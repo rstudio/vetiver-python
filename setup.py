@@ -23,7 +23,7 @@ setup(
     author_email="isabel.zimmerman@rstudio.com",
 
     description="Python parallel to R vetiver package",
-    long_description=read("README.rmd"),
+    long_description=read("README.md"),
 
     packages=find_packages(exclude=('tests',)),
 
