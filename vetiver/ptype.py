@@ -49,12 +49,13 @@ def vetiver_create_ptype(df, save_ptype, **kwargs):
     return ptype
 
 
-def _vetiver_ptype(df):
-    ptype = pd.DataFrame()
-    df = pd.DataFrame(data = df)
-    columns = df.columns
-    dtype = df.dtypes
-    for c, d in zip(columns, dtype):
-        ptype[c] = pd.Series(dtype = d)
+def create_ptype(test_data):
+
+    if test_data != pd.DataFrame():
+        test_data = pd.DataFrame(test_data)
+
+    assert len(test_data.columns)==len(test_data.dtypes)
+
+    ptype = pd.DataFrame(columns=test_data.columns).astype(dtype = test_data.dtypes)
     
     return ptype
