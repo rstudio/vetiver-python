@@ -35,10 +35,10 @@ def _vetiver_ptype(model, **kwargs):
     
     return ptype
 
-def vetiver_create_ptype(model, save_ptype, **kwargs):
+def vetiver_create_ptype(df, save_ptype, **kwargs):
 
     if (save_ptype == True):
-        ptype = _vetiver_ptype(model)
+        ptype = _vetiver_ptype(df)
     elif(save_ptype == False):
         ptype = None
     elif(isinstance(save_ptype, pd.DataFrame)):
@@ -46,4 +46,15 @@ def vetiver_create_ptype(model, save_ptype, **kwargs):
     else:
         raise InvalidPTypeError
 
+    return ptype
+
+
+def _vetiver_ptype(df):
+    ptype = pd.DataFrame()
+    df = pd.DataFrame(data = df)
+    columns = df.columns
+    dtype = df.dtypes
+    for c, d in zip(columns, dtype):
+        ptype[c] = pd.Series(dtype = d)
+    
     return ptype
