@@ -5,18 +5,20 @@ import joblib
 from joblib import dump
 import uvicorn
 import sklearn
-import pandas as pd
 from typing import List
+import nest_asyncio
 
 # do we want to convert to joblib?
+# get pinned somewhere, then joblib load on the pin
 def _prepare_model(model):
-    dump(model, 'vetiver_model.joblib')
+    dump(model, 'vetiver_model.joblib') # will eventually go
     load_model = joblib.load("vetiver_model.joblib")
     return(load_model)
 
 
 def _validate_data(data_base_model, pred_data):
-    
+
+   # does this really validate type? 
     class Validate(BaseModel):
         df_dict: List[data_base_model]
 
@@ -34,7 +36,16 @@ def _validate_data(data_base_model, pred_data):
     return served_data
 
 
-def vetiver_serve(sk_model, data_base_model, host_addr = "127.0.0.1", port = 8000):
+def vetiver_serve(sk_model, ptype, host_addr = "127.0.0.1", port = 8000):
+
+    '''
+    Parameters
+    ----------
+    model :  
+    ptype :  
+    host_addr : 
+    port :
+    '''
     
     served_model = _prepare_model(sk_model)
 
@@ -43,16 +54,19 @@ def vetiver_serve(sk_model, data_base_model, host_addr = "127.0.0.1", port = 800
     app = FastAPI()
     @app.get("/")
     def vetiver_intro():
-        return {"message": "go to /rapidoc or /docs"}
+        return {"message": "to view visual documentation, go to /rapidoc or /docs"}
 
     @app.post("/predict")
-    async def prediction(pred_data: data_base_model):
+    async def prediction(pred_data: ptype):
               
-        served_data = _validate_data(data_base_model, pred_data)
+        served_data = _validate_data(ptype, pred_data)
 
         y = served_model.predict([served_data])
 
         return {'prediction': y[0]}
+
+    @app.post("/health")
+
 
     @app.get("/rapidoc", response_class=HTMLResponse, include_in_schema=False)
     async def rapidoc():
@@ -72,4 +86,10 @@ def vetiver_serve(sk_model, data_base_model, host_addr = "127.0.0.1", port = 800
             </html>
         """
 
-    uvicorn.run(app, host=host_addr, port=port)
+    try:
+        uvicorn.run(app, host=host_addr, port=port)
+
+    except RuntimeError:
+        nest_asyncio.apply()
+        uvicorn.run(app, host=host_addr, port=port)
+    
