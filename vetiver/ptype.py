@@ -1,4 +1,6 @@
-import pandas as pd
+import pandas
+from typing import Type
+from pydantic import BaseModel, create_model
 
 class NoAvailablePTypeError(Exception):
     """
@@ -26,36 +28,29 @@ class InvalidPTypeError(Exception):
         self.message = message
         super().__init__(self.message)
 
-def _vetiver_ptype(model, **kwargs):
 
-    try:
-        ptype = type(model)
-    except:
-       raise NoAvailablePTypeError
-    
-    return ptype
-
-def vetiver_create_ptype(df, save_ptype, **kwargs):
+def vetiver_create_ptype(sample, save_ptype):
 
     if (save_ptype == True):
-        ptype = _vetiver_ptype(df)
+        ptype = _vetiver_ptype(sample)
     elif(save_ptype == False):
         ptype = None
-    elif(isinstance(save_ptype, pd.DataFrame)):
-        ptype = save_ptype.dtypes
+    elif(isinstance(save_ptype, BaseModel)):
+        ptype = sample
     else:
         raise InvalidPTypeError
 
     return ptype
 
 
-def create_ptype(test_data):
-
-    if test_data != pd.DataFrame():
-        test_data = pd.DataFrame(test_data)
-
-    assert len(test_data.columns)==len(test_data.dtypes)
-
-    ptype = pd.DataFrame(columns=test_data.columns).astype(dtype = test_data.dtypes)
+def _vetiver_ptype(test_data):
     
+    try:
+        test_data = test_data.iloc[1,:]
+    except TypeError:
+        raise NoAvailablePTypeError
+
+    dict_data = test_data.to_dict()
+    ptype = create_model("ptype", **dict_data)
+
     return ptype
