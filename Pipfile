@@ -1,0 +1,20 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+numpy = "*"
+pandas = "*"
+fastapi = "*"
+pydantic = "*"
+uvicorn = "*"
+joblib = "*"
+uvicorn = "*"
+scikit-learn = "*"
+nest-asyncio = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.9"
