@@ -1,3 +1,4 @@
+from logging import warn
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel, ValidationError
@@ -7,6 +8,7 @@ import uvicorn
 import sklearn
 from typing import List
 import nest_asyncio
+import warnings
 
 # do we want to convert to joblib?
 # get pinned somewhere, then joblib load on the pin
@@ -15,6 +17,17 @@ def _prepare_model(model):
     load_model = joblib.load("vetiver_model.joblib")
     return(load_model)
 
+def _jupyter_nb():
+    try:
+        shell = get_ipython().__class__.__name__
+        if shell == 'ZMQInteractiveShell':
+            return True   # Jupyter notebook or qtconsole
+        elif shell == 'TerminalInteractiveShell':
+            return False  # Terminal running IPython
+        else:
+            return False  # Other type (?)
+    except NameError:
+        return False      # Probably standard Python interpreter
 
 def _validate_data(data_base_model, pred_data):
 
@@ -86,10 +99,12 @@ def vetiver_serve(sk_model, ptype, host_addr = "127.0.0.1", port = 8000):
             </html>
         """
 
-    try:
-        uvicorn.run(app, host=host_addr, port=port)
+    if _jupyter_nb() == True:
+            warnings.warn("WARNING: Jupyter Notebooks are not considered stable environments for production code")
+            nest_asyncio.apply()
+    
+    uvicorn.run(app, host=host_addr, port=port)
 
-    except RuntimeError:
-        nest_asyncio.apply()
-        uvicorn.run(app, host=host_addr, port=port)
+
+    
     
