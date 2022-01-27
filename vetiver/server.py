@@ -9,6 +9,8 @@ import sklearn
 from typing import List
 import nest_asyncio
 import warnings
+import numpy as np
+from vetiver import VetiverModel
 
 # do we want to convert to joblib?
 # get pinned somewhere, then joblib load on the pin
@@ -17,68 +19,54 @@ def _prepare_model(model):
     load_model = joblib.load("vetiver_model.joblib")
     return(load_model)
 
+
 def _jupyter_nb():
     try:
         shell = get_ipython().__class__.__name__
         if shell == 'ZMQInteractiveShell':
-            return True   # Jupyter notebook or qtconsole
-        elif shell == 'TerminalInteractiveShell':
-            return False  # Terminal running IPython
+            return True # Jupyter notebook
         else:
-            return False  # Other type (?)
+            return False 
     except NameError:
-        return False      # Probably standard Python interpreter
+        return False
 
-def _validate_data(data_base_model, pred_data):
 
-   # does this really validate type? 
-    class Validate(BaseModel):
-        df_dict: List[data_base_model]
+def _prepare_data(pred_data):
 
-    try:
-        Validate(df_dict = pred_data.dict())
-    except ValidationError as e:
-        print(e.json())
-
-    dict_data = pred_data
     served_data = []
 
-    for key, value in dict_data:
+    for value in pred_data:
         served_data.append(value)
 
     return served_data
 
+def _make_app(model, ptype, check_type):
 
-def vetiver_serve(sk_model, ptype, host_addr = "127.0.0.1", port = 8000):
+    app = FastAPI(docs_url="/")
 
-    '''
-    Parameters
-    ----------
-    model :  
-    ptype :  
-    host_addr : 
-    port :
-    '''
-    
-    served_model = _prepare_model(sk_model)
-
-    # create a template for visual docs?
-
-    app = FastAPI()
     @app.get("/")
     def vetiver_intro():
         return {"message": "to view visual documentation, go to /rapidoc or /docs"}
 
-    @app.post("/predict")
-    async def prediction(pred_data: ptype):
-              
-        served_data = _validate_data(ptype, pred_data)
+    if (check_type == False):
+        @app.post("/predict/")
+        async def prediction(input_data):
 
-        y = served_model.predict([served_data])
+            input_data = input_data.split(" ") # user delimiter
+            input_data = np.asarray(input_data)
+            reshape_data = input_data.reshape(1,-1) 
+            y = model.predict(reshape_data)
 
-        return {'prediction': y[0]}
+            return {'prediction': y[0]}
+    else:
+        @app.post("/predict")
+        async def prediction(pred_data: ptype):
+                
+            served_data = _prepare_data(vetiver_model.ptype[0], pred_data)
 
-    @app.post("/health")
+            y = model.predict([served_data])
+
+            return {'prediction': y[0]}
 
 
     @app.get("/rapidoc", response_class=HTMLResponse, include_in_schema=False)
@@ -99,12 +87,24 @@ def vetiver_serve(sk_model, ptype, host_addr = "127.0.0.1", port = 8000):
             </html>
         """
 
+
+def vetiver_serve(vetiver_model: VetiverModel, check_type=True, host_addr = "127.0.0.1", port = 8000):
+
+    '''
+    Parameters
+    ----------
+    model :  
+    ptype :  
+    host_addr : 
+    port :
+    '''
+
+    app = _make_app(vetiver_model.model[0], vetiver_model.ptype[0], check_type)
+    
+
     if _jupyter_nb() == True:
             warnings.warn("WARNING: Jupyter Notebooks are not considered stable environments for production code")
             nest_asyncio.apply()
     
     uvicorn.run(app, host=host_addr, port=port)
-
-
-    
     
