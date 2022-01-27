@@ -52,7 +52,7 @@ def _make_app(model, ptype, check_type):
         @app.post("/predict/")
         async def prediction(input_data):
 
-            input_data = input_data.split(" ") # user delimiter
+            input_data = input_data.split(" ") # user delimiter ?
             input_data = np.asarray(input_data)
             reshape_data = input_data.reshape(1,-1) 
             y = model.predict(reshape_data)
@@ -62,7 +62,7 @@ def _make_app(model, ptype, check_type):
         @app.post("/predict")
         async def prediction(pred_data: ptype):
                 
-            served_data = _prepare_data(vetiver_model.ptype[0], pred_data)
+            served_data = _prepare_data(model, pred_data)
 
             y = model.predict([served_data])
 
@@ -100,7 +100,6 @@ def vetiver_serve(vetiver_model: VetiverModel, check_type=True, host_addr = "127
     '''
 
     app = _make_app(vetiver_model.model[0], vetiver_model.ptype[0], check_type)
-    
 
     if _jupyter_nb() == True:
             warnings.warn("WARNING: Jupyter Notebooks are not considered stable environments for production code")
