@@ -22,34 +22,29 @@ class InvalidPTypeError(Exception):
 
     def __init__(
         self,
-        message="The `save_ptype` argument must be TRUE, FALSE, or a dataframe.",
+        message="The `save_ptype` argument must be a dataframe, a BaseModel, or FALSE.",
     ):
         self.message = message
         super().__init__(self.message)
 
 
-def vetiver_create_ptype(sample, save_ptype):
-
-    if (save_ptype == True):
-        if(sample == None):
-            raise ValueError
-        elif(isinstance(sample, pd.DataFrame)):
-            ptype = _vetiver_ptype(sample)
-        elif(isinstance(sample, BaseModel)):
-            ptype = sample
+def vetiver_create_ptype(ptype_data, save_ptype):
+    try:
+        if(save_ptype == False):
+            ptype = None
+        elif(isinstance(ptype_data.construct(), BaseModel)):
+            ptype = ptype_data
         else:
-            raise InvalidPTypeError
-    elif(save_ptype == False):
-        ptype = None
-    else:
+            ptype = _vetiver_ptype(ptype_data)
+    except:
         raise InvalidPTypeError
 
     return ptype
 
 
-def _vetiver_ptype(test_data):
+def _vetiver_ptype(train_data):
 
-    dict_data = test_data.to_dict()
+    dict_data = train_data.to_dict()
     ptype = create_model("ptype", **dict_data)
 
     return ptype
