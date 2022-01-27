@@ -40,7 +40,23 @@ def _prepare_data(pred_data):
 
     return served_data
 
-def _make_app(model, ptype, check_type):
+#def _make_app(model, ptype, check_type):
+
+def vetiver_serve(vetiver_model: VetiverModel, check_type=True, host_addr = "127.0.0.1", port = 8000):
+
+    '''
+    Parameters
+    ----------
+    model :  
+    ptype :  
+    host_addr : 
+    port :
+    '''
+
+#    app = _make_app(
+    model = _prepare_model(vetiver_model.model[0])
+    
+    ptype = vetiver_model.ptype[0]
 
     app = FastAPI(docs_url="/")
 
@@ -59,10 +75,10 @@ def _make_app(model, ptype, check_type):
 
             return {'prediction': y[0]}
     else:
-        @app.post("/predict")
+        @app.post("/predict/")
         async def prediction(pred_data: ptype):
                 
-            served_data = _prepare_data(model, pred_data)
+            served_data = _prepare_data(pred_data)
 
             y = model.predict([served_data])
 
@@ -87,19 +103,6 @@ def _make_app(model, ptype, check_type):
             </html>
         """
 
-
-def vetiver_serve(vetiver_model: VetiverModel, check_type=True, host_addr = "127.0.0.1", port = 8000):
-
-    '''
-    Parameters
-    ----------
-    model :  
-    ptype :  
-    host_addr : 
-    port :
-    '''
-
-    app = _make_app(vetiver_model.model[0], vetiver_model.ptype[0], check_type)
 
     if _jupyter_nb() == True:
             warnings.warn("WARNING: Jupyter Notebooks are not considered stable environments for production code")
