@@ -29,14 +29,17 @@ class InvalidPTypeError(Exception):
 
 
 def vetiver_create_ptype(ptype_data, save_ptype):
-    try:
-        if(save_ptype == False):
-            ptype = None
-        elif(isinstance(ptype_data.construct(), BaseModel)):
-            ptype = ptype_data
-        else:
-            ptype = _vetiver_ptype(ptype_data)
-    except:
+    
+    if(save_ptype == False):
+        ptype = None
+    elif(save_ptype == True):
+        try:
+            if isinstance(ptype_data.construct(), BaseModel):
+                ptype = ptype_data
+        except AttributeError:
+            if isinstance(ptype_data, pd.DataFrame):
+                ptype = _vetiver_ptype(ptype_data.iloc[1,:])
+    else:
         raise InvalidPTypeError
 
     return ptype
