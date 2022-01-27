@@ -48,11 +48,6 @@ def vetiver_create_ptype(sample, save_ptype):
 
 
 def _vetiver_ptype(test_data):
-    
-    try:
-        test_data = test_data.iloc[1,:]
-    except TypeError:
-        raise NoAvailablePTypeError
 
     dict_data = test_data.to_dict()
     ptype = create_model("ptype", **dict_data)
