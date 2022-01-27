@@ -1,5 +1,4 @@
-import pandas
-from typing import Type
+import pandas as pd
 from pydantic import BaseModel, create_model
 
 class NoAvailablePTypeError(Exception):
@@ -32,11 +31,16 @@ class InvalidPTypeError(Exception):
 def vetiver_create_ptype(sample, save_ptype):
 
     if (save_ptype == True):
-        ptype = _vetiver_ptype(sample)
+        if(sample == None):
+            raise ValueError
+        elif(isinstance(sample, pd.DataFrame)):
+            ptype = _vetiver_ptype(sample)
+        elif(isinstance(sample, BaseModel)):
+            ptype = sample
+        else:
+            raise InvalidPTypeError
     elif(save_ptype == False):
         ptype = None
-    elif(isinstance(save_ptype, BaseModel)):
-        ptype = sample
     else:
         raise InvalidPTypeError
 
