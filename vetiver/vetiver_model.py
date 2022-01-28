@@ -31,39 +31,45 @@ class NoModelAvailableError(Exception):
 
 class VetiverModel():
     """
-    explanation
+    Create VetiverModel class for serving.
+
+    vetiver will recognize instances of this class as properly
+    formatted for serving.
 
     Parameters
     ----------
-    model :  
-    model_name : 
-    description :  
-    metadata : 
-    save_ptype :
-    versioned :
+    model :  a trained model, such as an sklearn or spacy model
+    name : model name or ID
+    save_ptype :  should an input data prototype be saved with the model? 'TRUE' or 'FALSE'
+    ptype_data: sample of data model should expect when it is being served
+    versioned : should the model be served when created?
+    description : a detailed description of the model. if omitted, a brief description will be generated
+    metadata : other details to be saved and accessed for serving
+
+    Methods
+    -------
 
     Examples
     --------
     
     """
 
-    def __init__(self, model, name = None, 
-        description = None, metadata = list(), 
-        save_ptype = True, versioned = None,
-        test_data = None, **kw):
+    def __init__(self, model, model_name = None,  
+        save_ptype = True, ptype_data = None, 
+        versioned = None, description = None, 
+        metadata = list()):
 
        
         self.model = model,
-        self.name = name,
-        self.description = _vetiver_create_description(model, name, description),
+        self.name = model_name,
+        self.description = _vetiver_create_description(model, model_name, description),
         self.metadata = metadata,
-        self.ptype = vetiver_create_ptype(test_data, save_ptype),
+        self.ptype = vetiver_create_ptype(ptype_data, save_ptype),
         self.versioned = versioned
 
         if(description == None):
-            description = _vetiver_create_description(model, name, description)
+            description = _vetiver_create_description(model, model_name, description)
 
-        # metadata = vetiver_create_meta(model, metadata)
 
 # create description
 def _vetiver_create_description(model, name, description):
