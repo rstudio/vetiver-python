@@ -34,15 +34,16 @@ def _jupyter_nb():
 def _prepare_data(pred_data):
 
     served_data = []
-
-    for value in pred_data:
+    for key, value in pred_data:
         served_data.append(value)
 
     return served_data
 
-#def _make_app(model, ptype, check_type):
 
-def vetiver_serve(vetiver_model: VetiverModel, check_type=True, host_addr = "127.0.0.1", port = 8000):
+#def _make_app(model, ptype, check_ptype):
+
+
+def vetiver_serve(vetiver_model: VetiverModel, check_ptype=True, host_addr = "127.0.0.1", port = 8000):
 
     '''
     Parameters
@@ -53,9 +54,7 @@ def vetiver_serve(vetiver_model: VetiverModel, check_type=True, host_addr = "127
     port :
     '''
 
-#    app = _make_app(
     model = _prepare_model(vetiver_model.model[0])
-    
     ptype = vetiver_model.ptype[0]
 
     app = FastAPI(docs_url="/")
@@ -64,7 +63,7 @@ def vetiver_serve(vetiver_model: VetiverModel, check_type=True, host_addr = "127
     def vetiver_intro():
         return {"message": "to view visual documentation, go to /rapidoc or /docs"}
 
-    if (check_type == False):
+    if (check_ptype == False):
         @app.post("/predict/")
         async def prediction(input_data):
 
@@ -76,14 +75,13 @@ def vetiver_serve(vetiver_model: VetiverModel, check_type=True, host_addr = "127
             return {'prediction': y[0]}
     else:
         @app.post("/predict/")
-        async def prediction(pred_data: ptype):
+        async def prediction(input_data: ptype):
                 
-            served_data = _prepare_data(pred_data)
+            served_data = _prepare_data(input_data)
 
             y = model.predict([served_data])
 
-            return {'prediction': y[0]}
-
+            return {'prediction': y[0]} #what about models with multiple outputs
 
     @app.get("/rapidoc", response_class=HTMLResponse, include_in_schema=False)
     async def rapidoc():
@@ -102,8 +100,7 @@ def vetiver_serve(vetiver_model: VetiverModel, check_type=True, host_addr = "127
                 </body> 
             </html>
         """
-
-
+    
     if _jupyter_nb() == True:
             warnings.warn("WARNING: Jupyter Notebooks are not considered stable environments for production code")
             nest_asyncio.apply()
