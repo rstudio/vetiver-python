@@ -107,3 +107,7 @@ def vetiver_serve(vetiver_model: VetiverModel, check_ptype=True, host_addr = "12
     
     uvicorn.run(app, host=host_addr, port=port)
     
+
+def vetiver_endpoint(url = "http://127.0.0.1:8000/predict"):
+
+    return url
