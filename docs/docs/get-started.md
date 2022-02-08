@@ -1,12 +1,8 @@
-# Overview
+# Get started
 
-The goal of vetiver is to give data scientists and other model-builders the tools to deploy their model to a remote endpoint.
+`vetiver` is intended to extend a data science workflow to deployment after a model has been created. It does not offer capabilities to train a machine learning model.
 
-Key features include: - Simple: designed to fit into a data scientist's natural workflow - Robust: ability to check input data types to minimize type failures in a model - Advanced support: easily deploy multiple endpoints to handle pre- and post- processing - Based on [FastAPI](https://github.com/tiangolo/fastapi), using [OpenAPI](https://github.com/OAI/OpenAPI-Specification)
-
-Source code: https://github.com/isabelizimm/vetiver-python
-
-# Quickstart
+## Installation
 
 `pip install vetiver`
 

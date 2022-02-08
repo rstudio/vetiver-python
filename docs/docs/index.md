@@ -1,17 +1,12 @@
-# Welcome to MkDocs
+# Overview
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+The goal of vetiver is to give data scientists and other model-builders the tools to deploy their model to a remote endpoint.
 
-## Commands
+Key features include:
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
+- **Simple:** designed to fit into a data scientist's natural workflow
+- **Robust:** ability to check input data types to minimize type failures in a model
+- **Advanced support:** easily deploy multiple endpoints to handle pre- and post- processing
+- Based on [FastAPI](https://github.com/tiangolo/fastapi), using [OpenAPI](https://github.com/OAI/OpenAPI-Specification)
 
-## Project layout
-
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+Source code available [on GitHub.](https://github.com/isabelizimm/vetiver-python)

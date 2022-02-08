@@ -1,1 +1,7 @@
-site_name: My Docs
+site_name: Vetiver
+theme:
+  name: material
+  features:
+    - navigation.expand
+  palette:
+    primary: white
