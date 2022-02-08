@@ -2,9 +2,10 @@ import pandas as pd
 import numpy as np
 from vetiver.ptype import vetiver_create_ptype
 
+
 class NoAvailableDescriptionError(Exception):
     """
-    Throw an error if we don't find a method 
+    Throw an error if we don't find a method
     available to create a description for `model`
     """
 
@@ -15,9 +16,10 @@ class NoAvailableDescriptionError(Exception):
         self.message = message
         super().__init__(self.message)
 
+
 class NoModelAvailableError(Exception):
     """
-    Throw an error if we don't find a method 
+    Throw an error if we don't find a method
     available to prepare a `model`
     """
 
@@ -29,7 +31,7 @@ class NoModelAvailableError(Exception):
         super().__init__(self.message)
 
 
-class VetiverModel():
+class VetiverModel:
     """
     Create VetiverModel class for serving.
 
@@ -51,30 +53,37 @@ class VetiverModel():
 
     Examples
     --------
-    
+
     """
 
-    def __init__(self, model, model_name = None,  
-        save_ptype = True, ptype_data = None, 
-        versioned = None, description = None, 
-        metadata = list()):
+    def __init__(
+        self,
+        model,
+        model_name=None,
+        save_ptype=True,
+        ptype_data=None,
+        versioned=None,
+        description=None,
+        metadata=list(),
+    ):
 
-       
-        self.model = model,
-        self.name = model_name,
-        self.description = _vetiver_create_description(model, model_name, description),
-        self.metadata = metadata,
-        self.ptype = vetiver_create_ptype(ptype_data, save_ptype),
+        self.model = (model,)
+        self.name = (model_name,)
+        self.description = (
+            _vetiver_create_description(model, model_name, description),
+        )
+        self.metadata = (metadata,)
+        self.ptype = (vetiver_create_ptype(ptype_data, save_ptype),)
         self.versioned = versioned
 
-        if(description == None):
+        if description == None:
             description = _vetiver_create_description(model, model_name, description)
 
 
 # create description
 def _vetiver_create_description(model, name, description):
-    if (description == None):
-        description = f'{name} is a {type(model)} vetiver model.'
+    if description == None:
+        description = f"{name} is a {type(model)} vetiver model."
     return description
 
 
