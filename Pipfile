@@ -13,6 +13,7 @@ uvicorn = "*"
 scikit-learn = "*"
 nest-asyncio = "*"
 requests = "*"
+pytest = "*"
 
 [dev-packages]
 
