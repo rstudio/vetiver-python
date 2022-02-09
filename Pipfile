@@ -8,11 +8,11 @@ numpy = "*"
 pandas = "*"
 fastapi = "*"
 pydantic = "*"
-uvicorn = "*"
 joblib = "*"
 uvicorn = "*"
 scikit-learn = "*"
 nest-asyncio = "*"
+requests = "*"
 
 [dev-packages]
 
