@@ -59,32 +59,27 @@ class VetiverModel:
     def __init__(
         self,
         model,
-        model_name=None,
-        save_ptype=True,
         ptype_data=None,
+        model_name: str = None,
         versioned=None,
-        description=None,
+        description: str = "",
         metadata=list(),
     ):
 
-        self.model = (model,)
-        self.name = (model_name,)
-        self.description = (
-            _vetiver_create_description(model, model_name, description),
-        )
-        self.metadata = (metadata,)
-        self.ptype = (vetiver_create_ptype(ptype_data, save_ptype),)
+        self.model = model
+        self.ptype = vetiver_create_ptype(ptype_data)
+        self.name = model_name
+        self.description = description
+        self.metadata = metadata
         self.versioned = versioned
 
-        if description == None:
-            description = _vetiver_create_description(model, model_name, description)
+        if not description:
+            description = self._create_description(self)
 
-
-# create description
-def _vetiver_create_description(model, name, description):
-    if description == None:
-        description = f"{name} is a {type(model)} vetiver model."
-    return description
+    # create description
+    def _create_description(self):
+        description = f"{self.name} is a {type(self.model)} vetiver model."
+        return description
 
 
 # def _vetiver_prepare_model(model):
