@@ -1,5 +1,7 @@
 import pandas as pd
+import numpy as np
 from pydantic import BaseModel, create_model
+from uvicorn import Config
 
 
 class NoAvailablePTypeError(Exception):
@@ -24,7 +26,7 @@ class InvalidPTypeError(Exception):
 
     def __init__(
         self,
-        message="The `save_ptype` argument must be a dataframe, a BaseModel, or FALSE.",
+        message="The `ptype_data` argument must be a pandas.DataFrame, a pydantic BaseModel,  np.ndarray, or `save_ptype` must be FALSE.",
     ):
         self.message = message
         super().__init__(self.message)
@@ -37,20 +39,32 @@ def vetiver_create_ptype(ptype_data, save_ptype):
         pass
     elif save_ptype == True:
         try:
-            if isinstance(ptype_data.construct(), BaseModel):
+            if isinstance(ptype_data, np.ndarray):
+                ptype = _array_to_ptype(ptype_data[1])
+            elif isinstance(ptype_data.construct(), BaseModel):
                 ptype = ptype_data
-        except AttributeError:
+        except AttributeError:  # cannot construct basemodel
             if isinstance(ptype_data, pd.DataFrame):
-                ptype = _vetiver_ptype(ptype_data.iloc[1, :])
+                ptype = _df_to_ptype(ptype_data.iloc[1, :])
     else:
         raise InvalidPTypeError
 
     return ptype
 
 
-def _vetiver_ptype(train_data):
+def _df_to_ptype(train_data):
 
     dict_data = train_data.to_dict()
+    ptype = create_model("ptype", **dict_data)
+
+    return ptype
+
+
+def _array_to_ptype(train_data):
+    dict_data = dict(enumerate(train_data, 0))
+
+    # pydantic requires strings as indicies
+    dict_data = {str(key): value.item() for key, value in dict_data.items()}
     ptype = create_model("ptype", **dict_data)
 
     return ptype
