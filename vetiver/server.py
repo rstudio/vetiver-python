@@ -12,7 +12,7 @@ from vetiver.vetiver_model import VetiverModel
 from vetiver.utils import _jupyter_nb
 
 
-class VetiverServe(FastAPI):
+class VetiverAPI(FastAPI):
 
     app = None
 
@@ -31,8 +31,8 @@ class VetiverServe(FastAPI):
 
     def _init_app(self):
 
-        ptype = self.model.ptype[0]
-        served_model = _prepare_model(self.model.model[0])
+        ptype = self.model.ptype
+        served_model = _prepare_model(self.model.model)
 
         app = FastAPI()
 
@@ -91,7 +91,7 @@ class VetiverServe(FastAPI):
         if self.check_ptype == True:
 
             @self.app.post("/" + endpoint_name + "/")
-            def custom_endpoint(input_data: self.model.ptype[0]):
+            def custom_endpoint(input_data: self.model.ptype):
                 served_data = _prepare_data(input_data)
                 new = endpoint_fx(pd.Series(served_data))
                 return new
