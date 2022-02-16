@@ -1,6 +1,6 @@
 # Vetiver
 
-The goal of vetiver is to give data scientists and other model-builders the tools to deploy their model to a remote endpoint.
+The goal of vetiver is to give data scientists and other model-builders the tools to deploy their model to a remote endpoint. It is the Python counterpart to the R package [vetiver](https://vetiver.tidymodels.org/).
 
 Key features include:
 
