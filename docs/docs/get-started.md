@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 `vetiver` is an MLOps framework intended to extend a data science workflow to deployment after a model has been created.
+=======
+`vetiver` is an MLOps framework intended to extend a data science workflow to deployment after a model has been created. It
+>>>>>>> 7d87d8b (minimal documentation)
 
 ## Installation
 
