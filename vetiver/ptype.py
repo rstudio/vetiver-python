@@ -1,9 +1,10 @@
 import pandas as pd
 from pydantic import BaseModel, create_model
 
+
 class NoAvailablePTypeError(Exception):
     """
-    Throw an error if we cannot create 
+    Throw an error if we cannot create
     a 0 row input data prototype for `model`
     """
 
@@ -13,6 +14,7 @@ class NoAvailablePTypeError(Exception):
     ):
         self.message = message
         super().__init__(self.message)
+
 
 class InvalidPTypeError(Exception):
     """
@@ -29,16 +31,17 @@ class InvalidPTypeError(Exception):
 
 
 def vetiver_create_ptype(ptype_data, save_ptype):
-    
-    if(save_ptype == False):
-        ptype = None
-    elif(save_ptype == True):
+    ptype = None
+
+    if save_ptype == False:
+        pass
+    elif save_ptype == True:
         try:
             if isinstance(ptype_data.construct(), BaseModel):
                 ptype = ptype_data
         except AttributeError:
             if isinstance(ptype_data, pd.DataFrame):
-                ptype = _vetiver_ptype(ptype_data.iloc[1,:])
+                ptype = _vetiver_ptype(ptype_data.iloc[1, :])
     else:
         raise InvalidPTypeError
 
