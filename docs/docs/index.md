@@ -1,4 +1,4 @@
-# Overview
+# Vetiver
 
 The goal of vetiver is to give data scientists and other model-builders the tools to deploy their model to a remote endpoint.
 

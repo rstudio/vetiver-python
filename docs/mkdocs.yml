@@ -1,7 +1,26 @@
 site_name: Vetiver
+nav:
+    - Home: index.md
+    - Get Started: get-started.md
+    - VetiverModel: vetiver-model.md
+    - VetiverAPI: vetiver-api.md
+    - Examples: examples.md
 theme:
+  logo: amphora.png
+  icon:
+    repo: fontawesome/brands/github
   name: material
   features:
     - navigation.expand
+    - navigation.tabs.sticky
   palette:
     primary: white
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.emoji:
+    emoji_index: !!python/name:materialx.emoji.twemoji
+    emoji_generator: !!python/name:materialx.emoji.to_svg
+repo_url: https://github.com/isabelizimm/vetiver-python
+repo_name: isabelizimm/vetiver-python
