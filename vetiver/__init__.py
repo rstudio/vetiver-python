@@ -6,7 +6,7 @@ __all__ = []
 
 import pandas as pd
 import numpy as np
-from vetiver.ptype import *
-from vetiver.vetiver_model import *
-from vetiver.server import *
-from vetiver.mock import *
+from .ptype import vetiver_create_ptype
+from .vetiver_model import VetiverModel
+from .server import VetiverAPI, vetiver_endpoint
+from .mock import get_mock_data, get_mock_model

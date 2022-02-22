@@ -8,11 +8,11 @@ import requests
 import numpy as np
 import pandas as pd
 
-from vetiver.vetiver_model import VetiverModel
-from vetiver.utils import _jupyter_nb
+from .vetiver_model import VetiverModel
+from .utils import _jupyter_nb
 
 
-class VetiverAPI(FastAPI):
+class VetiverAPI:
 
     app = None
 
@@ -22,11 +22,13 @@ class VetiverAPI(FastAPI):
         check_ptype: bool = True,
         port: Optional[int] = 8000,
         host="127.0.0.1",
+        app_factory=FastAPI,
     ) -> None:
         self.model = model
         self.port = port
         self.host = host
         self.check_ptype = check_ptype
+        self.app_factory = app_factory
         self.app = self._init_app()
 
     def _init_app(self):
@@ -34,17 +36,21 @@ class VetiverAPI(FastAPI):
         ptype = self.model.ptype
         served_model = _prepare_model(self.model.model)
 
-        app = FastAPI()
+        app = self.app_factory()
 
-        @app.get("/", response_class=HTMLResponse, include_in_schema=False)
-        def docs_redirect():
-            return RedirectResponse("/rapidoc")
+        @app.get("/")
+        async def main_app():
+            return {"msg": "root path"}
+
+        # redirect to docs?
+        # def docs_redirect():
+        #     return RedirectResponse("/rapidoc")
 
         @app.get("/ping", include_in_schema=False)
-        def ping():
+        async def ping():
             return {"ping": "pong"}
 
-        @app.get("/rapidoc", response_class=HTMLResponse, include_in_schema=False)
+        @app.get("/rapidoc", response_class=HTMLResponse)
         async def rapidoc():
             return f"""
                 <!doctype html>
@@ -91,7 +97,7 @@ class VetiverAPI(FastAPI):
         if self.check_ptype == True:
 
             @self.app.post("/" + endpoint_name + "/")
-            def custom_endpoint(input_data: self.model.ptype):
+            async def custom_endpoint(input_data: self.model.ptype):
                 served_data = _prepare_data(input_data)
                 new = endpoint_fx(pd.Series(served_data))
                 return new
@@ -99,7 +105,7 @@ class VetiverAPI(FastAPI):
         else:
 
             @self.app.post("/" + endpoint_name + "/")
-            def custom_endpoint(input_data):
+            async def custom_endpoint(input_data):
                 served_data = _prepare_data(input_data)
                 new = endpoint_fx(served_data)
                 return new

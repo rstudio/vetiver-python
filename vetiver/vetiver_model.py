@@ -1,6 +1,4 @@
-import pandas as pd
-import numpy as np
-from vetiver.ptype import vetiver_create_ptype
+from .ptype import vetiver_create_ptype
 
 
 class NoAvailableDescriptionError(Exception):
@@ -59,31 +57,26 @@ class VetiverModel:
     def __init__(
         self,
         model,
+        save_ptype: bool = True,
         ptype_data=None,
         model_name: str = None,
         versioned=None,
-        description: str = "",
+        description: str = None,
         metadata=list(),
     ):
 
         self.model = model
-        self.ptype = vetiver_create_ptype(ptype_data)
+        self.save_ptype = save_ptype
+        self.ptype = vetiver_create_ptype(ptype_data, save_ptype)
         self.name = model_name
         self.description = description
         self.metadata = metadata
         self.versioned = versioned
 
         if not description:
-            description = self._create_description(self)
+            description = self._create_description()
 
     # create description
     def _create_description(self):
         description = f"{self.name} is a {type(self.model)} vetiver model."
         return description
-
-
-# def _vetiver_prepare_model(model):
-#     try:
-#         model
-#     except:
-#         raise NoModelAvailableError
