@@ -1,12 +1,16 @@
 import nest_asyncio
 import warnings
-from IPython import get_ipython
+
+no_notebook = True
+try:
+    from IPython import get_ipython
+except ImportError:
+    no_notebook = False
 
 
 def _jupyter_nb():
-    shell = get_ipython().__class__.__name__
 
-    if shell == "ZMQInteractiveShell":
+    if not no_notebook:
         warnings.warn(
             "WARNING: Jupyter Notebooks are not considered stable environments for production code"
         )
