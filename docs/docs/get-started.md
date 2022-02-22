@@ -16,10 +16,10 @@ You can also install the development version from GitHub.
 Vetiver focuses on two main objects: `VetiverModel()` and `VetiverAPI()`. A **VetiverModel** collects all the information needed for deploying a trained model, while a **VetiverAPI** deploys the model to a REST endpoint. The example below shows a minimal deployment of an arbitrary model.
 
 ```python
-from vetiver import dummy, VetiverModel, VetiverAPI
+from vetiver import mock, VetiverModel, VetiverAPI
 
-X, y = dummy.get_dummy_data()
-model = dummy.get_dummy_model().fit(X, y)
+X, y = mock.get_mock_data()
+model = mock.get_mock_model().fit(X, y)
 
 v = VetiverModel(model, save_ptype= True, ptype_data=X)
 

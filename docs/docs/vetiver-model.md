@@ -5,10 +5,10 @@ This tutorial shows you how to use `VetiverModel()` with its core features, step
 Users will start with any trained model. Currently, Vetiver supports [scikit-learn](https://scikit-learn.org/stable/) models, with other model support on its way.
 
 ```python
-from vetiver import dummy, VetiverModel, VetiverAPI
+from vetiver import mock, VetiverModel, VetiverAPI
 
-X, y = dummy.get_dummy_data()
-model = dummy.get_dummy_model().fit(X, y)
+X, y = mock.get_mock_data()
+model = mock.get_mock_model().fit(X, y)
 
 v = VetiverModel(model, save_ptype = True, ptype_data = X)
 ```

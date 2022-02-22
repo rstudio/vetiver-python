@@ -7,10 +7,10 @@ This tutorial shows you how to use `VetiverAPI()` with its core features, step b
 The simplest VetiverAPI deployment includes a trained model with a `predict` method, inside a **VetiverModel**.
 
 ``` {python}
-from vetiver import dummy, VetiverModel, VetiverAPI
+from vetiver import mock, VetiverModel, VetiverAPI
 
-X, y = dummy.get_dummy_data()
-model = dummy.get_dummy_model().fit(X, y)
+X, y = mock.get_mock_data()
+model = mock.get_mock_model().fit(X, y)
 
 v = VetiverModel(model = model, save_ptype = True, ptype_data = X)
 
@@ -40,10 +40,10 @@ More advanced use cases may require multiple endpoints to be created for pre-pro
     The method `vetiver_post()` currently handles all data as a [Series](https://pandas.pydata.org/docs/reference/api/pandas.Series.html) type.
 
 ```{python}
-from vetiver import dummy, VetiverModel, VetiverAPI
+from vetiver import mock, VetiverModel, VetiverAPI
 
-X, y = dummy.get_dummy_data()
-model = dummy.get_dummy_model().fit(X, y)
+X, y = mock.get_mock_data()
+model = mock.get_mock_model().fit(X, y)
 
 v = VetiverModel(model = model, save_ptype = True, ptype_data = X)
 
