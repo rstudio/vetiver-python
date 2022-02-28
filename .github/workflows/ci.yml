@@ -23,4 +23,4 @@ jobs:
           python -m pipenv install
       - name: Run Tests
         run: |          
-          pytest vetiver
+          pipenv run pytest
