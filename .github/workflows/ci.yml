@@ -1,4 +1,4 @@
-name: CI
+name: tests
 
 on:
   workflow_dispatch:
@@ -24,3 +24,5 @@ jobs:
       - name: Run Tests
         run: |          
           pipenv run pytest
+      - name: Upload coverage
+        uses: codecov/codecov-action@v2
