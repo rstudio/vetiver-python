@@ -14,10 +14,8 @@ scikit-learn = "*"
 nest-asyncio = "*"
 requests = "*"
 pytest = "*"
+pytest-cov = "*"
 ipython = "*"
 vetiver = {editable = true, path = "."}
 
 [dev-packages]
-
-[requires]
-python_version = "3.7"
