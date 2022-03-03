@@ -1,10 +1,10 @@
 import pytest
 
 from vetiver import mock, VetiverModel, VetiverAPI
-from fastapi.testclient import TestClient
+from fastapi import FastAPI
 
 
-def _start_application():
+def _build_v():
     X, y = mock.get_mock_data()
     model = mock.get_mock_model().fit(X, y)
     v = VetiverModel(
@@ -16,13 +16,18 @@ def _start_application():
         description="A regression model for testing purposes",
     )
 
+    return v
+
+
+def test_is_fastapi():
+
+    v = _build_v()
     app = VetiverAPI(v)
+    assert isinstance(app.app, FastAPI)
 
-    return app
 
+def test_is_v_model():
 
-def test_ping_app():
-    client = TestClient(_start_application().app)
-    response = client.get("/ping")
-    assert response.status_code == 200, response.text
-    assert response.json() == {"ping": "pong"}
+    v = _build_v()
+    app = VetiverAPI(v)
+    assert isinstance(app.model, VetiverModel)
