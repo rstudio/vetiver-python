@@ -3,7 +3,7 @@
 <!-- badges: start -->
 
 [![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental) [![codecov](https://codecov.io/gh/isabelizimm/vetiver-python/branch/main/graph/badge.svg?token=CW6JHVS6ZX)](https://codecov.io/gh/isabelizimm/vetiver-python)
 
 <!-- badges: end -->
 
@@ -35,7 +35,7 @@ my_model = VetiverModel(model = linear_reg, ptype_data = train_data)
 Next, you can build a model-aware API and run it locally.
 
 ```python
-my_app = VetiverServe(my_model)
+my_app = VetiverAPI(my_model)
 my_app.run()
 ```
 
