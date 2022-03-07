@@ -100,7 +100,8 @@ class VetiverAPI:
             async def custom_endpoint(input_data: self.model.ptype):
                 served_data = _prepare_data(input_data)
                 new = endpoint_fx(pd.Series(served_data))
-                return new
+
+                return {endpoint_name: new.tolist()}
 
         else:
 
@@ -108,7 +109,8 @@ class VetiverAPI:
             async def custom_endpoint(input_data):
                 served_data = _prepare_data(input_data)
                 new = endpoint_fx(served_data)
-                return new
+
+                return {endpoint_name: new.tolist()}
 
     def run(self):
         _jupyter_nb()
