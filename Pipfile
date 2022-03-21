@@ -16,6 +16,7 @@ requests = "*"
 pytest = "*"
 pytest-cov = "*"
 ipython = "*"
+torch = "*"
 vetiver = {editable = true, path = "."}
 
 [dev-packages]

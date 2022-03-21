@@ -1,4 +1,5 @@
 from .ptype import vetiver_create_ptype
+from .handlers._interface import create_translator
 
 
 class NoAvailableDescriptionError(Exception):
@@ -30,33 +31,33 @@ class NoModelAvailableError(Exception):
 
 
 class VetiverModel:
-    """
-    Create VetiverModel class for serving.
+    """Create VetiverModel class for serving.
 
-    vetiver will recognize instances of this class as properly
-    formatted for serving.
-
-    Parameters
+    Attributes
     ----------
-    model :  a trained model, such as an sklearn or spacy model
-    name : model name or ID
-    save_ptype :  should an input data prototype be saved with the model? 'TRUE' or 'FALSE'
-    ptype_data: sample of data model should expect when it is being served
-    versioned : should the model be served when created?
-    description : a detailed description of the model. if omitted, a brief description will be generated
-    metadata : other details to be saved and accessed for serving
+    model :
+        a trained model, such as an sklearn or spacy model
+    name : string
+        model name or ID
+    save_ptype :  bool
+        should an input data prototype be saved with the model? 'TRUE' or 'FALSE'
+    ptype_data : pd.DataFrame, np.array
+        sample of data model should expect when it is being served
+    versioned :
+        should the model be served when created?
+    description : str
+        a detailed description of the model. if omitted, a brief description will be generated
+    metadata : dict
+        other details to be saved and accessed for serving
 
     Methods
     -------
-
-    Examples
-    --------
 
     """
 
     def __init__(
         self,
-        model,
+        model,  # takes model and return adapter standin load translator, take model and return translator object
         save_ptype: bool = True,
         ptype_data=None,
         model_name: str = None,
@@ -64,17 +65,19 @@ class VetiverModel:
         description: str = None,
         metadata=list(),
     ):
+        translator = create_translator(model)
 
-        self.model = model
+        self.model = translator.model
         self.save_ptype = save_ptype
         self.ptype = vetiver_create_ptype(ptype_data, save_ptype)
         self.name = model_name
         self.description = description
         self.metadata = metadata
         self.versioned = versioned
+        self.handler_predict = translator.handler_predict
 
         if not description:
-            description = self._create_description()
+            description = translator.create_description()
 
     # create description
     def _create_description(self):

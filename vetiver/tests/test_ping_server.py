@@ -41,4 +41,4 @@ def test_predict_endpoint():
     data = {"B": 0, "C": 0, "D": 0}
     response = client.post("/predict/", json=data)
     assert response.status_code == 200, response.text
-    assert response.json() == {"prediction": 44.47}, response.json()
+    assert response.json() == {"prediction": [44.47]}, response.json()
