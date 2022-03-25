@@ -1,7 +1,6 @@
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse, RedirectResponse
 import uvicorn
-import joblib
 from typing import List, Optional
 from logging import warn
 import requests
@@ -13,6 +12,33 @@ from .utils import _jupyter_nb
 
 
 class VetiverAPI:
+    """Create model aware API
+
+    Attributes
+    ----------
+    model :  VetiverModel
+        Model to be deployed in API
+    check_ptype : bool
+        Determine if data prototype should be enforced
+    port :  int
+        Port for deployment
+    host :
+        Host address
+    app_factory : FastAPI
+        Type of API to be deployed
+    app :
+        API that is deployed
+
+    Methods
+    -------
+    vetiver_post(self, endpoint_fx, endpoint_name)
+        Create new POST enpoint
+    run(self)
+        Start API
+    predict(self, data: dict, endpoint)
+        Use VetiverAPI to make a prediction from model
+
+    """
 
     app = None
 
@@ -32,9 +58,6 @@ class VetiverAPI:
         self.app = self._init_app()
 
     def _init_app(self):
-
-        ptype = self.model.ptype
-        served_model = _prepare_model(self.model.model)
 
         app = self.app_factory()
 
@@ -71,13 +94,13 @@ class VetiverAPI:
         if self.check_ptype == True:
 
             @app.post("/predict/")
-            async def prediction(input_data: ptype):
+            async def prediction(input_data: self.model.ptype):
 
                 served_data = _prepare_data(input_data)
 
-                y = served_model.predict([served_data])
+                y = self.model.handler_predict(served_data)
 
-                return {"prediction": y[0]}
+                return {"prediction": y.tolist()}
 
         else:
 
@@ -87,9 +110,9 @@ class VetiverAPI:
                 input_data = input_data.split(" ")  # user delimiter ?
                 input_data = np.asarray(input_data)
                 reshape_data = input_data.reshape(1, -1)
-                y = served_model.predict(reshape_data)
+                y = self.model.handler_predict(reshape_data)
 
-                return {"prediction": y[0]}
+                return {"prediction": y.tolist()}
 
         return app
 
@@ -120,12 +143,6 @@ class VetiverAPI:
         response = requests.post(endpoint, json=data)
 
         return response.json()
-
-
-def _prepare_model(model):
-    joblib.dump(model, "vetiver_model.joblib")  # will eventually go
-    load_model = joblib.load("vetiver_model.joblib")
-    return load_model
 
 
 def _prepare_data(pred_data):
