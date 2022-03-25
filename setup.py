@@ -13,21 +13,5 @@ def read(filename):
         return re.sub(text_type(r":[a-z]+:`~?(.*?)`"), text_type(r"``\1``"), fd.read())
 
 
-setup(
-    name="vetiver",
-    version="0.1.0",
-    url="https://github.com/isabelizimm/python-vetiver",
-    license="MIT",
-    author="Isabel Zimmerman",
-    author_email="isabel.zimmerman@rstudio.com",
-    description="Python parallel to R vetiver package",
-    long_description=read("README.md"),
-    packages=find_packages(exclude=("tests",)),
-    install_requires=[],
-    classifiers=[
-        "Development Status :: 2 - Pre-Alpha",
-        "License :: OSI Approved :: MIT License",
-        "Programming Language :: Python",
-        "Programming Language :: Python :: 3",
-    ],
-)
+if __name__ == "__main__":
+    setup()
