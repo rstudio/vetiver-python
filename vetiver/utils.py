@@ -1,11 +1,11 @@
 import nest_asyncio
 import warnings
 
-no_notebook = True
+no_notebook = False
 try:
     from IPython import get_ipython
 except ImportError:
-    no_notebook = False
+    no_notebook = True
 
 
 def _jupyter_nb():
