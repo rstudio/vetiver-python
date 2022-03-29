@@ -139,7 +139,7 @@ class VetiverAPI:
         _jupyter_nb()
         uvicorn.run(self.app, port=self.port, host=self.host)
 
-    def predict(self, data: dict, endpoint):
+    def predict(self, endpoint, data: dict):
         response = requests.post(endpoint, json=data)
 
         return response.json()
