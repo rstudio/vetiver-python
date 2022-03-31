@@ -32,7 +32,21 @@ class InvalidPTypeError(Exception):
         super().__init__(self.message)
 
 
-def vetiver_create_ptype(ptype_data, save_ptype):
+def _vetiver_create_ptype(ptype_data, save_ptype: bool):
+    """Create zero row structure to save data types
+    Parameters
+    ----------
+    ptype_data :
+        Custom function to be run at endpoint
+    save_ptype : bool
+        Whether or not ptype should be created
+
+    Returns
+    -------
+    ptype
+        Data prototype
+
+    """
     ptype = None
 
     if save_ptype == False:

@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse, RedirectResponse
 import uvicorn
-from typing import List, Optional
+from typing import Callable, List, Optional
 from logging import warn
 import requests
 import numpy as np
@@ -24,20 +24,10 @@ class VetiverAPI:
         Port for deployment
     host :
         Host address
-    app_factory : FastAPI
+    app_factory :
         Type of API to be deployed
     app :
         API that is deployed
-
-    Methods
-    -------
-    vetiver_post(self, endpoint_fx, endpoint_name)
-        Create new POST enpoint
-    run(self)
-        Start API
-    predict(self, data: dict, endpoint)
-        Use VetiverAPI to make a prediction from model
-
     """
 
     app = None
@@ -58,7 +48,6 @@ class VetiverAPI:
         self.app = self._init_app()
 
     def _init_app(self):
-
         app = self.app_factory()
 
         @app.get("/")
@@ -116,7 +105,22 @@ class VetiverAPI:
 
         return app
 
-    def vetiver_post(self, endpoint_fx, endpoint_name):
+    def vetiver_post(
+        self, endpoint_fx: Callable, endpoint_name: str = "custom_endpoint"
+    ):
+        """Create new POST endpoint
+        Parameters
+        ----------
+        endpoint_fx : typing.Callable
+            Custom function to be run at endpoint
+        endpoint_name : str
+            Name of endpoint
+
+        Returns
+        -------
+        dict
+            Key: endpoint_name Value: Output of endpoint_fx, in list format
+        """
         if self.check_ptype == True:
 
             @self.app.post("/" + endpoint_name + "/")
@@ -136,10 +140,25 @@ class VetiverAPI:
                 return {endpoint_name: new.tolist()}
 
     def run(self):
+        """Start API"""
         _jupyter_nb()
         uvicorn.run(self.app, port=self.port, host=self.host)
 
     def predict(self, endpoint, data: dict):
+        """Make a prediction from model endpoint
+
+        Parameters
+        ----------
+        endpoint :
+            URI path to endpoint
+        data : dict
+            Name of endpoint
+
+        Returns
+        -------
+        dict
+            Key: endpoint_name Value: Output of endpoint_fx, in list format
+        """
         response = requests.post(endpoint, json=data)
 
         return response.json()
@@ -153,5 +172,16 @@ def _prepare_data(pred_data):
 
 
 def vetiver_endpoint(url="http://127.0.0.1:8000/predict"):
+    """Wrap url
 
+        Parameters
+        ----------
+        url : str
+            URI path to endpoint
+
+        Returns
+        -------
+        url : str
+            URI path to endpoint
+     """
     return url

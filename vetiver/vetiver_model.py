@@ -1,19 +1,5 @@
-from .ptype import vetiver_create_ptype
+from .ptype import _vetiver_create_ptype
 from .handlers._interface import create_translator
-
-
-class NoAvailableDescriptionError(Exception):
-    """
-    Throw an error if we don't find a method
-    available to create a description for `model`
-    """
-
-    def __init__(
-        self,
-        message="There is no method available to create a description for `model`",
-    ):
-        self.message = message
-        super().__init__(self.message)
 
 
 class NoModelAvailableError(Exception):
@@ -49,27 +35,24 @@ class VetiverModel:
         a detailed description of the model. if omitted, a brief description will be generated
     metadata : dict
         other details to be saved and accessed for serving
-
-    Methods
-    -------
-
     """
 
     def __init__(
         self,
-        model,  # takes model and return adapter standin load translator, take model and return translator object
+        model,
         save_ptype: bool = True,
         ptype_data=None,
         model_name: str = None,
         versioned=None,
         description: str = None,
         metadata=list(),
+
     ):
-        translator = create_translator(model)
+        translator = create_translator(model, ptype_data, save_ptype)
 
         self.model = translator.model
         self.save_ptype = save_ptype
-        self.ptype = vetiver_create_ptype(ptype_data, save_ptype)
+        self.ptype = translator.ptype()
         self.name = model_name
         self.description = description
         self.metadata = metadata
