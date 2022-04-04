@@ -21,8 +21,11 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           python -m pip install -e .[dev]
-      - name: Build Sphinx
-        uses: seanzhengw/sphinx-pages@master
+      - uses: ammaraskar/sphinx-action@master
+        with:
+          docs-folder: "docs/"
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          create_readme: true
+          publish_branch: gh-pages
