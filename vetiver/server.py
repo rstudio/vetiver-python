@@ -140,28 +140,29 @@ class VetiverAPI:
                 return {endpoint_name: new.tolist()}
 
     def run(self):
-        """Start API"""
+        """Start API
+        """
         _jupyter_nb()
         uvicorn.run(self.app, port=self.port, host=self.host)
 
-    def predict(self, endpoint, data: dict):
-        """Make a prediction from model endpoint
+def predict(endpoint, data: dict):
+    """Make a prediction from model endpoint
 
-        Parameters
-        ----------
-        endpoint :
-            URI path to endpoint
-        data : dict
-            Name of endpoint
+    Parameters
+    ----------
+    endpoint :
+        URI path to endpoint
+    data : dict
+        Name of endpoint
 
-        Returns
-        -------
-        dict
-            Key: endpoint_name Value: Output of endpoint_fx, in list format
-        """
-        response = requests.post(endpoint, json=data)
+    Returns
+    -------
+    dict
+        Key: endpoint_name Value: Output of endpoint_fx, in list format
+    """
+    response = requests.post(endpoint, json=data)
 
-        return response.json()
+    return response.json()
 
 
 def _prepare_data(pred_data):

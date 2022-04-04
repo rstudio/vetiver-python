@@ -22,19 +22,19 @@ class VetiverModel:
     Attributes
     ----------
     model :
-        a trained model, such as an sklearn or spacy model
+        A trained model, such as an sklearn or spacy model
     name : string
-        model name or ID
+        Model name or ID
     save_ptype :  bool
-        should an input data prototype be saved with the model? 'TRUE' or 'FALSE'
+        Should an input data prototype be saved with the model? 'TRUE' or 'FALSE'
     ptype_data : pd.DataFrame, np.array
-        sample of data model should expect when it is being served
+        Sample of data model should expect when it is being served
     versioned :
-        should the model be served when created?
+        Should the model be served when created?
     description : str
-        a detailed description of the model. if omitted, a brief description will be generated
+        A detailed description of the model. if omitted, a brief description will be generated
     metadata : dict
-        other details to be saved and accessed for serving
+        Other details to be saved and accessed for serving
     """
 
     def __init__(
