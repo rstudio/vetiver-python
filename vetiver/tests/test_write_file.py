@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import pytest
 from vetiver.write_fastapi import vetiver_write_app
 import os
@@ -27,3 +28,8 @@ v = b.pin_read('test')
 vetiver_api = VetiverAPI(v)
 app = vetiver_api.app
 """)
+=======
+from vetiver.write_fastapi import write_app
+
+# write_app(board="test", name="test", file = "app.py")
+>>>>>>> b14210f (scaffolding to write docker)
