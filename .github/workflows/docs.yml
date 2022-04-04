@@ -32,9 +32,5 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-<<<<<<< HEAD
-          publish_dir: docs/_build/*
-=======
-          publish_dir: docs
->>>>>>> cd09a62 (Update docs.yml)
+          publish_dir: docs/_build/html/*
           publish_branch: gh-pages
