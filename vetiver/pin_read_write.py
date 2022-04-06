@@ -1,4 +1,3 @@
-from importlib.metadata import metadata
 import pins
 from .vetiver_model import VetiverModel
 from .meta import vetiver_meta

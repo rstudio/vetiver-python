@@ -1,5 +1,6 @@
 from ..ptype import _vetiver_create_ptype
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 import pandas as pd
 =======
@@ -7,6 +8,10 @@ from ..meta import vetiver_meta
 import sklearn
 >>>>>>> 1874222 (handle loading requirements for docker)
 import numpy as np
+=======
+from ..meta import vetiver_meta
+
+>>>>>>> 9979f1c (handle loading requirements for docker)
 
 class SKLearnHandler:
     """Handler class for creating VetiverModels with sklearn.
@@ -34,7 +39,11 @@ class SKLearnHandler:
         required_pkgs: list = [],
     ):
         """Create metadata for sklearn model"""
+<<<<<<< HEAD
         required_pkgs = required_pkgs + ["scikit-learn"]
+=======
+        required_pkgs = required_pkgs + ["torch"]
+>>>>>>> 9979f1c (handle loading requirements for docker)
         meta = vetiver_meta(user, version, url, required_pkgs)
 
         return meta
@@ -82,11 +91,18 @@ class SKLearnHandler:
         prediction
             Prediction from model
         """
+<<<<<<< HEAD
         if check_ptype == True:
             if isinstance(input_data, pd.DataFrame):
                 prediction = self.model.predict(input_data)
             else:
                prediction = self.model.predict([input_data])
+=======
+        ...
+
+    def handler_predict(self, input_data, predict_proba: bool = False):
+        import sklearn
+>>>>>>> 9979f1c (handle loading requirements for docker)
 
         # do not check ptype
         else:

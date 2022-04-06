@@ -78,6 +78,7 @@ class TorchHandler:
             Prediction from model
         """
         import torch
+<<<<<<< HEAD
         
         if check_ptype == True:
             input_data = np.array(input_data, dtype=np.array(self.ptype_data).dtype)
@@ -93,5 +94,15 @@ class TorchHandler:
             if not batch:
                 input_data = input_data.reshape(1, -1)
             prediction = self.model(torch.from_numpy(input_data))
+=======
+
+        dt = np.array(self.ptype_data).dtype
+        input_data = np.array(input_data, dtype=dt)
+        prediction = self.model(torch.from_numpy(input_data))
+
+        if argmax:
+
+            prediction = np.argmax(prediction)
+>>>>>>> 9979f1c (handle loading requirements for docker)
 
         return prediction

@@ -5,8 +5,12 @@ import pins
 def vetiver_write_app(board: pins.BaseBoard, pin_name,
 =======
 
+<<<<<<< HEAD
 def write_app(board, name,
 >>>>>>> b14210f (scaffolding to write docker)
+=======
+def vetiver_write_app(board, name,
+>>>>>>> 9979f1c (handle loading requirements for docker)
               file = "app.py"):
     """Write VetiverAPI app to a file
 
@@ -20,6 +24,7 @@ def write_app(board, name,
 
     f = open(file, "x")
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     app = f"""from vetiver import VetiverAPI
 from pins import board_folder
@@ -38,17 +43,23 @@ app = vetiver_api.app
 from vetiver import VetiverAPI
 from pins import BaseBoard
 import joblib
+=======
+    fastapi = f"""from vetiver import VetiverAPI
+from pins import board_folder
+>>>>>>> 9979f1c (handle loading requirements for docker)
 
-b = BaseBoard({board})
-# read VetiverAPI in, saved as joblib
-v = b.pin_read({name})
+b = board_folder(path = {repr(board.board)})
 
-api = joblib.load(v)
+v = b.pin_read({repr(name)})
 
-    """
-
+vetiver_api = VetiverAPI(v)
+app = vetiver_api.app
+"""
 
     f.write(fastapi)
+<<<<<<< HEAD
 
 
 >>>>>>> b14210f (scaffolding to write docker)
+=======
+>>>>>>> 9979f1c (handle loading requirements for docker)

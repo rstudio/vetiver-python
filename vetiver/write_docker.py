@@ -5,6 +5,7 @@ def vetiver_write_docker(app_file = "app.py",
     path = ".",
     rspm_env = True,
 <<<<<<< HEAD
+<<<<<<< HEAD
     host = "0.0.0.0",
     port = "80"):
 
@@ -41,6 +42,10 @@ CMD ["uvicorn", "app.app:api", "--host", "{host}", "--port", "{port}"]
 =======
     host = 0.0.0.0,
     port = 80):
+=======
+    host = "0.0.0.0",
+    port = "80"):
+>>>>>>> 9979f1c (handle loading requirements for docker)
 
     py_version = str(sys.version_info.major) + "." + str(sys.version_info.minor)
 
@@ -49,7 +54,6 @@ CMD ["uvicorn", "app.app:api", "--host", "{host}", "--port", "{port}"]
     else:
         pass
     docker_pkgs = ["fastapi", "vetiver"]
-
 
     # pkgs = unique()
 
@@ -69,6 +73,12 @@ CMD ["uvicorn", "app.app:api", "--host", "{host}", "--port", "{port}"]
 # COPY . /code/app
 
 # #
-# CMD ["uvicorn", "app.app:api", "--host", "{host}", "--port", "{port}"]
+# CMD ["uvicorn", "app.app:api", "--host", {repr(host)}, "--port", {repr(port)}]
     """
+<<<<<<< HEAD
 >>>>>>> b14210f (scaffolding to write docker)
+=======
+
+    f = open("Dockerfile", "x")
+    f.write(docker_script)
+>>>>>>> 9979f1c (handle loading requirements for docker)
