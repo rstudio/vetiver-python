@@ -1,6 +1,6 @@
 from vetiver.server import VetiverAPI
 
-def write_app(board, name,
+def vetiver_write_app(board, name,
               file = "app.py"):
     """Write VetiverAPI app to a file
 
@@ -14,20 +14,15 @@ def write_app(board, name,
 
     f = open(file, "x")
 
-    fastapi = f"""
-from vetiver import VetiverAPI
-from pins import BaseBoard
-import joblib
+    fastapi = f"""from vetiver import VetiverAPI
+from pins import board_folder
 
-b = BaseBoard({board})
-# read VetiverAPI in, saved as joblib
-v = b.pin_read({name})
+b = board_folder(path = {repr(board.board)})
 
-api = joblib.load(v)
+v = b.pin_read({repr(name)})
 
-    """
-
+vetiver_api = VetiverAPI(v)
+app = vetiver_api.app
+"""
 
     f.write(fastapi)
-
-

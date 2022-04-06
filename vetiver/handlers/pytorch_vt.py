@@ -1,5 +1,5 @@
+from ..meta import vetiver_meta
 from ..ptype import _vetiver_create_ptype
-import torch
 import numpy as np
 
 class TorchHandler:
@@ -21,10 +21,18 @@ class TorchHandler:
         desc = f"Pytorch model of type {type(self.model)}"
         return desc
 
-    def create_meta():
+    def vetiver_create_meta(
+        user: list = None,
+        version: str = None,
+        url: str = None,
+        required_pkgs: list = [],
+    ):
         """Create metadata for torch model
         """
-        ...
+        required_pkgs = required_pkgs + ["torch"]
+        meta = vetiver_meta(user, version, url, required_pkgs)
+
+        return meta
 
     def ptype(self):
         """Create data prototype for torch model

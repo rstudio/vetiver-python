@@ -4,8 +4,8 @@ import sys
 def vetiver_write_docker(app_file = "app.py",
     path = ".",
     rspm_env = True,
-    host = 0.0.0.0,
-    port = 80):
+    host = "0.0.0.0",
+    port = "80"):
 
     py_version = str(sys.version_info.major) + "." + str(sys.version_info.minor)
 
@@ -14,7 +14,6 @@ def vetiver_write_docker(app_file = "app.py",
     else:
         pass
     docker_pkgs = ["fastapi", "vetiver"]
-
 
     # pkgs = unique()
 
@@ -34,5 +33,8 @@ def vetiver_write_docker(app_file = "app.py",
 # COPY . /code/app
 
 # #
-# CMD ["uvicorn", "app.app:api", "--host", "{host}", "--port", "{port}"]
+# CMD ["uvicorn", "app.app:api", "--host", {repr(host)}, "--port", {repr(port)}]
     """
+
+    f = open("Dockerfile", "x")
+    f.write(docker_script)

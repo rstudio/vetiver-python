@@ -1,6 +1,11 @@
 from ..ptype import _vetiver_create_ptype
+<<<<<<< HEAD
 
 import pandas as pd
+=======
+from ..meta import vetiver_meta
+import sklearn
+>>>>>>> 1874222 (handle loading requirements for docker)
 import numpy as np
 
 class SKLearnHandler:
@@ -11,21 +16,28 @@ class SKLearnHandler:
     model : sklearn.base.BaseEstimator
         a trained sklearn model
     """
+
     def __init__(self, model, ptype_data, save_ptype):
         self.model = model
         self.ptype_data = ptype_data
         self.save_ptype = save_ptype
 
     def create_description(self):
-        """Create description for sklearn model
-        """
+        """Create description for sklearn model"""
         desc = f"Scikit-learn model of type {type(self.model)}"
         return desc
 
-    def create_meta():
-        """Create metadata for sklearn model
-        """
-        ...
+    def vetiver_create_meta(
+        user: list = None,
+        version: str = None,
+        url: str = None,
+        required_pkgs: list = [],
+    ):
+        """Create metadata for sklearn model"""
+        required_pkgs = required_pkgs + ["torch"]
+        meta = vetiver_meta(user, version, url, required_pkgs)
+
+        return meta
 
     def ptype(self):
         """Create data prototype for torch model
