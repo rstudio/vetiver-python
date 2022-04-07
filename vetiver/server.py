@@ -2,9 +2,7 @@ from fastapi import FastAPI
 from fastapi.responses import HTMLResponse, RedirectResponse
 import uvicorn
 from typing import Callable, List, Optional
-from logging import warn
 import requests
-import numpy as np
 import pandas as pd
 
 from .vetiver_model import VetiverModel
@@ -96,10 +94,7 @@ class VetiverAPI:
             @app.post("/predict/")
             async def prediction(input_data):
 
-                input_data = input_data.split(" ")  # user delimiter ?
-                input_data = np.asarray(input_data)
-                reshape_data = input_data.reshape(1, -1)
-                y = self.model.handler_predict(reshape_data)
+                y = self.model.handler_predict(input_data)
 
                 return {"prediction": y.tolist()}
 

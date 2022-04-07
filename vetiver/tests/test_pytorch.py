@@ -58,7 +58,7 @@ def test_vetiver_build():
     assert vt2.model == torch_model
 
 
-def test_torch_predict():
+def test_torch_predict_ptype():
 
     x_train, torch_model = _build_torch_v()
     v = VetiverModel(torch_model, save_ptype=True, ptype_data=x_train)
@@ -67,5 +67,18 @@ def test_torch_predict():
     client = TestClient(v_api.app)
     data = {"0": 3.3}
     response = client.post("/predict/", json=data)
+
+    assert response.status_code == 200, response.text
+
+
+def test_torch_predict_no_ptype():
+
+    x_train, torch_model = _build_torch_v()
+    v = VetiverModel(torch_model, save_ptype=False, ptype_data=x_train)
+    v_api = VetiverAPI(v, check_ptype=False)
+
+    client = TestClient(v_api.app)
+    data = 3.3
+    response = client.post(f"/predict/?input_data={data}")
 
     assert response.status_code == 200, response.text
