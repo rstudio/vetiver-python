@@ -1,4 +1,5 @@
-from fastapi import FastAPI
+from tabnanny import check
+from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
 import uvicorn
 from typing import Callable, List, Optional
@@ -85,18 +86,18 @@ class VetiverAPI:
 
                 served_data = _prepare_data(input_data)
 
-                y = self.model.handler_predict(served_data)
+                y = self.model.handler_predict(served_data, check_ptype=self.check_ptype)
 
                 return {"prediction": y.tolist()}
 
         else:
 
             @app.post("/predict/")
-            async def prediction(input_data):
+            async def prediction(input_data: Request):
+                y = await input_data.json()
+                prediction = self.model.handler_predict(y, check_ptype=self.check_ptype)
 
-                y = self.model.handler_predict(input_data)
-
-                return {"prediction": y.tolist()}
+                return {"prediction": prediction.tolist()}
 
         return app
 
@@ -128,8 +129,9 @@ class VetiverAPI:
         else:
 
             @self.app.post("/" + endpoint_name + "/")
-            async def custom_endpoint(input_data):
-                served_data = _prepare_data(input_data)
+            async def custom_endpoint(input_data: Request):
+                served_data = await input_data.get()
+                served_data = _prepare_data(served_data.body())
                 new = endpoint_fx(served_data)
 
                 return {endpoint_name: new.tolist()}

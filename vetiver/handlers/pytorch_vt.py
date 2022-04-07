@@ -52,7 +52,7 @@ class TorchHandler:
         """
         ...
 
-    def handler_predict(self, input_data):
+    def handler_predict(self, input_data, check_ptype):
         """Generates method for /predict endpoint in VetiverAPI
 
         The `handler_predict` function executes at each API call. Use this
@@ -69,7 +69,7 @@ class TorchHandler:
         prediction
             Prediction from model
         """
-        if self.save_ptype == True:
+        if check_ptype == True:
             input_data = np.array(input_data, dtype=np.array(self.ptype_data).dtype)
             prediction = self.model(torch.from_numpy(input_data))
         else:

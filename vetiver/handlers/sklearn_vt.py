@@ -52,7 +52,7 @@ class SKLearnHandler:
         ...
 
 
-    def handler_predict(self, input_data):
+    def handler_predict(self, input_data, check_ptype):
         """Generates method for /predict endpoint in VetiverAPI
 
         The `handler_predict` function executes at each API call. Use this
@@ -69,7 +69,7 @@ class SKLearnHandler:
         prediction
             Prediction from model
         """
-        if self.save_ptype == True:
+        if check_ptype == True:
             prediction = self.model.predict([input_data])
         else:
             input_data = input_data.split(",")  # user delimiter ?

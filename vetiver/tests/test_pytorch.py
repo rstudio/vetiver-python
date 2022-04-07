@@ -70,6 +70,18 @@ def test_torch_predict_ptype():
 
     assert response.status_code == 200, response.text
 
+def test_torch_predict_ptype_error():
+
+    x_train, torch_model = _build_torch_v()
+    v = VetiverModel(torch_model, save_ptype=True, ptype_data=x_train)
+    v_api = VetiverAPI(v)
+
+    client = TestClient(v_api.app)
+    data = {"0": "bad"}
+    response = client.post("/predict/", json=data)
+
+    assert response.status_code == 422, response.text # value is not a valid float
+
 
 def test_torch_predict_no_ptype():
 
@@ -78,7 +90,18 @@ def test_torch_predict_no_ptype():
     v_api = VetiverAPI(v, check_ptype=False)
 
     client = TestClient(v_api.app)
-    data = 3.3
-    response = client.post(f"/predict/?input_data={data}")
-
+    data = '3.3'
+    response = client.post("/predict/", json=data)
     assert response.status_code == 200, response.text
+
+
+def test_torch_predict_no_ptype_error():
+
+    x_train, torch_model = _build_torch_v()
+    v = VetiverModel(torch_model, save_ptype=False, ptype_data=x_train)
+    v_api = VetiverAPI(v, check_ptype=False)
+
+    client = TestClient(v_api.app)
+    data = 'bad'
+    with pytest.raises(ValueError):
+        client.post("/predict/", json=data)
