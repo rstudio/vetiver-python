@@ -34,7 +34,7 @@ class SKLearnHandler:
         required_pkgs: list = [],
     ):
         """Create metadata for sklearn model"""
-        required_pkgs = required_pkgs + ["torch"]
+        required_pkgs = required_pkgs + ["scikit-learn"]
         meta = vetiver_meta(user, version, url, required_pkgs)
 
         return meta

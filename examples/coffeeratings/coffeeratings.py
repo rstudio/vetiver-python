@@ -11,10 +11,13 @@ coffee = df[["total_cup_points", "aroma", "flavor", "sweetness", "acidity", \
 
 X_train, X_test, y_train, y_test = model_selection.train_test_split(coffee.iloc[:,1:],coffee['total_cup_points'],test_size=0.2)
 
+# fit model
 lr_fit = LinearRegression().fit(X_train, y_train)
 
+# create vetiver model
 v = VetiverModel(lr_fit, save_ptype = False, ptype_data=X_train, model_name = "v")
 
+# version model via pin
 from pins import board_folder
 
 model_board = board_folder(path="/tmp/test", versioned=True)

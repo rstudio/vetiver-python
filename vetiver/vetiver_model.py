@@ -1,4 +1,3 @@
-from .ptype import _vetiver_create_ptype
 from .handlers._interface import create_translator
 
 
@@ -57,5 +56,5 @@ class VetiverModel:
         self.model_name = model_name
         self.versioned = versioned
         self.description = translator.create_description() if description == None else description
-        self.metadata = translator.vetiver_create_meta(metadata)
+        self.metadata = translator.vetiver_create_meta(metadata, required_pkgs=["vetiver"])
         self.handler_predict = translator.handler_predict
