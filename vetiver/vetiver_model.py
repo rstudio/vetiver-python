@@ -57,8 +57,12 @@ class VetiverModel:
         self.versioned = versioned
         self.description = translator.create_description() if description == None else description
 <<<<<<< HEAD
+<<<<<<< HEAD
         self.metadata = translator.vetiver_create_meta(metadata, required_pkgs=["vetiver"])
 =======
         self.metadata = translator.vetiver_create_meta(metadata)
 >>>>>>> 9979f1c (handle loading requirements for docker)
+=======
+        self.metadata = translator.vetiver_create_meta(metadata, required_pkgs=["vetiver"])
+>>>>>>> 361d192 (use pins read/write)
         self.handler_predict = translator.handler_predict

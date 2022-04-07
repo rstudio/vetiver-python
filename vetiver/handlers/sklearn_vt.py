@@ -40,10 +40,14 @@ class SKLearnHandler:
     ):
         """Create metadata for sklearn model"""
 <<<<<<< HEAD
+<<<<<<< HEAD
         required_pkgs = required_pkgs + ["scikit-learn"]
 =======
         required_pkgs = required_pkgs + ["torch"]
 >>>>>>> 9979f1c (handle loading requirements for docker)
+=======
+        required_pkgs = required_pkgs + ["scikit-learn"]
+>>>>>>> 361d192 (use pins read/write)
         meta = vetiver_meta(user, version, url, required_pkgs)
 
         return meta

@@ -16,7 +16,11 @@ X_train, X_test, y_train, y_test = model_selection.train_test_split(coffee.iloc[
 lr_fit = LinearRegression().fit(X_train, y_train)
 
 # create vetiver model
+<<<<<<< HEAD
 v = vetiver.VetiverModel(lr_fit, save_ptype = True, ptype_data=X_train, model_name = "v")
+=======
+v = VetiverModel(lr_fit, save_ptype = False, ptype_data=X_train, model_name = "v")
+>>>>>>> 361d192 (use pins read/write)
 
 # version model via pin
 from pins import board_folder
