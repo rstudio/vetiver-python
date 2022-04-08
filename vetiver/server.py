@@ -1,10 +1,8 @@
-from fastapi import FastAPI
-from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi import FastAPI, Request
+from fastapi.responses import HTMLResponse
 import uvicorn
-from typing import Callable, List, Optional
-from logging import warn
+from typing import Callable, Optional
 import requests
-import numpy as np
 import pandas as pd
 
 from .vetiver_model import VetiverModel
@@ -87,21 +85,18 @@ class VetiverAPI:
 
                 served_data = _prepare_data(input_data)
 
-                y = self.model.handler_predict(served_data)
+                y = self.model.handler_predict(served_data, check_ptype=self.check_ptype)
 
                 return {"prediction": y.tolist()}
 
         else:
 
             @app.post("/predict/")
-            async def prediction(input_data):
+            async def prediction(input_data: Request):
+                y = await input_data.json()
+                prediction = self.model.handler_predict(y, check_ptype=self.check_ptype)
 
-                input_data = input_data.split(" ")  # user delimiter ?
-                input_data = np.asarray(input_data)
-                reshape_data = input_data.reshape(1, -1)
-                y = self.model.handler_predict(reshape_data)
-
-                return {"prediction": y.tolist()}
+                return {"prediction": prediction.tolist()}
 
         return app
 
@@ -125,17 +120,16 @@ class VetiverAPI:
 
             @self.app.post("/" + endpoint_name + "/")
             async def custom_endpoint(input_data: self.model.ptype):
-                served_data = _prepare_data(input_data)
-                new = endpoint_fx(pd.Series(served_data))
-
+                y = _prepare_data(input_data)
+                new = endpoint_fx(pd.Series(y))
                 return {endpoint_name: new.tolist()}
 
         else:
 
             @self.app.post("/" + endpoint_name + "/")
-            async def custom_endpoint(input_data):
-                served_data = _prepare_data(input_data)
-                new = endpoint_fx(served_data)
+            async def custom_endpoint(input_data: Request):
+                y = await input_data.json()
+                new = endpoint_fx(pd.Series(y))
 
                 return {endpoint_name: new.tolist()}
 

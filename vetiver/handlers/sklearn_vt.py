@@ -1,5 +1,6 @@
 from ..ptype import _vetiver_create_ptype
 import sklearn
+import numpy as np
 
 class SKLearnHandler:
     """Handler class for creating VetiverModels with sklearn.
@@ -43,7 +44,20 @@ class SKLearnHandler:
         return ptype
 
     def handler_startup():
+        """Include required packages for prediction
+
+        The `handler_startup` function executes when the API starts. Use this
+        function for tasks like loading packages.
+        """
+        ...
+
+
+    def handler_predict(self, input_data, check_ptype):
         """Generates method for /predict endpoint in VetiverAPI
+
+        The `handler_predict` function executes at each API call. Use this
+        function for calling `predict()` and any other tasks that must be executed
+        at each API call.
 
         Parameters
         ----------
@@ -55,13 +69,12 @@ class SKLearnHandler:
         prediction
             Prediction from model
         """
-        ...
-
-    def handler_predict(self, input_data, predict_proba: bool = False):
-
-        if predict_proba:
-            prediction = self.model.predict_proba([input_data])
-
-        prediction = self.model.predict([input_data])
+        if check_ptype == True:
+            prediction = self.model.predict([input_data])
+        else:
+            input_data = input_data.split(",")  # user delimiter ?
+            input_data = np.asarray(input_data)
+            reshape_data = input_data.reshape(1, -1)
+            prediction = self.model.predict(reshape_data)
 
         return prediction
