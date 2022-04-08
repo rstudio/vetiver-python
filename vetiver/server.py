@@ -121,18 +121,16 @@ class VetiverAPI:
 
             @self.app.post("/" + endpoint_name + "/")
             async def custom_endpoint(input_data: self.model.ptype):
-                served_data = _prepare_data(input_data)
-                new = endpoint_fx(pd.Series(served_data))
-
+                y = _prepare_data(input_data)
+                new = endpoint_fx(pd.Series(y))
                 return {endpoint_name: new.tolist()}
 
         else:
 
             @self.app.post("/" + endpoint_name + "/")
             async def custom_endpoint(input_data: Request):
-                served_data = await input_data.get()
-                served_data = _prepare_data(served_data.body())
-                new = endpoint_fx(served_data)
+                y = await input_data.json()
+                new = endpoint_fx(pd.Series(y))
 
                 return {endpoint_name: new.tolist()}
 
