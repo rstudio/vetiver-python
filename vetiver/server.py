@@ -1,8 +1,7 @@
-from tabnanny import check
 from fastapi import FastAPI, Request
-from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.responses import HTMLResponse
 import uvicorn
-from typing import Callable, List, Optional
+from typing import Callable, Optional
 import requests
 import pandas as pd
 
