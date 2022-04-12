@@ -1,13 +1,13 @@
+from cgitb import reset
 import pytest
 
 from vetiver.vetiver_model import VetiverModel
 from vetiver import VetiverAPI
 from fastapi.testclient import TestClient
 
+import torch
 import torch.nn as nn
 import numpy as np
-
-np.random.seed(500)
 
 
 def _build_torch_v():
@@ -59,7 +59,7 @@ def test_vetiver_build():
 
 
 def test_torch_predict_ptype():
-
+    torch.manual_seed(3)
     x_train, torch_model = _build_torch_v()
     v = VetiverModel(torch_model, save_ptype=True, ptype_data=x_train)
     v_api = VetiverAPI(v)
@@ -69,6 +69,22 @@ def test_torch_predict_ptype():
     response = client.post("/predict/", json=data)
 
     assert response.status_code == 200, response.text
+    assert response.json() == {"prediction":[-4.060722351074219]}, response.text
+
+
+def test_torch_predict_ptype_batch():
+    torch.manual_seed(3)
+    x_train, torch_model = _build_torch_v()
+    v = VetiverModel(torch_model, save_ptype=True, ptype_data=x_train)
+    v_api = VetiverAPI(v)
+
+    client = TestClient(v_api.app)
+    data = [{"0": 3.3}, {"0": 3.3}]
+    response = client.post("/predict/", json=data)
+
+    assert response.status_code == 200, response.text
+    assert response.json() == {"prediction":[[-4.060722351074219],[-4.060722351074219]]}, response.text
+
 
 def test_torch_predict_ptype_error():
 
@@ -80,19 +96,33 @@ def test_torch_predict_ptype_error():
     data = {"0": "bad"}
     response = client.post("/predict/", json=data)
 
-    assert response.status_code == 422, response.text # value is not a valid float
+    assert response.status_code == 422, response.text  # value is not a valid float
 
 
 def test_torch_predict_no_ptype():
-
+    torch.manual_seed(3)
     x_train, torch_model = _build_torch_v()
     v = VetiverModel(torch_model, save_ptype=False, ptype_data=x_train)
     v_api = VetiverAPI(v, check_ptype=False)
 
     client = TestClient(v_api.app)
-    data = '3.3'
+    data = "3.3"
     response = client.post("/predict/", json=data)
     assert response.status_code == 200, response.text
+    assert response.json() == {"prediction":[[-4.060722351074219]]}, response.text
+
+
+def test_torch_predict_no_ptype_batch():
+    torch.manual_seed(3)
+    x_train, torch_model = _build_torch_v()
+    v = VetiverModel(torch_model, save_ptype=False, ptype_data=x_train)
+    v_api = VetiverAPI(v, check_ptype=False)
+
+    client = TestClient(v_api.app)
+    data = [["3.3"], ["3.3"]]
+    response = client.post("/predict/", json=data)
+    assert response.status_code == 200, response.text
+    assert response.json() == {"prediction":[[-4.060722351074219],[-4.060722351074219]]}, response.text
 
 
 def test_torch_predict_no_ptype_error():
@@ -102,6 +132,6 @@ def test_torch_predict_no_ptype_error():
     v_api = VetiverAPI(v, check_ptype=False)
 
     client = TestClient(v_api.app)
-    data = 'bad'
+    data = "bad"
     with pytest.raises(ValueError):
         client.post("/predict/", json=data)

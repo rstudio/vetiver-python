@@ -72,10 +72,16 @@ class TorchHandler:
         if check_ptype == True:
             input_data = np.array(input_data, dtype=np.array(self.ptype_data).dtype)
             prediction = self.model(torch.from_numpy(input_data))
+        
+        # do not check ptype
         else:
-            input_data = input_data.split(",")  # user delimiter ?
+            batch = True
+            if not isinstance(input_data, list):
+                batch = False
+                input_data = input_data.split(",")  # user delimiter ?
             input_data = np.array(input_data, dtype=np.array(self.ptype_data).dtype)
-            reshape_data = input_data.reshape(1, -1)
-            prediction = self.model(torch.from_numpy(reshape_data))
+            if not batch:
+                input_data = input_data.reshape(1, -1)
+            prediction = self.model(torch.from_numpy(input_data))
 
         return prediction
