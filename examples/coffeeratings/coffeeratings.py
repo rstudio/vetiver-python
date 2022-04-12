@@ -1,7 +1,8 @@
 import pandas as pd
 from sklearn import model_selection
 from sklearn.linear_model import LinearRegression
-from vetiver import VetiverModel, VetiverAPI, vetiver_write_app, attach_pkgs, vetiver_write_docker
+import vetiver
+from vetiver.pin_read_write import vetiver_pin_write
 
 # Load training data
 raw = pd.read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-07-07/coffee_ratings.csv')
@@ -15,24 +16,25 @@ X_train, X_test, y_train, y_test = model_selection.train_test_split(coffee.iloc[
 lr_fit = LinearRegression().fit(X_train, y_train)
 
 # create vetiver model
-v = VetiverModel(lr_fit, save_ptype = False, ptype_data=X_train, model_name = "v")
+v = vetiver.VetiverModel(lr_fit, save_ptype = True, ptype_data=X_train, model_name = "v")
 
 # version model via pin
 from pins import board_folder
 
-model_board = board_folder(path="/tmp/test", versioned=True)
-model_board.pin_write(v, name="lr_model", title="", type="joblib")
+model_board = board_folder(path=".", versioned=True, allow_pickle_read=True)
+vetiver_pin_write(board=model_board, model=v)
 
-myapp = VetiverAPI(coffee, check_ptype = False)
+myapp = vetiver.VetiverAPI(v, check_ptype = True)
+api = myapp.app
 
 # next, run myapp.run() to start API and see visual documentation
 
 path = "./examples/coffeeratings/"
 # create app.py file that includes pinned VetiverAPI to be deployed
-vetiver_write_app(model_board, "lr_model", file = path+"app.py")
+vetiver.vetiver_write_app(model_board, "lr_model", file = path+"app.py")
 
 # automatically create requirements.txt
-attach_pkgs.load_pkgs(packages = v.metadata.get("required_pkgs"), path=path)
+vetiver.load_pkgs(model=v, path=path)
 
 # write Dockerfile
-vetiver_write_docker(app_file="app.py", path=path, host="0.0.0.0", port="80")
+vetiver.vetiver_write_docker(app_file="app.py", path=path, host="0.0.0.0", port="80")
