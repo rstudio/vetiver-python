@@ -14,15 +14,15 @@ def test_vetiver_write_app():
     file = "app.py"
     v = vetiver.VetiverModel(model=model, ptype_data=X_df,
          model_name="model", versioned=None)
-    board = pins.board_folder(path=".")
-    
-    vetiver_write_app(board=board, pin_name="test", file = file)
+    board = pins.board_folder(path=".") 
+    vetiver_write_app(board=board, pin_name="model", file = file)
     contents = open(file).read()
     os.remove(file)
     assert(contents == """from vetiver import VetiverAPI
 from pins import board_folder
 
 b = board_folder(path = '.')
+<<<<<<< HEAD
 
 v = b.pin_read('test')
 
@@ -51,6 +51,10 @@ from pins import board_folder
 b = board_folder(path = 'test')
 
 v = b.pin_read('test')
+=======
+
+v = b.pin_read('model')
+>>>>>>> e94bfec (adding tests)
 
 vetiver_api = VetiverAPI(v)
 app = vetiver_api.app

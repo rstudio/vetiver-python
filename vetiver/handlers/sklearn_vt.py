@@ -1,17 +1,23 @@
 from ..ptype import _vetiver_create_ptype
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 import pandas as pd
 =======
+=======
+>>>>>>> e94bfec (adding tests)
 from ..meta import vetiver_meta
 import sklearn
 >>>>>>> 1874222 (handle loading requirements for docker)
 import numpy as np
+<<<<<<< HEAD
 =======
 from ..meta import vetiver_meta
 
 >>>>>>> 9979f1c (handle loading requirements for docker)
+=======
+>>>>>>> e94bfec (adding tests)
 
 class SKLearnHandler:
     """Handler class for creating VetiverModels with sklearn.
@@ -95,8 +101,8 @@ class SKLearnHandler:
         prediction
             Prediction from model
         """
-<<<<<<< HEAD
         if check_ptype == True:
+<<<<<<< HEAD
             if isinstance(input_data, pd.DataFrame):
                 prediction = self.model.predict(input_data)
             else:
@@ -114,5 +120,13 @@ class SKLearnHandler:
                 input_data = [input_data.split(",")]  # user delimiter ?
 
             prediction = self.model.predict(input_data)
+=======
+            prediction = self.model.predict([input_data])
+        else:
+            input_data = input_data.split(",")  # user delimiter ?
+            input_data = np.asarray(input_data)
+            reshape_data = input_data.reshape(1, -1)
+            prediction = self.model.predict(reshape_data)
+>>>>>>> e94bfec (adding tests)
 
         return prediction

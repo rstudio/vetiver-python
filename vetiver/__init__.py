@@ -4,7 +4,7 @@ __version__ = "0.1.3"
 __author__ = "Isabel Zimmerman <isabel.zimmerman@rstudio.com>"
 __all__ = []
 
-import imp
+import importlib
 from .ptype import *
 from .vetiver_model import *
 from .server import *
