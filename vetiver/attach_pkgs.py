@@ -25,8 +25,8 @@ def load_pkgs(model: VetiverModel = None, packages: list = None, path=""):
 
     tmp = tempfile.NamedTemporaryFile(suffix='.in')
 
-    with open(repr(tmp), 'a') as f:
+    with open(tmp.name, 'a') as f:
         for package in required_pkgs:
             f.write(package + '\n')
 
-    os.system(f"pip-compile {repr(f.name)} --output-file={path}vetiver_requirements.txt")
+    os.system(f"pip-compile {f.name} --output-file={path}vetiver_requirements.txt")
