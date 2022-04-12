@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 import uvicorn
-from typing import Callable, Optional
+from typing import Callable, Optional, Union, List
 import requests
 import pandas as pd
 
@@ -81,9 +81,12 @@ class VetiverAPI:
         if self.check_ptype == True:
 
             @app.post("/predict/")
-            async def prediction(input_data: self.model.ptype):
-
-                served_data = _prepare_data(input_data)
+            async def prediction(input_data: Union[self.model.ptype, List[self.model.ptype]]):
+                
+                if isinstance(input_data, List):
+                    served_data = _batch_data(input_data)
+                else:
+                    served_data = _prepare_data(input_data)
 
                 y = self.model.handler_predict(served_data, check_ptype=self.check_ptype)
 
@@ -164,6 +167,16 @@ def _prepare_data(pred_data):
     for key, value in pred_data:
         served_data.append(value)
     return served_data
+
+def _batch_data(pred_data):
+    columns = pred_data[0].dict().keys()
+
+    data = [line.dict() for line in pred_data]
+    print(data)
+
+    served_data = pd.DataFrame(data, columns=columns)
+    return served_data
+
 
 
 def vetiver_endpoint(url="http://127.0.0.1:8000/predict"):

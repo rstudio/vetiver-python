@@ -1,5 +1,6 @@
 from ..ptype import _vetiver_create_ptype
-import sklearn
+
+import pandas as pd
 import numpy as np
 
 class SKLearnHandler:
@@ -70,11 +71,16 @@ class SKLearnHandler:
             Prediction from model
         """
         if check_ptype == True:
-            prediction = self.model.predict([input_data])
+            if isinstance(input_data, pd.DataFrame):
+                prediction = self.model.predict(input_data)
+            else:
+               prediction = self.model.predict([input_data])
+
+        # do not check ptype
         else:
-            input_data = input_data.split(",")  # user delimiter ?
-            input_data = np.asarray(input_data)
-            reshape_data = input_data.reshape(1, -1)
-            prediction = self.model.predict(reshape_data)
+            if not isinstance(input_data, list):
+                input_data = [input_data.split(",")]  # user delimiter ?
+
+            prediction = self.model.predict(input_data)
 
         return prediction
