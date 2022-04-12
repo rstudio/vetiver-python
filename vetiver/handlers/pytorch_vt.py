@@ -77,6 +77,8 @@ class TorchHandler:
         prediction
             Prediction from model
         """
+        import torch
+        
         if check_ptype == True:
             input_data = np.array(input_data, dtype=np.array(self.ptype_data).dtype)
             prediction = self.model(torch.from_numpy(input_data))

@@ -74,4 +74,5 @@ uvicorn==0.17.6
     # via vetiver
 vetiver==0.1.3
     # via -r <tempfile._TemporaryFileWrapper object at 0x175587fd0>
+# manually added
 git+https://github.com/machow/pins-python.git

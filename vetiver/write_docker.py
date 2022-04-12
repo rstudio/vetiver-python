@@ -9,31 +9,30 @@ def vetiver_write_docker(app_file = "app.py",
 
     py_version = str(sys.version_info.major) + "." + str(sys.version_info.minor)
 
-    if rspm_env:
-        pass
-    else:
-        pass
-    docker_pkgs = ["fastapi", "vetiver"]
+    # what is python value add for RSPM?
 
-    # pkgs = unique()
+    # if rspm_env:
+    #     pass
+    # else:
+    #     pass
 
-    docker_script = f"""
-# #
-# FROM python:{py_version}
+    docker_script = f"""# #
+FROM python:{py_version}
 
 # #
-# WORKDIR /code
-
-
-# #
-# RUN pip freeze > /code/requirements.txt
-# RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
+WORKDIR /code
 
 # #
-# COPY . /code/app
+COPY vetiver_requirements.txt /code/requirements.txt
 
 # #
-# CMD ["uvicorn", "app.app:api", "--host", {repr(host)}, "--port", {repr(port)}]
+RUN pip install --no-cache-dir --upgrade -r /code/vetiver_requirements.txt
+
+# #
+COPY . /code/app
+
+# #
+CMD ["uvicorn", "app.app:api", "--host", "{host}", "--port", "{port}"]
     """
 
     f = open("Dockerfile", "x")
