@@ -1,4 +1,4 @@
-# vetiver 🏺
+# vetiver <img src='docs/figures/logo.png' align="right" height="139" />
 
 <!-- badges: start -->
 
