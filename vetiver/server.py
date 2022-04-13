@@ -73,7 +73,20 @@ class VetiverAPI:
                         ></script>
                     </head>
                     <body>
-                        <rapi-doc spec-url="{app.openapi_url}"></rapi-doc>
+                        <rapi-doc spec-url="{app.openapi_url}"
+                        theme="light"
+                        header-color="#0F4B71"
+                        primary-color = "#407483"
+                        schema-style="tree"
+                        render-style="read" 
+                        schema-style="tree" 
+                        >
+                        <img
+                        slot="logo"
+                        height="75"
+                        width="75"
+                        src="https://raw.githubusercontent.com/rstudio/hex-stickers/master/SVG/vetiver.svg"
+                        </rapi-doc>
                     </body>
                 </html>
             """
@@ -188,7 +201,7 @@ def _batch_data(pred_data):
 
 
 def vetiver_endpoint(url="http://127.0.0.1:8000/predict"):
-    """Wrap url
+    """Wrap url where VetiverModel will be deployed
 
     Parameters
     ----------
