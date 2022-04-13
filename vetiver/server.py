@@ -48,7 +48,7 @@ class VetiverAPI:
     def _init_app(self):
         app = self.app_factory()
 
-        @app.get("/")
+        @app.get("/", include_in_schema=False)
         async def main_app():
             return {"msg": "root path"}
 
@@ -60,7 +60,7 @@ class VetiverAPI:
         async def ping():
             return {"ping": "pong"}
 
-        @app.get("/rapidoc", response_class=HTMLResponse)
+        @app.get("/rapidoc", response_class=HTMLResponse, include_in_schema=False)
         async def rapidoc():
             return f"""
                 <!doctype html>
