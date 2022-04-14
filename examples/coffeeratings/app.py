@@ -1,21 +1,9 @@
-from vetiver import VetiverAPI
-from pins import board_folder
+import vetiver
+import pins
 
-<<<<<<< HEAD
-b = board_folder(path = '.')
 
-#v = b.pin_read('lr_model')
+b = pins.board_folder('./examples/coffeeratings/')
+v = vetiver.vetiver_pin_read(b, 'v', version = '20220414T132046Z-c5e63')
 
-vetiver_api = VetiverAPI(v)
-api = vetiver_api.app
-=======
-# affected by deparse 
-b = board_folder(path = '/app/coffeeratings/my_board/', allow_pickle_read=True)
-
-v = b.pin_read('v')
-
-vetiver_api = VetiverAPI(v)
+vetiver_api = vetiver.VetiverAPI(v)
 app = vetiver_api.app
-
-print(b.pin_meta("v"))
->>>>>>> 99f57e0 (updating path-type things)

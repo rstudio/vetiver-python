@@ -1,5 +1,4 @@
 import pins
-from torch import true_divide
 from .vetiver_model import VetiverModel
 from .meta import vetiver_meta
 
@@ -22,7 +21,6 @@ def vetiver_pin_write(board, model: VetiverModel):
         name = model.model_name,
         type = "joblib",
         description = model.description,
-        title = "", # tracking in https://github.com/machow/pins-python/issues/88
         metadata = {"required_pkgs": model.metadata.get("required_pkgs"),
                     "ptype": None if model.ptype == None else model.ptype().json()}
     )

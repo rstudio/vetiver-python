@@ -1,5 +1,4 @@
-from .handlers._interface import create_translator
-
+from vetiver.handlers._interface import create_translator
 
 
 class NoModelAvailableError(Exception):
@@ -55,6 +54,10 @@ class VetiverModel:
         self.ptype = translator.ptype()
         self.model_name = model_name
         self.versioned = versioned
-        self.description = translator.create_description() if description == None else description
-        self.metadata = translator.vetiver_create_meta(metadata, required_pkgs=["vetiver"])
+        self.description = (
+            translator.create_description() if description == None else description
+        )
+        self.metadata = translator.vetiver_create_meta(
+            metadata, required_pkgs=["vetiver"]
+        )
         self.handler_predict = translator.handler_predict
