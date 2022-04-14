@@ -1,8 +1,10 @@
 import pins
+import warnings
+
 from .vetiver_model import VetiverModel
 from .meta import vetiver_meta
 
-def vetiver_pin_write(board, model: VetiverModel):
+def vetiver_pin_write(board, model: VetiverModel, versioned: bool=True):
     """
     Write pin including VetiverModel
     
@@ -22,25 +24,30 @@ def vetiver_pin_write(board, model: VetiverModel):
         type = "joblib",
         description = model.description,
         metadata = {"required_pkgs": model.metadata.get("required_pkgs"),
-                    "ptype": None if model.ptype == None else model.ptype().json()}
+                    "ptype": None if model.ptype == None else model.ptype().json()},
+        versioned=versioned
     )
-    #return(print("create a model card for your published model"))
 
-    # """Create a Model Card for your published model.
+    # to do: Model card
+    
+    # message = """
+    # Create a Model Card for your published model.
     # Model Cards provide a framework for transparent, responsible reporting.
     # Use the vetiver `.Rmd` template as a place to start."""
 
+    # warnings.warn(message=message)
 
-def vetiver_pin_read(board, name) -> VetiverModel:
 
-    model = board.pin_read(name)
+def vetiver_pin_read(board: pins.BaseBoard, name: str, version: str = None) -> VetiverModel:
+
+    model = board.pin_read(name, version)
     meta = board.pin_meta(name)
 
     v = VetiverModel(model = model,
         model_name = name,
         description = meta.description,
         metadata = vetiver_meta(user = meta.user,
-             version = meta.pin_hash,
+             version = version,
              url = meta.user.get("url"), # None all the time, besides Connect
              required_pkgs = meta.user.get("required_pkgs")
         ),
