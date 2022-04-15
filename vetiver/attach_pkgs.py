@@ -1,22 +1,21 @@
-import numpy as np
 import tempfile
 import os
 from vetiver import VetiverModel
 
 def load_pkgs(model: VetiverModel = None, packages: list = None, path=""):
-    """_summary_
+    """Load packages necessary for predictions
 
     Args
     ----
-        model (VetiverModel, optional):
-            VetiverModel to extract packages from. Defaults to None.
-        packages (list, optional): 
-            List of extra packages to include. Defaults to None.
-        path (str, optional): 
-            Where to save output file. Defaults to ".".
+        model: VetiverModel
+            VetiverModel to extract packages from
+        packages: list
+            List of extra packages to include
+        path: str
+            Where to save output file
     """
 
-    required_pkgs = ["fastapi", "vetiver", "pins"]
+    required_pkgs = ["vetiver"]
     if packages:
         required_pkgs = list(set(required_pkgs + packages))
     if model.metadata.get("required_pkgs"):

@@ -1,5 +1,4 @@
 import pytest
-from vetiver.write_fastapi import vetiver_write_app
 import os
 import pins
 import vetiver
@@ -27,5 +26,5 @@ b = pins.board_folder('.')
 v = vetiver.vetiver_pin_read(b, 'model', version = '{version}')
 
 vetiver_api = vetiver.VetiverAPI(v)
-app = vetiver_api.app
+api = vetiver_api.app
 """)

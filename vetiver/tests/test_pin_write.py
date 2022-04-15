@@ -26,13 +26,3 @@ def test_board_pin_write():
     vetiver_pin_write(board=board, model=v)
     assert isinstance(board.pin_read("model"), sklearn.dummy.DummyRegressor)
 
-def test_board_pin_read():
-    v = VetiverModel(model=model, ptype_data=X_df,
-        model_name="model", versioned=None)
-    board = pins.board_temp(allow_pickle_read=True)
-    vetiver_pin_write(board=board, model=v)
-    v = vetiver_pin_read(board, "model")
-    assert isinstance(v, VetiverModel)
-    assert v.model_name == "model"
-    assert isinstance(v.model, sklearn.dummy.DummyRegressor) 
-    assert v.metadata.get("required_pkgs") == ['vetiver', 'scikit-learn']

@@ -1,7 +1,15 @@
 import pins
+import pandas as pd
 import warnings
 
-def _choose_version(df):
+def _choose_version(df: pd.DataFrame):
+    """Choose pin version to load
+
+    Args
+    ----
+    df: pd.DataFrame
+        Available pins versions
+    """
     if 'active' in df.columns:
         version = df.active[0]
     elif 'created' in df.columns: 
@@ -17,6 +25,13 @@ def _choose_version(df):
     return version
 
 def _glue_required_pkgs(required_pkgs: list):
+    """Generate import statements
+
+    Args
+    ----
+    required_pkgs: list
+        Packages needed to run API
+    """
     load_required_pkgs = ""
     if required_pkgs:
         for pkg in required_pkgs:
@@ -25,15 +40,19 @@ def _glue_required_pkgs(required_pkgs: list):
     return load_required_pkgs
 
 def vetiver_write_app(board: pins.BaseBoard, pin_name: str,
-              version=None, file = "app.py"):
+              version: str = None, file: str = "app.py"):
     """Write VetiverAPI app to a file
 
-    Attributes
-    ----------
-    vetiver_api :  VetiverAPI
+    Args
+    ----
+    board :  pinse.BaseBoard
         API to be written
-    name : string
-        name of file
+    pin_name : string
+        Name of pin containing VetiverModel
+    version : 
+        Pins version of VetiverModel
+    file : 
+        Name of file
     """
 
     if board.versioned:
@@ -58,7 +77,7 @@ b = pins.{load_board}
 {pin_read}
 
 vetiver_api = vetiver.VetiverAPI(v)
-app = vetiver_api.app
+api = vetiver_api.app
 """
 
     f.write(app)

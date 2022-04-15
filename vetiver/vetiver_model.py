@@ -39,15 +39,19 @@ class VetiverModel:
     def __init__(
         self,
         model,
+        model_name: str,
         save_ptype: bool = True,
         ptype_data=None,
-        model_name: str = None,
         versioned=None,
         description: str = None,
         metadata: dict = None,
         **kwargs
     ):
         translator = create_translator(model, ptype_data, save_ptype)
+
+        if save_ptype is True:
+            if ptype_data is None:
+                raise AttributeError
 
         self.model = model
         self.save_ptype = save_ptype
@@ -61,3 +65,5 @@ class VetiverModel:
             metadata, required_pkgs=["vetiver"]
         )
         self.handler_predict = translator.handler_predict
+
+        

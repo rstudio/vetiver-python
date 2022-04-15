@@ -37,7 +37,7 @@ def _vetiver_create_ptype(ptype_data, save_ptype: bool):
     Parameters
     ----------
     ptype_data :
-        Custom function to be run at endpoint
+        Data that represents what
     save_ptype : bool
         Whether or not ptype should be created
 
@@ -55,6 +55,8 @@ def _vetiver_create_ptype(ptype_data, save_ptype: bool):
         try:
             if isinstance(ptype_data, np.ndarray):
                 ptype = _array_to_ptype(ptype_data[1])
+            elif isinstance(ptype_data, dict):
+                ptype = _dict_to_ptype(ptype_data)
             elif isinstance(ptype_data.construct(), BaseModel):
                 ptype = ptype_data
         except AttributeError:  # cannot construct basemodel
@@ -82,3 +84,8 @@ def _array_to_ptype(train_data):
     ptype = create_model("ptype", **dict_data)
 
     return ptype
+
+
+def _dict_to_ptype(train_data):
+
+    return create_model("ptype",**train_data)

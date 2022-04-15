@@ -39,3 +39,8 @@ vetiver.load_pkgs(model=v, path=path)
 
 # write Dockerfile
 vetiver.vetiver_write_docker(path=path, host="0.0.0.0", port="80")
+
+## to run Dockerfile, in CLI
+# cd ./coffeeratings
+# docker build -t myimage .
+# docker run -d --name mycontainer -p 80:80 myimage

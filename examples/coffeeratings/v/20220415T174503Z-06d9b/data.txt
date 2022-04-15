@@ -1,0 +1,15 @@
+api_version: 1
+created: 20220415T174503Z
+description: Scikit-learn model of type <class 'sklearn.linear_model._base.LinearRegression'>
+file: v.joblib
+file_size: 1035
+pin_hash: 06d9b5c677c7dcd0
+title: 'v: a pinned LinearRegression object'
+type: joblib
+user:
+  ptype: '{"aroma": 7.5, "flavor": 7.67, "sweetness": 10.0, "acidity": 7.67, "body":
+    7.58, "uniformity": 10.0, "balance": 7.42}'
+  required_pkgs:
+  - vetiver
+  - scikit-learn
+  save_ptype: true

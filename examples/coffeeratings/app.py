@@ -1,9 +1,9 @@
 import vetiver
 import pins
 
-
-b = pins.board_folder('./examples/coffeeratings/')
-v = vetiver.vetiver_pin_read(b, 'v', version = '20220414T132046Z-c5e63')
+# edited to reflect Docker container path, and allow_pickle_read=True
+b = pins.board_folder('/code/app', allow_pickle_read=True)
+v = vetiver.vetiver_pin_read(b, 'v', version = '20220415T174503Z-06d9b')
 
 vetiver_api = vetiver.VetiverAPI(v)
-app = vetiver_api.app
+api = vetiver_api.app
