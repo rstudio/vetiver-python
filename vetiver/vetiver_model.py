@@ -57,10 +57,8 @@ class VetiverModel:
         self.save_ptype = save_ptype
         self.ptype = translator.ptype()
         self.model_name = model_name
+        self.description = description if description else translator.create_description()
         self.versioned = versioned
-        self.description = (
-            translator.create_description() if description == None else description
-        )
         self.metadata = translator.vetiver_create_meta(
             metadata, required_pkgs=["vetiver"]
         )

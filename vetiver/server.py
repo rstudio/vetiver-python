@@ -1,9 +1,12 @@
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.openapi.utils import get_openapi
+
 import uvicorn
-from typing import Callable, Optional, Union, List
 import requests
 import pandas as pd
+from typing import Callable, Optional, Union, List
 
 from .vetiver_model import VetiverModel
 from .utils import _jupyter_nb
@@ -47,7 +50,9 @@ class VetiverAPI:
 
     def _init_app(self):
         app = self.app_factory()
-
+        app.openapi = self._custom_openapi
+        #app.mount("/static", StaticFiles(directory="static"), name="static")
+        
         @app.get("/", include_in_schema=False)
         async def main_app():
             return {"msg": "root path"}
@@ -56,7 +61,7 @@ class VetiverAPI:
         # def docs_redirect():
         #     return RedirectResponse("/rapidoc")
 
-        @app.get("/ping", include_in_schema=False)
+        @app.get("/ping", include_in_schema=True)
         async def ping():
             return {"ping": "pong"}
 
@@ -66,25 +71,34 @@ class VetiverAPI:
                 <!doctype html>
                 <html>
                     <head>
-                        <meta charset="utf-8">
-                        <script
-                            type="module"
-                            src="https://unpkg.com/rapidoc@9.1.4/dist/rapidoc-min.js"
-                        ></script>
-                    </head>
+                    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=yes">
+                    <title>RapiDoc</title>
+                    <script type="module" src="https://unpkg.com/rapidoc@9.1.3/dist/rapidoc-min.js">
+                    <link rel="stylesheet" href="./rapidoc/default.min.css"></link>
+                    <script src="./rapidoc/highlight.min.js"></script>
+                    </script></head>
                     <body>
                         <rapi-doc spec-url="{app.openapi_url}"
-                        theme="light"
-                        header-color="#0F4B71"
-                        primary-color = "#407483"
-                        schema-style="tree"
+                        id="thedoc" 
                         render-style="read" 
                         schema-style="tree" 
-                        >
+                        show-components="false" 
+                        show-info="true" 
+                        show-header="true"
+                        show-spec-url="false"
+                        allow-search="true" 
+                        allow-advanced-search="true"
+                        show-side-nav="false"
+                        allow-authentication="false"
+                        allow-api-list-style-selection="false"
+                        update-route="false" 
+                        match-type="regex"
+                        theme="light"
+                        header-color="#F2C6AC"
+                        primary-color = "#8C2D2D">
                         <img
                         slot="logo"
-                        height="75"
-                        width="75"
+                        width="55"
                         src="https://raw.githubusercontent.com/rstudio/hex-stickers/master/SVG/vetiver.svg"
                         </rapi-doc>
                     </body>
@@ -159,6 +173,20 @@ class VetiverAPI:
         _jupyter_nb()
         uvicorn.run(self.app, port=self.port, host=self.host)
 
+    def _custom_openapi(self):
+        if self.app.openapi_schema:
+            return self.app.openapi_schema
+        openapi_schema = get_openapi(
+            title=self.model.name + " model API",
+            version="0.1.3",
+            description=self.model.description,
+            routes=self.app.routes,
+        )
+        openapi_schema["info"]["x-logo"] = {
+            "url": "../docs/figures/logo.svg"
+        }
+        self.app.openapi_schema = openapi_schema
+        return self.app.openapi_schema
 
 def predict(endpoint, data: dict, **kw):
     """Make a prediction from model endpoint
@@ -214,3 +242,4 @@ def vetiver_endpoint(url="http://127.0.0.1:8000/predict"):
         URI path to endpoint
     """
     return url
+
