@@ -1,5 +1,4 @@
-from .ptype import _vetiver_create_ptype
-from .handlers._interface import create_translator
+from vetiver.handlers._interface import create_translator
 
 
 class NoModelAvailableError(Exception):
@@ -40,29 +39,31 @@ class VetiverModel:
     def __init__(
         self,
         model,
+        model_name: str,
         save_ptype: bool = True,
         ptype_data=None,
-        model_name: str = None,
         versioned=None,
         description: str = None,
-        metadata=list(),
-
+        metadata: dict = None,
+        **kwargs
     ):
         translator = create_translator(model, ptype_data, save_ptype)
 
-        self.model = translator.model
+        if save_ptype is True:
+            if ptype_data is None:
+                raise AttributeError
+
+        self.model = model
         self.save_ptype = save_ptype
         self.ptype = translator.ptype()
-        self.name = model_name
-        self.description = description
-        self.metadata = metadata
+        self.model_name = model_name
         self.versioned = versioned
+        self.description = (
+            translator.create_description() if description == None else description
+        )
+        self.metadata = translator.vetiver_create_meta(
+            metadata, required_pkgs=["vetiver"]
+        )
         self.handler_predict = translator.handler_predict
 
-        if not description:
-            description = translator.create_description()
-
-    # create description
-    def _create_description(self):
-        description = f"{self.name} is a {type(self.model)} vetiver model."
-        return description
+        
