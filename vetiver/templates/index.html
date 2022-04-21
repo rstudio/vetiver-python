@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+    <head>
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=yes">
+    <title>RapiDoc</title>
+    <script type="module" src="../rapidoc/rapidoc-min.js"></script>
+    <link rel="stylesheet" href="../rapidoc/default.min.css"></link>
+    <script src="../rapidoc/highlight.min.js"></script>
+    </script></head>
+    <body>
+        <rapi-doc spec-url="/openapi.json"
+        id="thedoc" 
+        render-style="read" 
+        schema-style="tree" 
+        show-components="false" 
+        show-info="true" 
+        show-header="true"
+        show-spec-url="false"
+        allow-search="true" 
+        allow-advanced-search="true"
+        show-side-nav="false"
+        allow-authentication="false"
+        allow-api-list-style-selection="false"
+        update-route="false" 
+        match-type="regex"
+        theme="light"
+        header-color="#F2C6AC"
+        primary-color = "#8C2D2D">
+        <img
+        slot="logo"
+        width="55"
+        src="../../docs/figures/logo.svg"
+        </rapi-doc>
+    </body>
+</html>

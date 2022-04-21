@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Request
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.openapi.utils import get_openapi
 
@@ -10,6 +10,7 @@ from typing import Callable, Optional, Union, List
 
 from .vetiver_model import VetiverModel
 from .utils import _jupyter_nb
+from vetiver import rapidoc
 
 
 class VetiverAPI:
@@ -51,58 +52,44 @@ class VetiverAPI:
     def _init_app(self):
         app = self.app_factory()
         app.openapi = self._custom_openapi
-        #app.mount("/static", StaticFiles(directory="static"), name="static")
-        
-        @app.get("/", include_in_schema=False)
-        async def main_app():
-            return {"msg": "root path"}
 
-        # redirect to docs?
-        # def docs_redirect():
-        #     return RedirectResponse("/rapidoc")
+        @app.get("/", include_in_schema=False)
+        def docs_redirect():
+            return RedirectResponse("/__docs__")
 
         @app.get("/ping", include_in_schema=True)
         async def ping():
             return {"ping": "pong"}
 
-        @app.get("/rapidoc", response_class=HTMLResponse, include_in_schema=False)
-        async def rapidoc():
+        @app.get("/__docs__", response_class=HTMLResponse, include_in_schema=False)
+        async def rapidoc_pg():
             return f"""
-                <!doctype html>
-                <html>
-                    <head>
-                    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=yes">
-                    <title>RapiDoc</title>
-                    <script type="module" src="https://unpkg.com/rapidoc@9.1.3/dist/rapidoc-min.js">
-                    <link rel="stylesheet" href="./rapidoc/default.min.css"></link>
-                    <script src="./rapidoc/highlight.min.js"></script>
-                    </script></head>
-                    <body>
-                        <rapi-doc spec-url="{app.openapi_url}"
-                        id="thedoc" 
-                        render-style="read" 
-                        schema-style="tree" 
-                        show-components="false" 
-                        show-info="true" 
-                        show-header="true"
-                        show-spec-url="false"
-                        allow-search="true" 
-                        allow-advanced-search="true"
-                        show-side-nav="false"
-                        allow-authentication="false"
-                        allow-api-list-style-selection="false"
-                        update-route="false" 
-                        match-type="regex"
-                        theme="light"
-                        header-color="#F2C6AC"
-                        primary-color = "#8C2D2D">
-                        <img
-                        slot="logo"
-                        width="55"
-                        src="https://raw.githubusercontent.com/rstudio/hex-stickers/master/SVG/vetiver.svg"
-                        </rapi-doc>
-                    </body>
-                </html>
+                    <!doctype html>
+                    <html>
+                        <head>
+                        <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=yes">
+                        <title>RapiDoc</title>
+                        <script type="module" src="https://unpkg.com/rapidoc@9.1.3/dist/rapidoc-min.js"></script>
+                        <link rel="stylesheet" href="./rapidoc/default.min.css">
+                        <script src="./rapidoc/highlight.min.js">
+                        </script></head>
+                        <body>
+                            <rapi-doc spec-url="{app.openapi_url}"
+                            id="thedoc" render-style="read" schema-style="tree" 
+                            show-components="true" show-info="true" show-header="true" 
+                            allow-search="true"
+                            show-side-nav="false"
+                            allow-authentication="false" update-route="false" match-type="regex"
+                            theme="light"
+                            header-color="#F2C6AC"
+                            primary-color = "#8C2D2D">
+                            <img
+                            slot="logo"
+                            width="55"
+                            src="https://raw.githubusercontent.com/rstudio/hex-stickers/master/SVG/vetiver.svg"
+                            </rapi-doc>
+                        </body>
+                    </html>
             """
 
         if self.check_ptype == True:
@@ -177,18 +164,21 @@ class VetiverAPI:
         if self.app.openapi_schema:
             return self.app.openapi_schema
         openapi_schema = get_openapi(
-            title=self.model.name + " model API",
+            title=self.model.model_name + " model API",
             version="0.1.3",
             description=self.model.description,
             routes=self.app.routes,
         )
-        openapi_schema["info"]["x-logo"] = {
-            "url": "../docs/figures/logo.svg"
-        }
+        openapi_schema["info"]["x-logo"] = {"url": "../docs/figures/logo.svg"}
         self.app.openapi_schema = openapi_schema
         return self.app.openapi_schema
 
+<<<<<<< HEAD
 def predict(endpoint, data: dict, **kw):
+=======
+
+def predict(endpoint, data: dict):
+>>>>>>> e4733af (first iteration for matching)
     """Make a prediction from model endpoint
 
     Parameters
@@ -205,9 +195,14 @@ def predict(endpoint, data: dict, **kw):
     """
     if isinstance(data, pd.DataFrame):
         data = data.to_json(orient="records")
+<<<<<<< HEAD
         response = requests.post(endpoint, data=data, **kw)
     else:
         response = requests.post(endpoint, json=data, **kw)
+=======
+
+    response = requests.post(endpoint, data=data)
+>>>>>>> e4733af (first iteration for matching)
 
     return response.json()
 
@@ -242,4 +237,3 @@ def vetiver_endpoint(url="http://127.0.0.1:8000/predict"):
         URI path to endpoint
     """
     return url
-

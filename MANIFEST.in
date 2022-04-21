@@ -1,1 +1,6 @@
+<<<<<<< HEAD
 include vetiver/data/*.csv
+=======
+include vetiver/rapidoc/*.js
+include vetiver/rapidoc/*.css
+>>>>>>> e4733af (first iteration for matching)
