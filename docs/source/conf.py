@@ -18,11 +18,11 @@
 # -- Project information -----------------------------------------------------
 
 project = "vetiver"
-copyright = "2022, Isabel Zimmerman"
+copyright = "2022, RStudio"
 author = "Isabel Zimmerman"
 
 # The full version, including alpha/beta/rc tags
-release = "0.1.0"
+release = "0.1.3"
 
 
 # -- General configuration ---------------------------------------------------
@@ -36,7 +36,8 @@ extensions = [
     "sphinx.ext.autosummary",
     "sphinx.ext.napoleon",
     "sphinx.ext.githubpages",
-    "sphinx.ext.autodoc"
+    "sphinx.ext.autodoc",
+    "myst_parser"
 ]
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
@@ -52,7 +53,18 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = "alabaster"
+html_theme = "sphinx_book_theme"
+
+html_theme_options = {
+    "repository_url": "https://github.com/tidymodels/vetiver-python",
+    "use_repository_button": True,
+    "use_issues_button": True,
+    "use_edit_page_button": True,
+
+}
+
+html_logo = "../figures/logo.png"
+
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,

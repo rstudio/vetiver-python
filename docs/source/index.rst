@@ -18,3 +18,32 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+
+
+Version
+==================
+
+.. currentmodule:: vetiver
+
+.. autosummary::
+   :toctree: api_doc/
+
+   ~VetiverModel
+
+Deploy
+==================
+
+.. currentmodule:: vetiver
+
+.. autosummary::
+   :toctree: api_doc/
+
+   ~VetiverModel
+
+   ~VetiverAPI
+   ~VetiverAPI.run
+   ~VetiverAPI.vetiver_post
+   ~vetiver_endpoint
+   ~load_pkgs
+   ~vetiver_write_app
+   ~vetiver_write_docker
