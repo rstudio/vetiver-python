@@ -3,24 +3,32 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to vetiver's documentation!
+vetiver
 ===================================
+The goal of vetiver is to provide fluent tooling to version, share, deploy, and monitor a trained model. Functions handle both recording and checking the model’s input data prototype, and predicting from a remote API endpoint. 
+You can use vetiver with:
+
+- scikit-learn
+- pytorch
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
 
-
-Indices and tables
+Version
 ==================
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+.. currentmodule:: vetiver
 
+.. autosummary::
+   :toctree: api_doc/
 
-Version
+   ~VetiverModel
+   ~pin_read_write.vetiver_pin_read
+   ~pin_read_write.vetiver_pin_write
+
+Deploy
 ==================
 
 .. currentmodule:: vetiver
