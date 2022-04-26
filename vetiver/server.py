@@ -173,12 +173,7 @@ class VetiverAPI:
         self.app.openapi_schema = openapi_schema
         return self.app.openapi_schema
 
-<<<<<<< HEAD
 def predict(endpoint, data: dict, **kw):
-=======
-
-def predict(endpoint, data: dict):
->>>>>>> e4733af (first iteration for matching)
     """Make a prediction from model endpoint
 
     Parameters
@@ -195,14 +190,9 @@ def predict(endpoint, data: dict):
     """
     if isinstance(data, pd.DataFrame):
         data = data.to_json(orient="records")
-<<<<<<< HEAD
         response = requests.post(endpoint, data=data, **kw)
     else:
         response = requests.post(endpoint, json=data, **kw)
-=======
-
-    response = requests.post(endpoint, data=data)
->>>>>>> e4733af (first iteration for matching)
 
     return response.json()
 
