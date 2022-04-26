@@ -60,10 +60,12 @@ html_theme_options = {
     "use_repository_button": True,
     "use_issues_button": True,
     "use_edit_page_button": True,
+    "home_page_in_toc": True
 
 }
 
 html_logo = "../figures/logo.png"
+html_favicon = "../figures/logo.png"
 
 
 # Add any paths that contain custom static files (such as style sheets) here,

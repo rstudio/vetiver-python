@@ -107,6 +107,7 @@ class VetiverAPI:
         self, endpoint_fx: Callable, endpoint_name: str = "custom_endpoint"
     ):
         """Create new POST endpoint
+        
         Parameters
         ----------
         endpoint_fx : typing.Callable
