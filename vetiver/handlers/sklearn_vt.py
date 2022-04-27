@@ -19,8 +19,9 @@ class SKLearnHandler:
         self.save_ptype = save_ptype
 
     def create_description(self):
-        """Create description for sklearn model"""
-        desc = f"Scikit-learn model of type {type(self.model)}"
+        """Create description for sklearn model
+        """
+        desc = f"Scikit-learn {self.model.__class__} model"
         return desc
 
     def vetiver_create_meta(
