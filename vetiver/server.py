@@ -10,7 +10,6 @@ from typing import Callable, Optional, Union, List
 
 from .vetiver_model import VetiverModel
 from .utils import _jupyter_nb
-from vetiver import rapidoc
 
 
 class VetiverAPI:
@@ -70,8 +69,6 @@ class VetiverAPI:
                         <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=yes">
                         <title>RapiDoc</title>
                         <script type="module" src="https://unpkg.com/rapidoc@9.1.3/dist/rapidoc-min.js"></script>
-                        <link rel="stylesheet" href="./rapidoc/default.min.css">
-                        <script src="./rapidoc/highlight.min.js">
                         </script></head>
                         <body>
                             <rapi-doc spec-url="{app.openapi_url}"
