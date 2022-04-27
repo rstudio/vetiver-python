@@ -81,14 +81,18 @@ class VetiverAPI:
         if self.check_ptype == True:
 
             @app.post("/predict/")
-            async def prediction(input_data: Union[self.model.ptype, List[self.model.ptype]]):
-                
+            async def prediction(
+                input_data: Union[self.model.ptype, List[self.model.ptype]]
+            ):
+
                 if isinstance(input_data, List):
                     served_data = _batch_data(input_data)
                 else:
                     served_data = _prepare_data(input_data)
 
-                y = self.model.handler_predict(served_data, check_ptype=self.check_ptype)
+                y = self.model.handler_predict(
+                    served_data, check_ptype=self.check_ptype
+                )
 
                 return {"prediction": y.tolist()}
 
@@ -107,7 +111,7 @@ class VetiverAPI:
         self, endpoint_fx: Callable, endpoint_name: str = "custom_endpoint"
     ):
         """Create new POST endpoint
-        
+
         Parameters
         ----------
         endpoint_fx : typing.Callable
@@ -138,12 +142,12 @@ class VetiverAPI:
                 return {endpoint_name: new.tolist()}
 
     def run(self):
-        """Start API
-        """
+        """Start API"""
         _jupyter_nb()
         uvicorn.run(self.app, port=self.port, host=self.host)
 
-def predict(endpoint, data: dict):
+
+def predict(endpoint, data: dict, **kw):
     """Make a prediction from model endpoint
 
     Parameters
@@ -158,7 +162,11 @@ def predict(endpoint, data: dict):
     dict
         Key: endpoint_name Value: Output of endpoint_fx, in list format
     """
-    response = requests.post(endpoint, json=data)
+    if isinstance(data, pd.DataFrame):
+        data = data.to_json(orient="records")
+        response = requests.post(endpoint, data=data, **kw)
+    else:
+        response = requests.post(endpoint, json=data, **kw)
 
     return response.json()
 
@@ -169,28 +177,27 @@ def _prepare_data(pred_data):
         served_data.append(value)
     return served_data
 
+
 def _batch_data(pred_data):
     columns = pred_data[0].dict().keys()
 
     data = [line.dict() for line in pred_data]
-    print(data)
 
     served_data = pd.DataFrame(data, columns=columns)
     return served_data
 
 
-
 def vetiver_endpoint(url="http://127.0.0.1:8000/predict"):
     """Wrap url
 
-        Parameters
-        ----------
-        url : str
-            URI path to endpoint
+    Parameters
+    ----------
+    url : str
+        URI path to endpoint
 
-        Returns
-        -------
-        url : str
-            URI path to endpoint
-     """
+    Returns
+    -------
+    url : str
+        URI path to endpoint
+    """
     return url
