@@ -37,13 +37,9 @@ class VetiverAPI:
         self,
         model: VetiverModel,
         check_ptype: bool = True,
-        port: Optional[int] = 8000,
-        host="127.0.0.1",
         app_factory=FastAPI,
     ) -> None:
         self.model = model
-        self.port = port
-        self.host = host
         self.check_ptype = check_ptype
         self.app_factory = app_factory
         self.app = self._init_app()
@@ -152,10 +148,13 @@ class VetiverAPI:
 
                 return {endpoint_name: new.tolist()}
 
-    def run(self):
+    def run(self,
+        port: int = 8000,
+        host: str = "127.0.0.1",
+        **kw):
         """Start API"""
         _jupyter_nb()
-        uvicorn.run(self.app, port=self.port, host=self.host)
+        uvicorn.run(self.app, port=port, host=host, **kw)
 
     def _custom_openapi(self):
         if self.app.openapi_schema:
