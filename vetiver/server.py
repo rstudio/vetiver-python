@@ -169,7 +169,7 @@ class VetiverAPI:
         self.app.openapi_schema = openapi_schema
         return self.app.openapi_schema
 
-def predict(endpoint, data: dict, **kw):
+def predict(endpoint, data: Union[dict, pd.DataFrame, pd.Series], **kw):
     """Make a prediction from model endpoint
 
     Parameters
@@ -184,13 +184,17 @@ def predict(endpoint, data: dict, **kw):
     dict
         Key: endpoint_name Value: Output of endpoint_fx, in list format
     """
-    if isinstance(data, pd.DataFrame):
-        data = data.to_json(orient="records")
-        response = requests.post(endpoint, data=data, **kw)
-    else:
+    if isinstance(data, (pd.DataFrame,pd.Series)):
+        data_json = data.to_json(orient="records")
+        response = requests.post(endpoint, data=data_json, **kw)
+    elif isinstance(data, dict):
         response = requests.post(endpoint, json=data, **kw)
+    else:
+        raise TypeError(f"Accepted data types are dictionary or DataFrame, given type is {type(data)} \n {data}")
+        
+    response_df = pd.DataFrame.from_dict(response.json())
 
-    return response.json()
+    return response_df
 
 
 def _prepare_data(pred_data):
