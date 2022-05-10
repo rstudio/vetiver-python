@@ -2,6 +2,7 @@ from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.openapi.utils import get_openapi
+from fastapi import testclient
 
 import uvicorn
 import requests
@@ -184,13 +185,19 @@ def predict(endpoint, data: Union[dict, pd.DataFrame, pd.Series], **kw):
     dict
         Key: endpoint_name Value: Output of endpoint_fx, in list format
     """
+    if isinstance(endpoint, testclient.TestClient):
+        requester = endpoint
+        endpoint = "/predict/"
+    else: 
+        requester = requests
+
     if isinstance(data, (pd.DataFrame,pd.Series)):
         data_json = data.to_json(orient="records")
-        response = requests.post(endpoint, data=data_json, **kw)
+        response = requester.post(endpoint, data=data_json, **kw)
     elif isinstance(data, dict):
-        response = requests.post(endpoint, json=data, **kw)
+        response = requester.post(endpoint, json=data, **kw)
     else:
-        raise TypeError(f"Accepted data types are dictionary or DataFrame, given type is {type(data)} \n {data}")
+        raise TypeError(f"Given type is {type(data)}")
         
     response_df = pd.DataFrame.from_dict(response.json())
 
