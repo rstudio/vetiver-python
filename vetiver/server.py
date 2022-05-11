@@ -2,6 +2,7 @@ from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.openapi.utils import get_openapi
+from fastapi import testclient
 
 import uvicorn
 import requests
@@ -169,7 +170,7 @@ class VetiverAPI:
         self.app.openapi_schema = openapi_schema
         return self.app.openapi_schema
 
-def predict(endpoint, data: dict, **kw):
+def predict(endpoint, data: Union[dict, pd.DataFrame, pd.Series], **kw):
     """Make a prediction from model endpoint
 
     Parameters
@@ -184,13 +185,35 @@ def predict(endpoint, data: dict, **kw):
     dict
         Key: endpoint_name Value: Output of endpoint_fx, in list format
     """
-    if isinstance(data, pd.DataFrame):
-        data = data.to_json(orient="records")
-        response = requests.post(endpoint, data=data, **kw)
-    else:
-        response = requests.post(endpoint, json=data, **kw)
+    if isinstance(endpoint, testclient.TestClient):
+        requester = endpoint
+        endpoint = "/predict/"
+    else: 
+        requester = requests
 
-    return response.json()
+    # TO DO: arrow format 
+
+    if isinstance(data, pd.DataFrame):
+        data_json = data.to_json(orient="records")
+        response = requester.post(endpoint, data=data_json, **kw)
+    elif isinstance(data, pd.Series):
+        data_dict = data.to_json()
+        response = requester.post(endpoint, data=data_dict, **kw)
+    elif isinstance(data, dict):
+        response = requester.post(endpoint, json=data, **kw)
+    else:
+        try:
+            response = requester.post(endpoint, json=data, **kw)
+        except:
+            raise TypeError(f"Predict expects a DataFrame or dict. Given type is {type(data)}")
+
+    response_df = pd.DataFrame.from_dict(response.json())
+    
+    if isinstance(response_df.iloc[0,0], dict):
+        if 'type_error.dict' in response_df.iloc[0,0].values():
+            raise TypeError(f"Predict expects a DataFrame or dict. Given type is {type(data)}")
+
+    return response_df
 
 
 def _prepare_data(pred_data):
