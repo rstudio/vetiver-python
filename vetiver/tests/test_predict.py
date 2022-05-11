@@ -28,6 +28,7 @@ def test_predict_sklearn_dict_ptype():
 
     assert isinstance(response, pd.DataFrame), response
     assert response.iloc[0,0] == 44.47
+    assert len(response) == 1
 
 
 def test_predict_sklearn_no_ptype():
@@ -74,9 +75,10 @@ def test_predict_sklearn_df_check_ptype():
     assert len(response) == 100
 
 
-def test_predict_sklearn_df_no_ptype():
+def test_predict_sklearn_series_check_ptype():
     np.random.seed(500)
     X, y = mock.get_mock_data()
+    ser = pd.Series(data=[0,0,0])
     model = mock.get_mock_model().fit(X, y)
     v = VetiverModel(
         model=model,
@@ -86,13 +88,14 @@ def test_predict_sklearn_df_no_ptype():
         versioned=None,
         description="A regression model for testing purposes",
     )
-    app = VetiverAPI(v, check_ptype=False)
+    app = VetiverAPI(v, check_ptype=True)
     client = TestClient(app.app)
     
-    response = predict(endpoint=client, data=X)
+    response = predict(endpoint=client, data=ser)
 
     assert isinstance(response, pd.DataFrame), response
     assert response.iloc[0,0] == 44.47
+    assert len(response) == 1
 
 
 def test_predict_sklearn_type_error():
@@ -109,7 +112,7 @@ def test_predict_sklearn_type_error():
     )
     app = VetiverAPI(v, check_ptype=True)
     client = TestClient(app.app)
-    data = '0,0,0'
+    data = (0,0)
     
     with pytest.raises(TypeError):
         predict(endpoint=client, data=data)

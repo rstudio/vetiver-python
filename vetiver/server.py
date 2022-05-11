@@ -191,15 +191,27 @@ def predict(endpoint, data: Union[dict, pd.DataFrame, pd.Series], **kw):
     else: 
         requester = requests
 
-    if isinstance(data, (pd.DataFrame,pd.Series)):
+    # TO DO: arrow format 
+
+    if isinstance(data, pd.DataFrame):
         data_json = data.to_json(orient="records")
         response = requester.post(endpoint, data=data_json, **kw)
+    elif isinstance(data, pd.Series):
+        data_dict = data.to_json()
+        response = requester.post(endpoint, data=data_dict, **kw)
     elif isinstance(data, dict):
         response = requester.post(endpoint, json=data, **kw)
     else:
-        raise TypeError(f"Given type is {type(data)}")
-        
+        try:
+            response = requester.post(endpoint, json=data, **kw)
+        except:
+            raise TypeError(f"Predict expects a DataFrame or dict. Given type is {type(data)}")
+
     response_df = pd.DataFrame.from_dict(response.json())
+    
+    if isinstance(response_df.iloc[0,0], dict):
+        if 'type_error.dict' in response_df.iloc[0,0].values():
+            raise TypeError(f"Predict expects a DataFrame or dict. Given type is {type(data)}")
 
     return response_df
 
