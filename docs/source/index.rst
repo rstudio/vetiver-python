@@ -1,10 +1,23 @@
-vetiver 🏺
+vetiver
 ===================================
 The goal of vetiver is to provide fluent tooling to version, share, deploy, and monitor a trained model. Functions handle both recording and checking the model’s input data prototype, and predicting from a remote API endpoint. 
 You can use vetiver with:
 
 - `scikit-learn <https://scikit-learn.org/stable/>`_
 - `pytorch <https://pytorch.org/>`_
+
+You can install the released version of vetiver from `PyPI <https://pypi.org/project/vetiver/>`_:
+
+.. code-block:: bash
+
+   pip install vetiver
+
+And the development version from `GitHub <https://github.com/tidymodels/vetiver-python>`_ with:
+
+.. code-block:: bash
+
+   python -m pip install git+https://github.com/tidymodels/vetiver-python
+
 
 This website documents the public API of Vetiver (for Python). See the `main Vetiver website <https://juliasilge.github.io/vetiver.dev/>`_ for
 a more holistic introduction to the API. The left-hand sidebar lists the full public
