@@ -39,7 +39,7 @@ def _glue_required_pkgs(required_pkgs: list):
 
     return load_required_pkgs
 
-def vetiver_write_app(board: pins.BaseBoard, pin_name: str,
+def vetiver_write_app(board, pin_name: str,
               version: str = None, file: str = "app.py"):
     """Write VetiverAPI app to a file
 

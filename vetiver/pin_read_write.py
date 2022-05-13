@@ -7,7 +7,7 @@ from .vetiver_model import VetiverModel
 from .meta import vetiver_meta
 from .write_fastapi import _choose_version
 
-def vetiver_pin_write(board: pins.BaseBoard, model: VetiverModel, versioned: bool=True):
+def vetiver_pin_write(board, model: VetiverModel, versioned: bool=True):
     """
     Write pin including VetiverModel
     
@@ -44,7 +44,7 @@ def vetiver_pin_write(board: pins.BaseBoard, model: VetiverModel, versioned: boo
     # warnings.warn(message=message)
 
 
-def vetiver_pin_read(board: pins.BaseBoard, name: str, version: str = None) -> VetiverModel:
+def vetiver_pin_read(board, name: str, version: str = None) -> VetiverModel:
     """
     Read pin and populate VetiverModel
     
