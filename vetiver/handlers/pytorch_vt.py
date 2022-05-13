@@ -2,6 +2,13 @@ from ..meta import vetiver_meta
 from ..ptype import _vetiver_create_ptype
 import numpy as np
 
+torch_exists = True
+try:
+    import torch
+except ImportError:
+    torch_exists = False
+
+
 class TorchHandler:
     """Handler class for creating VetiverModels with torch.
 
@@ -77,21 +84,22 @@ class TorchHandler:
         prediction
             Prediction from model
         """
-        import torch
-        
-        if check_ptype == True:
-            input_data = np.array(input_data, dtype=np.array(self.ptype_data).dtype)
-            prediction = self.model(torch.from_numpy(input_data))
-        
-        # do not check ptype
+        if torch_exists:
+            if check_ptype == True:
+                input_data = np.array(input_data, dtype=np.array(self.ptype_data).dtype)
+                prediction = self.model(torch.from_numpy(input_data))
+            
+            # do not check ptype
+            else:
+                batch = True
+                if not isinstance(input_data, list):
+                    batch = False
+                    input_data = input_data.split(",")  # user delimiter ?
+                input_data = np.array(input_data, dtype=np.array(self.ptype_data).dtype)
+                if not batch:
+                    input_data = input_data.reshape(1, -1)
+                prediction = self.model(torch.from_numpy(input_data))
         else:
-            batch = True
-            if not isinstance(input_data, list):
-                batch = False
-                input_data = input_data.split(",")  # user delimiter ?
-            input_data = np.array(input_data, dtype=np.array(self.ptype_data).dtype)
-            if not batch:
-                input_data = input_data.reshape(1, -1)
-            prediction = self.model(torch.from_numpy(input_data))
+            raise ImportError("Cannot import `torch`.")
 
         return prediction
