@@ -1,5 +1,5 @@
 from ..meta import vetiver_meta
-from ..ptype import _vetiver_create_ptype
+from ..ptype import vetiver_create_ptype
 import numpy as np
 
 torch_exists = True
@@ -55,7 +55,7 @@ class TorchHandler:
         ptype : pd.DataFrame or None
             Zero-row DataFrame for storing data types
         """
-        ptype = _vetiver_create_ptype(self.ptype_data, self.save_ptype)
+        ptype = vetiver_create_ptype(self.ptype_data, self.save_ptype)
 
         return ptype
 
