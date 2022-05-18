@@ -60,6 +60,10 @@ def vetiver_pin_read(board, name: str, version: str = None) -> VetiverModel:
     Returns
     --------
     vetiver.VetiverModel
+
+    Notes
+    -----
+    If reading a board from RSConnect, the `board` argument must be in "username/modelname" format.
     
     """
     version = version if version is not None else _choose_version(board.pin_versions(name))
