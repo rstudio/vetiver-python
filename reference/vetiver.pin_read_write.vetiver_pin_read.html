@@ -368,15 +368,17 @@ title="Print to PDF"
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>board</strong> (<em>pins.BaseBoard</em>) – Board where pin is held</p></li>
-<li><p><strong>name</strong> (<em>string</em>) – Name of pin</p></li>
-<li><p><strong>versioned</strong> (<em>bool</em>) – Whether or not the pin should be versioned</p></li>
+<li><p><strong>board</strong> – A pin board, created by <cite>pins.board_folder()</cite> or another <cite>board_</cite> function.</p></li>
+<li><p><strong>name</strong> (<em>string</em>) – Pin name</p></li>
+<li><p><strong>version</strong> (<em>str</em>) – Retrieve a specific version of a pin.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p><a class="reference internal" href="vetiver.VetiverModel.html#vetiver.VetiverModel" title="vetiver.VetiverModel">vetiver.VetiverModel</a></p>
 </dd>
 </dl>
+<p class="rubric">Notes</p>
+<p>If reading a board from RSConnect, the <cite>board</cite> argument must be in “username/modelname” format.</p>
 </dd></dl>
 
 </section>

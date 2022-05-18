@@ -364,11 +364,11 @@ title="Print to PDF"
 <dl class="py function">
 <dt class="sig sig-object py" id="vetiver.pin_read_write.vetiver_pin_write">
 <span class="sig-prename descclassname"><span class="pre">vetiver.pin_read_write.</span></span><span class="sig-name descname"><span class="pre">vetiver_pin_write</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">board</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="vetiver.VetiverModel.html#vetiver.VetiverModel" title="vetiver.vetiver_model.VetiverModel"><span class="pre">vetiver.vetiver_model.VetiverModel</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">versioned</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vetiver.pin_read_write.vetiver_pin_write" title="Permalink to this definition">#</a></dt>
-<dd><p>Write pin including VetiverModel</p>
+<dd><p>Pin a trained VetiverModel along with other model metadata.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>board</strong> (<em>pins.BaseBoard</em>) – Location for pin to be saved</p></li>
+<li><p><strong>board</strong> – A pin board, created by <cite>pins.board_folder()</cite> or another <cite>board_</cite> function.</p></li>
 <li><p><strong>model</strong> (<a class="reference internal" href="vetiver.VetiverModel.html#vetiver.VetiverModel" title="vetiver.VetiverModel"><em>vetiver.VetiverModel</em></a>) – VetiverModel to be written to board</p></li>
 <li><p><strong>versioned</strong> (<em>bool</em>) – Whether or not the pin should be versioned</p></li>
 </ul>

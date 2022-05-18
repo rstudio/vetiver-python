@@ -369,11 +369,11 @@ title="Print to PDF"
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>endpoint</strong> – URI path to endpoint</p></li>
-<li><p><strong>data</strong> (<em>dict</em>) – Name of endpoint</p></li>
+<li><p><strong>data</strong> (<em>Union</em><em>[</em><em>dict</em><em>, </em><em>pd.DataFrame</em><em>, </em><em>pd.Series</em><em>]</em>) – Name of endpoint</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Key: endpoint_name Value: Output of endpoint_fx, in list format</p>
+<dd class="field-even"><p>Endpoint_name and list of endpoint_fx output</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>dict</p>
