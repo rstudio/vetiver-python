@@ -1,8 +1,6 @@
 import pandas as pd
 import numpy as np
 from pydantic import BaseModel, create_model
-from uvicorn import Config
-
 
 class NoAvailablePTypeError(Exception):
     """
@@ -32,7 +30,7 @@ class InvalidPTypeError(Exception):
         super().__init__(self.message)
 
 
-def _vetiver_create_ptype(ptype_data, save_ptype: bool):
+def vetiver_create_ptype(ptype_data, save_ptype: bool):
     """Create zero row structure to save data types
     Parameters
     ----------

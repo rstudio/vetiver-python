@@ -1,8 +1,7 @@
-from ..ptype import _vetiver_create_ptype
+from ..ptype import vetiver_create_ptype
 import pandas as pd
 from ..meta import vetiver_meta
 import sklearn
-import numpy as np
 
 class SKLearnHandler:
     """Handler class for creating VetiverModels with sklearn.
@@ -50,7 +49,7 @@ class SKLearnHandler:
         ptype : pd.DataFrame or None
             Zero-row DataFrame for storing data types
         """
-        ptype = _vetiver_create_ptype(self.ptype_data, self.save_ptype)
+        ptype = vetiver_create_ptype(self.ptype_data, self.save_ptype)
         return ptype
 
     def handler_startup():

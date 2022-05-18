@@ -9,12 +9,12 @@ from .write_fastapi import _choose_version
 
 def vetiver_pin_write(board, model: VetiverModel, versioned: bool=True):
     """
-    Write pin including VetiverModel
+    Pin a trained VetiverModel along with other model metadata.
     
     Parameters
     ----------
-    board: pins.BaseBoard
-        Location for pin to be saved
+    board:
+        A pin board, created by `pins.board_folder()` or another `board_` function.
     model: vetiver.VetiverModel
         VetiverModel to be written to board
     versioned: bool
@@ -50,16 +50,20 @@ def vetiver_pin_read(board, name: str, version: str = None) -> VetiverModel:
     
     Parameters
     ----------
-    board: pins.BaseBoard
-        Board where pin is held
+    board:
+        A pin board, created by `pins.board_folder()` or another `board_` function.
     name: string
-        Name of pin
-    versioned: bool
-        Whether or not the pin should be versioned
+        Pin name
+    version: str
+        Retrieve a specific version of a pin. 
 
     Returns
     --------
     vetiver.VetiverModel
+
+    Notes
+    -----
+    If reading a board from RSConnect, the `board` argument must be in "username/modelname" format.
     
     """
     version = version if version is not None else _choose_version(board.pin_versions(name))

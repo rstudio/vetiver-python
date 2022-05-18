@@ -22,10 +22,6 @@ class VetiverAPI:
         Model to be deployed in API
     check_ptype : bool
         Determine if data prototype should be enforced
-    port :  int
-        Port for deployment
-    host :
-        Host address
     app_factory :
         Type of API to be deployed
     app :
@@ -153,7 +149,16 @@ class VetiverAPI:
         port: int = 8000,
         host: str = "127.0.0.1",
         **kw):
-        """Start API"""
+        """
+       Start API
+        
+        Parameters
+        ----------
+        port : int
+            An integer that indicates the server port that should be listened on.
+        host : str
+            A valid IPv4 or IPv6 address, which the application will listen on. 
+        """
         _jupyter_nb()
         uvicorn.run(self.app, port=port, host=host, **kw)
 
@@ -177,13 +182,13 @@ def predict(endpoint, data: Union[dict, pd.DataFrame, pd.Series], **kw):
     ----------
     endpoint :
         URI path to endpoint
-    data : dict
+    data : Union[dict, pd.DataFrame, pd.Series]
         Name of endpoint
 
     Returns
     -------
     dict
-        Key: endpoint_name Value: Output of endpoint_fx, in list format
+        Endpoint_name and list of endpoint_fx output
     """
     if isinstance(endpoint, testclient.TestClient):
         requester = endpoint
