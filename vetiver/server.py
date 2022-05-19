@@ -150,7 +150,7 @@ class VetiverAPI:
         host: str = "127.0.0.1",
         **kw):
         """
-       Start API
+        Start API
         
         Parameters
         ----------
