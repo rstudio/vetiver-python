@@ -1,0 +1,71 @@
+# Weekly tests to catch changes in upstream dependencies like pins
+# that break vetiver e.g. changes in pins could break either one or
+# both of:
+#   1. pypi release
+#   2. main branch version
+
+name: Weekly Tests
+
+on:
+  workflow_dispatch:
+  schedule:
+    # At 00:00 on Monday
+    - cron: 0 0 * * MON
+
+jobs:
+  vetiver_main_pins_main:
+    name: 'vetiver main, pins main'
+    if: github.repository == 'tidymodels/vetiver-python'
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        # Minimum and Maximum supported versions
+        python-version: ['3.7', '3.10']
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install 'vetiver[dev,torch]'
+          python -m pip install --upgrade git+https://github.com/rstudio/pins-python
+
+      - name: Run Tests
+        run: |
+          pytest
+
+      - name: Upload coverage
+        uses: codecov/codecov-action@v2
+
+  vetiver_pypi_pins_main:
+    name: 'vetiver pypi, pins main'
+    if: github.repository == 'tidymodels/vetiver-python'
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        # Minimum and Maximum supported versions
+        python-version: ['3.7', '3.10']
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e '.[dev,torch]'
+          python -m pip install --upgrade git+https://github.com/rstudio/pins-python
+
+      - name: Run Tests
+        run: |
+          pytest
