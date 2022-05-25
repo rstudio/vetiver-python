@@ -62,7 +62,7 @@ def vetiver_write_app(board, pin_name: str,
         pin_read = f"v = vetiver.vetiver_pin_read(b, {repr(pin_name)}, version = {repr(version)})"
         
     else:
-        pin_read = f"v = vetiver.vetiver_pin_read(b, {repr(pin_name)})"
+        pin_read = f"v = vetiver.pin_read_write.vetiver_pin_read(b, {repr(pin_name)})"
 
     infra_pkgs = ['vetiver', 'pins']
 

@@ -22,7 +22,7 @@ def test_vetiver_write_app():
 import pins
 
 
-b = pins.board_folder('.')
+b = pins.board_folder('.', allow_pickle_read=True)
 v = vetiver.vetiver_pin_read(b, 'model', version = '{version}')
 
 vetiver_api = vetiver.VetiverAPI(v)
