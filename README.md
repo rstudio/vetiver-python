@@ -35,7 +35,7 @@ python -m pip install git+https://github.com/rstudio/vetiver-python
 A `VetiverModel()` object collects the information needed to store, version, and deploy a trained model. 
 
 ```python
-from vetiver import mock, VetiverModel, VetiverAPI
+from vetiver import mock, VetiverModel
 
 X, y = mock.get_mock_data()
 model = mock.get_mock_model().fit(X, y)
@@ -53,7 +53,7 @@ model_board = board_temp(versioned = True, allow_pickle_read = True)
 vetiver_pin_write(model_board, v)
 ```
 
-You can **deploy** your pinned `VetiverModel()` via [FastAPI](https://fastapi.tiangolo.com/).
+You can **deploy** your pinned `VetiverModel()` using `VetiverAPI()`, an extension of [FastAPI](https://fastapi.tiangolo.com/).
 
 ```python
 from vetiver import VetiverAPI
