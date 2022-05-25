@@ -1,4 +1,4 @@
-# vetiver <img src='docs/figures/logo.png' align="right" height="139" />
+# vetiver <a href='https://rstudio.github.io/vetiver-python/'><img src='docs/figures/logo.png' align="right" height="139" /></a>
 
 <!-- badges: start -->
 
@@ -9,42 +9,63 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 
 _Vetiver, the oil of tranquility, is used as a stabilizing ingredient in perfumery to preserve more volatile fragrances._
 
-Python parallel to [R vetiver](https://github.com/tidymodels/vetiver) package.
+The goal of vetiver is to provide fluent tooling to version, share, deploy, and monitor a trained model. Functions handle both recording and checking the model's input data prototype, and predicting from a remote API endpoint. The vetiver package is extensible, with generics that can support many kinds of models, and available for both Python and R. To learn more about vetiver, see the documentation at <https://vetiver.rstudio.com/>
 
-## Usage
+You can use vetiver with:
 
-`vetiver` is used to deploy a trained model to predict from a remote endpoint.
+-   [scikit-learn](https://scikit-learn.org/)
+-   [PyTorch](https://pytorch.org/)
 
-Key features include:
+## Installation
 
-- **Simple:** designed to fit into a data scientist's natural workflow
-- **Robust:** ability to check input data types to minimize type failures in a model
-- **Advanced support:** easily deploy multiple endpoints to handle pre- and post- processing
-- Based on [FastAPI](https://github.com/tiangolo/fastapi), using [OpenAPI](https://github.com/OAI/OpenAPI-Specification)
-
-## Get Started
-
-`pip install vetiver`
-
-To begin, initialize a `VetiverModel` with a trained model and an example of data (usually training data) to built a data prototype.
+You can install the released version of vetiver from [PyPI](https://pypi.org/project/vetiver/):
 
 ```python
-my_model = VetiverModel(model = linear_reg, ptype_data = train_data)
+pip install vetiver
 ```
 
-Next, you can build a model-aware API and run it locally.
+And the development version from [GitHub](https://github.com/rstudio/vetiver-python) with:
 
 ```python
-my_app = VetiverAPI(my_model)
-my_app.run()
+python -m pip install git+https://github.com/rstudio/vetiver-python
 ```
 
-To view more, see [this repo of examples](https://github.com/isabelizimm/vetiverpydemo).
+## Example
 
-## License
+A `VetiverModel()` object collects the information needed to store, version, and deploy a trained model. 
+
+```python
+from vetiver import mock, VetiverModel
+
+X, y = mock.get_mock_data()
+model = mock.get_mock_model().fit(X, y)
+
+v = VetiverModel(model, save_ptype=True, ptype_data=X)
+```
+
+You can **version** and **share** your `VetiverModel()` by choosing a [pins](https://rstudio.github.io/pins-python/) "board" for it, including a local folder, RStudio Connect, Amazon S3, and more.
+
+```python
+from pins import board_temp
+from vetiver import vetiver_pin_write
+
+model_board = board_temp(versioned = True, allow_pickle_read = True)
+vetiver_pin_write(model_board, v)
+```
+
+You can **deploy** your pinned `VetiverModel()` using `VetiverAPI()`, an extension of [FastAPI](https://fastapi.tiangolo.com/).
+
+```python
+from vetiver import VetiverAPI
+app = VetiverAPI(v, check_ptype = True)
+```
+
+To start a server using this object, use `app.run(port = 8080)` or your port of choice.
 
 ## Contributing
 
-This project is released with a [Contributor Code of
-Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html).
-By contributing to this project, you agree to abide by its terms.
+This project is released with a [Contributor Code of Conduct](https://www.contributor-covenant.org/version/2/1/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
+
+- For questions and discussions about deploying models, statistical modeling, and machine learning, please [post on RStudio Community](https://community.rstudio.com/new-topic?category_id=15&tags=vetiver,question).
+
+- If you think you have encountered a bug, please [submit an issue](https://github.com/rstudio/vetiver-python/issues).
