@@ -137,3 +137,7 @@ dmypy.json
 .pyre/
 
 NOTES.md
+
+## RStudio
+*.Rproj
+.Rproj.user
