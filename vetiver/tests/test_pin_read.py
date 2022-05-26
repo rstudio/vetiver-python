@@ -4,14 +4,13 @@ from vetiver import vetiver_pin_read, vetiver_pin_write, VetiverModel, VetiverAP
 from fastapi.testclient import TestClient
 import numpy as np
 
-def _make_model(save_ptype: bool):
+def _make_model(save_ptype: bool=True):
     np.random.seed(500)
     X, y = mock.get_mock_data()
     model = mock.get_mock_model().fit(X, y)
     v = VetiverModel(
         model=model,
-        save_ptype=save_ptype,
-        ptype_data=X,
+        ptype_data=X if save_ptype else None,
         model_name="model",
         versioned=None,
         description="A regression model for testing purposes",
@@ -21,7 +20,7 @@ def _make_model(save_ptype: bool):
 
 def test_board_pin_rountrip_ptype_sklearn():
     np.random.seed(500)
-    v = _make_model(save_ptype=True)
+    v = _make_model()
     board = pins.board_temp(allow_pickle_read=True)
     vetiver_pin_write(board=board, model=v)
     v = vetiver_pin_read(board, "model")

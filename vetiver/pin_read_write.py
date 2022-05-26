@@ -29,7 +29,6 @@ def vetiver_pin_write(board, model: VetiverModel, versioned: bool=True):
         type = "joblib",
         description = model.description,
         metadata = {"required_pkgs": model.metadata.get("required_pkgs"),
-                    "save_ptype": model.save_ptype,
                     "ptype": None if model.ptype == None else model.ptype().json()},
         versioned=versioned
     )
@@ -79,7 +78,6 @@ def vetiver_pin_read(board, name: str, version: str = None) -> VetiverModel:
              url = meta.user.get("url"), # None all the time, besides Connect
              required_pkgs = meta.user.get("required_pkgs")
         ),
-        save_ptype=meta.user.get("save_ptype"),
         ptype_data = json.loads(meta.user.get("ptype")) if meta.user.get("ptype") else None,
         versioned = True
         )

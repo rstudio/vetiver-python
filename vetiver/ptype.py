@@ -22,13 +22,12 @@ class NoAvailablePTypeError(Exception):
 
 class InvalidPTypeError(Exception):
     """
-    Throw an error if `save_ptype` is not
-    True, False, or data.frame
+    Throw an error if ptype cannot be recognised
     """
 
     def __init__(
         self,
-        message="The `ptype_data` argument must be a pandas.DataFrame, a pydantic BaseModel,  np.ndarray, or `save_ptype` must be FALSE.",
+        message="`ptype_data` must be a pd.DataFrame, a pydantic BaseModel or np.ndarray",
     ):
         self.message = message
         super().__init__(self.message)
@@ -55,7 +54,7 @@ a pull request.
 """
 
 @singledispatch
-def vetiver_create_ptype(data, save_ptype):
+def vetiver_create_ptype(data):
     """Create zero row structure to save data types
 
     Parameters
@@ -69,20 +68,20 @@ def vetiver_create_ptype(data, save_ptype):
         Data prototype
 
     """
-    msg = CREATE_PTYPE_TPL.format(_data_type=type(data))
-    msg = ""
-    raise InvalidPTypeError(message=msg)
+    raise InvalidPTypeError(
+        message=CREATE_PTYPE_TPL.format(_data_type=type(data))
+    )
 
 
 @vetiver_create_ptype.register
-def _vetiver_create_ptype(data: pd.DataFrame, save_ptype):
+def _vetiver_create_ptype(data: pd.DataFrame):
     dict_data = data.iloc[1, :].to_dict()
     ptype = create_model("ptype", **dict_data)
     return ptype
 
 
 @vetiver_create_ptype.register
-def _vetiver_create_ptype(data: np.ndarray, save_ptype):
+def _vetiver_create_ptype(data: np.ndarray):
     dict_data = dict(enumerate(data[1], 0))
     # pydantic requires strings as indicies
     dict_data = {f"{key}": value.item() for key, value in dict_data.items()}
@@ -91,15 +90,15 @@ def _vetiver_create_ptype(data: np.ndarray, save_ptype):
 
 
 @vetiver_create_ptype.register
-def _vetiver_create_ptype(data: dict, save_ptype):
+def _vetiver_create_ptype(data: dict):
     return create_model("ptype", **data)
 
 
 @vetiver_create_ptype.register
-def _vetiver_create_ptype(data: BaseModel, save_ptype):
+def _vetiver_create_ptype(data: BaseModel):
     return data
 
 
 @vetiver_create_ptype.register
-def _vetiver_create_ptype(data: NoneType, save_ptype):
+def _vetiver_create_ptype(data: NoneType):
     return None
