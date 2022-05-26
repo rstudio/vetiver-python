@@ -6,13 +6,12 @@ from fastapi.testclient import TestClient
 import numpy as np
 
 
-def _start_application(save_ptype: bool):
+def _start_application(save_ptype: bool=True):
     X, y = mock.get_mock_data()
     model = mock.get_mock_model().fit(X, y)
     v = VetiverModel(
         model=model,
-        save_ptype=save_ptype,
-        ptype_data=X,
+        ptype_data=X if save_ptype else None,
         model_name="my_model",
         versioned=None,
         description="A regression model for testing purposes",
@@ -25,7 +24,7 @@ def _start_application(save_ptype: bool):
 
 def test_predict_endpoint_ptype():
     np.random.seed(500)
-    client = TestClient(_start_application(save_ptype=True).app)
+    client = TestClient(_start_application().app)
     data = {"B": 0, "C": 0, "D": 0}
     response = client.post("/predict/", json=data)
     assert response.status_code == 200, response.text
@@ -33,7 +32,7 @@ def test_predict_endpoint_ptype():
 
 def test_predict_endpoint_ptype_batch():
     np.random.seed(500)
-    client = TestClient(_start_application(save_ptype=True).app)
+    client = TestClient(_start_application().app)
     data = [{"B": 0, "C": 0, "D": 0},{"B": 0, "C": 0, "D": 0}]
     response = client.post("/predict/", json=data)
     assert response.status_code == 200, response.text
@@ -42,7 +41,7 @@ def test_predict_endpoint_ptype_batch():
 
 def test_predict_endpoint_ptype_error():
     np.random.seed(500)
-    client = TestClient(_start_application(save_ptype=True).app)
+    client = TestClient(_start_application().app)
     data = {"B": 0, "C": 'a', "D": 0}
     response = client.post("/predict/", json=data)
     assert response.status_code == 422, response.text # value is not a valid integer
