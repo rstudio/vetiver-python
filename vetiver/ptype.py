@@ -1,6 +1,10 @@
+from functools import singledispatch
+from types import NoneType
+
 import pandas as pd
 import numpy as np
 from pydantic import BaseModel, create_model
+
 
 class NoAvailablePTypeError(Exception):
     """
@@ -30,14 +34,34 @@ class InvalidPTypeError(Exception):
         super().__init__(self.message)
 
 
-def vetiver_create_ptype(ptype_data, save_ptype: bool):
+CREATE_PTYPE_TPL =  """\
+Failed to create a data prototype (ptype) from data of \
+type {_data_type}. If your datatype is not one of \
+(pd.DataFrame, pydantic.BaseModel, np.ndarry, dict), \
+you should write a function to create the ptype. Here is \
+a template for such a function: \
+
+    from pydantic import create_model
+    from vetiver.ptype import vetiver_create_ptype
+
+    @vetiver_create_ptype.register
+    def _(data: {_data_type}):
+        data_dict = ... # convert data to a dictionary
+        ptype = create_model("ptype", **data_dict)
+        return ptype
+
+If your datatype is a common type, please consider submitting \
+a pull request.
+"""
+
+@singledispatch
+def vetiver_create_ptype(data, save_ptype):
     """Create zero row structure to save data types
+
     Parameters
     ----------
-    ptype_data :
+    data :
         Data that represents what
-    save_ptype : bool
-        Whether or not ptype should be created
 
     Returns
     -------
@@ -45,45 +69,37 @@ def vetiver_create_ptype(ptype_data, save_ptype: bool):
         Data prototype
 
     """
-    ptype = None
-
-    if save_ptype == False:
-        pass
-    elif save_ptype == True:
-        try:
-            if isinstance(ptype_data, np.ndarray):
-                ptype = _array_to_ptype(ptype_data[1])
-            elif isinstance(ptype_data, dict):
-                ptype = _dict_to_ptype(ptype_data)
-            elif isinstance(ptype_data.construct(), BaseModel):
-                ptype = ptype_data
-        except AttributeError:  # cannot construct basemodel
-            if isinstance(ptype_data, pd.DataFrame):
-                ptype = _df_to_ptype(ptype_data.iloc[1, :])
-    else:
-        raise InvalidPTypeError
-
-    return ptype
+    msg = CREATE_PTYPE_TPL.format(_data_type=type(data))
+    msg = ""
+    raise InvalidPTypeError(message=msg)
 
 
-def _df_to_ptype(train_data):
-
-    dict_data = train_data.to_dict()
+@vetiver_create_ptype.register
+def _vetiver_create_ptype(data: pd.DataFrame, save_ptype):
+    dict_data = data.iloc[1, :].to_dict()
     ptype = create_model("ptype", **dict_data)
-
     return ptype
 
 
-def _array_to_ptype(train_data):
-    dict_data = dict(enumerate(train_data, 0))
-
+@vetiver_create_ptype.register
+def _vetiver_create_ptype(data: np.ndarray, save_ptype):
+    dict_data = dict(enumerate(data[1], 0))
     # pydantic requires strings as indicies
-    dict_data = {str(key): value.item() for key, value in dict_data.items()}
+    dict_data = {f"{key}": value.item() for key, value in dict_data.items()}
     ptype = create_model("ptype", **dict_data)
-
     return ptype
 
 
-def _dict_to_ptype(train_data):
+@vetiver_create_ptype.register
+def _vetiver_create_ptype(data: dict, save_ptype):
+    return create_model("ptype", **data)
 
-    return create_model("ptype",**train_data)
+
+@vetiver_create_ptype.register
+def _vetiver_create_ptype(data: BaseModel, save_ptype):
+    return data
+
+
+@vetiver_create_ptype.register
+def _vetiver_create_ptype(data: NoneType, save_ptype):
+    return None
