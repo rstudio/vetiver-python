@@ -59,12 +59,12 @@ def vetiver_create_ptype(data):
 
     Parameters
     ----------
-    data :
-        Data that represents what
+    data : object
+        An object with information (data) whose layout is to be determined.
 
     Returns
     -------
-    ptype
+    ptype : pydantic.main.BaseModel
         Data prototype
 
     """
@@ -74,31 +74,121 @@ def vetiver_create_ptype(data):
 
 
 @vetiver_create_ptype.register
-def _vetiver_create_ptype(data: pd.DataFrame):
-    dict_data = data.iloc[1, :].to_dict()
+def _(data: pd.DataFrame):
+    """
+    Create ptype for a pandas dataframe
+
+    Parameters
+    ----------
+    data : DataFrame
+        Pandas dataframe
+
+    Examples
+    --------
+    >>> from pydantic import BaseModel
+    >>> df = pd.DataFrame({'x': [1, 2, 3], 'y': [4, 5, 6]})
+    >>> prototype = vetiver_create_ptype(df)
+    >>> issubclass(prototype, BaseModel)
+    True
+    >>> prototype()
+    ptype(x=1, y=4)
+
+    The data prototype created for the dataframe is equivalent to:
+
+    >>> class another_prototype(BaseModel):
+    ...     class Config:
+    ...         title = 'ptype'
+    ...     x: int = 1
+    ...     y: int = 4
+
+    >>> another_prototype()
+    another_prototype(x=1, y=4)
+    >>> another_prototype() == prototype()
+    True
+
+    Changing the title using `class Config` ensures that the
+    also json/schemas match.
+
+    >>> another_prototype.schema() == prototype.schema()
+    True
+    """
+    dict_data = data.iloc[0, :].to_dict()
     ptype = create_model("ptype", **dict_data)
     return ptype
 
 
 @vetiver_create_ptype.register
-def _vetiver_create_ptype(data: np.ndarray):
-    dict_data = dict(enumerate(data[1], 0))
+def _(data: np.ndarray):
+    """
+    Create ptype for a numpy array
+
+    Parameters
+    ----------
+    data : ndarray
+        2-Dimensional numpy array
+
+    Examples
+    --------
+    >>> arr = np.array([[1, 4], [2, 5], [3, 6]])
+    >>> prototype = vetiver_create_ptype(arr)
+    >>> prototype()
+    ptype(0=1, 1=4)
+
+    >>> arr2 = np.array([[1, 'a'], [2, 'b'], [3, 'c']], dtype=object)
+    >>> prototype2 = vetiver_create_ptype(arr2)
+    >>> prototype2()
+    ptype(0=1, 1='a')
+    """
+    def _item(value):
+        # pydantic needs python objects. .item() converts a numpy
+        # scalar type to a python equivalent, and if the ndarray
+        # is dtype=object, it may have python objects
+        try:
+            return value.item()
+        except AttributeError:
+            return value
+
+    dict_data = dict(enumerate(data[0], 0))
     # pydantic requires strings as indicies
-    dict_data = {f"{key}": value.item() for key, value in dict_data.items()}
+    dict_data = {f"{key}": _item(value) for key, value in dict_data.items()}
     ptype = create_model("ptype", **dict_data)
     return ptype
 
 
 @vetiver_create_ptype.register
-def _vetiver_create_ptype(data: dict):
+def _(data: dict):
+    """
+    Create ptype for a dict
+
+    Parameters
+    ----------
+    data : dict
+        Dictionary
+    """
     return create_model("ptype", **data)
 
 
 @vetiver_create_ptype.register
-def _vetiver_create_ptype(data: BaseModel):
+def _(data: BaseModel):
+    """
+    Create ptype for a pydantic BaseModel object
+
+    Parameters
+    ----------
+    data : pydantic.BaseModel
+        Pydantic BaseModel
+    """
     return data
 
 
 @vetiver_create_ptype.register
-def _vetiver_create_ptype(data: NoneType):
+def _(data: NoneType):
+    """
+    Create ptype for None
+
+    Parameters
+    ----------
+    data : None
+        None
+    """
     return None
