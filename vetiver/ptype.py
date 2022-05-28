@@ -1,5 +1,9 @@
 from functools import singledispatch
-from types import NoneType
+try:
+    from types import NoneType
+except ImportError:
+    # python < 3.10
+    NoneType = type(None)
 
 import pandas as pd
 import numpy as np
