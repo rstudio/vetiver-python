@@ -99,7 +99,7 @@ def test_torch_predict_ptype_error():
     assert response.status_code == 422, response.text  # value is not a valid float
 
 
-def test_torch_predict_no_ptype_error():
+def test_torch_predict_no_ptype_batch():
     torch.manual_seed(3)
     x_train, torch_model = _build_torch_v()
     v = VetiverModel(torch_model, model_name = "torch")
@@ -112,7 +112,7 @@ def test_torch_predict_no_ptype_error():
     assert response.json() == {"prediction":[[-4.060722351074219],[-4.060722351074219]]}, response.text
 
 
-def test_torch_predict_no_ptype_batch():
+def test_torch_predict_no_ptype():
     torch.manual_seed(3)
     x_train, torch_model = _build_torch_v()
     v = VetiverModel(torch_model, model_name = "torch")
