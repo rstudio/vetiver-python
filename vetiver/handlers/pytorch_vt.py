@@ -65,7 +65,7 @@ class TorchHandler:
         """
         ...
 
-    def handler_predict(self, input_data, check_ptype):
+    def handler_predict(self, input_data, check_ptype, **kw):
         """Generates method for /predict endpoint in VetiverAPI
 
         The `handler_predict` function executes at each API call. Use this
@@ -88,15 +88,10 @@ class TorchHandler:
                 prediction = self.model(torch.from_numpy(input_data))
             
             # do not check ptype
-            else:
-                batch = True
-                if not isinstance(input_data, list):
-                    batch = False
-                    input_data = input_data.split(",")  # user delimiter ?
-                input_data = np.array(input_data, dtype=np.array(self.ptype_data).dtype)
-                if not batch:
-                    input_data = input_data.reshape(1, -1)
-                prediction = self.model(torch.from_numpy(input_data))
+            else:    
+                input_data = torch.tensor(input_data)
+                prediction = self.model(input_data)
+
         else:
             raise ImportError("Cannot import `torch`.")
 
