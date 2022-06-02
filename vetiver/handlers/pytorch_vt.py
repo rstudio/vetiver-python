@@ -17,10 +17,9 @@ class TorchHandler:
     model : nn.Module
         a trained torch model
     """
-    def __init__(self, model, ptype_data, save_ptype):
+    def __init__(self, model, ptype_data):
         self.model = model
         self.ptype_data = ptype_data
-        self.save_ptype = save_ptype
 
     def create_description(self):
         """Create description for torch model
@@ -48,14 +47,13 @@ class TorchHandler:
         ----------
         ptype_data : pd.DataFrame, np.ndarray, or None
             Training data to create ptype
-        save_ptype : bool
 
         Returns
         -------
         ptype : pd.DataFrame or None
             Zero-row DataFrame for storing data types
         """
-        ptype = vetiver_create_ptype(self.ptype_data, self.save_ptype)
+        ptype = vetiver_create_ptype(self.ptype_data)
 
         return ptype
 
@@ -90,15 +88,10 @@ class TorchHandler:
                 prediction = self.model(torch.from_numpy(input_data))
             
             # do not check ptype
-            else:
-                batch = True
-                if not isinstance(input_data, list):
-                    batch = False
-                    input_data = input_data.split(",")  # user delimiter ?
-                input_data = np.array(input_data, dtype=np.array(self.ptype_data).dtype)
-                if not batch:
-                    input_data = input_data.reshape(1, -1)
-                prediction = self.model(torch.from_numpy(input_data))
+            else:    
+                input_data = torch.tensor(input_data)
+                prediction = self.model(input_data)
+
         else:
             raise ImportError("Cannot import `torch`.")
 

@@ -12,10 +12,9 @@ class SKLearnHandler:
         a trained sklearn model
     """
 
-    def __init__(self, model, ptype_data, save_ptype):
+    def __init__(self, model, ptype_data):
         self.model = model
         self.ptype_data = ptype_data
-        self.save_ptype = save_ptype
 
     def create_description(self):
         """Create description for sklearn model
@@ -42,14 +41,13 @@ class SKLearnHandler:
         ----------
         ptype_data : pd.DataFrame, np.ndarray, or None
             Training data to create ptype
-        save_ptype : bool
 
         Returns
         -------
         ptype : pd.DataFrame or None
             Zero-row DataFrame for storing data types
         """
-        ptype = vetiver_create_ptype(self.ptype_data, self.save_ptype)
+        ptype = vetiver_create_ptype(self.ptype_data)
         return ptype
 
     def handler_startup():

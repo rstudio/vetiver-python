@@ -1,13 +1,13 @@
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
-from fastapi.staticfiles import StaticFiles
 from fastapi.openapi.utils import get_openapi
 from fastapi import testclient
 
 import uvicorn
 import requests
 import pandas as pd
-from typing import Callable, Optional, Union, List
+import numpy as np
+from typing import Callable, Union, List
 
 from .vetiver_model import VetiverModel
 from .utils import _jupyter_nb
@@ -53,8 +53,37 @@ class VetiverAPI:
         async def ping():
             return {"ping": "pong"}
 
+        if self.check_ptype is True:
+
+            @app.post("/predict/")
+            async def prediction(
+                input_data: Union[self.model.ptype, List[self.model.ptype]]
+            ):  
+                if isinstance(input_data, List):
+                    served_data = _batch_data(input_data)
+                else:
+                    served_data = _prepare_data(input_data)
+
+                y = self.model.handler_predict(
+                    served_data, check_ptype=self.check_ptype
+                )
+
+                return {"prediction": y.tolist()}
+
+        elif self.check_ptype is False:
+
+            @app.post("/predict/")
+            async def prediction(input_data: Request):
+                
+                y = await input_data.json()
+                prediction = self.model.handler_predict(y, check_ptype=self.check_ptype)
+
+                return {"prediction": prediction.tolist()}
+        else: 
+            raise ValueError("cannot determine `check_ptype`")
+
         @app.get("/__docs__", response_class=HTMLResponse, include_in_schema=False)
-        async def rapidoc_pg():
+        async def rapidoc():
             return f"""
                     <!doctype html>
                     <html>
@@ -81,33 +110,6 @@ class VetiverAPI:
                         </body>
                     </html>
             """
-
-        if self.check_ptype == True:
-
-            @app.post("/predict/")
-            async def prediction(
-                input_data: Union[self.model.ptype, List[self.model.ptype]]
-            ):
-
-                if isinstance(input_data, List):
-                    served_data = _batch_data(input_data)
-                else:
-                    served_data = _prepare_data(input_data)
-
-                y = self.model.handler_predict(
-                    served_data, check_ptype=self.check_ptype
-                )
-
-                return {"prediction": y.tolist()}
-
-        else:
-
-            @app.post("/predict/")
-            async def prediction(input_data: Request):
-                y = await input_data.json()
-                prediction = self.model.handler_predict(y, check_ptype=self.check_ptype)
-
-                return {"prediction": prediction.tolist()}
 
         return app
 

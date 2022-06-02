@@ -24,8 +24,6 @@ class VetiverModel:
         A trained model, such as an sklearn or spacy model
     name : string
         Model name or ID
-    save_ptype :  bool
-        Should an input data prototype be saved with the model? 'TRUE' or 'FALSE'
     ptype_data : pd.DataFrame, np.array
         Sample of data model should expect when it is being served
     versioned :
@@ -40,21 +38,15 @@ class VetiverModel:
         self,
         model,
         model_name: str,
-        save_ptype: bool = True,
         ptype_data=None,
         versioned=None,
         description: str = None,
         metadata: dict = None,
         **kwargs
     ):
-        translator = create_translator(model, ptype_data, save_ptype)
-
-        if save_ptype is True:
-            if ptype_data is None:
-                raise AttributeError
+        translator = create_translator(model, ptype_data)
 
         self.model = model
-        self.save_ptype = save_ptype
         self.ptype = translator.ptype()
         self.model_name = model_name
         self.description = description if description else translator.create_description()

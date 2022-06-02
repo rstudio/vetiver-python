@@ -10,7 +10,6 @@ def _start_application():
     model = mock.get_mock_model().fit(X, y)
     v = VetiverModel(
         model=model,
-        save_ptype=True,
         ptype_data=X,
         model_name="my_model",
         versioned=None,
