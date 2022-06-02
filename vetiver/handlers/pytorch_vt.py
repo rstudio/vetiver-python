@@ -65,7 +65,7 @@ class TorchHandler:
         """
         ...
 
-    def handler_predict(self, input_data, check_ptype, **kw):
+    def handler_predict(self, input_data, check_ptype):
         """Generates method for /predict endpoint in VetiverAPI
 
         The `handler_predict` function executes at each API call. Use this
