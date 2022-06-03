@@ -93,7 +93,7 @@ class VetiverAPI:
                         <script type="module" src="https://unpkg.com/rapidoc@9.1.3/dist/rapidoc-min.js"></script>
                         </script></head>
                         <body>
-                            <rapi-doc spec-url="{app.openapi_url}"
+                            <rapi-doc spec-url="{self.app.openapi_url[1:]}"
                             id="thedoc" render-style="read" schema-style="tree" 
                             show-components="true" show-info="true" show-header="true" 
                             allow-search="true"
