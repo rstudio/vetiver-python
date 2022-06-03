@@ -9,6 +9,7 @@ import pandas as pd
 import numpy as np
 from typing import Callable, Union, List
 
+from . import __version__
 from .vetiver_model import VetiverModel
 from .utils import _jupyter_nb
 
@@ -47,7 +48,15 @@ class VetiverAPI:
 
         @app.get("/", include_in_schema=False)
         def docs_redirect():
-            return RedirectResponse("/__docs__")
+            
+            redirect = "__docs__"
+
+            return RedirectResponse(redirect)
+
+        if self.model.metadata.get("url") is not None:
+            @app.get("/pin-url")
+            def pin_url():
+                return repr(self.model.metadata.get("url"))
 
         @app.get("/ping", include_in_schema=True)
         async def ping():
@@ -169,9 +178,10 @@ class VetiverAPI:
             return self.app.openapi_schema
         openapi_schema = get_openapi(
             title=self.model.model_name + " model API",
-            version="0.1.3",
+            version= __version__,
             description=self.model.description,
             routes=self.app.routes,
+            servers=self.app.servers
         )
         openapi_schema["info"]["x-logo"] = {"url": "../docs/figures/logo.svg"}
         self.app.openapi_schema = openapi_schema
