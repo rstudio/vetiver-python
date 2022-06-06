@@ -1,4 +1,4 @@
-from vetiver.handlers._interface import create_translator
+from vetiver.handlers._interface import create_handler
 
 
 class NoModelAvailableError(Exception):
@@ -44,7 +44,7 @@ class VetiverModel:
         metadata: dict = None,
         **kwargs
     ):
-        translator = create_translator(model, ptype_data)
+        translator = create_handler(model, ptype_data)
 
         self.model = model
         self.ptype = translator.ptype()

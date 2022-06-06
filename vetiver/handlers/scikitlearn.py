@@ -1,9 +1,11 @@
+from vetiver.handlers.base import VetiverHandler
 from ..ptype import vetiver_create_ptype
-import pandas as pd
 from ..meta import vetiver_meta
+
+import pandas as pd
 import sklearn
 
-class SKLearnHandler:
+class SKLearnHandler(VetiverHandler):
     """Handler class for creating VetiverModels with sklearn.
 
     Parameters
@@ -13,8 +15,7 @@ class SKLearnHandler:
     """
 
     def __init__(self, model, ptype_data):
-        self.model = model
-        self.ptype_data = ptype_data
+        super().__init__(model, ptype_data)
 
     def create_description(self):
         """Create description for sklearn model

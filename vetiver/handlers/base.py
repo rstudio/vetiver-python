@@ -1,30 +1,24 @@
-from ..meta import vetiver_meta
 from ..ptype import vetiver_create_ptype
-import numpy as np
+from ..meta import vetiver_meta
 
-torch_exists = True
-try:
-    import torch
-except ImportError:
-    torch_exists = False
-
-
-class TorchHandler:
-    """Handler class for creating VetiverModels with torch.
+class VetiverHandler:
+    """Base handler class for creating VetiverModel of different type.
 
     Parameters
     ----------
-    model : nn.Module
-        a trained torch model
+    model :
+        a trained model
+    ptype_data:
+        An object with information (data) whose layout is to be determined.
     """
+
     def __init__(self, model, ptype_data):
         self.model = model
         self.ptype_data = ptype_data
 
     def create_description(self):
-        """Create description for torch model
-        """
-        desc = f"Pytorch model of type {type(self.model)}"
+        """Create description for model"""
+        desc = f"{self.model.__class__} model"
         return desc
 
     def vetiver_create_meta(
@@ -33,9 +27,7 @@ class TorchHandler:
         url: str = None,
         required_pkgs: list = [],
     ):
-        """Create metadata for torch model
-        """
-        required_pkgs = required_pkgs + ["torch"]
+        """Create metadata for sklearn model"""
         meta = vetiver_meta(user, version, url, required_pkgs)
 
         return meta
@@ -54,7 +46,6 @@ class TorchHandler:
             Zero-row DataFrame for storing data types
         """
         ptype = vetiver_create_ptype(self.ptype_data)
-
         return ptype
 
     def handler_startup():
@@ -64,6 +55,7 @@ class TorchHandler:
         function for tasks like loading packages.
         """
         ...
+
 
     def handler_predict(self, input_data, check_ptype):
         """Generates method for /predict endpoint in VetiverAPI
@@ -75,24 +67,13 @@ class TorchHandler:
         Parameters
         ----------
         input_data:
-            Test data
+            Data used to generate prediction
+        check_ptype:
+            If type should be checked against `ptype` or not
 
         Returns
         -------
         prediction
             Prediction from model
         """
-        if torch_exists:
-            if check_ptype == True:
-                input_data = np.array(input_data, dtype=np.array(self.ptype_data).dtype)
-                prediction = self.model(torch.from_numpy(input_data))
-            
-            # do not check ptype
-            else:    
-                input_data = torch.tensor(input_data)
-                prediction = self.model(input_data)
-
-        else:
-            raise ImportError("Cannot import `torch`.")
-
-        return prediction
+        ...
