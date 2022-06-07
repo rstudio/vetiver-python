@@ -15,5 +15,5 @@ from .meta import *
 from .write_docker import *
 from .write_fastapi import * 
 from .handlers._interface import *
-from .handlers.scikitlearn import *
-from .handlers.pytorch import *
+from .handlers.sklearn import SKLearnHandler
+from .handlers.torch import TorchHandler

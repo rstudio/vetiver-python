@@ -1,13 +1,6 @@
 from typing import Any
-from vetiver.handlers import pytorch, scikitlearn
+from vetiver.handlers import torch, sklearn
 from functools import singledispatch
-import sklearn
-
-torch_exists = True
-try:
-    import torch
-except ImportError:
-    torch_exists = False
 
 class InvalidModelError(Exception):
     """
@@ -90,11 +83,6 @@ def create_handler(model, ptype_data):
     """
     raise InvalidModelError(message=CREATE_PTYPE_TPL.format(_model_type=type(model)))
 
-@create_handler.register
-def _(model: sklearn.base.BaseEstimator, ptype_data: Any):
-    return scikitlearn.SKLearnHandler(model, ptype_data)
+create_handler.register(sklearn.SKLearnHandler.base_class, sklearn.SKLearnHandler)
 
-if torch_exists:
-    @create_handler.register
-    def _(model: torch.nn.Module, ptype_data: Any):
-        return pytorch.TorchHandler(model, ptype_data)
+create_handler.register(torch.TorchHandler.base_class, torch.TorchHandler)
