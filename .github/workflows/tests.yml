@@ -9,13 +9,21 @@ on:
     types: [published]
 
 jobs:
-  build:
+  tests:
     name: "Tests"
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: ['ubuntu-latest', 'macosx-latest', 'windows-latest']
-        python-version: ['3.7', '3.8', '3.9', '3.10']
+        include:
+          - os: 'ubuntu-latest'
+            python-version: '3.7'
+          - os: 'macos-latest'
+            python-version: '3.8'
+          - os: 'windows-latest'
+            python-version: '3.9'
+          - os: 'ubuntu-latest'
+            python-version: '3.10'
+
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
