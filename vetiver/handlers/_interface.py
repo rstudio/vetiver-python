@@ -1,5 +1,4 @@
-from typing import Any
-from vetiver.handlers import torch, sklearn
+from vetiver.handlers import torch, sklearn, base
 from functools import singledispatch
 
 class InvalidModelError(Exception):
@@ -20,7 +19,6 @@ Failed to create a handler from model of \
 type {_model_type}. If your model is not one of \
 (scikit-learn, torch), you should create and register \
 the handler. Here is a template for such a function: \
-    from pydantic import create_model
     from vetiver.handlers._interface import create_handler
     from vetiver.handlers.base import VetiverHandler
 
@@ -86,3 +84,5 @@ def create_handler(model, ptype_data):
 create_handler.register(sklearn.SKLearnHandler.base_class, sklearn.SKLearnHandler)
 
 create_handler.register(torch.TorchHandler.base_class, torch.TorchHandler)
+
+#create_handler.register(base.VetiverHandler, lambda model: model)

@@ -16,6 +16,9 @@ class VetiverHandler:
         self.model = model
         self.ptype_data = ptype_data
 
+    def __class__(self):
+        ...
+
     def create_description(self):
         """Create description for model"""
         desc = f"{self.model.__class__} model"

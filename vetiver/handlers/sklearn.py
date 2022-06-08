@@ -1,30 +1,27 @@
 from vetiver.handlers.base import VetiverHandler
-from ..meta import vetiver_meta
 from ..ptype import vetiver_create_ptype
-import numpy as np
+from ..meta import vetiver_meta
 
-torch_exists = True
-try:
-    import torch
-except ImportError:
-    torch_exists = False
+import pandas as pd
+import sklearn
 
-
-class TorchHandler(VetiverHandler):
-    """Handler class for creating VetiverModels with torch.
+class SKLearnHandler(VetiverHandler):
+    """Handler class for creating VetiverModels with sklearn.
 
     Parameters
     ----------
-    model : nn.Module
-        a trained torch model
+    model : sklearn.base.BaseEstimator
+        a trained sklearn model
     """
+    base_class = sklearn.base.BaseEstimator
+    
     def __init__(self, model, ptype_data):
         super().__init__(model, ptype_data)
 
     def create_description(self):
-        """Create description for torch model
+        """Create description for sklearn model
         """
-        desc = f"Pytorch model of type {type(self.model)}"
+        desc = f"Scikit-learn {self.model.__class__} model"
         return desc
 
     def vetiver_create_meta(
@@ -33,9 +30,8 @@ class TorchHandler(VetiverHandler):
         url: str = None,
         required_pkgs: list = [],
     ):
-        """Create metadata for torch model
-        """
-        required_pkgs = required_pkgs + ["torch"]
+        """Create metadata for sklearn model"""
+        required_pkgs = required_pkgs + ["scikit-learn"]
         meta = vetiver_meta(user, version, url, required_pkgs)
 
         return meta
@@ -54,7 +50,6 @@ class TorchHandler(VetiverHandler):
             Zero-row DataFrame for storing data types
         """
         ptype = vetiver_create_ptype(self.ptype_data)
-
         return ptype
 
     def handler_startup():
@@ -64,6 +59,7 @@ class TorchHandler(VetiverHandler):
         function for tasks like loading packages.
         """
         ...
+
 
     def handler_predict(self, input_data, check_ptype):
         """Generates method for /predict endpoint in VetiverAPI
@@ -82,17 +78,18 @@ class TorchHandler(VetiverHandler):
         prediction
             Prediction from model
         """
-        if torch_exists:
-            if check_ptype == True:
-                input_data = np.array(input_data, dtype=np.array(self.ptype_data).dtype)
-                prediction = self.model(torch.from_numpy(input_data))
-            
-            # do not check ptype
-            else:    
-                input_data = torch.tensor(input_data)
-                prediction = self.model(input_data)
 
+        if check_ptype == True:
+            if isinstance(input_data, pd.DataFrame):
+                prediction = self.model.predict(input_data)
+            else:
+               prediction = self.model.predict([input_data])
+
+        # do not check ptype
         else:
-            raise ImportError("Cannot import `torch`.")
+            if not isinstance(input_data, list):
+                input_data = [input_data.split(",")]  # user delimiter ?
+
+            prediction = self.model.predict(input_data)
 
         return prediction

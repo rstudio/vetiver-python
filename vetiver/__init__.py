@@ -14,6 +14,6 @@ from .attach_pkgs import *
 from .meta import *
 from .write_docker import *
 from .write_fastapi import * 
-from .handlers._interface import *
+from .handlers._interface import create_handler
 from .handlers.sklearn import SKLearnHandler
 from .handlers.torch import TorchHandler
