@@ -18,16 +18,19 @@ def test_vetiver_write_app_no_rspm():
 FROM python:{py_version}
 
 #
-WORKDIR /code
+WORKDIR /vetiver
 
 #
-COPY vetiver_requirements.txt /code/requirements.txt
+COPY vetiver_requirements.txt /vetiver/requirements.txt
 
 #
-RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
+RUN pip install --no-cache-dir --upgrade -r /vetiver/requirements.txt
 
 #
-COPY app.py /code/app
+COPY app.py /vetiver/app
+
+#
+EXPOSE 80
 
 #
 CMD ["uvicorn", "app.app:api", "--host", "0.0.0.0", "--port", "80"]
@@ -45,17 +48,20 @@ def test_vetiver_write_app_rspm():
 FROM python:{py_version}
 
 #
-WORKDIR /code
+WORKDIR /vetiver
 
 #
-COPY vetiver_requirements.txt /code/requirements.txt
+COPY vetiver_requirements.txt /vetiver/requirements.txt
 
 #
 RUN pip config set global.index-url https://colorado.rstudio.com/rspm/pypi/latest/simple
-RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
+RUN pip install --no-cache-dir --upgrade -r /vetiver/requirements.txt
 
 #
-COPY app.py /code/app
+COPY app.py /vetiver/app
+
+#
+EXPOSE 80
 
 #
 CMD ["uvicorn", "app.app:api", "--host", "0.0.0.0", "--port", "80"]

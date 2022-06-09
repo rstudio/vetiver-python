@@ -1,7 +1,7 @@
 import sys
 
 def vetiver_write_docker(app_file: str = "app.py",
-    path: str = ".",
+    path: str = "./",
     rspm_env: bool = False,
     host: str = "0.0.0.0",
     port: str = "80"):
@@ -33,16 +33,19 @@ def vetiver_write_docker(app_file: str = "app.py",
 FROM python:{py_version}
 
 #
-WORKDIR /code
+WORKDIR /vetiver
 
 #
-COPY vetiver_requirements.txt /code/requirements.txt
+COPY vetiver_requirements.txt /vetiver/requirements.txt
 
 #{rspm}
-RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
+RUN pip install --no-cache-dir --upgrade -r /vetiver/requirements.txt
 
 #
-COPY {app_file} /code/app
+COPY {app_file} /vetiver/app
+
+#
+EXPOSE {port}
 
 #
 CMD ["uvicorn", "app.app:api", "--host", "{host}", "--port", "{port}"]
