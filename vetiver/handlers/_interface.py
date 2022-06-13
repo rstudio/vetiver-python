@@ -1,6 +1,8 @@
 from vetiver.handlers import torch, sklearn, base
 from functools import singledispatch
 
+from vetiver.ptype import vetiver_create_ptype
+
 class InvalidModelError(Exception):
     """
     Throw an error if `model` is not
@@ -79,10 +81,16 @@ def create_handler(model, ptype_data):
     >>> handler.create_description()
     Scikit-learn <class 'sklearn.dummy.DummyRegressor'> model
     """
+
     raise InvalidModelError(message=CREATE_PTYPE_TPL.format(_model_type=type(model)))
 
 create_handler.register(sklearn.SKLearnHandler.base_class, sklearn.SKLearnHandler)
 
 create_handler.register(torch.TorchHandler.base_class, torch.TorchHandler)
 
-#create_handler.register(base.VetiverHandler, lambda model: model)
+@create_handler.register
+def _(model:base.VetiverHandler, ptype_data):
+    if model.ptype_data is None and ptype_data is not None:
+        model.ptype_data = ptype_data
+    
+    return model

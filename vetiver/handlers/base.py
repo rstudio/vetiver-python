@@ -1,14 +1,15 @@
 from ..ptype import vetiver_create_ptype
 from ..meta import vetiver_meta
+from abc import ABCMeta
 
-class VetiverHandler:
+class VetiverHandler(metaclass=ABCMeta):
     """Base handler class for creating VetiverModel of different type.
 
     Parameters
     ----------
     model :
         a trained model
-    ptype_data:
+    ptype_data :
         An object with information (data) whose layout is to be determined.
     """
 
@@ -16,8 +17,6 @@ class VetiverHandler:
         self.model = model
         self.ptype_data = ptype_data
 
-    def __class__(self):
-        ...
 
     def create_description(self):
         """Create description for model"""
