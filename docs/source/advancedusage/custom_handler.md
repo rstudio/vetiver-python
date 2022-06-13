@@ -29,7 +29,7 @@ def _(model: {_model_type}, ptype_data):
 VetiverModel(your_model, "your_model")
 ```
 
-If your datatype is a common type, please consider submitting a pull request.
+If your model is a common type, please consider [submitting a pull request](https://github.com/rstudio/vetiver-python/pulls).
 
 ## Different model implementation
 If your model's prediction function is different than vetiver's, you should create a custom handler with a `handler_predict` method to make predictions. Then, initialize your handler with your model, and pass the object into `VetiverModel`.
