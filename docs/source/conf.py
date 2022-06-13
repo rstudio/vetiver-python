@@ -10,9 +10,10 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-# import os
-# import sys
-# sys.path.insert(0, os.path.abspath('.'))
+import os
+import sys
+sys.path.insert(0, os.path.abspath('.'))
+from vetiver import __version__
 
 
 # -- Project information -----------------------------------------------------
@@ -22,7 +23,7 @@ copyright = "2022, RStudio"
 author = "Isabel Zimmerman"
 
 # The full version, including alpha/beta/rc tags
-release = "0.1.3"
+release = __version__
 
 
 # -- General configuration ---------------------------------------------------
@@ -63,6 +64,13 @@ html_theme_options = {
     "home_page_in_toc": True
 
 }
+
+source_suffix = {
+    '.rst': 'restructuredtext',
+    '.txt': 'markdown',
+    '.md': 'markdown',
+}
+myst_heading_anchors = 2
 
 html_logo = "../figures/logo.png"
 html_favicon = "../figures/logo.png"

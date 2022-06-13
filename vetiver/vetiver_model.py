@@ -18,10 +18,10 @@ class NoModelAvailableError(Exception):
 class VetiverModel:
     """Create VetiverModel class for serving.
 
-    Attributes
+    Parameters
     ----------
     model :
-        A trained model, such as an sklearn or spacy model
+        A trained model, such as an sklearn or torch model
     name : string
         Model name or ID
     ptype_data : pd.DataFrame, np.array
@@ -32,6 +32,19 @@ class VetiverModel:
         A detailed description of the model. if omitted, a brief description will be generated
     metadata : dict
         Other details to be saved and accessed for serving
+
+    Attributes
+    ----------    
+    ptype : pydantic.main.BaseModel
+        Data prototype
+    handler_predict:
+        Method to make predictions from a trained model
+    
+    Notes
+    -----
+    VetiverModel can also take an initialized custom VetiverHandler
+    as a model, for advanced use cases or non-supported model types.
+    
     """
 
     def __init__(

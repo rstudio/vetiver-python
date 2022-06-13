@@ -42,8 +42,6 @@ Version
 Deploy
 ==================
 
-.. currentmodule:: vetiver
-
 .. autosummary::
    :toctree: reference/
    :caption: Deploy
@@ -56,3 +54,10 @@ Deploy
    ~load_pkgs
    ~vetiver_write_app
    ~vetiver_write_docker
+
+Advanced Usage
+==================
+.. toctree::
+   advancedusage/custom_handler.md
+   :caption: Advanced Usage
+   
