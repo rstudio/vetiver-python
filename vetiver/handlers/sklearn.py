@@ -1,9 +1,8 @@
-from vetiver.handlers.base import VetiverHandler
-from ..ptype import vetiver_create_ptype
-from ..meta import vetiver_meta
-
 import pandas as pd
 import sklearn
+
+from .base import VetiverHandler
+from ..meta import vetiver_meta
 
 class SKLearnHandler(VetiverHandler):
     """Handler class for creating VetiverModels with sklearn.
@@ -18,13 +17,13 @@ class SKLearnHandler(VetiverHandler):
     def __init__(self, model, ptype_data):
         super().__init__(model, ptype_data)
 
-    def create_description(self):
+    def describe(self):
         """Create description for sklearn model
         """
         desc = f"Scikit-learn {self.model.__class__} model"
         return desc
 
-    def vetiver_create_meta(
+    def construct_meta(
         user: list = None,
         version: str = None,
         url: str = None,
@@ -35,30 +34,6 @@ class SKLearnHandler(VetiverHandler):
         meta = vetiver_meta(user, version, url, required_pkgs)
 
         return meta
-
-    def ptype(self):
-        """Create data prototype for torch model
-
-        Parameters
-        ----------
-        ptype_data : pd.DataFrame, np.ndarray, or None
-            Training data to create ptype
-
-        Returns
-        -------
-        ptype : pd.DataFrame or None
-            Zero-row DataFrame for storing data types
-        """
-        ptype = vetiver_create_ptype(self.ptype_data)
-        return ptype
-
-    def handler_startup():
-        """Include required packages for prediction
-
-        The `handler_startup` function executes when the API starts. Use this
-        function for tasks like loading packages.
-        """
-        ...
 
 
     def handler_predict(self, input_data, check_ptype):

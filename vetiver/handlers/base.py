@@ -18,12 +18,12 @@ class VetiverHandler(metaclass=ABCMeta):
         self.ptype_data = ptype_data
 
 
-    def create_description(self):
+    def describe(self):
         """Create description for model"""
         desc = f"{self.model.__class__} model"
         return desc
 
-    def vetiver_create_meta(
+    def create_meta(
         user: list = None,
         version: str = None,
         url: str = None,
@@ -34,7 +34,7 @@ class VetiverHandler(metaclass=ABCMeta):
 
         return meta
 
-    def ptype(self):
+    def construct_ptype(self):
         """Create data prototype for torch model
 
         Parameters

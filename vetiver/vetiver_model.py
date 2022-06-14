@@ -60,11 +60,11 @@ class VetiverModel:
         translator = create_handler(model, ptype_data)
 
         self.model = translator.model
-        self.ptype = translator.ptype()
+        self.ptype = translator.construct_ptype()
         self.model_name = model_name
-        self.description = description if description else translator.create_description()
+        self.description = description if description else translator.describe()
         self.versioned = versioned
-        self.metadata = translator.vetiver_create_meta(
+        self.metadata = translator.create_meta(
             metadata, required_pkgs=["vetiver"]
         )
         self.handler_predict = translator.handler_predict
