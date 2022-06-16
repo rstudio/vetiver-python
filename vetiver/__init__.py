@@ -4,6 +4,7 @@ __version__ = "0.1.5"
 __author__ = "Isabel Zimmerman <isabel.zimmerman@rstudio.com>"
 __all__ = []
 
+<<<<<<< HEAD
 import importlib  # noqa
 from .ptype import *  # noqa
 from .vetiver_model import VetiverModel  # noqa
@@ -20,3 +21,19 @@ from .handlers.sklearn import SKLearnHandler  # noqa
 from .handlers.torch import TorchHandler  # noqa
 from .rsconnect import deploy_rsconnect # noqa
 from .monitor import compute_metrics, pin_metrics, plot_metrics # noqa
+=======
+import importlib
+from .ptype import *
+from .vetiver_model import *
+from .server import *
+from .mock import *
+from .pin_read_write import *
+from .attach_pkgs import *
+from .meta import *
+from .write_docker import *
+from .write_fastapi import *
+from .handlers._interface import *
+from .handlers.sklearn_vt import *
+from .handlers.pytorch_vt import *
+from .monitor import compute_metrics, plot_metrics, pin_metrics
+>>>>>>> f936189 (pin_metrics to facet)
