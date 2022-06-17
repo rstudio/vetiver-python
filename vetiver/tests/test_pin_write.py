@@ -25,4 +25,4 @@ def test_board_pin_write():
     board = pins.board_temp(allow_pickle_read=True)
     vetiver_pin_write(board=board, model=v)
     assert isinstance(board.pin_read("model"), sklearn.dummy.DummyRegressor)
-
+    board.pin_delete("model")

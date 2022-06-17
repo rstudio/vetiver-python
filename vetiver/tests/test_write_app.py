@@ -28,3 +28,4 @@ v = vetiver.vetiver_pin_read(b, 'model', version = '{version}')
 vetiver_api = vetiver.VetiverAPI(v)
 api = vetiver_api.app
 """)
+    model_board.pin_delete("model")
