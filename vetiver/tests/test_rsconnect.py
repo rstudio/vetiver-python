@@ -6,6 +6,8 @@ from pins.boards import BoardRsConnect
 RSC_SERVER_URL = "http://localhost:3939"
 RSC_KEYS_FNAME = "vetiver/tests/rsconnect_api_keys.json"
 
+pytestmark = pytest.mark.rsc_test  # noqa
+
 def rsc_from_key(name):
     from pins.rsconnect.api import RsConnectApi
 

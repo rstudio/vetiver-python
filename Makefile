@@ -26,7 +26,9 @@ help:
 	@echo "release - package and upload a release"
 	@echo "dist - package"
 	@echo "install - install the package to the active Python's site-packages"
-	@echo "develop - install the package in development mode"
+	@echo "dev - generate RStudio Connect API keys"
+	@echo "dev-start - start up development RStudio Connect in Docker"
+	@echo "dev-stop - stop RStudio Connect dev container"
 
 clean: clean-build clean-pyc clean-test docs-clean
 
@@ -95,7 +97,3 @@ dev-stop:
 
 $(RSC_API_KEYS): dev-start
 	python script/setup-rsconnect/dump_api_keys.py $@
-
-test:
-	pytest
-
