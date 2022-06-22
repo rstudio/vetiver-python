@@ -4,7 +4,7 @@ import warnings
 import json
 
 from .vetiver_model import VetiverModel
-from .meta import vetiver_meta
+from .meta import _model_meta
 from .write_fastapi import _choose_version
 
 def vetiver_pin_write(board, model: VetiverModel, versioned: bool=True):
@@ -65,6 +65,9 @@ def vetiver_pin_read(board, name: str, version: str = None) -> VetiverModel:
     If reading a board from RSConnect, the `board` argument must be in "username/modelname" format.
     
     """
+
+    raise DeprecationWarning("vetiver_pin_read is now a classmethod VetiverModel.from_pin()")
+
     version = version if version is not None else _choose_version(board.pin_versions(name))
 
     model = board.pin_read(name, version)
@@ -73,7 +76,7 @@ def vetiver_pin_read(board, name: str, version: str = None) -> VetiverModel:
     v = VetiverModel(model = model,
         model_name = name,
         description = meta.description,
-        metadata = vetiver_meta(user = meta.user,
+        metadata = _model_meta(user = meta.user,
              version = version,
              url = meta.user.get("url"), # None all the time, besides Connect
              required_pkgs = meta.user.get("required_pkgs")

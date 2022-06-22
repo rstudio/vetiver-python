@@ -1,4 +1,9 @@
+import json
+
 from vetiver.handlers._interface import create_handler
+from .meta import _model_meta
+from .write_fastapi import _choose_version
+
 
 
 class NoModelAvailableError(Exception):
@@ -62,11 +67,38 @@ class VetiverModel:
         self.model = translator.model
         self.ptype = translator.construct_ptype()
         self.model_name = model_name
-        self.description = description if description else translator.describe()
+        self.description = (
+            description if description else translator.describe()
+        )
         self.versioned = versioned
-        self.metadata = translator.create_meta(
+        self.metadata = metadata if metadata else translator.create_meta(
             metadata, required_pkgs=["vetiver"]
         )
         self.handler_predict = translator.handler_predict
 
-        
+    @classmethod
+    def from_pin(cls, board, name: str, version: str = None):
+        version = (
+            version
+            if version is not None
+            else _choose_version(board.pin_versions(name))
+        )
+
+        model = board.pin_read(name, version)
+        meta = board.pin_meta(name)
+
+        return cls(
+            model=model,
+            model_name=name,
+            description=meta.description,
+            metadata=_model_meta(
+                user=meta.user,
+                version=version,
+                url=meta.user.get("url"),  # None all the time, besides Connect
+                required_pkgs=meta.user.get("required_pkgs"),
+            ),
+            ptype_data=json.loads(meta.user.get("ptype"))
+            if meta.user.get("ptype")
+            else None,
+            versioned=True,
+        )

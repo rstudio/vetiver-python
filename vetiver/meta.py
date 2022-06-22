@@ -1,4 +1,4 @@
-def vetiver_meta(user: dict = None, version: str = None,
+def _model_meta(user: dict = None, version: str = None,
             url: str = None, required_pkgs: list = None):
     """Populate relevant metadata for VetiverModel
 
