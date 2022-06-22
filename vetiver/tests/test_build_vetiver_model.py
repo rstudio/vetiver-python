@@ -1,8 +1,9 @@
+from numpy import isin
 import pytest
+import sklearn
 
-from vetiver.vetiver_model import VetiverModel
+import vetiver as vt
 from vetiver.mock import get_mock_data, get_mock_model
-from vetiver.pin_read_write import pin_write
 
 import pandas as pd
 import pydantic
@@ -16,7 +17,7 @@ model = get_mock_model().fit(X_df, y)
 
 def test_vetiver_model_array_ptype():
     # build VetiverModel, no ptype
-    vt1 = VetiverModel(
+    vt1 = vt.VetiverModel(
         model=model,
         ptype_data=X_array,
         model_name="iris",
@@ -32,7 +33,7 @@ def test_vetiver_model_array_ptype():
 
 def test_vetiver_model_df_ptype():
     # build VetiverModel, df ptype_data
-    vt2 = VetiverModel(
+    vt2 = vt.VetiverModel(
         model=model,
         ptype_data=X_df,
         model_name="iris",
@@ -48,7 +49,7 @@ def test_vetiver_model_df_ptype():
 
 def test_vetiver_model_dict_ptype():
     dict_data = {"B": 0, "C": 0, "D": 0}
-    vt3 = VetiverModel(
+    vt3 = vt.VetiverModel(
         model=model,
         ptype_data=dict_data,
         model_name="iris",
@@ -64,7 +65,7 @@ def test_vetiver_model_dict_ptype():
 
 def test_vetiver_model_no_ptype():
     # build VetiverModel, no ptype
-    vt4 = VetiverModel(
+    vt4 = vt.VetiverModel(
         model=model,
         ptype_data=None,
         model_name="iris",
@@ -78,18 +79,18 @@ def test_vetiver_model_no_ptype():
 
 def test_vetiver_model_from_pin():
 
-    v = VetiverModel(
+    v = vt.VetiverModel(
         model=model,
-        ptype_data=None,
-        model_name="iris",
+        ptype_data=X_df,
+        model_name="model",
         versioned=None,
         description=None,
         metadata=None,
     )
     board = pins.board_temp(allow_pickle_read=True)
-    vetiver_pin_write(board=board, model=v)
-    v = VetiverModel.from_pin(board, "model")
-    assert isinstance(v, VetiverModel) 
-    assert vt5.model == model
-    assert isinstance(vt5.ptype.construct(), pydantic.BaseModel)
+    vt.vetiver_pin_write(board=board, model=v)
+    v2 = vt.VetiverModel.from_pin(board, "model")
+    assert isinstance(v2, vt.VetiverModel) 
+    assert isinstance(v2.model, sklearn.base.BaseEstimator)
+    assert isinstance(v2.ptype.construct(), pydantic.BaseModel)
     board.pin_delete("model")

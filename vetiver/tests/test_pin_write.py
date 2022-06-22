@@ -1,7 +1,7 @@
 import pytest 
 
 from vetiver.mock import get_mock_data, get_mock_model
-from vetiver.pin_read_write import vetiver_pin_read, vetiver_pin_write
+from vetiver.pin_read_write import vetiver_pin_write
 from vetiver.vetiver_model import VetiverModel
 import sklearn
 import pins

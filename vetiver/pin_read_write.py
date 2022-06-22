@@ -1,4 +1,3 @@
-import pydantic
 import pins
 import warnings
 import json
