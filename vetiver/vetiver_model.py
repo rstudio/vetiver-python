@@ -21,15 +21,15 @@ class VetiverModel:
     Attributes
     ----------
     model :
-        A trained model, such as an sklearn or spacy model
+        A trained model, such as an sklearn or PyTorch model
     name : string
         Model name or ID
     ptype_data : pd.DataFrame, np.array
         Sample of data model should expect when it is being served
     versioned :
-        Should the model be served when created?
+        Should the model be versioned when created?
     description : str
-        A detailed description of the model. if omitted, a brief description will be generated
+        A detailed description of the model. If omitted, a brief description will be generated.
     metadata : dict
         Other details to be saved and accessed for serving
     """
