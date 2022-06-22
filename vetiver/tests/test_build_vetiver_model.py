@@ -1,4 +1,3 @@
-from numpy import isin
 import pytest
 import sklearn
 
@@ -77,6 +76,7 @@ def test_vetiver_model_no_ptype():
     assert vt4.model == model
     assert vt4.ptype == None
 
+
 def test_vetiver_model_from_pin():
 
     v = vt.VetiverModel(
@@ -90,7 +90,7 @@ def test_vetiver_model_from_pin():
     board = pins.board_temp(allow_pickle_read=True)
     vt.vetiver_pin_write(board=board, model=v)
     v2 = vt.VetiverModel.from_pin(board, "model")
-    assert isinstance(v2, vt.VetiverModel) 
+    assert isinstance(v2, vt.VetiverModel)
     assert isinstance(v2.model, sklearn.base.BaseEstimator)
     assert isinstance(v2.ptype.construct(), pydantic.BaseModel)
     board.pin_delete("model")

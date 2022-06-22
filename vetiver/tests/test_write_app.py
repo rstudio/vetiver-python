@@ -18,12 +18,13 @@ def test_write_app():
     os.remove(file)
     version = model_board.pin_versions("model").sort_values(by='created', ascending=False)
     version = version.version[0]
-    assert(contents == f"""import vetiver
+    assert(contents == f"""from vetiver import VetiverModel
+import vetiver
 import pins
 
 
 b = pins.board_folder('.', allow_pickle_read=True)
-v = vetiver.vetiver_pin_read(b, 'model', version = '{version}')
+v = VetiverModel.from_pin(b, 'model', version = '{version}')
 
 vetiver_api = vetiver.VetiverAPI(v)
 api = vetiver_api.app

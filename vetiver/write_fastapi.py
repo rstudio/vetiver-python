@@ -70,10 +70,10 @@ def write_app(board, pin_name: str, version: str = None, file: str = "app.py"):
         if not version:
             version = board.pin_versions(pin_name)
             version = _choose_version(version)
-        pin_read = f"v = vetiver.vetiver_pin_read(b, {repr(pin_name)}, version = {repr(version)})"
+        pin_read = f"v = VetiverModel.from_pin(b, {repr(pin_name)}, version = {repr(version)})"
 
     else:
-        pin_read = f"v = vetiver.pin_read_write.vetiver_pin_read(b, {repr(pin_name)})"
+        pin_read = f"v = VetiverModel.from_pin(b, {repr(pin_name)})"
 
     infra_pkgs = ["vetiver", "pins"]
 
@@ -81,7 +81,8 @@ def write_app(board, pin_name: str, version: str = None, file: str = "app.py"):
 
     f = open(file, "x")
 
-    app = f"""{_glue_required_pkgs(infra_pkgs)}
+    app = f"""from vetiver import VetiverModel
+{_glue_required_pkgs(infra_pkgs)}
 
 b = pins.{load_board}
 {pin_read}
