@@ -9,7 +9,10 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 
 _Vetiver, the oil of tranquility, is used as a stabilizing ingredient in perfumery to preserve more volatile fragrances._
 
-The goal of vetiver is to provide fluent tooling to version, share, deploy, and monitor a trained model. Functions handle both recording and checking the model's input data prototype, and predicting from a remote API endpoint. The vetiver package is extensible, with generics that can support many kinds of models, and available for both Python and R. To learn more about vetiver, see the documentation at <https://vetiver.rstudio.com/>
+The goal of vetiver is to provide fluent tooling to version, share, deploy, and monitor a trained model. Functions handle both recording and checking the model's input data prototype, and predicting from a remote API endpoint. The vetiver package is extensible, with generics that can support many kinds of models, and available for both Python and R. To learn more about vetiver, see:
+
+- the documentation at <https://vetiver.rstudio.com/>
+- the R package at <https://rstudio.github.io/vetiver-r/>
 
 You can use vetiver with:
 
