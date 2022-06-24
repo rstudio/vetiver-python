@@ -164,6 +164,18 @@
   </a>
  </li>
 </ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Advanced Usage
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../advancedusage/custom_handler.html">
+   Custom Handlers
+  </a>
+ </li>
+</ul>
 
     </div>
 </nav></div>
@@ -365,62 +377,38 @@ title="Print to PDF"
 <dt class="sig sig-object py" id="vetiver.VetiverModel">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vetiver.</span></span><span class="sig-name descname"><span class="pre">VetiverModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ptype_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">versioned</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vetiver.VetiverModel" title="Permalink to this definition">#</a></dt>
 <dd><p>Create VetiverModel class for serving.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> – A trained model, such as an sklearn or torch model</p></li>
+<li><p><strong>name</strong> (<em>string</em>) – Model name or ID</p></li>
+<li><p><strong>ptype_data</strong> (<em>pd.DataFrame</em><em>, </em><em>np.array</em>) – Sample of data model should expect when it is being served</p></li>
+<li><p><strong>versioned</strong> – Should the model be versioned when created?</p></li>
+<li><p><strong>description</strong> (<em>str</em>) – A detailed description of the model. If omitted, a brief description will be generated.</p></li>
+<li><p><strong>metadata</strong> (<em>dict</em>) – Other details to be saved and accessed for serving</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="vetiver.VetiverModel.model">
-<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#vetiver.VetiverModel.model" title="Permalink to this definition">#</a></dt>
-<dd><p>A trained model, such as an sklearn or PyTorch model</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vetiver.VetiverModel.name">
-<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#vetiver.VetiverModel.name" title="Permalink to this definition">#</a></dt>
-<dd><p>Model name or ID</p>
+<dt class="sig sig-object py" id="vetiver.VetiverModel.ptype">
+<span class="sig-name descname"><span class="pre">ptype</span></span><a class="headerlink" href="#vetiver.VetiverModel.ptype" title="Permalink to this definition">#</a></dt>
+<dd><p>Data prototype</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>string</p>
+<dd class="field-odd"><p>pydantic.main.BaseModel</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="vetiver.VetiverModel.ptype_data">
-<span class="sig-name descname"><span class="pre">ptype_data</span></span><a class="headerlink" href="#vetiver.VetiverModel.ptype_data" title="Permalink to this definition">#</a></dt>
-<dd><p>Sample of data model should expect when it is being served</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>pd.DataFrame, np.array</p>
-</dd>
-</dl>
+<dt class="sig sig-object py" id="vetiver.VetiverModel.handler_predict">
+<span class="sig-name descname"><span class="pre">handler_predict</span></span><a class="headerlink" href="#vetiver.VetiverModel.handler_predict" title="Permalink to this definition">#</a></dt>
+<dd><p>Method to make predictions from a trained model</p>
 </dd></dl>
 
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vetiver.VetiverModel.versioned">
-<span class="sig-name descname"><span class="pre">versioned</span></span><a class="headerlink" href="#vetiver.VetiverModel.versioned" title="Permalink to this definition">#</a></dt>
-<dd><p>Should the model be versioned when created?</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vetiver.VetiverModel.description">
-<span class="sig-name descname"><span class="pre">description</span></span><a class="headerlink" href="#vetiver.VetiverModel.description" title="Permalink to this definition">#</a></dt>
-<dd><p>A detailed description of the model. If omitted, a brief description will be generated.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vetiver.VetiverModel.metadata">
-<span class="sig-name descname"><span class="pre">metadata</span></span><a class="headerlink" href="#vetiver.VetiverModel.metadata" title="Permalink to this definition">#</a></dt>
-<dd><p>Other details to be saved and accessed for serving</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>dict</p>
-</dd>
-</dl>
-</dd></dl>
-
+<p class="rubric">Notes</p>
+<p>VetiverModel can also take an initialized custom VetiverHandler
+as a model, for advanced use cases or non-supported model types.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="vetiver.VetiverModel.__init__">
 <span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ptype_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">versioned</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vetiver.VetiverModel.__init__" title="Permalink to this definition">#</a></dt>
