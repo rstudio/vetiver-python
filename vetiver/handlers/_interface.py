@@ -79,7 +79,7 @@ def create_handler(model, ptype_data):
     >>> model = vetiver.mock.get_mock_model()
     >>> handler = vetiver.create_handler(model, X)
     >>> handler.describe()
-    Scikit-learn <class 'sklearn.dummy.DummyRegressor'> model
+    "Scikit-learn <class 'sklearn.dummy.DummyRegressor'> model"
     """
 
     raise InvalidModelError(message=CREATE_PTYPE_TPL.format(_model_type=type(model)))
