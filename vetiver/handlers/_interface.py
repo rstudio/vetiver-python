@@ -78,7 +78,7 @@ def create_handler(model, ptype_data):
     >>> X, y = vetiver.mock.get_mock_data()
     >>> model = vetiver.mock.get_mock_model()
     >>> handler = vetiver.create_handler(model, X)
-    >>> handler.create_description()
+    >>> handler.describe()
     Scikit-learn <class 'sklearn.dummy.DummyRegressor'> model
     """
 
