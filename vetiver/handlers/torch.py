@@ -1,6 +1,7 @@
-from ..meta import vetiver_meta
-from ..ptype import vetiver_create_ptype
 import numpy as np
+
+from .base import VetiverHandler
+from ..meta import vetiver_meta
 
 torch_exists = True
 try:
@@ -9,7 +10,7 @@ except ImportError:
     torch_exists = False
 
 
-class TorchHandler:
+class TorchHandler(VetiverHandler):
     """Handler class for creating VetiverModels with torch.
 
     Parameters
@@ -17,17 +18,17 @@ class TorchHandler:
     model : nn.Module
         a trained torch model
     """
+    base_class = torch.nn.Module
     def __init__(self, model, ptype_data):
-        self.model = model
-        self.ptype_data = ptype_data
+        super().__init__(model, ptype_data)
 
-    def create_description(self):
+    def describe(self):
         """Create description for torch model
         """
         desc = f"Pytorch model of type {type(self.model)}"
         return desc
 
-    def vetiver_create_meta(
+    def create_meta(
         user: list = None,
         version: str = None,
         url: str = None,
@@ -39,31 +40,6 @@ class TorchHandler:
         meta = vetiver_meta(user, version, url, required_pkgs)
 
         return meta
-
-    def ptype(self):
-        """Create data prototype for torch model
-
-        Parameters
-        ----------
-        ptype_data : pd.DataFrame, np.ndarray, or None
-            Training data to create ptype
-
-        Returns
-        -------
-        ptype : pd.DataFrame or None
-            Zero-row DataFrame for storing data types
-        """
-        ptype = vetiver_create_ptype(self.ptype_data)
-
-        return ptype
-
-    def handler_startup():
-        """Include required packages for prediction
-
-        The `handler_startup` function executes when the API starts. Use this
-        function for tasks like loading packages.
-        """
-        ...
 
     def handler_predict(self, input_data, check_ptype):
         """Generates method for /predict endpoint in VetiverAPI

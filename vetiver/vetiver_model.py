@@ -1,4 +1,4 @@
-from vetiver.handlers._interface import create_translator
+from vetiver.handlers._interface import create_handler
 
 
 class NoModelAvailableError(Exception):
@@ -18,10 +18,10 @@ class NoModelAvailableError(Exception):
 class VetiverModel:
     """Create VetiverModel class for serving.
 
-    Attributes
+    Parameters
     ----------
     model :
-        A trained model, such as an sklearn or PyTorch model
+        A trained model, such as an sklearn or torch model
     name : string
         Model name or ID
     ptype_data : pd.DataFrame, np.array
@@ -32,6 +32,19 @@ class VetiverModel:
         A detailed description of the model. If omitted, a brief description will be generated.
     metadata : dict
         Other details to be saved and accessed for serving
+
+    Attributes
+    ----------    
+    ptype : pydantic.main.BaseModel
+        Data prototype
+    handler_predict:
+        Method to make predictions from a trained model
+    
+    Notes
+    -----
+    VetiverModel can also take an initialized custom VetiverHandler
+    as a model, for advanced use cases or non-supported model types.
+    
     """
 
     def __init__(
@@ -44,14 +57,14 @@ class VetiverModel:
         metadata: dict = None,
         **kwargs
     ):
-        translator = create_translator(model, ptype_data)
+        translator = create_handler(model, ptype_data)
 
-        self.model = model
-        self.ptype = translator.ptype()
+        self.model = translator.model
+        self.ptype = translator.construct_ptype()
         self.model_name = model_name
-        self.description = description if description else translator.create_description()
+        self.description = description if description else translator.describe()
         self.versioned = versioned
-        self.metadata = translator.vetiver_create_meta(
+        self.metadata = translator.create_meta(
             metadata, required_pkgs=["vetiver"]
         )
         self.handler_predict = translator.handler_predict
