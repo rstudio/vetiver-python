@@ -2,6 +2,7 @@ import pins
 import pandas as pd
 import warnings
 
+
 def _choose_version(df: pd.DataFrame):
     """Choose pin version to load
 
@@ -10,10 +11,10 @@ def _choose_version(df: pd.DataFrame):
     df: pd.DataFrame
         Available pins versions
     """
-    if 'active' in df.columns:
+    if "active" in df.columns:
         version = df.active[0]
-    elif 'created' in df.columns: 
-        version_desc = df.sort_values(by='created', ascending=False)
+    elif "created" in df.columns:
+        version_desc = df.sort_values(by="created", ascending=False)
         version = version_desc.version[0]
     else:
         version = df.version[0]
@@ -23,6 +24,7 @@ def _choose_version(df: pd.DataFrame):
               Using version {version}"""
         )
     return version
+
 
 def _glue_required_pkgs(required_pkgs: list):
     """Generate import statements
@@ -39,8 +41,17 @@ def _glue_required_pkgs(required_pkgs: list):
 
     return load_required_pkgs
 
-def vetiver_write_app(board, pin_name: str,
-              version: str = None, file: str = "app.py"):
+
+def vetiver_write_app(board, pin_name: str, version: str = None, file: str = "app.py"):
+
+    warnings.warn(
+        "vetiver_write_app will be replaced by write_app in v1.0.0", DeprecationWarning
+    )
+
+    return write_app(board=board, pin_name=pin_name, version=version, file=file)
+
+
+def write_app(board, pin_name: str, version: str = None, file: str = "app.py", overwrite = False):
     """Write VetiverAPI app to a file
 
     Args
@@ -49,9 +60,9 @@ def vetiver_write_app(board, pin_name: str,
         API to be written
     pin_name : string
         Name of pin containing VetiverModel
-    version : 
+    version :
         Pins version of VetiverModel
-    file : 
+    file :
         Name of file
     """
 
@@ -59,19 +70,22 @@ def vetiver_write_app(board, pin_name: str,
         if not version:
             version = board.pin_versions(pin_name)
             version = _choose_version(version)
-        pin_read = f"v = vetiver.vetiver_pin_read(b, {repr(pin_name)}, version = {repr(version)})"
-        
+        pin_read = f"v = VetiverModel.from_pin(b, {repr(pin_name)}, version = {repr(version)})"
+
     else:
-        pin_read = f"v = vetiver.pin_read_write.vetiver_pin_read(b, {repr(pin_name)})"
+        pin_read = f"v = VetiverModel.from_pin(b, {repr(pin_name)})"
 
-    infra_pkgs = ['vetiver', 'pins']
-
+    infra_pkgs = ["vetiver", "pins"]
 
     load_board = pins.board_deparse(board)
-    
-    f = open(file, "x")
 
-    app = f"""{_glue_required_pkgs(infra_pkgs)}
+    if overwrite:
+        f = open(file, "w")
+    elif not overwrite:
+        f = open(file, "x")
+
+    app = f"""from vetiver import VetiverModel
+{_glue_required_pkgs(infra_pkgs)}
 
 b = pins.{load_board}
 {pin_read}

@@ -1,8 +1,9 @@
 import pandas as pd
 import sklearn
 
+from ..meta import _model_meta
 from .base import VetiverHandler
-from ..meta import vetiver_meta
+
 
 class SKLearnHandler(VetiverHandler):
     """Handler class for creating VetiverModels with sklearn.
@@ -12,14 +13,14 @@ class SKLearnHandler(VetiverHandler):
     model : sklearn.base.BaseEstimator
         a trained sklearn model
     """
+
     base_class = sklearn.base.BaseEstimator
-    
+
     def __init__(self, model, ptype_data):
         super().__init__(model, ptype_data)
 
     def describe(self):
-        """Create description for sklearn model
-        """
+        """Create description for sklearn model"""
         desc = f"Scikit-learn {self.model.__class__} model"
         return desc
 
@@ -31,10 +32,9 @@ class SKLearnHandler(VetiverHandler):
     ):
         """Create metadata for sklearn model"""
         required_pkgs = required_pkgs + ["scikit-learn"]
-        meta = vetiver_meta(user, version, url, required_pkgs)
+        meta = _model_meta(user, version, url, required_pkgs)
 
         return meta
-
 
     def handler_predict(self, input_data, check_ptype):
         """Generates method for /predict endpoint in VetiverAPI
@@ -58,7 +58,7 @@ class SKLearnHandler(VetiverHandler):
             if isinstance(input_data, pd.DataFrame):
                 prediction = self.model.predict(input_data)
             else:
-               prediction = self.model.predict([input_data])
+                prediction = self.model.predict([input_data])
 
         # do not check ptype
         else:

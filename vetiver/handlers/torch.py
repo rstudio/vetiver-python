@@ -1,7 +1,7 @@
 import numpy as np
 
+from ..meta import _model_meta
 from .base import VetiverHandler
-from ..meta import vetiver_meta
 
 torch_exists = True
 try:
@@ -18,13 +18,14 @@ class TorchHandler(VetiverHandler):
     model : nn.Module
         a trained torch model
     """
+
     base_class = torch.nn.Module
+
     def __init__(self, model, ptype_data):
         super().__init__(model, ptype_data)
 
     def describe(self):
-        """Create description for torch model
-        """
+        """Create description for torch model"""
         desc = f"Pytorch model of type {type(self.model)}"
         return desc
 
@@ -34,10 +35,9 @@ class TorchHandler(VetiverHandler):
         url: str = None,
         required_pkgs: list = [],
     ):
-        """Create metadata for torch model
-        """
+        """Create metadata for torch model"""
         required_pkgs = required_pkgs + ["torch"]
-        meta = vetiver_meta(user, version, url, required_pkgs)
+        meta = _model_meta(user, version, url, required_pkgs)
 
         return meta
 
@@ -62,9 +62,9 @@ class TorchHandler(VetiverHandler):
             if check_ptype == True:
                 input_data = np.array(input_data, dtype=np.array(self.ptype_data).dtype)
                 prediction = self.model(torch.from_numpy(input_data))
-            
+
             # do not check ptype
-            else:    
+            else:
                 input_data = torch.tensor(input_data)
                 prediction = self.model(input_data)
 

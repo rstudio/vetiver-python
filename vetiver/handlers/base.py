@@ -1,6 +1,7 @@
-from ..ptype import vetiver_create_ptype
-from ..meta import vetiver_meta
 from abc import ABCMeta
+
+from ..ptype import vetiver_create_ptype
+from ..meta import _model_meta
 
 class VetiverHandler(metaclass=ABCMeta):
     """Base handler class for creating VetiverModel of different type.
@@ -30,7 +31,7 @@ class VetiverHandler(metaclass=ABCMeta):
         required_pkgs: list = [],
     ):
         """Create metadata for sklearn model"""
-        meta = vetiver_meta(user, version, url, required_pkgs)
+        meta = _model_meta(user, version, url, required_pkgs)
 
         return meta
 
