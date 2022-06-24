@@ -77,23 +77,10 @@ def vetiver_pin_read(board, name: str, version: str = None) -> VetiverModel:
         version if version is not None else _choose_version(board.pin_versions(name))
     )
 
-    model = board.pin_read(name, version)
-    meta = board.pin_meta(name)
-
-    v = VetiverModel(
-        model=model,
-        model_name=name,
-        description=meta.description,
-        metadata=_model_meta(
-            user=meta.user,
-            version=version,
-            url=meta.user.get("url"),  # None all the time, besides Connect
-            required_pkgs=meta.user.get("required_pkgs"),
-        ),
-        ptype_data=json.loads(meta.user.get("ptype"))
-        if meta.user.get("ptype")
-        else None,
-        versioned=True,
+    v = VetiverModel.from_pin(
+        board = board, 
+        name = name,
+        version = version
     )
 
     return v

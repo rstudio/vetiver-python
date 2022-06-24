@@ -17,7 +17,7 @@ def _choose_version(df: pd.DataFrame):
         version_desc = df.sort_values(by="created", ascending=False)
         version = version_desc.version[0]
     else:
-        version = df.version[0]
+        version = df.version[-1]
         warnings.warn(
             f"""Pinned vetiver model has no active version and no datetime on versions,
               Do you need to check your pinned model?
@@ -51,7 +51,7 @@ def vetiver_write_app(board, pin_name: str, version: str = None, file: str = "ap
     return write_app(board=board, pin_name=pin_name, version=version, file=file)
 
 
-def write_app(board, pin_name: str, version: str = None, file: str = "app.py"):
+def write_app(board, pin_name: str, version: str = None, file: str = "app.py", overwrite = False):
     """Write VetiverAPI app to a file
 
     Args
@@ -79,7 +79,10 @@ def write_app(board, pin_name: str, version: str = None, file: str = "app.py"):
 
     load_board = pins.board_deparse(board)
 
-    f = open(file, "x")
+    if overwrite:
+        f = open(file, "w")
+    elif not overwrite:
+        f = open(file, "x")
 
     app = f"""from vetiver import VetiverModel
 {_glue_required_pkgs(infra_pkgs)}
