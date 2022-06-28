@@ -24,7 +24,7 @@ You can use vetiver with:
 You can install the released version of vetiver from [PyPI](https://pypi.org/project/vetiver/):
 
 ```python
-pip install vetiver
+python -m pip install vetiver
 ```
 
 And the development version from [GitHub](https://github.com/rstudio/vetiver-python) with:
