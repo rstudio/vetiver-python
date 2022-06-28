@@ -1,6 +1,6 @@
 import tempfile
-from rsconnect.actions import deploy_python_fastapi
 import typing
+from rsconnect.actions import deploy_python_fastapi
 
 from .write_fastapi import write_app
 
@@ -20,6 +20,9 @@ def deploy_rsconnect(
     log_callback: typing.Callable = None,
     image: str = None,
 ):
+    if not title:
+        title = pin_name + "_vetiver"
+
     with tempfile.TemporaryDirectory() as temp:
         tmp_app = temp + "/app.py"
         write_app(
@@ -35,7 +38,7 @@ def deploy_rsconnect(
             directory=temp,
             extra_files=extra_files,
             excludes=None,
-            entry_point="vetiver_api:api",
+            entry_point="app:api",
             new=new,
             app_id=app_id,
             title=title,

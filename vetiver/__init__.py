@@ -18,3 +18,4 @@ from .handlers._interface import create_handler, InvalidModelError
 from .handlers.base import VetiverHandler
 from .handlers.sklearn import SKLearnHandler
 from .handlers.torch import TorchHandler
+from .rsconnect import deploy_rsconnect

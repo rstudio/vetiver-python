@@ -5,12 +5,12 @@ import requests
 import sklearn
 from pins.boards import BoardRsConnect
 
-from vetiver import VetiverModel, vetiver_pin_write, mock
+import vetiver
 from vetiver.rsconnect import deploy_rsconnect
 
 # Load data, model
-X_df, y = mock.get_mock_data()
-model = mock.get_mock_model().fit(X_df, y)
+X_df, y = vetiver.mock.get_mock_data()
+model = vetiver.mock.get_mock_model().fit(X_df, y)
 
 RSC_SERVER_URL = "http://localhost:3939"
 RSC_KEYS_FNAME = "vetiver/tests/rsconnect_api_keys.json"
@@ -64,21 +64,24 @@ def rsc_short():
 
 
 def test_board_pin_write(rsc_short):
-    v = VetiverModel(
+    v = vetiver.VetiverModel(
         model=model, ptype_data=X_df, model_name="susan/model", versioned=None
     )
-    vetiver_pin_write(board=rsc_short, model=v)
+    vetiver.vetiver_pin_write(board=rsc_short, model=v)
     assert isinstance(rsc_short.pin_read("susan/model"), sklearn.dummy.DummyRegressor)
 
 
 def test_deploy(rsc_short):
-    v = VetiverModel(
+    v = vetiver.VetiverModel(
         model=model, ptype_data=X_df, model_name="susan/model", versioned=None
     )
 
-    vetiver_pin_write(board=rsc_short, model=v)
+    vetiver.vetiver_pin_write(board=rsc_short, model=v)
+    
     deploy_rsconnect(
-        connect_server=server_from_key("susan"), board=rsc_short, pin_name="susan/model"
+        connect_server=server_from_key("susan"), 
+        board=rsc_short, 
+        pin_name="susan/model"
     )
     response = requests.post(RSC_SERVER_URL + "/predict/", json=X_df)
     assert response.status_code == 200, response.text
