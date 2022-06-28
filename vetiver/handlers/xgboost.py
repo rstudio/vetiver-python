@@ -9,13 +9,13 @@ try:
 except ImportError:
     xgboost_exists = False
 
+
 class XGBoostHandler(VetiverHandler):
 
     base_class = xgboost.Booster
 
     def describe(self):
-        """Create description for sklearn model
-        """
+        """Create description for sklearn model"""
         desc = f"Scikit-learn {self.model.__class__} model"
         return desc
 
@@ -57,7 +57,7 @@ class XGBoostHandler(VetiverHandler):
 
                 prediction = self.model.predict(real_input)
             else:
-               prediction = self.model.predict(input_data)
+                prediction = self.model.predict(input_data)
 
         # NOTE: this code is copied from the sklearn handler
         # NOTE: how is this used?
@@ -66,9 +66,7 @@ class XGBoostHandler(VetiverHandler):
             if not isinstance(input_data, list):
                 input_data = [input_data.split(",")]  # user delimiter ?
 
-            prediction = self.model.predict(input_data)
+            dmat_data = xgboost.DMatrix(input_data, label=self.model.feature_names)
+            prediction = self.model.predict(dmat_data)
 
         return prediction
-
-
-
