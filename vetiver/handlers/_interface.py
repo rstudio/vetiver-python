@@ -1,4 +1,4 @@
-from vetiver.handlers import torch, sklearn, base
+from vetiver.handlers import torch, sklearn, xgboost, base
 from functools import singledispatch
 
 from vetiver.ptype import vetiver_create_ptype
@@ -87,6 +87,8 @@ def create_handler(model, ptype_data):
 create_handler.register(sklearn.SKLearnHandler.base_class, sklearn.SKLearnHandler)
 
 create_handler.register(torch.TorchHandler.base_class, torch.TorchHandler)
+
+create_handler.register(xgboost.XGBoostHandler.base_class, xgboost.XGBoostHandler)
 
 @create_handler.register
 def _(model:base.VetiverHandler, ptype_data):
