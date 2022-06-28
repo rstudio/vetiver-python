@@ -1,12 +1,29 @@
 import pytest
 import json
-from pins.rsconnect.fs import RsConnectFs
+import requests
+
+import sklearn
 from pins.boards import BoardRsConnect
+
+from vetiver import VetiverModel, vetiver_pin_write, mock
+from vetiver.rsconnect import deploy_rsconnect
+
+# Load data, model
+X_df, y = mock.get_mock_data()
+model = mock.get_mock_model().fit(X_df, y)
 
 RSC_SERVER_URL = "http://localhost:3939"
 RSC_KEYS_FNAME = "vetiver/tests/rsconnect_api_keys.json"
 
 pytestmark = pytest.mark.rsc_test  # noqa
+
+
+def server_from_key(name):
+    from rsconnect.api import RSConnectServer
+
+    with open(RSC_KEYS_FNAME) as f:
+        api_key = json.load(f)[name]
+        return RSConnectServer(RSC_SERVER_URL, api_key)
 
 def rsc_from_key(name):
     from pins.rsconnect.api import RsConnectApi
@@ -14,6 +31,7 @@ def rsc_from_key(name):
     with open(RSC_KEYS_FNAME) as f:
         api_key = json.load(f)[name]
         return RsConnectApi(RSC_SERVER_URL, api_key)
+
 
 def rsc_fs_from_key(name):
     from pins.rsconnect.fs import RsConnectFs
@@ -29,6 +47,7 @@ def rsc_delete_user_content(rsc):
     for entry in content:
         rsc.delete_content_item(entry["guid"])
 
+
 @pytest.fixture(scope="function")
 def rsc_short():
     # tears down content after each test
@@ -37,18 +56,30 @@ def rsc_short():
     # delete any content that might already exist
     rsc_delete_user_content(fs_susan.api)
 
-    yield BoardRsConnect("", fs_susan, allow_pickle_read=True) #fs_susan.ls to list content
+    yield BoardRsConnect(
+        "", fs_susan, allow_pickle_read=True
+    )  # fs_susan.ls to list content
 
     rsc_delete_user_content(fs_susan.api)
 
-from vetiver import VetiverModel, vetiver_pin_write, mock
-import sklearn
-# Load data, model
-X_df, y = mock.get_mock_data()
-model = mock.get_mock_model().fit(X_df, y)
 
 def test_board_pin_write(rsc_short):
-    v = VetiverModel(model=model, ptype_data=X_df,
-        model_name="susan/model", versioned=None)
+    v = VetiverModel(
+        model=model, ptype_data=X_df, model_name="susan/model", versioned=None
+    )
     vetiver_pin_write(board=rsc_short, model=v)
     assert isinstance(rsc_short.pin_read("susan/model"), sklearn.dummy.DummyRegressor)
+
+
+def test_deploy(rsc_short):
+    v = VetiverModel(
+        model=model, ptype_data=X_df, model_name="susan/model", versioned=None
+    )
+
+    vetiver_pin_write(board=rsc_short, model=v)
+    deploy_rsconnect(
+        connect_server=server_from_key("susan"), board=rsc_short, pin_name="susan/model"
+    )
+    response = requests.post(RSC_SERVER_URL + "/predict/", json=X_df)
+    assert response.status_code == 200, response.text
+    assert response.json() == {"prediction": [44.47, 44.47]}, response.json()

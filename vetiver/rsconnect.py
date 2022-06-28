@@ -1,43 +1,47 @@
-from tempfile import tempdir
-import rsconnect
+import tempfile
+from rsconnect.actions import deploy_python_fastapi
 import typing
 
 from .write_fastapi import write_app
+
 
 def deploy_rsconnect(
     connect_server,
     board,
     pin_name,
-    version,
-    directory: str,
-    extra_files: typing.List[str],
-    excludes: typing.List[str],
-    entry_point: str,
-    new: bool,
-    app_id: int,
-    title: str,
-    python: str,
-    conda_mode: bool,
-    force_generate: bool,
-    log_callback: typing.Callable,
+    version = None,
+    extra_files: typing.List[str] = None,
+    new: bool = False,
+    app_id: int = None,
+    title: str = None,
+    python: str = None,
+    conda_mode: bool = False,
+    force_generate: bool = False,
+    log_callback: typing.Callable = None,
     image: str = None,
 ):
-    tmp = tempdir()
+    with tempfile.TemporaryDirectory() as temp:
+        tmp_app = temp + "/app.py"
+        write_app(
+            board=board,
+            pin_name=pin_name,
+            version=version,
+            file=tmp_app,
+            overwrite=False,
+        )
 
-    write_app(board = board, pin_name = pin_name, version = version, file = tmp+"app.py", overwrite = False)
-
-    rsconnect.actions.deploy_python_fastapi(
-        connect_server = connect_server,
-        directory = directory,
-        extra_files = extra_files,
-        excludes = excludes,
-        entry_point = entry_point,
-        new = new,
-        app_id = app_id,
-        title = title,
-        python = python,
-        conda_mode = conda_mode,
-        force_generate = force_generate,
-        log_callback = log_callback,
-        image = image,
-     )
+        deploy_python_fastapi(
+            connect_server=connect_server,
+            directory=temp,
+            extra_files=extra_files,
+            excludes=None,
+            entry_point="vetiver_api:api",
+            new=new,
+            app_id=app_id,
+            title=title,
+            python=python,
+            conda_mode=conda_mode,
+            force_generate=force_generate,
+            log_callback=log_callback,
+            image=image,
+        )
