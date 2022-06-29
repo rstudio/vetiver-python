@@ -7,7 +7,7 @@ __all__ = []
 import importlib
 from .ptype import *
 from .vetiver_model import VetiverModel
-from .server import VetiverAPI, vetiver_endpoint
+from .server import VetiverAPI, vetiver_endpoint, predict
 from .mock import get_mock_data, get_mock_model
 from .pin_read_write import vetiver_pin_write
 from .attach_pkgs import *
