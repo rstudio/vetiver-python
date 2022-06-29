@@ -34,7 +34,7 @@
     <link rel="shortcut icon" href="../_static/logo.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="vetiver.load_pkgs" href="../reference/vetiver.load_pkgs.html" />
+    <link rel="prev" title="vetiver.write_docker" href="../reference/vetiver.write_docker.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -106,11 +106,6 @@
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../reference/vetiver.pin_read_write.vetiver_pin_read.html">
-   vetiver.pin_read_write.vetiver_pin_read
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="../reference/vetiver.pin_read_write.vetiver_pin_write.html">
    vetiver.pin_read_write.vetiver_pin_write
   </a>
@@ -148,8 +143,13 @@
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../reference/vetiver.load_pkgs.html">
-   vetiver.load_pkgs
+  <a class="reference internal" href="../reference/vetiver.write_app.html">
+   vetiver.write_app
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../reference/vetiver.write_docker.html">
+   vetiver.write_docker
   </a>
  </li>
 </ul>
@@ -415,7 +415,7 @@ title="Print to PDF"
 <span class="k">class</span> <span class="nc">SampleCustomHandler</span><span class="p">(</span><span class="n">VetiverHandler</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">ptype_data</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">ptype_data</span><span class="p">)</span>
-    
+
     <span class="k">def</span> <span class="nf">handler_predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_data</span><span class="p">,</span> <span class="n">check_ptype</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        handler_predict defines how to make predictions from your model</span>
@@ -456,11 +456,11 @@ title="Print to PDF"
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="../reference/vetiver.load_pkgs.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="../reference/vetiver.write_docker.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">vetiver.load_pkgs</p>
+            <p class="prev-next-title">vetiver.write_docker</p>
         </div>
     </a>
 </div>

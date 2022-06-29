@@ -106,11 +106,6 @@
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="reference/vetiver.pin_read_write.vetiver_pin_read.html">
-   vetiver.pin_read_write.vetiver_pin_read
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="reference/vetiver.pin_read_write.vetiver_pin_write.html">
    vetiver.pin_read_write.vetiver_pin_write
   </a>
@@ -148,8 +143,13 @@
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="reference/vetiver.load_pkgs.html">
-   vetiver.load_pkgs
+  <a class="reference internal" href="reference/vetiver.write_app.html">
+   vetiver.write_app
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="reference/vetiver.write_docker.html">
+   vetiver.write_docker
   </a>
  </li>
 </ul>
@@ -459,10 +459,7 @@ more on how to get started.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="reference/vetiver.VetiverModel.html#vetiver.VetiverModel" title="vetiver.VetiverModel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VetiverModel</span></code></a>(model, model_name[, ...])</p></td>
 <td><p>Create VetiverModel class for serving.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="reference/vetiver.pin_read_write.vetiver_pin_read.html#vetiver.pin_read_write.vetiver_pin_read" title="vetiver.pin_read_write.vetiver_pin_read"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vetiver_pin_read</span></code></a>(board, name[, version])</p></td>
-<td><p>Read pin and populate VetiverModel</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="reference/vetiver.pin_read_write.vetiver_pin_write.html#vetiver.pin_read_write.vetiver_pin_write" title="vetiver.pin_read_write.vetiver_pin_write"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vetiver_pin_write</span></code></a>(board, model[, versioned])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/vetiver.pin_read_write.vetiver_pin_write.html#vetiver.pin_read_write.vetiver_pin_write" title="vetiver.pin_read_write.vetiver_pin_write"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vetiver_pin_write</span></code></a>(board, model[, versioned])</p></td>
 <td><p>Pin a trained VetiverModel along with other model metadata.</p></td>
 </tr>
 </tbody>
@@ -491,8 +488,11 @@ more on how to get started.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="reference/vetiver.predict.html#vetiver.predict" title="vetiver.predict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">predict</span></code></a>(endpoint, data, **kw)</p></td>
 <td><p>Make a prediction from model endpoint</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="reference/vetiver.load_pkgs.html#vetiver.load_pkgs" title="vetiver.load_pkgs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_pkgs</span></code></a>([model, packages, path])</p></td>
-<td><p>Load packages necessary for predictions</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/vetiver.write_app.html#vetiver.write_app" title="vetiver.write_app"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_app</span></code></a>(board, pin_name[, version, file, ...])</p></td>
+<td><p>Write VetiverAPI app to a file</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/vetiver.write_docker.html#vetiver.write_docker" title="vetiver.write_docker"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_docker</span></code></a>([app_file, path, rspm_env, ...])</p></td>
+<td><p>Writes a Dockerfile to run VetiverAPI in a container</p></td>
 </tr>
 </tbody>
 </table>
