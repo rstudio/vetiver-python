@@ -5,18 +5,12 @@
 
 .. autoclass:: VetiverModel
 
-   
+
    .. automethod:: __init__
 
-   
+
    .. rubric:: Methods
 
    .. autosummary::
-   
-      ~VetiverModel.__init__
-   
-   
 
-   
-   
-   
+      ~VetiverModel.__init__

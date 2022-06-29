@@ -1,5 +1,3 @@
-import pytest
-
 from vetiver import mock, VetiverModel, VetiverAPI
 from fastapi.testclient import TestClient
 
@@ -39,7 +37,7 @@ def test_endpoint_adds_no_ptype():
     app = _start_application(check_ptype=False).app
 
     client = TestClient(app)
-    data = [0,0,0]
+    data = [0, 0, 0]
     response = client.post("/sum/", json=data)
     assert response.status_code == 200, response.text
     assert response.json() == {"sum": 0}, response.json()

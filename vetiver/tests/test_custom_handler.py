@@ -1,4 +1,3 @@
-import pytest
 import sklearn
 import pydantic
 import pandas as pd
@@ -11,11 +10,11 @@ class CustomHandler(VetiverHandler):
         super().__init__(model, ptype_data)
 
     def handler_predict(self, input_data, check_ptype):
-        if check_ptype == True:
+        if check_ptype is True:
             if isinstance(input_data, pd.DataFrame):
                 prediction = self.model.predict(input_data)
             else:
-               prediction = self.model.predict([input_data])
+                prediction = self.model.predict([input_data])
         else:
             if not isinstance(input_data, list):
                 input_data = [input_data.split(",")]  # user delimiter ?
@@ -42,7 +41,7 @@ def test_custom_vetiver_model():
     assert isinstance(v.ptype.construct(), pydantic.BaseModel)
 
 
-def test_custom_vetiver_model():
+def test_custom_vetiver_model_no_ptype():
     X, y = mock.get_mock_data()
     model = mock.get_mock_model().fit(X, y)
     custom_handler = CustomHandler(model, None)

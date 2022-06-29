@@ -10,7 +10,7 @@ assignees: ''
 Prepare for release:
 
 - [ ] `pre-commit run`
-- [ ] `pytest vetiver/tests/` 
+- [ ] `pytest vetiver/tests/`
 - [ ] bump release number
 
 Submit to PyPI:

@@ -5,7 +5,6 @@ from .meta import _model_meta
 from .write_fastapi import _choose_version
 
 
-
 class NoModelAvailableError(Exception):
     """
     Throw an error if we don't find a method
@@ -39,17 +38,17 @@ class VetiverModel:
         Other details to be saved and accessed for serving
 
     Attributes
-    ----------    
+    ----------
     ptype : pydantic.main.BaseModel
         Data prototype
     handler_predict:
         Method to make predictions from a trained model
-    
+
     Notes
     -----
     VetiverModel can also take an initialized custom VetiverHandler
     as a model, for advanced use cases or non-supported model types.
-    
+
     """
 
     def __init__(
@@ -67,12 +66,12 @@ class VetiverModel:
         self.model = translator.model
         self.ptype = translator.construct_ptype()
         self.model_name = model_name
-        self.description = (
-            description if description else translator.describe()
-        )
+        self.description = description if description else translator.describe()
         self.versioned = versioned
-        self.metadata = metadata if metadata else translator.create_meta(
-            metadata, required_pkgs=["vetiver"]
+        self.metadata = (
+            metadata
+            if metadata
+            else translator.create_meta(metadata, required_pkgs=["vetiver"])
         )
         self.handler_predict = translator.handler_predict
 

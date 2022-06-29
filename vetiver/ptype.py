@@ -1,4 +1,5 @@
 from functools import singledispatch
+
 try:
     from types import NoneType
 except ImportError:
@@ -37,7 +38,7 @@ class InvalidPTypeError(Exception):
         super().__init__(self.message)
 
 
-CREATE_PTYPE_TPL =  """\
+CREATE_PTYPE_TPL = """\
 Failed to create a data prototype (ptype) from data of \
 type {_data_type}. If your datatype is not one of \
 (pd.DataFrame, pydantic.BaseModel, np.ndarry, dict), \
@@ -57,6 +58,7 @@ If your datatype is a common type, please consider submitting \
 a pull request.
 """
 
+
 @singledispatch
 def vetiver_create_ptype(data):
     """Create zero row structure to save data types
@@ -72,9 +74,7 @@ def vetiver_create_ptype(data):
         Data prototype
 
     """
-    raise InvalidPTypeError(
-        message=CREATE_PTYPE_TPL.format(_data_type=type(data))
-    )
+    raise InvalidPTypeError(message=CREATE_PTYPE_TPL.format(_data_type=type(data)))
 
 
 @vetiver_create_ptype.register
@@ -143,6 +143,7 @@ def _(data: np.ndarray):
     >>> prototype2()
     ptype(0=1, 1='a')
     """
+
     def _item(value):
         # pydantic needs python objects. .item() converts a numpy
         # scalar type to a python equivalent, and if the ndarray

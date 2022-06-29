@@ -35,7 +35,7 @@ python -m pip install git+https://github.com/rstudio/vetiver-python
 
 ## Example
 
-A `VetiverModel()` object collects the information needed to store, version, and deploy a trained model. 
+A `VetiverModel()` object collects the information needed to store, version, and deploy a trained model.
 
 ```python
 from vetiver import mock, VetiverModel

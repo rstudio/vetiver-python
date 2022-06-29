@@ -3,6 +3,7 @@ from abc import ABCMeta
 from ..ptype import vetiver_create_ptype
 from ..meta import _model_meta
 
+
 class VetiverHandler(metaclass=ABCMeta):
     """Base handler class for creating VetiverModel of different type.
 
@@ -17,7 +18,6 @@ class VetiverHandler(metaclass=ABCMeta):
     def __init__(self, model, ptype_data):
         self.model = model
         self.ptype_data = ptype_data
-
 
     def describe(self):
         """Create description for model"""
@@ -58,7 +58,6 @@ class VetiverHandler(metaclass=ABCMeta):
         function for tasks like loading packages.
         """
         ...
-
 
     def handler_predict(self, input_data, check_ptype):
         """Generates method for /predict endpoint in VetiverAPI
