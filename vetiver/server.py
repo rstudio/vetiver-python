@@ -48,12 +48,13 @@ class VetiverAPI:
 
         @app.get("/", include_in_schema=False)
         def docs_redirect():
-            
+
             redirect = "__docs__"
 
             return RedirectResponse(redirect)
 
         if self.model.metadata.get("url") is not None:
+
             @app.get("/pin-url")
             def pin_url():
                 return repr(self.model.metadata.get("url"))
@@ -67,7 +68,7 @@ class VetiverAPI:
             @app.post("/predict/")
             async def prediction(
                 input_data: Union[self.model.ptype, List[self.model.ptype]]
-            ):  
+            ):
                 if isinstance(input_data, List):
                     served_data = _batch_data(input_data)
                 else:
@@ -83,12 +84,13 @@ class VetiverAPI:
 
             @app.post("/predict/")
             async def prediction(input_data: Request):
-                
+
                 y = await input_data.json()
                 prediction = self.model.handler_predict(y, check_ptype=self.check_ptype)
 
                 return {"prediction": prediction.tolist()}
-        else: 
+
+        else:
             raise ValueError("cannot determine `check_ptype`")
 
         @app.get("/__docs__", response_class=HTMLResponse, include_in_schema=False)
@@ -103,8 +105,8 @@ class VetiverAPI:
                         </script></head>
                         <body>
                             <rapi-doc spec-url="{self.app.openapi_url[1:]}"
-                            id="thedoc" render-style="read" schema-style="tree" 
-                            show-components="true" show-info="true" show-header="true" 
+                            id="thedoc" render-style="read" schema-style="tree"
+                            show-components="true" show-info="true" show-header="true"
                             allow-search="true"
                             show-side-nav="false"
                             allow-authentication="false" update-route="false" match-type="regex"
@@ -139,7 +141,7 @@ class VetiverAPI:
         dict
             Key: endpoint_name Value: Output of endpoint_fx, in list format
         """
-        if self.check_ptype == True:
+        if self.check_ptype is True:
 
             @self.app.post("/" + endpoint_name + "/")
             async def custom_endpoint(input_data: self.model.ptype):
@@ -156,19 +158,16 @@ class VetiverAPI:
 
                 return {endpoint_name: new.tolist()}
 
-    def run(self,
-        port: int = 8000,
-        host: str = "127.0.0.1",
-        **kw):
+    def run(self, port: int = 8000, host: str = "127.0.0.1", **kw):
         """
         Start API
-        
+
         Parameters
         ----------
         port : int
             An integer that indicates the server port that should be listened on.
         host : str
-            A valid IPv4 or IPv6 address, which the application will listen on. 
+            A valid IPv4 or IPv6 address, which the application will listen on.
         """
         _jupyter_nb()
         uvicorn.run(self.app, port=port, host=host, **kw)
@@ -178,14 +177,15 @@ class VetiverAPI:
             return self.app.openapi_schema
         openapi_schema = get_openapi(
             title=self.model.model_name + " model API",
-            version= __version__,
+            version=__version__,
             description=self.model.description,
             routes=self.app.routes,
-            servers=self.app.servers
+            servers=self.app.servers,
         )
         openapi_schema["info"]["x-logo"] = {"url": "../docs/figures/logo.svg"}
         self.app.openapi_schema = openapi_schema
         return self.app.openapi_schema
+
 
 def predict(endpoint, data: Union[dict, pd.DataFrame, pd.Series], **kw):
     """Make a prediction from model endpoint
@@ -205,10 +205,10 @@ def predict(endpoint, data: Union[dict, pd.DataFrame, pd.Series], **kw):
     if isinstance(endpoint, testclient.TestClient):
         requester = endpoint
         endpoint = "/predict/"
-    else: 
+    else:
         requester = requests
 
-    # TO DO: arrow format 
+    # TO DO: arrow format
 
     if isinstance(data, pd.DataFrame):
         data_json = data.to_json(orient="records")
@@ -221,14 +221,18 @@ def predict(endpoint, data: Union[dict, pd.DataFrame, pd.Series], **kw):
     else:
         try:
             response = requester.post(endpoint, json=data, **kw)
-        except:
-            raise TypeError(f"Predict expects a DataFrame or dict. Given type is {type(data)}")
+        except TypeError:
+            raise TypeError(
+                f"Predict expects a DataFrame or dict. Given type is {type(data)}"
+            )
 
     response_df = pd.DataFrame.from_dict(response.json())
-    
-    if isinstance(response_df.iloc[0,0], dict):
-        if 'type_error.dict' in response_df.iloc[0,0].values():
-            raise TypeError(f"Predict expects a DataFrame or dict. Given type is {type(data)}")
+
+    if isinstance(response_df.iloc[0, 0], dict):
+        if "type_error.dict" in response_df.iloc[0, 0].values():
+            raise TypeError(
+                f"Predict expects a DataFrame or dict. Given type is {type(data)}"
+            )
 
     return response_df
 

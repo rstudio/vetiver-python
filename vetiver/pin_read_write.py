@@ -1,9 +1,6 @@
-import pins
 import warnings
-import json
 
 from .vetiver_model import VetiverModel
-from .meta import _model_meta
 from .write_fastapi import _choose_version
 
 
@@ -30,7 +27,7 @@ def vetiver_pin_write(board, model: VetiverModel, versioned: bool = True):
         description=model.description,
         metadata={
             "required_pkgs": model.metadata.get("required_pkgs"),
-            "ptype": None if model.ptype == None else model.ptype().json(),
+            "ptype": None if model.ptype is None else model.ptype().json(),
         },
         versioned=versioned,
     )
@@ -77,10 +74,6 @@ def vetiver_pin_read(board, name: str, version: str = None) -> VetiverModel:
         version if version is not None else _choose_version(board.pin_versions(name))
     )
 
-    v = VetiverModel.from_pin(
-        board = board, 
-        name = name,
-        version = version
-    )
+    v = VetiverModel.from_pin(board=board, name=name, version=version)
 
     return v

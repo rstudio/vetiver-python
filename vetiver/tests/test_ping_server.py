@@ -1,8 +1,5 @@
-import pytest
-
 from vetiver import mock, VetiverModel, VetiverAPI
 from fastapi.testclient import TestClient
-import numpy as np
 
 
 def _start_application():

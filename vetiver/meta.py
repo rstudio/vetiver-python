@@ -1,5 +1,6 @@
-def _model_meta(user: dict = None, version: str = None,
-            url: str = None, required_pkgs: list = None):
+def _model_meta(
+    user: dict = None, version: str = None, url: str = None, required_pkgs: list = None
+):
     """Populate relevant metadata for VetiverModel
 
     Args
@@ -14,9 +15,9 @@ def _model_meta(user: dict = None, version: str = None,
             Packages necessary to make predictions
     """
     meta = {
-        'user': user,
-        'version': version,
-        'url': url,
-        'required_pkgs': required_pkgs
-        }
+        "user": user,
+        "version": version,
+        "url": url,
+        "required_pkgs": required_pkgs,
+    }
     return meta

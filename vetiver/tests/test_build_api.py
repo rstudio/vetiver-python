@@ -1,5 +1,3 @@
-import pytest
-
 from vetiver import mock, VetiverModel, VetiverAPI
 from fastapi import FastAPI
 

@@ -1,7 +1,6 @@
 from vetiver.handlers import torch, sklearn, base
 from functools import singledispatch
 
-from vetiver.ptype import vetiver_create_ptype
 
 class InvalidModelError(Exception):
     """
@@ -16,7 +15,8 @@ class InvalidModelError(Exception):
         self.message = message
         super().__init__(self.message)
 
-CREATE_PTYPE_TPL =  """\
+
+CREATE_PTYPE_TPL = """\
 Failed to create a handler from model of \
 type {_model_type}. If your model is not one of \
 (scikit-learn, torch), you should create and register \
@@ -27,19 +27,19 @@ the handler. Here is a template for such a function: \
     class CustomTemplateHandler(VetiverHandler):
         def __init__(model, ptype_data):
             super().__init__(model, ptype_data)
-        
+
         def vetiver_create_meta(
-             user: list = None, 
-             version: str = None, 
-             url: str = None, 
+             user: list = None,
+             version: str = None,
+             url: str = None,
              required_pkgs: list = []):
         \"""
-        Create metadata for model. This method should include the required 
+        Create metadata for model. This method should include the required
         packages necessary to create a prediction.
         \"""
         required_pkgs = required_pkgs + ["name_of_modeling_package"]
         meta = vetiver_meta(user, version, url, required_pkgs)
-        
+
         return meta
 
         def handler_predict(self, input_data, check_ptype):
@@ -55,6 +55,7 @@ the handler. Here is a template for such a function: \
 If your datatype is a common type, please consider submitting \
 a pull request.
 """
+
 
 @singledispatch
 def create_handler(model, ptype_data):
@@ -84,13 +85,15 @@ def create_handler(model, ptype_data):
 
     raise InvalidModelError(message=CREATE_PTYPE_TPL.format(_model_type=type(model)))
 
+
 create_handler.register(sklearn.SKLearnHandler.base_class, sklearn.SKLearnHandler)
 
 create_handler.register(torch.TorchHandler.base_class, torch.TorchHandler)
 
+
 @create_handler.register
-def _(model:base.VetiverHandler, ptype_data):
+def _(model: base.VetiverHandler, ptype_data):
     if model.ptype_data is None and ptype_data is not None:
         model.ptype_data = ptype_data
-    
+
     return model

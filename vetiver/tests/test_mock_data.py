@@ -1,5 +1,3 @@
-import pytest
-
 import vetiver
 from sklearn.dummy import DummyRegressor
 import pandas as pd

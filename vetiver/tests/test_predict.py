@@ -22,11 +22,11 @@ def test_predict_sklearn_dict_ptype():
     app = VetiverAPI(v, check_ptype=True)
     client = TestClient(app.app)
     data = {"B": 0, "C": 0, "D": 0}
-    
+
     response = predict(endpoint=client, data=data)
 
     assert isinstance(response, pd.DataFrame), response
-    assert response.iloc[0,0] == 44.47
+    assert response.iloc[0, 0] == 44.47
     assert len(response) == 1
 
 
@@ -43,11 +43,11 @@ def test_predict_sklearn_no_ptype():
     )
     app = VetiverAPI(v, check_ptype=False)
     client = TestClient(app.app)
-    
+
     response = predict(endpoint=client, data=X)
 
     assert isinstance(response, pd.DataFrame), response
-    assert response.iloc[0,0] == 44.47
+    assert response.iloc[0, 0] == 44.47
     assert len(response) == 100
 
 
@@ -64,18 +64,18 @@ def test_predict_sklearn_df_check_ptype():
     )
     app = VetiverAPI(v, check_ptype=True)
     client = TestClient(app.app)
-    
+
     response = predict(endpoint=client, data=X)
 
     assert isinstance(response, pd.DataFrame), response
-    assert response.iloc[0,0] == 44.47
+    assert response.iloc[0, 0] == 44.47
     assert len(response) == 100
 
 
 def test_predict_sklearn_series_check_ptype():
     np.random.seed(500)
     X, y = mock.get_mock_data()
-    ser = pd.Series(data=[0,0,0])
+    ser = pd.Series(data=[0, 0, 0])
     model = mock.get_mock_model().fit(X, y)
     v = VetiverModel(
         model=model,
@@ -86,11 +86,11 @@ def test_predict_sklearn_series_check_ptype():
     )
     app = VetiverAPI(v, check_ptype=True)
     client = TestClient(app.app)
-    
+
     response = predict(endpoint=client, data=ser)
 
     assert isinstance(response, pd.DataFrame), response
-    assert response.iloc[0,0] == 44.47
+    assert response.iloc[0, 0] == 44.47
     assert len(response) == 1
 
 
@@ -107,7 +107,7 @@ def test_predict_sklearn_type_error():
     )
     app = VetiverAPI(v, check_ptype=True)
     client = TestClient(app.app)
-    data = (0,0)
-    
+    data = (0, 0)
+
     with pytest.raises(TypeError):
         predict(endpoint=client, data=data)

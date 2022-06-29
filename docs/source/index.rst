@@ -36,7 +36,6 @@ Version
    :caption: Version
 
    ~VetiverModel
-   ~pin_read_write.vetiver_pin_read
    ~pin_read_write.vetiver_pin_write
 
 Deploy
@@ -51,13 +50,11 @@ Deploy
    ~VetiverAPI.vetiver_post
    ~vetiver_endpoint
    ~predict
-   ~load_pkgs
-   ~vetiver_write_app
-   ~vetiver_write_docker
+   ~write_app
+   ~write_docker
 
 Advanced Usage
 ==================
 .. toctree::
    advancedusage/custom_handler.md
    :caption: Advanced Usage
-   

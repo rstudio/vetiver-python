@@ -2,6 +2,9 @@ import pytest
 import json
 import sklearn
 from pins.boards import BoardRsConnect
+from pins.rsconnect.api import RsConnectApi
+from vetiver import VetiverModel, vetiver_pin_write, mock
+import sklearn
 
 import vetiver
 from vetiver.rsconnect import deploy_rsconnect
@@ -24,7 +27,6 @@ def server_from_key(name):
         return RSConnectServer(RSC_SERVER_URL, api_key)
 
 def rsc_from_key(name):
-    from pins.rsconnect.api import RsConnectApi
 
     with open(RSC_KEYS_FNAME) as f:
         api_key = json.load(f)[name]
@@ -32,7 +34,6 @@ def rsc_from_key(name):
 
 
 def rsc_fs_from_key(name):
-    from pins.rsconnect.fs import RsConnectFs
 
     rsc = rsc_from_key(name)
 
@@ -59,6 +60,7 @@ def rsc_short():
     )  # fs_susan.ls to list content
 
     rsc_delete_user_content(fs_susan.api)
+
 
 
 def test_board_pin_write(rsc_short):

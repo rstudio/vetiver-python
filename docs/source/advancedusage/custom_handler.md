@@ -8,7 +8,7 @@ from vetiver.handlers.base import VetiverHandler
 class SampleCustomHandler(VetiverHandler):
     def __init__(model, ptype_data):
         super().__init__(model, ptype_data)
-    
+
     def handler_predict(self, input_data, check_ptype):
         """
         handler_predict defines how to make predictions from your model
@@ -17,9 +17,9 @@ class SampleCustomHandler(VetiverHandler):
 ```
 
 ## New model type
-If your model type is not supported by vetiver, you should create and then register the handler using [single dispatch](https://docs.python.org/3/library/functools.html#functools.singledispatch). Once the new type is registered, you are able to use `VetiverModel()` as normal. Here is a template for such a function: 
+If your model type is not supported by vetiver, you should create and then register the handler using [single dispatch](https://docs.python.org/3/library/functools.html#functools.singledispatch). Once the new type is registered, you are able to use `VetiverModel()` as normal. Here is a template for such a function:
 
-```python    
+```python
 from vetiver.handlers._interface import create_handler
 
 @create_handler.register
@@ -34,7 +34,7 @@ If your model is a common type, please consider [submitting a pull request](http
 ## Different model implementation
 If your model's prediction function is different than vetiver's, you should create a custom handler with a `handler_predict` method to make predictions. Then, initialize your handler with your model, and pass the object into `VetiverModel`.
 
-```python    
+```python
 new_model = SampleCustomHandler(your_model, your_ptype_data)
 
 VetiverModel(new_model, "your_model")
