@@ -3,11 +3,12 @@ import json
 import sklearn
 from pins.boards import BoardRsConnect
 from pins.rsconnect.api import RsConnectApi
+from pins.rsconnect.fs import RsConnectFs
 from vetiver import VetiverModel, vetiver_pin_write, mock
 import sklearn
+from rsconnect.api import RSConnectServer
 
 import vetiver
-from vetiver.rsconnect import deploy_rsconnect
 
 # Load data, model
 X_df, y = vetiver.mock.get_mock_data()
@@ -20,14 +21,11 @@ pytestmark = pytest.mark.rsc_test  # noqa
 
 
 def server_from_key(name):
-    from rsconnect.api import RSConnectServer
-
     with open(RSC_KEYS_FNAME) as f:
         api_key = json.load(f)[name]
         return RSConnectServer(RSC_SERVER_URL, api_key)
 
 def rsc_from_key(name):
-
     with open(RSC_KEYS_FNAME) as f:
         api_key = json.load(f)[name]
         return RsConnectApi(RSC_SERVER_URL, api_key)
@@ -79,7 +77,7 @@ def test_deploy(rsc_short):
 
     vetiver.vetiver_pin_write(board=rsc_short, model=v)
     
-    deploy_rsconnect(
+    vetiver.deploy_rsconnect(
         connect_server=server_from_key("susan"), 
         board=rsc_short, 
         pin_name="susan/model"
