@@ -53,6 +53,17 @@ Deploy
    ~write_app
    ~write_docker
 
+Monitor
+==================
+
+.. autosummary::
+   :toctree: reference/
+   :caption: Monitor
+
+   ~compute_metrics
+   ~pin_metrics
+   ~plot_metrics
+
 Advanced Usage
 ==================
 .. toctree::

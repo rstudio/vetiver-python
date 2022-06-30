@@ -13,7 +13,7 @@ def compute_metrics(
     metric_set: list,
     truth: str,
     estimate: str,
-):
+) -> pd.DataFrame:
     """
     Compute metrics for given time period
 
@@ -23,12 +23,10 @@ def compute_metrics(
         Pandas dataframe
     date_var:
         Column in `data` containing dates
-    period:
+    period: datetime.timedelta
         Defining period to group by
-        https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#offset-aliases
     metric_set: list
-        List of metrics to compute
-        https://scikit-learn.org/stable/modules/classes.html#module-sklearn.metrics
+        List of metrics to compute, that have the parameters `y_true` and `y_pred`
     truth:
         Column name for true results
     estimate:
@@ -36,10 +34,12 @@ def compute_metrics(
 
     Example
     -------
-    rng = pd.date_range("1/1/2012", periods=100, freq="S")
-    new = dict(x=range(len(ts)), y = range(len(ts)))
+    from sklearn import metrics
+    rng = pd.date_range("1/1/2012", periods=10, freq="S")
+    new = dict(x=range(len(rng)), y = range(len(rng)))
     df = pd.DataFrame(new, index = rng).reset_index(inplace=True)
-    metric_set = [metrics.mean_squared_error, metrics.mean_absolute_error]
+    td = timedelta(seconds = 2)
+    metric_set = [sklearn.metrics.mean_squared_error, sklearn.metrics.mean_absolute_error]
     compute_metrics(df, "index", td, metric_set=metric_set, truth="x", estimate="y")
 
     """
@@ -133,7 +133,7 @@ def pin_metrics(board, df_metrics, metrics_pin_name, overwrite=False):
 
 def plot_metrics(
     df_metrics, date="index", estimate="estimate", metric="metric", n="n", **kw
-):
+) -> px.line:
     """
     Plot metrics over a given time period
 
