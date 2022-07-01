@@ -53,9 +53,6 @@ def deploy_rsconnect(
         image: str
             Docker image to be specified for off-host execution
     """
-    if board.fs.protocol == "rsc":
-        raise NotImplementedError()
-
     if not title:
         title = pin_name + "_vetiver"
 
@@ -67,7 +64,11 @@ def deploy_rsconnect(
                 shutil.copyfile(file, os.path.join(temp, filename))
                 new_files = new_files + [os.path.join(temp, filename)]
             extra_files = new_files
-                
+        
+        if board.fs.protocol == "file":
+            shutil.copytree(board.path_to_pin(pin_name), os.path.join(temp, pin_name))
+
+
         tmp_app = temp + "/app.py"
 
         write_app(
