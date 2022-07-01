@@ -1,4 +1,3 @@
-from typing import List
 from sklearn import metrics
 from datetime import timedelta
 import pandas as pd
@@ -29,7 +28,7 @@ def test_compute():
     )
 
 def test_monitor(snapshot):
-    snapshot.snapshot_dir = './snapshots'
+    snapshot.snapshot_dir = './vetiver/tests/snapshots'
     m = vetiver.compute_metrics(
         df, "index", td, metric_set=metric_set, truth="x", estimate="y"
     )

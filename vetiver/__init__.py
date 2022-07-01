@@ -19,4 +19,4 @@ from .handlers.base import VetiverHandler  # noqa
 from .handlers.sklearn import SKLearnHandler  # noqa
 from .handlers.torch import TorchHandler  # noqa
 from .rsconnect import deploy_rsconnect # noqa
-from .monitor import compute_metrics, pin_metrics, plot_metrics # noqa
+from .monitor import compute_metrics, pin_metrics, plot_metrics, _rolling_df # noqa
