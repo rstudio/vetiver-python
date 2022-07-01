@@ -162,4 +162,5 @@ def plot_metrics(
     )
     fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1]))
     fig.update_layout(showlegend=False)
-    fig.show()
+
+    return fig
