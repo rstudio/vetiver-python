@@ -155,6 +155,28 @@
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
+  Monitor
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="reference/vetiver.compute_metrics.html">
+   vetiver.compute_metrics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="reference/vetiver.pin_metrics.html">
+   vetiver.pin_metrics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="reference/vetiver.plot_metrics.html">
+   vetiver.plot_metrics
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
   Advanced Usage
  </span>
 </p>
@@ -374,6 +396,11 @@ title="Print to PDF"
   </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#monitor">
+   Monitor
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#advanced-usage">
    Advanced Usage
   </a>
@@ -410,6 +437,11 @@ title="Print to PDF"
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#deploy">
    Deploy
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#monitor">
+   Monitor
   </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
@@ -493,6 +525,26 @@ more on how to get started.</p>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="reference/vetiver.write_docker.html#vetiver.write_docker" title="vetiver.write_docker"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_docker</span></code></a>([app_file, path, rspm_env, ...])</p></td>
 <td><p>Writes a Dockerfile to run VetiverAPI in a container</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="monitor">
+<h1>Monitor<a class="headerlink" href="#monitor" title="Permalink to this headline">#</a></h1>
+<table class="autosummary longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/vetiver.compute_metrics.html#vetiver.compute_metrics" title="vetiver.compute_metrics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_metrics</span></code></a>(data, date_var, period, ...)</p></td>
+<td><p>Compute metrics for given time period</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/vetiver.pin_metrics.html#vetiver.pin_metrics" title="vetiver.pin_metrics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pin_metrics</span></code></a>(board, df_metrics, metrics_pin_name)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/vetiver.plot_metrics.html#vetiver.plot_metrics" title="vetiver.plot_metrics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_metrics</span></code></a>(df_metrics[, date, estimate, ...])</p></td>
+<td><p>Plot metrics over a given time period</p></td>
 </tr>
 </tbody>
 </table>

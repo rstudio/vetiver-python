@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>vetiver.VetiverAPI &#8212; vetiver 0.1.5 documentation</title>
+    <title>vetiver.pin_metrics &#8212; vetiver 0.1.5 documentation</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -34,8 +34,8 @@
     <link rel="shortcut icon" href="../_static/logo.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="vetiver.VetiverAPI.run" href="vetiver.VetiverAPI.run.html" />
-    <link rel="prev" title="vetiver.pin_read_write.vetiver_pin_write" href="vetiver.pin_read_write.vetiver_pin_write.html" />
+    <link rel="next" title="vetiver.plot_metrics" href="vetiver.plot_metrics.html" />
+    <link rel="prev" title="vetiver.compute_metrics" href="vetiver.compute_metrics.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -117,9 +117,9 @@
   Deploy
  </span>
 </p>
-<ul class="current nav bd-sidenav">
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="vetiver.VetiverAPI.html">
    vetiver.VetiverAPI
   </a>
  </li>
@@ -159,14 +159,14 @@
   Monitor
  </span>
 </p>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="vetiver.compute_metrics.html">
    vetiver.compute_metrics
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="vetiver.pin_metrics.html">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
    vetiver.pin_metrics
   </a>
  </li>
@@ -277,7 +277,7 @@ title="Source repository"
       </li>
       
       <li>
-        <a href="https://github.com/tidymodels/vetiver-python/issues/new?title=Issue%20on%20page%20%2Freference/vetiver.VetiverAPI.html&body=Your%20issue%20content%20here."
+        <a href="https://github.com/tidymodels/vetiver-python/issues/new?title=Issue%20on%20page%20%2Freference/vetiver.pin_metrics.html&body=Your%20issue%20content%20here."
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -294,7 +294,7 @@ title="Open an issue"
       </li>
       
       <li>
-        <a href="https://github.com/tidymodels/vetiver-python/edit/master/reference/vetiver.VetiverAPI.rst"
+        <a href="https://github.com/tidymodels/vetiver-python/edit/master/reference/vetiver.pin_metrics.rst"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -322,7 +322,7 @@ title="Edit this page"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="../_sources/reference/vetiver.VetiverAPI.rst.txt"
+        <a href="../_sources/reference/vetiver.pin_metrics.rst.txt"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -371,7 +371,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>vetiver.VetiverAPI</h1>
+                <h1>vetiver.pin_metrics</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -383,82 +383,12 @@ title="Print to PDF"
                 
               <div>
                 
-  <section id="vetiver-vetiverapi">
-<h1>vetiver.VetiverAPI<a class="headerlink" href="#vetiver-vetiverapi" title="Permalink to this headline">#</a></h1>
-<dl class="py class">
-<dt class="sig sig-object py" id="vetiver.VetiverAPI">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vetiver.</span></span><span class="sig-name descname"><span class="pre">VetiverAPI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model:</span> <span class="pre">vetiver.vetiver_model.VetiverModel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_ptype:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app_factory=&lt;class</span> <span class="pre">'fastapi.applications.FastAPI'&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vetiver.VetiverAPI" title="Permalink to this definition">#</a></dt>
-<dd><p>Create model aware API</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vetiver.VetiverAPI.model">
-<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#vetiver.VetiverAPI.model" title="Permalink to this definition">#</a></dt>
-<dd><p>Model to be deployed in API</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference internal" href="vetiver.VetiverModel.html#vetiver.VetiverModel" title="vetiver.VetiverModel">VetiverModel</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vetiver.VetiverAPI.check_ptype">
-<span class="sig-name descname"><span class="pre">check_ptype</span></span><a class="headerlink" href="#vetiver.VetiverAPI.check_ptype" title="Permalink to this definition">#</a></dt>
-<dd><p>Determine if data prototype should be enforced</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>bool</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vetiver.VetiverAPI.app_factory">
-<span class="sig-name descname"><span class="pre">app_factory</span></span><a class="headerlink" href="#vetiver.VetiverAPI.app_factory" title="Permalink to this definition">#</a></dt>
-<dd><p>Type of API to be deployed</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="vetiver.VetiverAPI.app">
-<span class="sig-name descname"><span class="pre">app</span></span><a class="headerlink" href="#vetiver.VetiverAPI.app" title="Permalink to this definition">#</a></dt>
-<dd><p>API that is deployed</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="vetiver.VetiverAPI.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model:</span> <span class="pre">vetiver.vetiver_model.VetiverModel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_ptype:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app_factory=&lt;class</span> <span class="pre">'fastapi.applications.FastAPI'&gt;</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#vetiver.VetiverAPI.__init__" title="Permalink to this definition">#</a></dt>
+  <section id="vetiver-pin-metrics">
+<h1>vetiver.pin_metrics<a class="headerlink" href="#vetiver-pin-metrics" title="Permalink to this headline">#</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="vetiver.pin_metrics">
+<span class="sig-prename descclassname"><span class="pre">vetiver.</span></span><span class="sig-name descname"><span class="pre">pin_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">board</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df_metrics</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics_pin_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vetiver.pin_metrics" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
-
-<p class="rubric">Methods</p>
-<table class="autosummary longtable table autosummary">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#vetiver.VetiverAPI.__init__" title="vetiver.VetiverAPI.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(model[, check_ptype, app_factory])</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="vetiver.VetiverAPI.run.html#vetiver.VetiverAPI.run" title="vetiver.VetiverAPI.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a>([port, host])</p></td>
-<td><p>Start API</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="vetiver.VetiverAPI.vetiver_post.html#vetiver.VetiverAPI.vetiver_post" title="vetiver.VetiverAPI.vetiver_post"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vetiver_post</span></code></a>(endpoint_fx[, endpoint_name])</p></td>
-<td><p>Create new POST endpoint</p></td>
-</tr>
-</tbody>
-</table>
-<p class="rubric">Attributes</p>
-<table class="autosummary longtable table autosummary">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#vetiver.VetiverAPI.app" title="vetiver.VetiverAPI.app"><code class="xref py py-obj docutils literal notranslate"><span class="pre">app</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
 
 </section>
 
@@ -470,17 +400,17 @@ title="Print to PDF"
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="vetiver.pin_read_write.vetiver_pin_write.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="vetiver.compute_metrics.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">vetiver.pin_read_write.vetiver_pin_write</p>
+            <p class="prev-next-title">vetiver.compute_metrics</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="vetiver.VetiverAPI.run.html" title="next page">
+    <a class='right-next' id="next-link" href="vetiver.plot_metrics.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">vetiver.VetiverAPI.run</p>
+        <p class="prev-next-title">vetiver.plot_metrics</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
