@@ -1,6 +1,8 @@
 from sklearn import metrics
 from datetime import timedelta
+
 import pandas as pd
+import pins
 import numpy
 import vetiver
 
@@ -10,10 +12,12 @@ df = pd.DataFrame(new, index=rng)
 td = timedelta(seconds=2)
 metric_set = [metrics.mean_squared_error, metrics.mean_absolute_error]
 
+
 def test_rolling():
     m = [_ for _ in vetiver._rolling_df(df, td)]
     assert len(m) == 5
     assert len(m[0]) == 2
+
 
 def test_compute():
     df.reset_index(inplace=True)
@@ -27,10 +31,38 @@ def test_compute():
         numpy.array(["mean_squared_error", "mean_absolute_error"], dtype=object),
     )
 
+
 def test_monitor(snapshot):
-    snapshot.snapshot_dir = './vetiver/tests/snapshots'
+    snapshot.snapshot_dir = "./vetiver/tests/snapshots"
     m = vetiver.compute_metrics(
         df, "index", td, metric_set=metric_set, truth="x", estimate="y"
     )
     vetiver.plot_metrics(m)
-    snapshot.assert_match(m.to_json(), 'test_monitor.json')
+    snapshot.assert_match(m.to_json(), "test_monitor.json")
+
+
+def test_vetiver_pin_metrics():
+    board = pins.board_temp()
+    df_metrics_old = pd.DataFrame(
+        {
+            "index": pd.to_datetime(["2021-01-01", "2021-01-02"]),
+            "n": [1, 2],
+            "metric": ["x", "x"],
+            "estimate": [0.6, 0.7],
+        }
+    )
+
+    df_metrics_new = pd.DataFrame(
+        {
+            "index": pd.to_datetime(["2021-01-03", "2021-01-04"]),
+            "n": [3, 4],
+            "metric": ["x", "x"],
+            "estimate": [0.8, 0.9],
+        }
+    )
+
+    board.pin_write(df_metrics_old, "test_metrics", type="arrow")
+
+    df_res = vetiver.pin_metrics(board, df_metrics_new, "test_metrics")
+
+    assert len(df_res) == 4
