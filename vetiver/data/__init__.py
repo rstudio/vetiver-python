@@ -12,10 +12,8 @@ def __dir__():
 
 def __getattr__(k):
     import pandas as pd
-    f_path = None
-    if k == "mtcars":
-        f_path = sources.get("mtcars")
-    elif k == "chicago":
+    f_path = sources.get("mtcars")
+    if k == "chicago":
         f_path = sources.get("chicago")
 
     return pd.read_csv(f_path)
