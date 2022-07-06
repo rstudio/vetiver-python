@@ -4,6 +4,7 @@ from datetime import timedelta
 import pandas as pd
 import pins
 import numpy
+import time
 import vetiver
 
 import pytest
@@ -58,6 +59,7 @@ def df_metrics_old():
 def test_vetiver_pin_metrics_simple(df_metrics_old):
     board = pins.board_temp()
     board.pin_write(df_metrics_old, "test_metrics", type="csv")
+    time.sleep(1)
 
     df_metrics_new = pd.DataFrame(
         {
@@ -77,6 +79,7 @@ def test_vetiver_pin_metrics_simple(df_metrics_old):
 def test_vetiver_pin_metrics_overlap_error(df_metrics_old):
     board = pins.board_temp()
     board.pin_write(df_metrics_old, "test_metrics", type="csv")
+    time.sleep(0.1)
 
     with pytest.raises(ValueError) as exc_info:
         vetiver.pin_metrics(board, df_metrics_old, "test_metrics")
@@ -87,6 +90,7 @@ def test_vetiver_pin_metrics_overlap_error(df_metrics_old):
 def test_vetiver_pin_metrics_overwrite(df_metrics_old):
     board = pins.board_temp()
     board.pin_write(df_metrics_old, "test_metrics", type="csv")
+    time.sleep(1)
 
     # first row should update existing metrics
     df_metrics_new = pd.DataFrame(
@@ -108,6 +112,7 @@ def test_vetiver_pin_metrics_overwrite(df_metrics_old):
 def test_vetiver_pin_metrics_manual_pin_type(df_metrics_old):
     board = pins.board_temp()
     board.pin_write(df_metrics_old, "test_metrics", type="csv")
+    time.sleep(1)
 
     df_res = vetiver.pin_metrics(
         board, df_metrics_old, "test_metrics", overwrite=True, pin_type="joblib"
