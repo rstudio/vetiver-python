@@ -73,8 +73,13 @@ def _rolling_df(df: pd.DataFrame, td: timedelta):
 
 
 def pin_metrics(
-    board, df_metrics, metrics_pin_name: str, index_name="index", overwrite=False
-):
+    board,
+    df_metrics: pd.DataFrame,
+    metrics_pin_name: str,
+    pin_type: "str | None" = None,
+    index_name: str = "index",
+    overwrite: bool = False,
+) -> pd.DataFrame:
     """
     Update an existing pin storing model metrics over time
 
@@ -97,21 +102,18 @@ def pin_metrics(
         the existing pin.
     """
 
-    new_dates = df_metrics[index_name]
+    old_metrics_raw = board.pin_read(metrics_pin_name)
 
-    old_metrics = board.pin_read(metrics_pin_name)
-    old_dates = old_metrics[index_name]
+    # need to coerce date index to a datetime, since pandas does not infer
+    # date columns from CSV (but note that formats like arrow do)
+    old_metrics = old_metrics_raw.copy()
+    old_metrics[index_name] = pd.to_datetime(old_metrics[index_name])
 
     # handle overlapping dates ----
-    if new_dates.dtype != old_dates.dtype:
-        raise TypeError(
-            f"index_name column ({repr(index_name)}) in old and new metrics "
-            "must have the same dtype. "
-            f"\nOld dtype: {old_dates.dtype}"
-            f"\nNew dtype: {new_dates.dtype}"
-        )
+    dt_new = pd.to_datetime(df_metrics[index_name])
+    dt_old = old_metrics[index_name]
 
-    indx_old_overlap = old_metrics[index_name].isin(new_dates)
+    indx_old_overlap = dt_old.isin(dt_new)
 
     if overwrite:
         # get only rows specific to old metrics, so when we concat below
@@ -128,7 +130,14 @@ def pin_metrics(
     combined_metrics = pd.concat([old_metrics, df_metrics], ignore_index=True)
     sorted_metrics = combined_metrics.sort_values(index_name)
 
-    board.pin_write(sorted_metrics, metrics_pin_name, type="arrow")
+    if pin_type is None:
+        meta = board.pin_meta(metrics_pin_name)
+
+        final_pin_type = meta.type
+    else:
+        final_pin_type = pin_type
+
+    board.pin_write(sorted_metrics, metrics_pin_name, type=final_pin_type)
 
     return sorted_metrics
 
