@@ -1,6 +1,6 @@
 import json
 
-from vetiver.handlers._interface import create_handler
+from vetiver.handlers.base import create_handler
 from .meta import _model_meta
 from .write_fastapi import _choose_version
 
@@ -33,7 +33,8 @@ class VetiverModel:
     versioned :
         Should the model be versioned when created?
     description : str
-        A detailed description of the model. If omitted, a brief description will be generated.
+        A detailed description of the model.
+        If omitted, a brief description will be generated.
     metadata : dict
         Other details to be saved and accessed for serving
 

@@ -1,10 +1,59 @@
-from abc import ABCMeta
+from vetiver.handlers import base
+from functools import singledispatch
+from contextlib import suppress
 
 from ..ptype import vetiver_create_ptype
 from ..meta import _model_meta
 
 
-class VetiverHandler(metaclass=ABCMeta):
+class InvalidModelError(Exception):
+    """
+    Throw an error if `model` is not registered.
+    """
+
+    def __init__(
+        self,
+        message="The `model` argument must be a scikit-learn or torch model.",
+    ):
+        self.message = message
+        super().__init__(self.message)
+
+
+@singledispatch
+def create_handler(model, ptype_data):
+    """check for model type to handle prediction
+
+    Parameters
+    ----------
+    model: object
+        Description of parameter `x`.
+    ptype_data : object
+        An object with information (data) whose layout is to be determined.
+
+    Returns
+    -------
+    handler
+        Handler class for specified model type
+
+
+    Examples
+    --------
+    >>> import vetiver
+    >>> X, y = vetiver.mock.get_mock_data()
+    >>> model = vetiver.mock.get_mock_model()
+    >>> handler = vetiver.create_handler(model, X)
+    >>> handler.describe()
+    "Scikit-learn <class 'sklearn.dummy.DummyRegressor'> model"
+    """
+
+    raise InvalidModelError(
+        "Model must be an sklearn or torch model, or a \
+        custom handler must be used. See the docs for more info on custom handlers. \
+        https://rstudio.github.io/vetiver-python/advancedusage/custom_handler.html"
+    )
+
+
+class VetiverHandler:
     """Base handler class for creating VetiverModel of different type.
 
     Parameters
@@ -14,6 +63,16 @@ class VetiverHandler(metaclass=ABCMeta):
     ptype_data :
         An object with information (data) whose layout is to be determined.
     """
+
+    @classmethod
+    def __init_subclass__(cls, **kwargs):
+        super().__init_subclass__(**kwargs)
+        with suppress(AttributeError, NameError):
+            create_handler.register(cls.base_class, cls)
+
+    def __new__(cls, value=None):
+        implementation_cls = create_handler.registry[type(value)]
+        return super().__new__(implementation_cls)
 
     def __init__(self, model, ptype_data):
         self.model = model
@@ -79,3 +138,11 @@ class VetiverHandler(metaclass=ABCMeta):
             Prediction from model
         """
         ...
+
+
+@create_handler.register
+def _(model: base.VetiverHandler, ptype_data):
+    if model.ptype_data is None and ptype_data is not None:
+        model.ptype_data = ptype_data
+
+    return model
