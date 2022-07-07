@@ -6,7 +6,6 @@ from fastapi import testclient
 import uvicorn
 import requests
 import pandas as pd
-import numpy as np
 from typing import Callable, Union, List
 
 from . import __version__
@@ -65,7 +64,7 @@ class VetiverAPI:
 
         if self.check_ptype is True:
 
-            @app.post("/predict/")
+            @app.post("/predict")
             async def prediction(
                 input_data: Union[self.model.ptype, List[self.model.ptype]]
             ):
@@ -82,7 +81,7 @@ class VetiverAPI:
 
         elif self.check_ptype is False:
 
-            @app.post("/predict/")
+            @app.post("/predict")
             async def prediction(input_data: Request):
 
                 y = await input_data.json()
@@ -99,17 +98,25 @@ class VetiverAPI:
                     <!doctype html>
                     <html>
                         <head>
-                        <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=yes">
+                        <meta name="viewport"
+                        content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=yes">
                         <title>RapiDoc</title>
-                        <script type="module" src="https://unpkg.com/rapidoc@9.1.3/dist/rapidoc-min.js"></script>
+                        <script type="module"
+                        src="https://unpkg.com/rapidoc@9.3.3/dist/rapidoc-min.js"></script>
                         </script></head>
                         <body>
                             <rapi-doc spec-url="{self.app.openapi_url[1:]}"
-                            id="thedoc" render-style="read" schema-style="tree"
-                            show-components="true" show-info="true" show-header="true"
+                            id="thedoc"
+                            render-style="read"
+                            schema-style="tree"
+                            show-components="true"
+                            show-info="true"
+                            show-header="true"
                             allow-search="true"
                             show-side-nav="false"
-                            allow-authentication="false" update-route="false" match-type="regex"
+                            allow-authentication="false"
+                            update-route="false"
+                            match-type="regex"
                             theme="light"
                             header-color="#F2C6AC"
                             primary-color = "#8C2D2D">
@@ -143,7 +150,7 @@ class VetiverAPI:
         """
         if self.check_ptype is True:
 
-            @self.app.post("/" + endpoint_name + "/")
+            @self.app.post("/" + endpoint_name)
             async def custom_endpoint(input_data: self.model.ptype):
                 y = _prepare_data(input_data)
                 new = endpoint_fx(pd.Series(y))
@@ -151,7 +158,7 @@ class VetiverAPI:
 
         else:
 
-            @self.app.post("/" + endpoint_name + "/")
+            @self.app.post("/" + endpoint_name)
             async def custom_endpoint(input_data: Request):
                 y = await input_data.json()
                 new = endpoint_fx(pd.Series(y))
@@ -204,7 +211,7 @@ def predict(endpoint, data: Union[dict, pd.DataFrame, pd.Series], **kw):
     """
     if isinstance(endpoint, testclient.TestClient):
         requester = endpoint
-        endpoint = "/predict/"
+        endpoint = "/predict"
     else:
         requester = requests
 
