@@ -157,9 +157,11 @@ def plot_metrics(
         y=estimate,
         color=metric,
         facet_row=metric,
-        markers=n,
+        markers=dict(size=n),
+        hover_data={"n": ':'},
         **kw,
     )
+
     fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1]))
     fig.update_layout(showlegend=False)
 
