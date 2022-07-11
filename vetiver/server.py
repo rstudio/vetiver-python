@@ -8,7 +8,6 @@ import requests
 import pandas as pd
 from typing import Callable, Union, List
 
-from . import __version__
 from .vetiver_model import VetiverModel
 from .utils import _jupyter_nb
 
@@ -180,11 +179,13 @@ class VetiverAPI:
         uvicorn.run(self.app, port=port, host=host, **kw)
 
     def _custom_openapi(self):
+        import vetiver
+
         if self.app.openapi_schema:
             return self.app.openapi_schema
         openapi_schema = get_openapi(
             title=self.model.model_name + " model API",
-            version=__version__,
+            version=vetiver.__version__,
             description=self.model.description,
             routes=self.app.routes,
             servers=self.app.servers,
