@@ -19,7 +19,7 @@ class TorchHandler(VetiverHandler):
         a trained torch model
     """
 
-    base_class = torch.nn.Module
+    base_class = staticmethod(lambda: torch.nn.Module)
 
     def __init__(self, model, ptype_data):
         super().__init__(model, ptype_data)
@@ -59,7 +59,7 @@ class TorchHandler(VetiverHandler):
             Prediction from model
         """
         if torch_exists:
-            if check_ptype == True:
+            if check_ptype:
                 input_data = np.array(input_data, dtype=np.array(self.ptype_data).dtype)
                 prediction = self.model(torch.from_numpy(input_data))
 

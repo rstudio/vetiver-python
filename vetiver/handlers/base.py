@@ -68,11 +68,11 @@ class VetiverHandler:
     def __init_subclass__(cls, **kwargs):
         super().__init_subclass__(**kwargs)
         with suppress(AttributeError, NameError):
-            create_handler.register(cls.base_class, cls)
+            create_handler.register(cls.base_class(), cls)
 
-    def __new__(cls, value=None):
-        implementation_cls = create_handler.registry[type(value)]
-        return super().__new__(implementation_cls)
+    # def __new__(cls, value=None):
+    #     implementation_cls = create_handler.registry[type(value)]
+    #     return super().__new__(implementation_cls)
 
     def __init__(self, model, ptype_data):
         self.model = model

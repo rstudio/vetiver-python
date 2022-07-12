@@ -14,7 +14,7 @@ class SKLearnHandler(VetiverHandler):
         a trained sklearn model
     """
 
-    base_class = sklearn.base.BaseEstimator
+    base_class = staticmethod(lambda: sklearn.base.BaseEstimator)
 
     def __init__(self, model, ptype_data):
         super().__init__(model, ptype_data)
@@ -54,7 +54,7 @@ class SKLearnHandler(VetiverHandler):
             Prediction from model
         """
 
-        if check_ptype == True:
+        if check_ptype:
             if isinstance(input_data, pd.DataFrame):
                 prediction = self.model.predict(input_data)
             else:
