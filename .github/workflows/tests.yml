@@ -68,7 +68,6 @@ jobs:
   test-no-torch:
     name: "Test no-torch"
     runs-on: ubuntu-latest
-    if: ${{ !github.event.pull_request.head.repo.fork }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
