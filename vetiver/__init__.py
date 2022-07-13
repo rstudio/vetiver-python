@@ -1,10 +1,7 @@
 """vetiver - Python parallel to R vetiver package"""
+# Change to import.metadata when minimum python>=3.8
+from importlib_metadata import version as _version
 
-__version__ = "0.1.5"
-__author__ = "Isabel Zimmerman <isabel.zimmerman@rstudio.com>"
-__all__ = []
-
-import importlib  # noqa
 from .ptype import *  # noqa
 from .vetiver_model import VetiverModel  # noqa
 from .server import VetiverAPI, vetiver_endpoint, predict  # noqa
@@ -20,3 +17,8 @@ from .handlers.sklearn import SKLearnHandler  # noqa
 from .handlers.torch import TorchHandler  # noqa
 from .rsconnect import deploy_rsconnect # noqa
 from .monitor import compute_metrics, pin_metrics, plot_metrics, _rolling_df # noqa
+
+__author__ = "Isabel Zimmerman <isabel.zimmerman@rstudio.com>"
+__all__ = []
+__version__ = _version("vetiver")
+del _version
