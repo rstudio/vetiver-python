@@ -2,12 +2,14 @@ import sklearn
 import pydantic
 import pandas as pd
 
-from vetiver import mock, VetiverModel, VetiverHandler
+from vetiver import mock, VetiverModel, BaseHandler
 
 
-class CustomHandler(VetiverHandler):
+class CustomHandler(BaseHandler):
     def __init__(self, model, ptype_data):
         super().__init__(model, ptype_data)
+
+    model_type = staticmethod(lambda: sklearn.dummy.DummyRegressor)
 
     def handler_predict(self, input_data, check_ptype):
         if check_ptype is True:

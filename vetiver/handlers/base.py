@@ -53,7 +53,10 @@ def create_handler(model, ptype_data):
     )
 
 
-class VetiverHandler:
+# BaseHandler uses create_handler to register subclasses based on model_class
+
+
+class BaseHandler:
     """Base handler class for creating VetiverModel of different type.
 
     Parameters
@@ -68,11 +71,7 @@ class VetiverHandler:
     def __init_subclass__(cls, **kwargs):
         super().__init_subclass__(**kwargs)
         with suppress(AttributeError, NameError):
-            create_handler.register(cls.base_class(), cls)
-
-    # def __new__(cls, value=None):
-    #     implementation_cls = create_handler.registry[type(value)]
-    #     return super().__new__(implementation_cls)
+            create_handler.register(cls.model_class(), cls)
 
     def __init__(self, model, ptype_data):
         self.model = model
@@ -140,8 +139,12 @@ class VetiverHandler:
         ...
 
 
+# BaseHandler for subclassing, Handler for new model types
+Handler = BaseHandler
+
+
 @create_handler.register
-def _(model: base.VetiverHandler, ptype_data):
+def _(model: base.BaseHandler, ptype_data):
     if model.ptype_data is None and ptype_data is not None:
         model.ptype_data = ptype_data
 

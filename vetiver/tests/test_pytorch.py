@@ -1,12 +1,12 @@
-from vetiver.vetiver_model import VetiverModel
-from vetiver import VetiverAPI
-from fastapi.testclient import TestClient
 import pytest
-import numpy as np
 
-torch = pytest.importorskip("torch")
+torch = pytest.importorskip("torch", reason="torch library not installed")
 
-import torch  # noqa
+import numpy as np  # noqa
+from fastapi.testclient import TestClient  # noqa
+
+from vetiver.vetiver_model import VetiverModel  # noqa
+from vetiver import VetiverAPI  # noqa
 
 
 def _build_torch_v():
