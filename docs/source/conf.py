@@ -1,6 +1,7 @@
 import os
 import sys
-from vetiver import __version__
+import re
+from vetiver import __version__ as version
 
 sys.path.insert(0, os.path.abspath("."))
 
@@ -12,8 +13,14 @@ copyright = "2022, RStudio"
 author = "Isabel Zimmerman"
 
 # The full version, including alpha/beta/rc tags
-release = __version__
+# Do not use the 0.0 version created by setuptools_scm when the package
+# is cloned too shallow to pickup
+p = re.compile(r"^0\.0\.post\d+\+g")
+if p.match(version):
+    commit = p.sub("", version)
+    version = f"Commit: {commit}"
 
+release = version
 
 # -- General configuration ---------------------------------------------------
 

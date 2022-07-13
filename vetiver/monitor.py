@@ -1,9 +1,6 @@
-import datetime
-import pins
-from pins.errors import PinsError
 import plotly.express as px
 import pandas as pd
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 
 def compute_metrics(
@@ -75,60 +72,74 @@ def _rolling_df(df: pd.DataFrame, td: timedelta):
         first = stop
 
 
-def pin_metrics(board, df_metrics, metrics_pin_name, overwrite=False):
-    pass
+def pin_metrics(
+    board,
+    df_metrics: pd.DataFrame,
+    metrics_pin_name: str,
+    pin_type: "str | None" = None,
+    index_name: str = "index",
+    overwrite: bool = False,
+) -> pd.DataFrame:
+    """
+    Update an existing pin storing model metrics over time
 
+    Parameters
+    ----------
+    board :
+        Pins board
+    df_metrics: pd.DataFrame
+        Dataframe of metrics over time, such as created by `vetiver_compute_metrics()`
+    metrics_pin_name:
+        Pin name for where the metrics are stored
+    index_name:
+        The column in df_metrics containing the aggregated dates or datetimes.
+        Note that this defaults to a column named "index".
+    overwrite: bool
+        If TRUE (the default), overwrite any metrics for
+        dates that exist both in the existing pin and
+        new metrics with the new values. If FALSE, error
+        when the new metrics contain overlapping dates with
+        the existing pin.
+    """
 
-#     """
-#     Update an existing pin storing model metrics over time
+    old_metrics_raw = board.pin_read(metrics_pin_name)
 
-#     Parameters
-#     ----------
-#     board :
-#         Pins board
-#     df_metrics: pd.DataFrame
-#         Dataframe of metrics over time, such as created by `vetiver_compute_metrics()`
-#     metrics_pin_name:
-#         Pin name for where the metrics are stored
-#     overwrite: bool
-#         If TRUE (the default), overwrite any metrics for
-#         dates that exist both in the existing pin and
-#         new metrics with the new values. If FALSE, error
-#         when the new metrics contain overlapping dates with
-#         the existing pin.
-#     """
-#     date_types = (datetime.date, datetime.time, datetime.datetime)
-#     if not isinstance(df_metrics.index, date_types):
-#         try:
-#             df_metrics = df_metrics.index.astype("datetime")
-#         except TypeError:
-#             raise TypeError(f"Index of {df_metrics} must be a date type")
+    # need to coerce date index to a datetime, since pandas does not infer
+    # date columns from CSV (but note that formats like arrow do)
+    old_metrics = old_metrics_raw.copy()
+    old_metrics[index_name] = pd.to_datetime(old_metrics[index_name])
 
-#     new_metrics = df_metrics.sort_index()
+    # handle overlapping dates ----
+    dt_new = pd.to_datetime(df_metrics[index_name])
+    dt_old = old_metrics[index_name]
 
-#     new_dates = df_metrics.index.unique()
+    indx_old_overlap = dt_old.isin(dt_new)
 
-#     try:
-#         old_metrics = board.pin_read(metrics_pin_name)
-#     except PinsError:
-#         board.pin_write(metrics_pin_name)
+    if overwrite:
+        # get only rows specific to old metrics, so when we concat below
+        # it effectively is an upsert
+        old_metrics = old_metrics.loc[~indx_old_overlap, :]
 
-#     overlapping_dates = old_metrics.index in new_dates
+    elif not overwrite and indx_old_overlap.any():
+        raise ValueError(
+            f"The new metrics overlap with dates already stored in {metrics_pin_name}."
+            " Check the aggregated dates or use `overwrite=True`."
+        )
 
-#     if overwrite is True:
-#         old_metrics = old_metrics not in overlapping_dates
-#     else:
-#         if overlapping_dates:
-#             raise ValueError(
-#                 f"The new metrics overlap with dates \
-#                      already stored in {repr(metrics_pin_name)} \
-#                      Check the aggregated dates or use `overwrite = True`"
-#             )
+    # update and pin ----
+    combined_metrics = pd.concat([old_metrics, df_metrics], ignore_index=True)
+    sorted_metrics = combined_metrics.sort_values(index_name)
 
-#     new_metrics = old_metrics + df_metrics
-#     new_metrics = new_metrics.sort_index()
+    if pin_type is None:
+        meta = board.pin_meta(metrics_pin_name)
 
-#     pins.pin_write(board, new_metrics, metrics_pin_name)
+        final_pin_type = meta.type
+    else:
+        final_pin_type = pin_type
+
+    board.pin_write(sorted_metrics, metrics_pin_name, type=final_pin_type)
+
+    return sorted_metrics
 
 
 def plot_metrics(
@@ -157,9 +168,11 @@ def plot_metrics(
         y=estimate,
         color=metric,
         facet_row=metric,
-        markers=n,
+        markers=dict(size=n),
+        hover_data={"n": ':'},
         **kw,
     )
+
     fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1]))
     fig.update_layout(showlegend=False)
 

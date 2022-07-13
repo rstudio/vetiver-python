@@ -63,7 +63,7 @@ def test_torch_predict_ptype():
 
     client = TestClient(v_api.app)
     data = {"0": 3.3}
-    response = client.post("/predict/", json=data)
+    response = client.post("/predict", json=data)
 
     assert response.status_code == 200, response.text
     assert response.json() == {"prediction": [-4.060722351074219]}, response.text
@@ -77,7 +77,7 @@ def test_torch_predict_ptype_batch():
 
     client = TestClient(v_api.app)
     data = [{"0": 3.3}, {"0": 3.3}]
-    response = client.post("/predict/", json=data)
+    response = client.post("/predict", json=data)
 
     assert response.status_code == 200, response.text
     assert response.json() == {
@@ -93,7 +93,7 @@ def test_torch_predict_ptype_error():
 
     client = TestClient(v_api.app)
     data = {"0": "bad"}
-    response = client.post("/predict/", json=data)
+    response = client.post("/predict", json=data)
 
     assert response.status_code == 422, response.text  # value is not a valid float
 
@@ -106,7 +106,7 @@ def test_torch_predict_no_ptype_batch():
 
     client = TestClient(v_api.app)
     data = [[3.3], [3.3]]
-    response = client.post("/predict/", json=data)
+    response = client.post("/predict", json=data)
     assert response.status_code == 200, response.text
     assert response.json() == {
         "prediction": [[-4.060722351074219], [-4.060722351074219]]
@@ -121,6 +121,6 @@ def test_torch_predict_no_ptype():
 
     client = TestClient(v_api.app)
     data = [[3.3]]
-    response = client.post("/predict/", json=data)
+    response = client.post("/predict", json=data)
     assert response.status_code == 200, response.text
     assert response.json() == {"prediction": [[-4.060722351074219]]}, response.text
