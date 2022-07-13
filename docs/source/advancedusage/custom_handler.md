@@ -39,7 +39,7 @@ class CustomHandler(BaseHandler):
 
 new_model = CustomHandler(model, ptype_data)
 
-VetiverModel(new_model, "integer_model")
+VetiverModel(new_model, "custom_model")
 ```
 
 If your model is a common type, please consider [submitting a pull request](https://github.com/rstudio/vetiver-python/pulls).
