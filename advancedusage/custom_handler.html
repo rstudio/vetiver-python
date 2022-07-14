@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Custom Handlers &#8212; vetiver Commit: f37b86b documentation</title>
+    <title>Custom Handlers &#8212; vetiver Commit: a25fb07 documentation</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -78,7 +78,7 @@
       <img src="../_static/logo.png" class="logo" alt="logo">
       
       
-      <h1 class="site-logo" id="site-title">vetiver Commit: f37b86b documentation</h1>
+      <h1 class="site-logo" id="site-title">vetiver Commit: a25fb07 documentation</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
@@ -358,41 +358,12 @@ title="Print to PDF"
     </ul>
   </div>
 </div>
-<label for="__page-toc"
-  class="headerbtn headerbtn-page-toc"
-  
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-list"></i>
-  </span>
-
-</label>
 
     </div>
 </div>
 
 <!-- Table of contents -->
 <div class="col-md-3 bd-toc show noprint">
-    <div class="tocsection onthispage pt-5 pb-3">
-        <i class="fas fa-list"></i> Contents
-    </div>
-    <nav id="bd-toc-nav" aria-label="Page">
-        <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#new-model-type">
-   New model type
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#different-model-implementation">
-   Different model implementation
-  </a>
- </li>
-</ul>
-
-    </nav>
 </div>
     </div>
     <div class="article row">
@@ -404,24 +375,6 @@ title="Print to PDF"
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
-                        <div>
-                            <h2> Contents </h2>
-                        </div>
-                        <nav aria-label="Page">
-                            <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#new-model-type">
-   New model type
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#different-model-implementation">
-   Different model implementation
-  </a>
- </li>
-</ul>
-
-                        </nav>
                     </div>
                 </div>
             </div>
@@ -431,43 +384,46 @@ title="Print to PDF"
                 
   <section id="custom-handlers">
 <h1>Custom Handlers<a class="headerlink" href="#custom-handlers" title="Permalink to this headline">#</a></h1>
-<p>There are two different ways that vetiver supports flexible handling for models that do not work automatically with the vetiver framework. The first way is with <a class="reference internal" href="#new-model-type"><span class="std std-doc">new model types,</span></a> where there is no current implementation for the type of model you would like to deploy. The second way is when you would like to implement a current handler, but <a class="reference internal" href="#different-model-implementation"><span class="std std-doc">in a different way</span></a>. In either case, you <em>must</em> make a custom handler from the base <code class="docutils literal notranslate"><span class="pre">VetiverHandler</span></code>. A minimal custom handler could look like the following:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">vetiver.handlers.base</span> <span class="kn">import</span> <span class="n">VetiverHandler</span>
+<p>There are two different ways that vetiver supports flexible handling for models that do not work automatically with the vetiver framework. The first way is with new model types where there is no current implementation for the type of model you would like to deploy. The second way is when you would like to implement a current handler, but in a different way. In either case, you should create a custom handler from vetiver’s <code class="docutils literal notranslate"><span class="pre">BaseHandler()</span></code>. At a minimum, you must give the type of your model via <code class="docutils literal notranslate"><span class="pre">model_type</span></code> how predictions should be made, via the method <code class="docutils literal notranslate"><span class="pre">handler_predict()</span></code>. Then, initialize your handler with your model, and pass the object into <code class="docutils literal notranslate"><span class="pre">VetiverModel</span></code>.</p>
+<p>This example shows a custom handler of <code class="docutils literal notranslate"><span class="pre">newmodeltype</span></code> type.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">vetiver.handlers.base</span> <span class="kn">import</span> <span class="n">BaseHandler</span>
 
-<span class="k">class</span> <span class="nc">SampleCustomHandler</span><span class="p">(</span><span class="n">VetiverHandler</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">CustomHandler</span><span class="p">(</span><span class="n">BaseHandler</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">ptype_data</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">ptype_data</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">handler_predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_data</span><span class="p">,</span> <span class="n">check_ptype</span><span class="p">):</span>
+    <span class="n">model_type</span> <span class="o">=</span> <span class="nb">staticmethod</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">newmodeltype</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">handler_predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_data</span><span class="p">,</span> <span class="n">check_ptype</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        handler_predict defines how to make predictions from your model</span>
+<span class="sd">        Generates method for /predict endpoint in VetiverAPI</span>
+
+<span class="sd">        The `handler_predict` function executes at each API call. Use this</span>
+<span class="sd">        function for calling `predict()` and any other tasks that must be executed at each API call.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        input_data:</span>
+<span class="sd">            Test data</span>
+<span class="sd">        check_ptype: bool</span>
+<span class="sd">            Whether the ptype should be enforced</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        prediction</span>
+<span class="sd">            Prediction from model</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># your code here</span>
-</pre></div>
-</div>
-<section id="new-model-type">
-<h2>New model type<a class="headerlink" href="#new-model-type" title="Permalink to this headline">#</a></h2>
-<p>If your model type is not supported by vetiver, you should create and then register the handler using <a class="reference external" href="https://docs.python.org/3/library/functools.html#functools.singledispatch">single dispatch</a>. Once the new type is registered, you are able to use <code class="docutils literal notranslate"><span class="pre">VetiverModel()</span></code> as normal. Here is a template for such a function:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">vetiver.handlers._interface</span> <span class="kn">import</span> <span class="n">create_handler</span>
+        <span class="n">prediction</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fancy_new_predict</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span>
 
-<span class="nd">@create_handler</span><span class="o">.</span><span class="n">register</span>
-<span class="k">def</span> <span class="nf">_</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="p">{</span><span class="n">_model_type</span><span class="p">},</span> <span class="n">ptype_data</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">SampleCustomHandler</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">ptype_data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">prediction</span>
 
-<span class="n">VetiverModel</span><span class="p">(</span><span class="n">your_model</span><span class="p">,</span> <span class="s2">&quot;your_model&quot;</span><span class="p">)</span>
+<span class="n">new_model</span> <span class="o">=</span> <span class="n">CustomHandler</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">ptype_data</span><span class="p">)</span>
+
+<span class="n">VetiverModel</span><span class="p">(</span><span class="n">new_model</span><span class="p">,</span> <span class="s2">&quot;custom_model&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>If your model is a common type, please consider <a class="reference external" href="https://github.com/rstudio/vetiver-python/pulls">submitting a pull request</a>.</p>
-</section>
-<section id="different-model-implementation">
-<h2>Different model implementation<a class="headerlink" href="#different-model-implementation" title="Permalink to this headline">#</a></h2>
-<p>If your model’s prediction function is different than vetiver’s, you should create a custom handler with a <code class="docutils literal notranslate"><span class="pre">handler_predict</span></code> method to make predictions. Then, initialize your handler with your model, and pass the object into <code class="docutils literal notranslate"><span class="pre">VetiverModel</span></code>.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">new_model</span> <span class="o">=</span> <span class="n">SampleCustomHandler</span><span class="p">(</span><span class="n">your_model</span><span class="p">,</span> <span class="n">your_ptype_data</span><span class="p">)</span>
-
-<span class="n">VetiverModel</span><span class="p">(</span><span class="n">new_model</span><span class="p">,</span> <span class="s2">&quot;your_model&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</section>
 </section>
 
 
