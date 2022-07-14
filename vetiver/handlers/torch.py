@@ -1,7 +1,7 @@
 import numpy as np
 
 from ..meta import _model_meta
-from .base import VetiverHandler
+from .base import BaseHandler
 
 torch_exists = True
 try:
@@ -10,7 +10,7 @@ except ImportError:
     torch_exists = False
 
 
-class TorchHandler(VetiverHandler):
+class TorchHandler(BaseHandler):
     """Handler class for creating VetiverModels with torch.
 
     Parameters
@@ -19,7 +19,7 @@ class TorchHandler(VetiverHandler):
         a trained torch model
     """
 
-    base_class = torch.nn.Module
+    model_class = staticmethod(lambda: torch.nn.Module)
 
     def __init__(self, model, ptype_data):
         super().__init__(model, ptype_data)
@@ -59,7 +59,7 @@ class TorchHandler(VetiverHandler):
             Prediction from model
         """
         if torch_exists:
-            if check_ptype == True:
+            if check_ptype:
                 input_data = np.array(input_data, dtype=np.array(self.ptype_data).dtype)
                 prediction = self.model(torch.from_numpy(input_data))
 

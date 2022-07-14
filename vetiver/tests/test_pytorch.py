@@ -1,19 +1,19 @@
-from vetiver.vetiver_model import VetiverModel
-from vetiver import VetiverAPI
-from fastapi.testclient import TestClient
+import pytest
 
-import torch
-import torch.nn as nn
-import numpy as np
+torch = pytest.importorskip("torch", reason="torch library not installed")
+
+import numpy as np  # noqa
+from fastapi.testclient import TestClient  # noqa
+
+from vetiver.vetiver_model import VetiverModel  # noqa
+from vetiver import VetiverAPI  # noqa
 
 
 def _build_torch_v():
 
-    # Hyper-parameters
     input_size = 1
     output_size = 1
 
-    # Toy dataset
     x_train = np.array(
         [
             [3.3],
@@ -34,8 +34,8 @@ def _build_torch_v():
         ],
         dtype=np.float32,
     )
-    # Linear regression model
-    torch_model = nn.Linear(input_size, output_size)
+
+    torch_model = torch.nn.Linear(input_size, output_size)
     return x_train, torch_model
 
 

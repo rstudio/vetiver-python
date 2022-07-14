@@ -2,10 +2,10 @@ import pandas as pd
 import sklearn
 
 from ..meta import _model_meta
-from .base import VetiverHandler
+from .base import BaseHandler
 
 
-class SKLearnHandler(VetiverHandler):
+class SKLearnHandler(BaseHandler):
     """Handler class for creating VetiverModels with sklearn.
 
     Parameters
@@ -14,7 +14,7 @@ class SKLearnHandler(VetiverHandler):
         a trained sklearn model
     """
 
-    base_class = sklearn.base.BaseEstimator
+    model_class = staticmethod(lambda: sklearn.base.BaseEstimator)
 
     def __init__(self, model, ptype_data):
         super().__init__(model, ptype_data)
@@ -54,7 +54,7 @@ class SKLearnHandler(VetiverHandler):
             Prediction from model
         """
 
-        if check_ptype == True:
+        if check_ptype:
             if isinstance(input_data, pd.DataFrame):
                 prediction = self.model.predict(input_data)
             else:

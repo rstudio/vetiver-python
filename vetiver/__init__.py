@@ -11,8 +11,7 @@ from .attach_pkgs import *  # noqa
 from .meta import *  # noqa
 from .write_docker import write_docker  # noqa
 from .write_fastapi import write_app  # noqa
-from .handlers._interface import create_handler, InvalidModelError  # noqa
-from .handlers.base import VetiverHandler  # noqa
+from .handlers.base import BaseHandler, create_handler, InvalidModelError  # noqa
 from .handlers.sklearn import SKLearnHandler  # noqa
 from .handlers.torch import TorchHandler  # noqa
 from .rsconnect import deploy_rsconnect # noqa
