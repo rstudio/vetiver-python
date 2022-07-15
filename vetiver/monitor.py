@@ -1,6 +1,7 @@
 import plotly.express as px
 import pandas as pd
-from datetime import timedelta, datetime
+import numpy as np
+from datetime import timedelta
 
 
 def compute_metrics(
@@ -43,7 +44,7 @@ def compute_metrics(
 
     df = data[[truth, estimate, date_var]].copy()
 
-    if not isinstance(date_var, datetime):
+    if not np.issubdtype(df[date_var], np.datetime64):
         df[date_var] = pd.to_datetime(df[date_var])
 
     df = df.set_index(date_var).sort_index()
