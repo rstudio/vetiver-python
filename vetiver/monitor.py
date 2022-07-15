@@ -1,5 +1,6 @@
 import plotly.express as px
 import pandas as pd
+import numpy as np
 from datetime import timedelta
 
 
@@ -41,7 +42,12 @@ def compute_metrics(
 
     """
 
-    df = data[[truth, estimate, date_var]].set_index(date_var).sort_index()
+    df = data[[truth, estimate, date_var]].copy()
+
+    if not np.issubdtype(df[date_var], np.datetime64):
+        df[date_var] = pd.to_datetime(df[date_var])
+
+    df = df.set_index(date_var).sort_index()
     lst = [_ for _ in _rolling_df(df=df, td=period)]
 
     rows = []
@@ -169,7 +175,7 @@ def plot_metrics(
         color=metric,
         facet_row=metric,
         markers=dict(size=n),
-        hover_data={"n": ':'},
+        hover_data={"n": ":"},
         **kw,
     )
 
