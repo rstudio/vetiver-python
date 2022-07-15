@@ -35,6 +35,27 @@ def test_compute():
     )
 
 
+def test_compute_coerce_datetime():
+
+    df_metrics = pd.DataFrame(
+        {
+            "index": ["2021-01-01", "2021-01-02", "2021-01-03"],
+            "truth": [200, 201, 199],
+            "pred": [198, 200, 199],
+        }
+    )
+    td = timedelta(days=1)
+    m = vetiver.compute_metrics(
+        df_metrics, "index", td, metric_set=metric_set, truth="truth", estimate="pred"
+    )
+    assert isinstance(m, pd.DataFrame)
+    assert m.shape == (4, 4)
+    numpy.testing.assert_array_equal(
+        m.metric.unique(),
+        numpy.array(["mean_squared_error", "mean_absolute_error"], dtype=object),
+    )
+
+
 def test_monitor(snapshot):
     snapshot.snapshot_dir = "./vetiver/tests/snapshots"
     m = vetiver.compute_metrics(

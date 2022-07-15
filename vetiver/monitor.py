@@ -1,6 +1,6 @@
 import plotly.express as px
 import pandas as pd
-from datetime import timedelta
+from datetime import timedelta, datetime
 
 
 def compute_metrics(
@@ -42,7 +42,10 @@ def compute_metrics(
     """
 
     df = data[[truth, estimate, date_var]].copy()
-    df[date_var] = pd.to_datetime(df[date_var])
+
+    if not isinstance(date_var, datetime):
+        df[date_var] = pd.to_datetime(df[date_var])
+
     df = df.set_index(date_var).sort_index()
     lst = [_ for _ in _rolling_df(df=df, td=period)]
 
