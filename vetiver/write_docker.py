@@ -45,7 +45,7 @@ def write_docker(
     py_version = str(sys.version_info.major) + "." + str(sys.version_info.minor)
 
     if rspm_env:
-        rspm = "\nRUN pip config set global.index-url https://colorado.rstudio.com/rspm/pypi/latest/simple"
+        rspm = "\nRUN pip config set global.index-url https://colorado.rstudio.com/rspm/pypi/latest/simple"  # noqa
     else:
         rspm = ""
 

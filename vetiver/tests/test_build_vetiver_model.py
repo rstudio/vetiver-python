@@ -1,4 +1,3 @@
-import pytest
 import sklearn
 
 import vetiver as vt
@@ -74,7 +73,7 @@ def test_vetiver_model_no_ptype():
     )
 
     assert vt4.model == model
-    assert vt4.ptype == None
+    assert vt4.ptype is None
 
 
 def test_vetiver_model_from_pin():

@@ -14,8 +14,8 @@ from .write_fastapi import write_app  # noqa
 from .handlers.base import BaseHandler, create_handler, InvalidModelError  # noqa
 from .handlers.sklearn import SKLearnHandler  # noqa
 from .handlers.torch import TorchHandler  # noqa
-from .rsconnect import deploy_rsconnect # noqa
-from .monitor import compute_metrics, pin_metrics, plot_metrics, _rolling_df # noqa
+from .rsconnect import deploy_rsconnect  # noqa
+from .monitor import compute_metrics, pin_metrics, plot_metrics, _rolling_df  # noqa
 
 __author__ = "Isabel Zimmerman <isabel.zimmerman@rstudio.com>"
 __all__ = []

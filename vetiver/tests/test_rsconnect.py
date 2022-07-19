@@ -4,8 +4,6 @@ import sklearn
 from pins.boards import BoardRsConnect
 from pins.rsconnect.api import RsConnectApi
 from pins.rsconnect.fs import RsConnectFs
-from vetiver import VetiverModel, vetiver_pin_write, mock
-import sklearn
 from rsconnect.api import RSConnectServer
 
 import vetiver
@@ -24,6 +22,7 @@ def server_from_key(name):
     with open(RSC_KEYS_FNAME) as f:
         api_key = json.load(f)[name]
         return RSConnectServer(RSC_SERVER_URL, api_key)
+
 
 def rsc_from_key(name):
     with open(RSC_KEYS_FNAME) as f:
@@ -60,13 +59,13 @@ def rsc_short():
     rsc_delete_user_content(fs_susan.api)
 
 
-
 def test_board_pin_write(rsc_short):
     v = vetiver.VetiverModel(
         model=model, ptype_data=X_df, model_name="susan/model", versioned=None
     )
     vetiver.vetiver_pin_write(board=rsc_short, model=v)
     assert isinstance(rsc_short.pin_read("susan/model"), sklearn.dummy.DummyRegressor)
+
 
 @pytest.mark.xfail
 def test_deploy(rsc_short):
@@ -76,11 +75,9 @@ def test_deploy(rsc_short):
     )
 
     vetiver.vetiver_pin_write(board=rsc_short, model=v)
-    
+
     vetiver.deploy_rsconnect(
-        connect_server=server_from_key("susan"), 
-        board=rsc_short, 
-        pin_name="susan/model"
+        connect_server=server_from_key("susan"), board=rsc_short, pin_name="susan/model"
     )
     response = vetiver.predict(RSC_SERVER_URL + "/predict/", json=X_df)
     assert response.status_code == 200, response.text

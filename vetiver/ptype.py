@@ -19,7 +19,7 @@ class NoAvailablePTypeError(Exception):
 
     def __init__(
         self,
-        message="There is no method available to create a 0-row input data prototype for `model`",
+        message="There is no method to create a 0-row input data prototype for `model`",
     ):
         self.message = message
         super().__init__(self.message)

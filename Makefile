@@ -20,6 +20,7 @@ help:
 	@echo "clean-test - remove test and coverage artifacts"
 	@echo "lint - check style with flake8"
 	@echo "test - run tests quickly with the default Python"
+	@echo "test-rsc - run tests for rsconnect"
 	@echo "coverage - check code coverage quickly with the default Python"
 	@echo "docs - generate Sphinx HTML documentation, including API docs"
 	@echo "cdocs - cleanout previous build & generate Sphinx HTML documentation, including API docs"
@@ -54,6 +55,9 @@ lint:
 	flake8 vetiver
 
 test: clean-test
+	pytest -m 'not rsc_test'
+
+test-rsc: clean-test
 	pytest
 
 coverage:
