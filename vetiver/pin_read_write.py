@@ -61,12 +61,14 @@ def vetiver_pin_read(board, name: str, version: str = None) -> VetiverModel:
 
     Notes
     -----
-    If reading a board from RSConnect, the `board` argument must be in "username/modelname" format.
+    If reading a board from RSConnect, the `board` argument must be in
+    "username/modelname" format.
 
     """
 
     warnings.warn(
-        "vetiver_pin_read will be removed in v1.0.0. Use classmethod VetiverModel.from_pin() instead",
+        "vetiver_pin_read will be removed in v1.0.0. Use classmethod "
+        "VetiverModel.from_pin() instead",
         DeprecationWarning,
     )
 

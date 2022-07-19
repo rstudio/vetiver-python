@@ -26,16 +26,16 @@ def deploy_rsconnect(
 
     Parameters
     ----------
-        connect_server: 
+        connect_server:
             RSConnect Server
-        board: 
+        board:
             Pins board
         pin_name: str
             Name of pin
         version: str
             Version of pin
         extra_files: typing.List[str]
-            Any extra files to include in 
+            Any extra files to include in
         new:
             Force as a new deploy
         app_id:
@@ -46,7 +46,7 @@ def deploy_rsconnect(
             Optional name of a Python executable
         conda_mode: bool
             Use conda to build an environment.yml
-        force_generate: bool    
+        force_generate: bool
             Force generating "requirements.txt" or "environment.yml"
         log_callback: typing.Callable
             Callback to use to write the log to
@@ -64,10 +64,9 @@ def deploy_rsconnect(
                 shutil.copyfile(file, os.path.join(temp, filename))
                 new_files = new_files + [os.path.join(temp, filename)]
             extra_files = new_files
-        
+
         if board.fs.protocol == "file":
             shutil.copytree(board.path_to_pin(pin_name), os.path.join(temp, pin_name))
-
 
         tmp_app = temp + "/app.py"
 

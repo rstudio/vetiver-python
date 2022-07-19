@@ -12,6 +12,7 @@ def __dir__():
 
 def __getattr__(k):
     import pandas as pd
+
     f_path = sources.get("mtcars")
     if k == "chicago":
         f_path = sources.get("chicago")
