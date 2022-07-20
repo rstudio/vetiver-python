@@ -18,7 +18,6 @@ And the development version from `GitHub <https://github.com/rstudio/vetiver-pyt
 
    python -m pip install git+https://github.com/rstudio/vetiver-python
 
-
 This website documents the public API of Vetiver (for Python). See `vetiver.rstudio.com <https://vetiver.rstudio.com>`_ for
 more on how to get started.
 
