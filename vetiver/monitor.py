@@ -42,7 +42,7 @@ def compute_metrics(
     ... )
     >>> td = timedelta(days = 1)
     >>> metric_set = [mean_squared_error, mean_absolute_error]
-    >>> compute_metrics(df, "index", td, metric_set, "truth", "pred")
+    >>> metrics = compute_metrics(df, "index", td, metric_set, "truth", "pred")
 
     """
 
