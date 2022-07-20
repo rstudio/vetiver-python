@@ -23,6 +23,7 @@ jobs:
           python -m pip install -e .[dev]
       - name: build docs
         run: |
+          echo "${{ github.ref_name }}"
           cd docs
           make html
       - name: save docs
