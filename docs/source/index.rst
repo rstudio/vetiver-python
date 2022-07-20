@@ -35,7 +35,8 @@ Version
    :caption: Version
 
    ~VetiverModel
-   ~pin_read_write.vetiver_pin_write
+   ~vetiver_pin_write
+   ~vetiver_create_ptype
 
 Deploy
 ==================
@@ -51,6 +52,7 @@ Deploy
    ~predict
    ~write_app
    ~write_docker
+   ~deploy_rsconnect
 
 Monitor
 ==================
