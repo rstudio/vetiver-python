@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>vetiver &#8212; vetiver 0.1.5 documentation</title>
+    <title>vetiver &#8212; vetiver 0.1.6 documentation</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -78,7 +78,7 @@
       <img src="_static/logo.png" class="logo" alt="logo">
       
       
-      <h1 class="site-logo" id="site-title">vetiver 0.1.5 documentation</h1>
+      <h1 class="site-logo" id="site-title">vetiver 0.1.6 documentation</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
@@ -150,6 +150,28 @@
  <li class="toctree-l1">
   <a class="reference internal" href="reference/vetiver.write_docker.html">
    vetiver.write_docker
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Monitor
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="reference/vetiver.compute_metrics.html">
+   vetiver.compute_metrics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="reference/vetiver.pin_metrics.html">
+   vetiver.pin_metrics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="reference/vetiver.plot_metrics.html">
+   vetiver.plot_metrics
   </a>
  </li>
 </ul>
@@ -515,6 +537,15 @@ more on how to get started.</p>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/vetiver.compute_metrics.html#vetiver.compute_metrics" title="vetiver.compute_metrics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_metrics</span></code></a>(data, date_var, period, ...)</p></td>
+<td><p>Compute metrics for given time period</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/vetiver.pin_metrics.html#vetiver.pin_metrics" title="vetiver.pin_metrics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pin_metrics</span></code></a>(board, df_metrics, metrics_pin_name)</p></td>
+<td><p>Update an existing pin storing model metrics over time</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/vetiver.plot_metrics.html#vetiver.plot_metrics" title="vetiver.plot_metrics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_metrics</span></code></a>(df_metrics[, date, estimate, ...])</p></td>
+<td><p>Plot metrics over a given time period</p></td>
+</tr>
 </tbody>
 </table>
 </section>
