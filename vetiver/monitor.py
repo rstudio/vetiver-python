@@ -32,13 +32,17 @@ def compute_metrics(
 
     Example
     -------
-    from sklearn import metrics
-    rng = pd.date_range("1/1/2012", periods=10, freq="S")
-    new = dict(x=range(len(rng)), y = range(len(rng)))
-    df = pd.DataFrame(new, index = rng).reset_index(inplace=True)
-    td = timedelta(seconds = 2)
-    metric_set = [sklearn.metrics.mean_squared_error, sklearn.metrics.mean_absolute_error]
-    compute_metrics(df, "index", td, metric_set=metric_set, truth="x", estimate="y")
+    >>> from sklearn.metrics import mean_squared_error, mean_absolute_error
+    >>> df = pd.DataFrame(
+    ...   {
+    ...        "index": ["2021-01-01", "2021-01-02", "2021-01-03"],
+    ...        "truth": [200, 201, 199],
+    ...        "pred": [198, 200, 199],
+    ...   }
+    ... )
+    >>> td = timedelta(days = 1)
+    >>> metric_set = [mean_squared_error, mean_absolute_error]
+    >>> compute_metrics(df, "index", td, metric_set, "truth", "pred")
 
     """
 
