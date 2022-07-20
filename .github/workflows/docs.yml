@@ -10,7 +10,7 @@ on:
 
 jobs:
   tests:
-    name: "Tests"
+    name: "Docs"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -30,10 +30,25 @@ jobs:
         with:
           name: docs-html
           path: docs/_build/html/
-      - name: publish docs
-        if: github.ref_name == 'main' && github.ref_type == 'branch'
+      - name: publish dev docs
+        if: github.ref_name == 'docs-switch' && github.ref_type == 'branch'
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: docs/_build/*
           publish_branch: gh-pages
+          destination_dir: main
+      - name: publish stable docs
+        if: github.ref_name == 'main' && github.ref_type == 'tag' && startswith(github.ref, 'refs/tags/v')
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: docs/_build/*
+          publish_branch: gh-pages
+          destination_dir: github.ref_name
+      - name: create symlink stable to new version
+        if: github.ref_name == 'main' && github.ref_type == 'tag' && startswith(github.ref, 'refs/tags/v')
+        run: |
+          rm stable
+          ln -s "${{ github.ref_name }}" stable
+          ls -la
