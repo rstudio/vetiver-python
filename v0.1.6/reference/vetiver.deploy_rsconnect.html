@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>vetiver.vetiver_write_app &#8212; vetiver 0.1.6 documentation</title>
+    <title>vetiver.deploy_rsconnect &#8212; vetiver 0.1.6 documentation</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -34,6 +34,8 @@
     <link rel="shortcut icon" href="../_static/logo.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="vetiver.compute_metrics" href="vetiver.compute_metrics.html" />
+    <link rel="prev" title="vetiver.write_docker" href="vetiver.write_docker.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -120,7 +122,7 @@
   Deploy
  </span>
 </p>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="vetiver.VetiverAPI.html">
    vetiver.VetiverAPI
@@ -156,8 +158,8 @@
    vetiver.write_docker
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="vetiver.deploy_rsconnect.html">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
    vetiver.deploy_rsconnect
   </a>
  </li>
@@ -285,7 +287,7 @@ title="Source repository"
       </li>
       
       <li>
-        <a href="https://github.com/tidymodels/vetiver-python/issues/new?title=Issue%20on%20page%20%2Freference/vetiver.vetiver_write_app.html&body=Your%20issue%20content%20here."
+        <a href="https://github.com/tidymodels/vetiver-python/issues/new?title=Issue%20on%20page%20%2Freference/vetiver.deploy_rsconnect.html&body=Your%20issue%20content%20here."
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -302,7 +304,7 @@ title="Open an issue"
       </li>
       
       <li>
-        <a href="https://github.com/tidymodels/vetiver-python/edit/master/reference/vetiver.vetiver_write_app.rst"
+        <a href="https://github.com/tidymodels/vetiver-python/edit/master/reference/vetiver.deploy_rsconnect.rst"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -330,7 +332,7 @@ title="Edit this page"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="../_sources/reference/vetiver.vetiver_write_app.rst.txt"
+        <a href="../_sources/reference/vetiver.deploy_rsconnect.rst.txt"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -379,7 +381,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>vetiver.vetiver_write_app</h1>
+                <h1>vetiver.deploy_rsconnect</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -391,8 +393,33 @@ title="Print to PDF"
                 
               <div>
                 
-  <section id="vetiver-vetiver-write-app">
-<h1>vetiver.vetiver_write_app<a class="headerlink" href="#vetiver-vetiver-write-app" title="Permalink to this headline">#</a></h1>
+  <section id="vetiver-deploy-rsconnect">
+<h1>vetiver.deploy_rsconnect<a class="headerlink" href="#vetiver-deploy-rsconnect" title="Permalink to this headline">#</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="vetiver.deploy_rsconnect">
+<span class="sig-prename descclassname"><span class="pre">vetiver.</span></span><span class="sig-name descname"><span class="pre">deploy_rsconnect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">connect_server</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">board</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pin_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_files</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">python</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conda_mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_generate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_callback</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Callable</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vetiver.deploy_rsconnect" title="Permalink to this definition">#</a></dt>
+<dd><p>Deploy to RSConnect</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>connect_server</strong> – RSConnect Server</p></li>
+<li><p><strong>board</strong> – Pins board</p></li>
+<li><p><strong>pin_name</strong> (<em>str</em>) – Name of pin</p></li>
+<li><p><strong>version</strong> (<em>str</em>) – Version of pin</p></li>
+<li><p><strong>extra_files</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – Any extra files to include in</p></li>
+<li><p><strong>new</strong> – Force as a new deploy</p></li>
+<li><p><strong>app_id</strong> – ID of an existing application to deploy new files for.</p></li>
+<li><p><strong>title</strong> (<em>str</em>) – Optional title for the deploy.</p></li>
+<li><p><strong>python</strong> (<em>str</em>) – Optional name of a Python executable</p></li>
+<li><p><strong>conda_mode</strong> (<em>bool</em>) – Use conda to build an environment.yml</p></li>
+<li><p><strong>force_generate</strong> (<em>bool</em>) – Force generating “requirements.txt” or “environment.yml”</p></li>
+<li><p><strong>log_callback</strong> (<em>Callable</em>) – Callback to use to write the log to</p></li>
+<li><p><strong>image</strong> (<em>str</em>) – Docker image to be specified for off-host execution</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 
 
@@ -403,6 +430,20 @@ title="Print to PDF"
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="vetiver.write_docker.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">vetiver.write_docker</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="vetiver.compute_metrics.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">vetiver.compute_metrics</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
 </div>
             </footer>
         </div>

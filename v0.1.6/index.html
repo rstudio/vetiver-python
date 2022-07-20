@@ -106,8 +106,13 @@
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="reference/vetiver.pin_read_write.vetiver_pin_write.html">
-   vetiver.pin_read_write.vetiver_pin_write
+  <a class="reference internal" href="reference/vetiver.vetiver_pin_write.html">
+   vetiver.vetiver_pin_write
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="reference/vetiver.vetiver_create_ptype.html">
+   vetiver.vetiver_create_ptype
   </a>
  </li>
 </ul>
@@ -150,6 +155,11 @@
  <li class="toctree-l1">
   <a class="reference internal" href="reference/vetiver.write_docker.html">
    vetiver.write_docker
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="reference/vetiver.deploy_rsconnect.html">
+   vetiver.deploy_rsconnect
   </a>
  </li>
 </ul>
@@ -491,8 +501,11 @@ more on how to get started.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="reference/vetiver.VetiverModel.html#vetiver.VetiverModel" title="vetiver.VetiverModel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VetiverModel</span></code></a>(model, model_name[, ...])</p></td>
 <td><p>Create VetiverModel class for serving.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="reference/vetiver.pin_read_write.vetiver_pin_write.html#vetiver.pin_read_write.vetiver_pin_write" title="vetiver.pin_read_write.vetiver_pin_write"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vetiver_pin_write</span></code></a>(board, model[, versioned])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/vetiver.vetiver_pin_write.html#vetiver.vetiver_pin_write" title="vetiver.vetiver_pin_write"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vetiver_pin_write</span></code></a>(board, model[, versioned])</p></td>
 <td><p>Pin a trained VetiverModel along with other model metadata.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/vetiver.vetiver_create_ptype.html#vetiver.vetiver_create_ptype" title="vetiver.vetiver_create_ptype"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vetiver_create_ptype</span></code></a>(data)</p></td>
+<td><p>Create zero row structure to save data types</p></td>
 </tr>
 </tbody>
 </table>
@@ -525,6 +538,9 @@ more on how to get started.</p>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="reference/vetiver.write_docker.html#vetiver.write_docker" title="vetiver.write_docker"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_docker</span></code></a>([app_file, path, rspm_env, ...])</p></td>
 <td><p>Writes a Dockerfile to run VetiverAPI in a container</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/vetiver.deploy_rsconnect.html#vetiver.deploy_rsconnect" title="vetiver.deploy_rsconnect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deploy_rsconnect</span></code></a>(connect_server, board, pin_name)</p></td>
+<td><p>Deploy to RSConnect</p></td>
 </tr>
 </tbody>
 </table>

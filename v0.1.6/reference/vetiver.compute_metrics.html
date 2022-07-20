@@ -107,8 +107,13 @@
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="vetiver.pin_read_write.vetiver_pin_write.html">
-   vetiver.pin_read_write.vetiver_pin_write
+  <a class="reference internal" href="vetiver.vetiver_pin_write.html">
+   vetiver.vetiver_pin_write
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="vetiver.vetiver_create_ptype.html">
+   vetiver.vetiver_create_ptype
   </a>
  </li>
 </ul>
@@ -402,13 +407,19 @@ title="Print to PDF"
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<p>from sklearn import metrics
-rng = pd.date_range(“1/1/2012”, periods=10, freq=”S”)
-new = dict(x=range(len(rng)), y = range(len(rng)))
-df = pd.DataFrame(new, index = rng).reset_index(inplace=True)
-td = timedelta(seconds = 2)
-metric_set = [sklearn.metrics.mean_squared_error, sklearn.metrics.mean_absolute_error]
-compute_metrics(df, “index”, td, metric_set=metric_set, truth=”x”, estimate=”y”)</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span><span class="p">,</span> <span class="n">mean_absolute_error</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+<span class="gp">... </span>   <span class="p">{</span>
+<span class="gp">... </span>       <span class="s2">&quot;index&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;2021-01-01&quot;</span><span class="p">,</span> <span class="s2">&quot;2021-01-02&quot;</span><span class="p">,</span> <span class="s2">&quot;2021-01-03&quot;</span><span class="p">],</span>
+<span class="gp">... </span>       <span class="s2">&quot;truth&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">200</span><span class="p">,</span> <span class="mi">201</span><span class="p">,</span> <span class="mi">199</span><span class="p">],</span>
+<span class="gp">... </span>       <span class="s2">&quot;pred&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">198</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">199</span><span class="p">],</span>
+<span class="gp">... </span>   <span class="p">}</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">td</span> <span class="o">=</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">metric_set</span> <span class="o">=</span> <span class="p">[</span><span class="n">mean_squared_error</span><span class="p">,</span> <span class="n">mean_absolute_error</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">compute_metrics</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="s2">&quot;index&quot;</span><span class="p">,</span> <span class="n">td</span><span class="p">,</span> <span class="n">metric_set</span><span class="p">,</span> <span class="s2">&quot;truth&quot;</span><span class="p">,</span> <span class="s2">&quot;pred&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </section>
