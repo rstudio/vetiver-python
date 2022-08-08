@@ -47,7 +47,7 @@ jobs:
           publish_branch: gh-pages
           destination_dir: github.ref_name
       - name: create symlink stable to new version
-        if: github.ref_name == 'main' && github.ref_type == 'tag' && startswith(github.ref, 'refs/tags/v')
+        if: github.ref_type == 'tag' && startswith(github.ref, 'refs/tags/v')
         run: |
           rm stable
           ln -s "${{ github.ref_name }}" stable
