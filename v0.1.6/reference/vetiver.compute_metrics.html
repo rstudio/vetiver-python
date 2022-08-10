@@ -35,7 +35,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="vetiver.pin_metrics" href="vetiver.pin_metrics.html" />
-    <link rel="prev" title="vetiver.write_docker" href="vetiver.write_docker.html" />
+    <link rel="prev" title="vetiver.deploy_rsconnect" href="vetiver.deploy_rsconnect.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -156,6 +156,11 @@
  <li class="toctree-l1">
   <a class="reference internal" href="vetiver.write_docker.html">
    vetiver.write_docker
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="vetiver.deploy_rsconnect.html">
+   vetiver.deploy_rsconnect
   </a>
  </li>
 </ul>
@@ -407,19 +412,13 @@ title="Print to PDF"
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span><span class="p">,</span> <span class="n">mean_absolute_error</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-<span class="gp">... </span>   <span class="p">{</span>
-<span class="gp">... </span>       <span class="s2">&quot;index&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;2021-01-01&quot;</span><span class="p">,</span> <span class="s2">&quot;2021-01-02&quot;</span><span class="p">,</span> <span class="s2">&quot;2021-01-03&quot;</span><span class="p">],</span>
-<span class="gp">... </span>       <span class="s2">&quot;truth&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">200</span><span class="p">,</span> <span class="mi">201</span><span class="p">,</span> <span class="mi">199</span><span class="p">],</span>
-<span class="gp">... </span>       <span class="s2">&quot;pred&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">198</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">199</span><span class="p">],</span>
-<span class="gp">... </span>   <span class="p">}</span>
-<span class="gp">... </span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">td</span> <span class="o">=</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">metric_set</span> <span class="o">=</span> <span class="p">[</span><span class="n">mean_squared_error</span><span class="p">,</span> <span class="n">mean_absolute_error</span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">compute_metrics</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="s2">&quot;index&quot;</span><span class="p">,</span> <span class="n">td</span><span class="p">,</span> <span class="n">metric_set</span><span class="p">,</span> <span class="s2">&quot;truth&quot;</span><span class="p">,</span> <span class="s2">&quot;pred&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
+<p>from sklearn import metrics
+rng = pd.date_range(“1/1/2012”, periods=10, freq=”S”)
+new = dict(x=range(len(rng)), y = range(len(rng)))
+df = pd.DataFrame(new, index = rng).reset_index(inplace=True)
+td = timedelta(seconds = 2)
+metric_set = [sklearn.metrics.mean_squared_error, sklearn.metrics.mean_absolute_error]
+compute_metrics(df, “index”, td, metric_set=metric_set, truth=”x”, estimate=”y”)</p>
 </dd></dl>
 
 </section>
@@ -432,11 +431,11 @@ title="Print to PDF"
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="vetiver.write_docker.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="vetiver.deploy_rsconnect.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">vetiver.write_docker</p>
+            <p class="prev-next-title">vetiver.deploy_rsconnect</p>
         </div>
     </a>
     <a class='right-next' id="next-link" href="vetiver.pin_metrics.html" title="next page">

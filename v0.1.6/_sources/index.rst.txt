@@ -10,7 +10,7 @@ You can install the released version of vetiver from `PyPI <https://pypi.org/pro
 
 .. code-block:: bash
 
-   pip install vetiver
+   python -m pip install vetiver
 
 And the development version from `GitHub <https://github.com/rstudio/vetiver-python>`_ with:
 
