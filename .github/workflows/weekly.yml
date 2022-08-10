@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
   schedule:
     # At 00:00 on Monday
-    - cron: 0 0 * * MON
+    - cron: "0 0 * * MON"
 
 jobs:
   vetiver_main_pins_main:

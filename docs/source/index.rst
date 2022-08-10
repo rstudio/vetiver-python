@@ -10,14 +10,13 @@ You can install the released version of vetiver from `PyPI <https://pypi.org/pro
 
 .. code-block:: bash
 
-   pip install vetiver
+   python -m pip install vetiver
 
 And the development version from `GitHub <https://github.com/rstudio/vetiver-python>`_ with:
 
 .. code-block:: bash
 
    python -m pip install git+https://github.com/rstudio/vetiver-python
-
 
 This website documents the public API of Vetiver (for Python). See `vetiver.rstudio.com <https://vetiver.rstudio.com>`_ for
 more on how to get started.
@@ -36,7 +35,8 @@ Version
    :caption: Version
 
    ~VetiverModel
-   ~pin_read_write.vetiver_pin_write
+   ~vetiver_pin_write
+   ~vetiver_create_ptype
 
 Deploy
 ==================
@@ -52,6 +52,7 @@ Deploy
    ~predict
    ~write_app
    ~write_docker
+   ~deploy_rsconnect
 
 Monitor
 ==================

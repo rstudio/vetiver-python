@@ -10,7 +10,7 @@ from .pin_read_write import vetiver_pin_write  # noqa
 from .attach_pkgs import *  # noqa
 from .meta import *  # noqa
 from .write_docker import write_docker  # noqa
-from .write_fastapi import write_app  # noqa
+from .write_fastapi import write_app, vetiver_write_app  # noqa
 from .handlers.base import BaseHandler, create_handler, InvalidModelError  # noqa
 from .handlers.sklearn import SKLearnHandler  # noqa
 from .handlers.torch import TorchHandler  # noqa
