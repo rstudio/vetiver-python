@@ -23,8 +23,7 @@ jobs:
           python -m pip install -e .[dev]
       - name: build docs
         run: |
-          cd docs
-          make html
+          make docs
       - name: save docs
         uses: actions/upload-artifact@v3
         with:
