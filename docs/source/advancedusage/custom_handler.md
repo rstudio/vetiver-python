@@ -8,7 +8,7 @@ This example shows a custom handler of `newmodeltype` type.
 from vetiver.handlers.base import BaseHandler
 
 class CustomHandler(BaseHandler):
-    def __init__(model, ptype_data):
+    def __init__(self, model, ptype_data):
         super().__init__(model, ptype_data)
 
     model_type = staticmethod(lambda: newmodeltype)
