@@ -19,9 +19,7 @@ class StatsmodelsHandler(BaseHandler):
         a trained sklearn model
     """
 
-    model_class = staticmethod(
-        lambda: statsmodels.regression.linear_model.RegressionResultsWrapper
-    )
+    model_class = staticmethod(lambda: statsmodels.base.wrapper.ResultsWrapper)
 
     def __init__(self, model, ptype_data):
         super().__init__(model, ptype_data)
