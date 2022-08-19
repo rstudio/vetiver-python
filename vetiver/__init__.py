@@ -14,6 +14,7 @@ from .write_fastapi import write_app, vetiver_write_app  # noqa
 from .handlers.base import BaseHandler, create_handler, InvalidModelError  # noqa
 from .handlers.sklearn import SKLearnHandler  # noqa
 from .handlers.torch import TorchHandler  # noqa
+from .handlers.statsmodels import StatsmodelsHandler  # noqa
 from .rsconnect import deploy_rsconnect  # noqa
 from .monitor import compute_metrics, pin_metrics, plot_metrics, _rolling_df  # noqa
 
