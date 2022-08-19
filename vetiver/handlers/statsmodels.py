@@ -11,12 +11,12 @@ except ImportError:
 
 
 class StatsmodelsHandler(BaseHandler):
-    """Handler class for creating VetiverModels with sklearn.
+    """Handler class for creating VetiverModels with statsmodels.
 
     Parameters
     ----------
     model : statsmodels
-        a trained sklearn model
+        a trained and fit statsmodels model
     """
 
     model_class = staticmethod(lambda: statsmodels.base.wrapper.ResultsWrapper)
@@ -25,7 +25,7 @@ class StatsmodelsHandler(BaseHandler):
         super().__init__(model, ptype_data)
 
     def describe(self):
-        """Create description for sklearn model"""
+        """Create description for statsmodels model"""
         desc = f"Statsmodels {self.model.__class__} model."
         return desc
 
@@ -35,7 +35,7 @@ class StatsmodelsHandler(BaseHandler):
         url: str = None,
         required_pkgs: list = [],
     ):
-        """Create metadata for sklearn model"""
+        """Create metadata for statsmodel"""
         required_pkgs = required_pkgs + ["statsmodels"]
         meta = _model_meta(user, version, url, required_pkgs)
 
@@ -59,17 +59,9 @@ class StatsmodelsHandler(BaseHandler):
             Prediction from model
         """
 
-        if check_ptype:
-            if isinstance(input_data, pd.DataFrame):
-                prediction = self.model.predict(input_data)
-            else:
-                prediction = self.model.predict([input_data])
-
-        # do not check ptype
-        else:
-            if not isinstance(input_data, list):
-                input_data = [input_data.split(",")]  # user delimiter ?
-
+        if isinstance(input_data, pd.DataFrame):
             prediction = self.model.predict(input_data)
+        else:
+            prediction = self.model.predict([input_data])
 
         return prediction
