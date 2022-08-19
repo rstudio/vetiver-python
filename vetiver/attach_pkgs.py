@@ -22,10 +22,12 @@ def load_pkgs(model: VetiverModel = None, packages: list = None, path=""):
     if model.metadata.get("required_pkgs"):
         required_pkgs = list(set(required_pkgs + model.metadata.get("required_pkgs")))
 
-    tmp = tempfile.NamedTemporaryFile(suffix=".in")
+    tmp = tempfile.NamedTemporaryFile(suffix=".in", delete=False)
+    tmp.close()
 
     with open(tmp.name, "a") as f:
         for package in required_pkgs:
             f.write(package + "\n")
 
     os.system(f"pip-compile {f.name} --output-file={path}vetiver_requirements.txt")
+    os.remove(tmp.name)
