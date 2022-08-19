@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Custom Handlers &#8212; vetiver 0.1.5 documentation</title>
+    <title>Custom Handlers &#8212; vetiver Commit: dd4a5ed documentation</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -21,7 +21,7 @@
     href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
     
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
@@ -30,11 +30,11 @@
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
     <link rel="shortcut icon" href="../_static/logo.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="vetiver.write_docker" href="../reference/vetiver.write_docker.html" />
+    <link rel="prev" title="vetiver.plot_metrics" href="../reference/vetiver.plot_metrics.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -78,7 +78,7 @@
       <img src="../_static/logo.png" class="logo" alt="logo">
       
       
-      <h1 class="site-logo" id="site-title">vetiver 0.1.5 documentation</h1>
+      <h1 class="site-logo" id="site-title">vetiver Commit: dd4a5ed documentation</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
@@ -106,8 +106,13 @@
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../reference/vetiver.pin_read_write.vetiver_pin_write.html">
-   vetiver.pin_read_write.vetiver_pin_write
+  <a class="reference internal" href="../reference/vetiver.vetiver_pin_write.html">
+   vetiver.vetiver_pin_write
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../reference/vetiver.vetiver_create_ptype.html">
+   vetiver.vetiver_create_ptype
   </a>
  </li>
 </ul>
@@ -150,6 +155,33 @@
  <li class="toctree-l1">
   <a class="reference internal" href="../reference/vetiver.write_docker.html">
    vetiver.write_docker
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../reference/vetiver.deploy_rsconnect.html">
+   vetiver.deploy_rsconnect
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Monitor
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../reference/vetiver.compute_metrics.html">
+   vetiver.compute_metrics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../reference/vetiver.pin_metrics.html">
+   vetiver.pin_metrics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../reference/vetiver.plot_metrics.html">
+   vetiver.plot_metrics
   </a>
  </li>
 </ul>
@@ -367,7 +399,7 @@ title="Print to PDF"
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">vetiver.handlers.base</span> <span class="kn">import</span> <span class="n">BaseHandler</span>
 
 <span class="k">class</span> <span class="nc">CustomHandler</span><span class="p">(</span><span class="n">BaseHandler</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">ptype_data</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">ptype_data</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">ptype_data</span><span class="p">)</span>
 
     <span class="n">model_type</span> <span class="o">=</span> <span class="nb">staticmethod</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">newmodeltype</span><span class="p">)</span>
@@ -412,11 +444,11 @@ title="Print to PDF"
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="../reference/vetiver.write_docker.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="../reference/vetiver.plot_metrics.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">vetiver.write_docker</p>
+            <p class="prev-next-title">vetiver.plot_metrics</p>
         </div>
     </a>
 </div>

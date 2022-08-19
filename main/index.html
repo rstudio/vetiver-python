@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>vetiver &#8212; vetiver 0.1.5 documentation</title>
+    <title>vetiver &#8212; vetiver Commit: dd4a5ed documentation</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -21,7 +21,7 @@
     href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
     
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
@@ -30,7 +30,7 @@
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
     <link rel="shortcut icon" href="_static/logo.png"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -78,7 +78,7 @@
       <img src="_static/logo.png" class="logo" alt="logo">
       
       
-      <h1 class="site-logo" id="site-title">vetiver 0.1.5 documentation</h1>
+      <h1 class="site-logo" id="site-title">vetiver Commit: dd4a5ed documentation</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
@@ -106,8 +106,13 @@
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="reference/vetiver.pin_read_write.vetiver_pin_write.html">
-   vetiver.pin_read_write.vetiver_pin_write
+  <a class="reference internal" href="reference/vetiver.vetiver_pin_write.html">
+   vetiver.vetiver_pin_write
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="reference/vetiver.vetiver_create_ptype.html">
+   vetiver.vetiver_create_ptype
   </a>
  </li>
 </ul>
@@ -150,6 +155,33 @@
  <li class="toctree-l1">
   <a class="reference internal" href="reference/vetiver.write_docker.html">
    vetiver.write_docker
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="reference/vetiver.deploy_rsconnect.html">
+   vetiver.deploy_rsconnect
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Monitor
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="reference/vetiver.compute_metrics.html">
+   vetiver.compute_metrics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="reference/vetiver.pin_metrics.html">
+   vetiver.pin_metrics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="reference/vetiver.plot_metrics.html">
+   vetiver.plot_metrics
   </a>
  </li>
 </ul>
@@ -446,7 +478,7 @@ You can use vetiver with:</p>
 <li><p><a class="reference external" href="https://pytorch.org/">pytorch</a></p></li>
 </ul>
 <p>You can install the released version of vetiver from <a class="reference external" href="https://pypi.org/project/vetiver/">PyPI</a>:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install vetiver
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python -m pip install vetiver
 </pre></div>
 </div>
 <p>And the development version from <a class="reference external" href="https://github.com/rstudio/vetiver-python">GitHub</a> with:</p>
@@ -469,8 +501,11 @@ more on how to get started.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="reference/vetiver.VetiverModel.html#vetiver.VetiverModel" title="vetiver.VetiverModel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VetiverModel</span></code></a>(model, model_name[, ...])</p></td>
 <td><p>Create VetiverModel class for serving.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="reference/vetiver.pin_read_write.vetiver_pin_write.html#vetiver.pin_read_write.vetiver_pin_write" title="vetiver.pin_read_write.vetiver_pin_write"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vetiver_pin_write</span></code></a>(board, model[, versioned])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/vetiver.vetiver_pin_write.html#vetiver.vetiver_pin_write" title="vetiver.vetiver_pin_write"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vetiver_pin_write</span></code></a>(board, model[, versioned])</p></td>
 <td><p>Pin a trained VetiverModel along with other model metadata.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/vetiver.vetiver_create_ptype.html#vetiver.vetiver_create_ptype" title="vetiver.vetiver_create_ptype"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vetiver_create_ptype</span></code></a>(data)</p></td>
+<td><p>Create zero row structure to save data types</p></td>
 </tr>
 </tbody>
 </table>
@@ -504,6 +539,9 @@ more on how to get started.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="reference/vetiver.write_docker.html#vetiver.write_docker" title="vetiver.write_docker"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_docker</span></code></a>([app_file, path, rspm_env, ...])</p></td>
 <td><p>Writes a Dockerfile to run VetiverAPI in a container</p></td>
 </tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/vetiver.deploy_rsconnect.html#vetiver.deploy_rsconnect" title="vetiver.deploy_rsconnect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deploy_rsconnect</span></code></a>(connect_server, board, pin_name)</p></td>
+<td><p>Deploy to RSConnect</p></td>
+</tr>
 </tbody>
 </table>
 </section>
@@ -515,6 +553,15 @@ more on how to get started.</p>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/vetiver.compute_metrics.html#vetiver.compute_metrics" title="vetiver.compute_metrics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_metrics</span></code></a>(data, date_var, period, ...)</p></td>
+<td><p>Compute metrics for given time period</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/vetiver.pin_metrics.html#vetiver.pin_metrics" title="vetiver.pin_metrics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pin_metrics</span></code></a>(board, df_metrics, metrics_pin_name)</p></td>
+<td><p>Update an existing pin storing model metrics over time</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/vetiver.plot_metrics.html#vetiver.plot_metrics" title="vetiver.plot_metrics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_metrics</span></code></a>(df_metrics[, date, estimate, ...])</p></td>
+<td><p>Plot metrics over a given time period</p></td>
+</tr>
 </tbody>
 </table>
 </section>

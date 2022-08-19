@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>vetiver.plot_metrics &#8212; vetiver 0.1.5 documentation</title>
+    <title>vetiver.plot_metrics &#8212; vetiver Commit: dd4a5ed documentation</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -21,7 +21,7 @@
     href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
     
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
@@ -30,10 +30,12 @@
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
     <link rel="shortcut icon" href="../_static/logo.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Custom Handlers" href="../advancedusage/custom_handler.html" />
+    <link rel="prev" title="vetiver.pin_metrics" href="vetiver.pin_metrics.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -77,7 +79,7 @@
       <img src="../_static/logo.png" class="logo" alt="logo">
       
       
-      <h1 class="site-logo" id="site-title">vetiver 0.1.5 documentation</h1>
+      <h1 class="site-logo" id="site-title">vetiver Commit: dd4a5ed documentation</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
@@ -105,8 +107,13 @@
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="vetiver.pin_read_write.vetiver_pin_write.html">
-   vetiver.pin_read_write.vetiver_pin_write
+  <a class="reference internal" href="vetiver.vetiver_pin_write.html">
+   vetiver.vetiver_pin_write
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="vetiver.vetiver_create_ptype.html">
+   vetiver.vetiver_create_ptype
   </a>
  </li>
 </ul>
@@ -149,6 +156,33 @@
  <li class="toctree-l1">
   <a class="reference internal" href="vetiver.write_docker.html">
    vetiver.write_docker
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="vetiver.deploy_rsconnect.html">
+   vetiver.deploy_rsconnect
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Monitor
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="vetiver.compute_metrics.html">
+   vetiver.compute_metrics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="vetiver.pin_metrics.html">
+   vetiver.pin_metrics
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   vetiver.plot_metrics
   </a>
  </li>
 </ul>
@@ -361,6 +395,23 @@ title="Print to PDF"
                 
   <section id="vetiver-plot-metrics">
 <h1>vetiver.plot_metrics<a class="headerlink" href="#vetiver-plot-metrics" title="Permalink to this headline">#</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="vetiver.plot_metrics">
+<span class="sig-prename descclassname"><span class="pre">vetiver.</span></span><span class="sig-name descname"><span class="pre">plot_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df_metrics</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'index'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estimate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'estimate'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'metric'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'n'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kw</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">plotly.express._chart_types.line</span></span></span><a class="headerlink" href="#vetiver.plot_metrics" title="Permalink to this definition">#</a></dt>
+<dd><p>Plot metrics over a given time period</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df_metrics</strong> (<em>DataFrame</em>) – Pandas dataframe of metrics over time, such as created by <cite>compute_metircs()</cite></p></li>
+<li><p><strong>date</strong> (<em>str</em>) – Column in <cite>df_metrics</cite> containing dates</p></li>
+<li><p><strong>estimate</strong> (<em>str</em>) – Column in <cite>df_metrics</cite> containing metric output</p></li>
+<li><p><strong>metric</strong> (<em>str</em>) – Column in <cite>df_metrics</cite> containing metric name</p></li>
+<li><p><strong>n</strong> (<em>str</em>) – Column in <cite>df_metrics</cite> containing number of observations</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 
 
@@ -371,6 +422,20 @@ title="Print to PDF"
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="vetiver.pin_metrics.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">vetiver.pin_metrics</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="../advancedusage/custom_handler.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Custom Handlers</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
 </div>
             </footer>
         </div>
