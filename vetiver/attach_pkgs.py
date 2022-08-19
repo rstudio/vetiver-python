@@ -29,5 +29,5 @@ def load_pkgs(model: VetiverModel = None, packages: list = None, path=""):
         for package in required_pkgs:
             f.write(package + "\n")
 
-    os.system(f"pip-compile {f.name} --output-file={path}vetiver_requirements.txt")
+    os.system(f"pip-compile {tmp.name} --output-file={path}vetiver_requirements.txt")
     os.remove(tmp.name)
