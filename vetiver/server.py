@@ -83,7 +83,12 @@ class VetiverAPI:
             @app.post("/predict")
             async def prediction(input_data: Request):
                 y = await input_data.json()
-                prediction = self.model.handler_predict(y, check_ptype=self.check_ptype)
+                from io import BytesIO  # noqa
+
+                df = pd.read_csv(BytesIO(y))
+                prediction = self.model.handler_predict(
+                    df, check_ptype=self.check_ptype
+                )
 
                 return {"prediction": prediction.tolist()}
 
