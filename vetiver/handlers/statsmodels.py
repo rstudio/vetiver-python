@@ -58,7 +58,8 @@ class StatsmodelsHandler(BaseHandler):
         prediction
             Prediction from model
         """
-
+        if not check_ptype:
+            input_data = pd.DataFrame(input_data)
         if isinstance(input_data, pd.DataFrame):
             prediction = self.model.predict(input_data)
         else:

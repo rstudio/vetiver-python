@@ -26,9 +26,24 @@ def test_vetiver_build(build_sm):
     api = vetiver.VetiverAPI(build_sm)
     client = TestClient(api.app)
     data = {"B": 0, "C": 0, "D": 0}
-    response = client.post("/predict", json=data)
-    assert response.status_code == 200, response.text
-    assert response.json() == {"prediction": [0.0]}, response.json()
+
+    response = vetiver.predict(endpoint=client, data=data)
+
+    assert response.iloc[0, 0] == 0.0
+    assert len(response) == 1
+
+
+def test_no_ptype(build_sm):
+    v = build_sm
+    v.ptype = None
+    api = vetiver.VetiverAPI(v)
+    client = TestClient(api.app)
+    data = 0, 0, 0
+
+    response = vetiver.predict(endpoint=client, data=data)
+
+    assert response.iloc[0, 0] == 0.0
+    assert len(response) == 1
 
 
 def test_serialize(build_sm):
