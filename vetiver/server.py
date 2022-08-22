@@ -82,7 +82,7 @@ class VetiverAPI:
 
             @app.post("/predict")
             async def prediction(input_data: Request):
-                y = await input_data.body()
+                y = await input_data.json()
                 prediction = self.model.handler_predict(y, check_ptype=self.check_ptype)
 
                 return {"prediction": prediction.tolist()}
