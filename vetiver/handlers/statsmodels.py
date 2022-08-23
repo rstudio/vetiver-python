@@ -29,7 +29,7 @@ class StatsmodelsHandler(BaseHandler):
         desc = f"Statsmodels {self.model.__class__} model."
         return desc
 
-    def construct_meta(
+    def create_meta(
         user: list = None,
         version: str = None,
         url: str = None,
@@ -58,10 +58,12 @@ class StatsmodelsHandler(BaseHandler):
         prediction
             Prediction from model
         """
-
-        if isinstance(input_data, (list, pd.DataFrame)):
-            prediction = self.model.predict(input_data)
+        if sm_exists:
+            if isinstance(input_data, (list, pd.DataFrame)):
+                prediction = self.model.predict(input_data)
+            else:
+                prediction = self.model.predict([input_data])
         else:
-            prediction = self.model.predict([input_data])
+            raise ImportError("Cannot import `statsmodels`")
 
         return prediction
