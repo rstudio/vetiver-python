@@ -11,12 +11,12 @@ except ImportError:
 
 
 class XGBoostHandler(BaseHandler):
-    """Handler class for creating VetiverModels with statsmodels.
+    """Handler class for creating VetiverModels with xgboost.
 
     Parameters
     ----------
-    model : statsmodels
-        a trained and fit statsmodels model
+    model :
+        a trained and fit xgboost model
     """
 
     model_class = staticmethod(lambda: xgboost.Booster)
@@ -35,7 +35,7 @@ class XGBoostHandler(BaseHandler):
         url: str = None,
         required_pkgs: list = [],
     ):
-        """Create metadata for statsmodel"""
+        """Create metadata for xgboost"""
         required_pkgs = required_pkgs + ["xgboost"]
         meta = _model_meta(user, version, url, required_pkgs)
 
