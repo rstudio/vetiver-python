@@ -26,7 +26,7 @@ class XGBoostHandler(BaseHandler):
 
     def describe(self):
         """Create description for xgboost model"""
-        desc = f"Statsmodels {self.model.__class__} model."
+        desc = f"XGBoost {self.model.__class__} model."
         return desc
 
     def create_meta(
