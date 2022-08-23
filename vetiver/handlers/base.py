@@ -13,7 +13,7 @@ class InvalidModelError(Exception):
 
     def __init__(
         self,
-        message="The `model` argument must be a scikit-learn or torch model.",
+        message="The `model` argument must be a supported or custom type.",
     ):
         self.message = message
         super().__init__(self.message)
@@ -47,9 +47,9 @@ def create_handler(model, ptype_data):
     """
 
     raise InvalidModelError(
-        "Model must be an sklearn or torch model, or a \
-        custom handler must be used. See the docs for more info on custom handlers. \
-        https://rstudio.github.io/vetiver-python/advancedusage/custom_handler.html"
+        "Model must be a supported model type, or a "
+        "custom handler must be used. See the docs for more info on custom handlers and"
+        "supported types https://rstudio.github.io/vetiver-python/"
     )
 
 
@@ -88,13 +88,13 @@ class BaseHandler:
         url: str = None,
         required_pkgs: list = [],
     ):
-        """Create metadata for sklearn model"""
+        """Create metadata for a model"""
         meta = _model_meta(user, version, url, required_pkgs)
 
         return meta
 
     def construct_ptype(self):
-        """Create data prototype for torch model
+        """Create data prototype for a model
 
         Parameters
         ----------
