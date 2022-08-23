@@ -61,12 +61,12 @@ class XGBoostHandler(BaseHandler):
 
         if xgb_exists:
             if not isinstance(input_data, xgboost.DMatrix):
-                if isinstance(input_data, pd.DataFrame):
-                    input_data = xgboost.DMatrix(input_data)
-                else:
-                    input_data = xgboost.DMatrix(
-                        input_data, label=self.model.feature_names
-                    )
+                if not isinstance(input_data, pd.DataFrame):
+                    try:
+                        input_data = pd.DataFrame(input_data)
+                    except ValueError:
+                        raise (f"Expected a dict or DataFrame, got {type(input_data)}")
+                input_data = xgboost.DMatrix(input_data)
 
             prediction = self.model.predict(input_data)
         else:
