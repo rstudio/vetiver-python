@@ -5,7 +5,7 @@ from .base import BaseHandler
 
 sm_exists = True
 try:
-    import statsmodels
+    import statsmodels.api
 except ImportError:
     sm_exists = False
 
