@@ -227,7 +227,6 @@ def predict(endpoint, data: Union[dict, pd.DataFrame, pd.Series], **kw):
     elif isinstance(data, dict):
         response = requester.post(endpoint, json=data, **kw)
     else:
-        # TODO: Check in on JSON serialization of DMatrix for XGBoost
         try:
             response = requester.post(endpoint, json=data, **kw)
         except TypeError:
