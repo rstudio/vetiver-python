@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>vetiver &#8212; vetiver Commit: 22405bd documentation</title>
+    <title>vetiver &#8212; vetiver Commit: 7202cd8 documentation</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -78,7 +78,7 @@
       <img src="_static/logo.png" class="logo" alt="logo">
       
       
-      <h1 class="site-logo" id="site-title">vetiver Commit: 22405bd documentation</h1>
+      <h1 class="site-logo" id="site-title">vetiver Commit: 7202cd8 documentation</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
@@ -182,6 +182,38 @@
  <li class="toctree-l1">
   <a class="reference internal" href="reference/vetiver.plot_metrics.html">
    vetiver.plot_metrics
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Monitor
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="reference/vetiver.BaseHandler.html">
+   vetiver.BaseHandler
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="reference/vetiver.SKLearnHandler.html">
+   vetiver.SKLearnHandler
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="reference/vetiver.TorchHandler.html">
+   vetiver.TorchHandler
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="reference/vetiver.StatsmodelsHandler.html">
+   vetiver.StatsmodelsHandler
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="reference/vetiver.XGBoostHandler.html">
+   vetiver.XGBoostHandler
   </a>
  </li>
 </ul>
@@ -411,6 +443,11 @@ title="Print to PDF"
   </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#model-handlers">
+   Model Handlers
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#advanced-usage">
    Advanced Usage
   </a>
@@ -455,6 +492,11 @@ title="Print to PDF"
   </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#model-handlers">
+   Model Handlers
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#advanced-usage">
    Advanced Usage
   </a>
@@ -476,6 +518,8 @@ You can use vetiver with:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://scikit-learn.org/stable/">scikit-learn</a></p></li>
 <li><p><a class="reference external" href="https://pytorch.org/">pytorch</a></p></li>
+<li><p><a class="reference external" href="https://www.statsmodels.org/">statsmodels</a></p></li>
+<li><p><a class="reference external" href="https://xgboost.readthedocs.io/">xgboost</a></p></li>
 </ul>
 <p>You can install the released version of vetiver from <a class="reference external" href="https://pypi.org/project/vetiver/">PyPI</a>:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python -m pip install vetiver
@@ -561,6 +605,32 @@ more on how to get started.</p>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="reference/vetiver.plot_metrics.html#vetiver.plot_metrics" title="vetiver.plot_metrics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_metrics</span></code></a>(df_metrics[, date, estimate, ...])</p></td>
 <td><p>Plot metrics over a given time period</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="model-handlers">
+<h1>Model Handlers<a class="headerlink" href="#model-handlers" title="Permalink to this headline">#</a></h1>
+<table class="autosummary longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/vetiver.BaseHandler.html#vetiver.BaseHandler" title="vetiver.BaseHandler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BaseHandler</span></code></a>(model, ptype_data)</p></td>
+<td><p>Base handler class for creating VetiverModel of different type.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/vetiver.SKLearnHandler.html#vetiver.SKLearnHandler" title="vetiver.SKLearnHandler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SKLearnHandler</span></code></a>(model, ptype_data)</p></td>
+<td><p>Handler class for creating VetiverModels with sklearn.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/vetiver.TorchHandler.html#vetiver.TorchHandler" title="vetiver.TorchHandler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TorchHandler</span></code></a>(model, ptype_data)</p></td>
+<td><p>Handler class for creating VetiverModels with torch.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/vetiver.StatsmodelsHandler.html#vetiver.StatsmodelsHandler" title="vetiver.StatsmodelsHandler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StatsmodelsHandler</span></code></a>(model, ptype_data)</p></td>
+<td><p>Handler class for creating VetiverModels with statsmodels.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/vetiver.XGBoostHandler.html#vetiver.XGBoostHandler" title="vetiver.XGBoostHandler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">XGBoostHandler</span></code></a>(model, ptype_data)</p></td>
+<td><p>Handler class for creating VetiverModels with xgboost.</p></td>
 </tr>
 </tbody>
 </table>

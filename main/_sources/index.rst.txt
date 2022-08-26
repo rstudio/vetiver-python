@@ -5,6 +5,8 @@ You can use vetiver with:
 
 - `scikit-learn <https://scikit-learn.org/stable/>`_
 - `pytorch <https://pytorch.org/>`_
+- `statsmodels <https://www.statsmodels.org/>`_
+- `xgboost <https://xgboost.readthedocs.io/>`_
 
 You can install the released version of vetiver from `PyPI <https://pypi.org/project/vetiver/>`_:
 
@@ -64,6 +66,18 @@ Monitor
    ~compute_metrics
    ~pin_metrics
    ~plot_metrics
+
+Model Handlers
+==================
+.. autosummary::
+   :toctree: reference/
+   :caption: Monitor
+
+   ~BaseHandler
+   ~SKLearnHandler
+   ~TorchHandler
+   ~StatsmodelsHandler
+   ~XGBoostHandler
 
 Advanced Usage
 ==================

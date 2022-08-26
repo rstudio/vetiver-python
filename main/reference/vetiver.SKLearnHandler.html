@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>vetiver.write_app &#8212; vetiver Commit: 7202cd8 documentation</title>
+    <title>vetiver.SKLearnHandler &#8212; vetiver Commit: 7202cd8 documentation</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -34,8 +34,8 @@
     <link rel="shortcut icon" href="../_static/logo.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="vetiver.write_docker" href="vetiver.write_docker.html" />
-    <link rel="prev" title="vetiver.predict" href="vetiver.predict.html" />
+    <link rel="next" title="vetiver.TorchHandler" href="vetiver.TorchHandler.html" />
+    <link rel="prev" title="vetiver.BaseHandler" href="vetiver.BaseHandler.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -122,7 +122,7 @@
   Deploy
  </span>
 </p>
-<ul class="current nav bd-sidenav">
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="vetiver.VetiverAPI.html">
    vetiver.VetiverAPI
@@ -148,8 +148,8 @@
    vetiver.predict
   </a>
  </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="vetiver.write_app.html">
    vetiver.write_app
   </a>
  </li>
@@ -191,14 +191,14 @@
   Monitor
  </span>
 </p>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="vetiver.BaseHandler.html">
    vetiver.BaseHandler
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="vetiver.SKLearnHandler.html">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
    vetiver.SKLearnHandler
   </a>
  </li>
@@ -319,7 +319,7 @@ title="Source repository"
       </li>
       
       <li>
-        <a href="https://github.com/tidymodels/vetiver-python/issues/new?title=Issue%20on%20page%20%2Freference/vetiver.write_app.html&body=Your%20issue%20content%20here."
+        <a href="https://github.com/tidymodels/vetiver-python/issues/new?title=Issue%20on%20page%20%2Freference/vetiver.SKLearnHandler.html&body=Your%20issue%20content%20here."
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -336,7 +336,7 @@ title="Open an issue"
       </li>
       
       <li>
-        <a href="https://github.com/tidymodels/vetiver-python/edit/master/reference/vetiver.write_app.rst"
+        <a href="https://github.com/tidymodels/vetiver-python/edit/master/reference/vetiver.SKLearnHandler.rst"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -364,7 +364,7 @@ title="Edit this page"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="../_sources/reference/vetiver.write_app.rst.txt"
+        <a href="../_sources/reference/vetiver.SKLearnHandler.rst.txt"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -413,7 +413,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>vetiver.write_app</h1>
+                <h1>vetiver.SKLearnHandler</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -425,22 +425,52 @@ title="Print to PDF"
                 
               <div>
                 
-  <section id="vetiver-write-app">
-<h1>vetiver.write_app<a class="headerlink" href="#vetiver-write-app" title="Permalink to this headline">#</a></h1>
-<dl class="py function">
-<dt class="sig sig-object py" id="vetiver.write_app">
-<span class="sig-prename descclassname"><span class="pre">vetiver.</span></span><span class="sig-name descname"><span class="pre">write_app</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">board</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pin_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'app.py'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vetiver.write_app" title="Permalink to this definition">#</a></dt>
-<dd><p>Write VetiverAPI app to a file</p>
+  <section id="vetiver-sklearnhandler">
+<h1>vetiver.SKLearnHandler<a class="headerlink" href="#vetiver-sklearnhandler" title="Permalink to this headline">#</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="vetiver.SKLearnHandler">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vetiver.</span></span><span class="sig-name descname"><span class="pre">SKLearnHandler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ptype_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vetiver.SKLearnHandler" title="Permalink to this definition">#</a></dt>
+<dd><p>Handler class for creating VetiverModels with sklearn.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>board</strong> (<em>pinse.BaseBoard</em>) – API to be written</p></li>
-<li><p><strong>pin_name</strong> (<em>string</em>) – Name of pin containing VetiverModel</p></li>
-<li><p><strong>version</strong> – Pins version of VetiverModel</p></li>
-<li><p><strong>file</strong> – Name of file</p></li>
-</ul>
+<dd class="field-odd"><p><strong>model</strong> (<em>sklearn.base.BaseEstimator</em>) – a trained sklearn model</p>
 </dd>
 </dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="vetiver.SKLearnHandler.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ptype_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vetiver.SKLearnHandler.__init__" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<p class="rubric">Methods</p>
+<table class="autosummary longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#vetiver.SKLearnHandler.__init__" title="vetiver.SKLearnHandler.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(model, ptype_data)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">construct_ptype</span></code>()</p></td>
+<td><p>Create data prototype for a model</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_meta</span></code>([version, url, required_pkgs])</p></td>
+<td><p>Create metadata for sklearn model</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">describe</span></code>()</p></td>
+<td><p>Create description for sklearn model</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">handler_predict</span></code>(input_data, check_ptype)</p></td>
+<td><p>Generates method for /predict endpoint in VetiverAPI</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">handler_startup</span></code>()</p></td>
+<td><p>Include required packages for prediction</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">model_class</span></code>()</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </section>
@@ -453,17 +483,17 @@ title="Print to PDF"
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="vetiver.predict.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="vetiver.BaseHandler.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">vetiver.predict</p>
+            <p class="prev-next-title">vetiver.BaseHandler</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="vetiver.write_docker.html" title="next page">
+    <a class='right-next' id="next-link" href="vetiver.TorchHandler.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">vetiver.write_docker</p>
+        <p class="prev-next-title">vetiver.TorchHandler</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
