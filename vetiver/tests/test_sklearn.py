@@ -49,7 +49,7 @@ def test_predict_endpoint_ptype_error():
 def test_predict_endpoint_no_ptype():
     np.random.seed(500)
     client = TestClient(_start_application(save_ptype=False).app)
-    data = "0,0,0"
+    data = [{"B": 0, "C": 0, "D": 0}]
     response = client.post("/predict", json=data)
     assert response.status_code == 200, response.text
     assert response.json() == {"prediction": [44.47]}, response.json()
@@ -58,7 +58,7 @@ def test_predict_endpoint_no_ptype():
 def test_predict_endpoint_no_ptype_batch():
     np.random.seed(500)
     client = TestClient(_start_application(save_ptype=False).app)
-    data = [["0,0,0"], ["0,0,0"]]
+    data = [[0, 0, 0], [0, 0, 0]]
     response = client.post("/predict", json=data)
     assert response.status_code == 200, response.text
     assert response.json() == {"prediction": [44.47, 44.47]}, response.json()
@@ -69,4 +69,4 @@ def test_predict_endpoint_no_ptype_error():
     client = TestClient(_start_application(save_ptype=False).app)
     data = {"hell0", 9, 32.0}
     with pytest.raises(TypeError):
-        client.post("/predictt", json=data)
+        client.post("/predict", json=data)
