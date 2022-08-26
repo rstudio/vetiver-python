@@ -13,7 +13,7 @@ except ImportError:
 class StatsmodelsHandler(BaseHandler):
     """Handler class for creating VetiverModels with statsmodels.
 
-    Methods
+    Parameters
     ----------
     model : statsmodels
         a trained and fit statsmodels model
