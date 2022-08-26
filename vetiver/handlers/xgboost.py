@@ -21,9 +21,6 @@ class XGBoostHandler(BaseHandler):
 
     model_class = staticmethod(lambda: xgboost.Booster)
 
-    def __init__(self, model, ptype_data):
-        super().__init__(model, ptype_data)
-
     def describe(self):
         """Create description for xgboost model"""
         desc = f"XGBoost {self.model.__class__} model."
@@ -59,17 +56,16 @@ class XGBoostHandler(BaseHandler):
             Prediction from model
         """
 
-        if xgb_exists:
-            if not isinstance(input_data, xgboost.DMatrix):
-                if not isinstance(input_data, pd.DataFrame):
-                    try:
-                        input_data = pd.DataFrame(input_data)
-                    except ValueError:
-                        raise (f"Expected a dict or DataFrame, got {type(input_data)}")
-                input_data = xgboost.DMatrix(input_data)
-
-            prediction = self.model.predict(input_data)
-        else:
+        if not xgb_exists:
             raise ImportError("Cannot import `xgboost`")
+
+        if not isinstance(input_data, pd.DataFrame):
+            try:
+                input_data = pd.DataFrame(input_data)
+            except ValueError:
+                raise (f"Expected a dict or DataFrame, got {type(input_data)}")
+        input_data = xgboost.DMatrix(input_data)
+
+        prediction = self.model.predict(input_data)
 
         return prediction

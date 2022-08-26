@@ -13,7 +13,7 @@ except ImportError:
 class StatsmodelsHandler(BaseHandler):
     """Handler class for creating VetiverModels with statsmodels.
 
-    Parameters
+    Methods
     ----------
     model : statsmodels
         a trained and fit statsmodels model
@@ -58,12 +58,12 @@ class StatsmodelsHandler(BaseHandler):
         prediction
             Prediction from model
         """
-        if sm_exists:
-            if isinstance(input_data, (list, pd.DataFrame)):
-                prediction = self.model.predict(input_data)
-            else:
-                prediction = self.model.predict([input_data])
-        else:
+        if not sm_exists:
             raise ImportError("Cannot import `statsmodels`")
+
+        if isinstance(input_data, (list, pd.DataFrame)):
+            prediction = self.model.predict(input_data)
+        else:
+            prediction = self.model.predict([input_data])
 
         return prediction

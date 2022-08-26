@@ -16,15 +16,12 @@ class SKLearnHandler(BaseHandler):
 
     model_class = staticmethod(lambda: sklearn.base.BaseEstimator)
 
-    def __init__(self, model, ptype_data):
-        super().__init__(model, ptype_data)
-
     def describe(self):
         """Create description for sklearn model"""
         desc = f"Scikit-learn {self.model.__class__} model"
         return desc
 
-    def construct_meta(
+    def create_meta(
         user: list = None,
         version: str = None,
         url: str = None,
@@ -54,17 +51,9 @@ class SKLearnHandler(BaseHandler):
             Prediction from model
         """
 
-        if check_ptype:
-            if isinstance(input_data, pd.DataFrame):
-                prediction = self.model.predict(input_data)
-            else:
-                prediction = self.model.predict([input_data])
-
-        # do not check ptype
-        else:
-            if not isinstance(input_data, list):
-                input_data = [input_data.split(",")]  # user delimiter ?
-
+        if not check_ptype or isinstance(input_data, pd.DataFrame):
             prediction = self.model.predict(input_data)
+        else:
+            prediction = self.model.predict([input_data])
 
         return prediction

@@ -21,9 +21,6 @@ class TorchHandler(BaseHandler):
 
     model_class = staticmethod(lambda: torch.nn.Module)
 
-    def __init__(self, model, ptype_data):
-        super().__init__(model, ptype_data)
-
     def describe(self):
         """Create description for torch model"""
         desc = f"Pytorch model of type {type(self.model)}"
@@ -58,17 +55,15 @@ class TorchHandler(BaseHandler):
         prediction
             Prediction from model
         """
-        if torch_exists:
-            if check_ptype:
-                input_data = np.array(input_data, dtype=np.array(self.ptype_data).dtype)
-                prediction = self.model(torch.from_numpy(input_data))
-
-            # do not check ptype
-            else:
-                input_data = torch.tensor(input_data)
-                prediction = self.model(input_data)
-
-        else:
+        if not torch_exists:
             raise ImportError("Cannot import `torch`.")
+        if check_ptype:
+            input_data = np.array(input_data, dtype=np.array(self.ptype_data).dtype)
+            prediction = self.model(torch.from_numpy(input_data))
+
+        # do not check ptype
+        else:
+            input_data = torch.tensor(input_data)
+            prediction = self.model(input_data)
 
         return prediction
