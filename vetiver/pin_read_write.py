@@ -37,7 +37,8 @@ def vetiver_pin_write(board, model: VetiverModel, versioned: bool = True):
     # message = """
     # Create a Model Card for your published model.
     # Model Cards provide a framework for transparent, responsible reporting.
-    # Use the vetiver `.Rmd` template as a place to start."""
+    # Use the vetiver `.qmd` Quarto template as a place to start,
+    # with vetiver.model_card()"""
 
     # warnings.warn(message=message)
 
