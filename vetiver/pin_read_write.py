@@ -1,7 +1,6 @@
 import warnings
 
 from .vetiver_model import VetiverModel
-from .write_fastapi import _choose_version
 
 
 def vetiver_pin_write(board, model: VetiverModel, versioned: bool = True):
@@ -71,10 +70,6 @@ def vetiver_pin_read(board, name: str, version: str = None) -> VetiverModel:
         "vetiver_pin_read will be removed in v1.0.0. Use classmethod "
         "VetiverModel.from_pin() instead",
         DeprecationWarning,
-    )
-
-    version = (
-        version if version is not None else _choose_version(board.pin_versions(name))
     )
 
     v = VetiverModel.from_pin(board=board, name=name, version=version)

@@ -2,7 +2,6 @@ import json
 
 from vetiver.handlers.base import create_handler
 from .meta import _model_meta
-from .write_fastapi import _choose_version
 
 
 class NoModelAvailableError(Exception):
@@ -78,14 +77,9 @@ class VetiverModel:
 
     @classmethod
     def from_pin(cls, board, name: str, version: str = None):
-        version = (
-            version
-            if version is not None
-            else _choose_version(board.pin_versions(name))
-        )
 
         model = board.pin_read(name, version)
-        meta = board.pin_meta(name)
+        meta = board.pin_meta(name, version)
 
         return cls(
             model=model,
@@ -93,7 +87,7 @@ class VetiverModel:
             description=meta.description,
             metadata=_model_meta(
                 user=meta.user,
-                version=version,
+                version=meta.version.version.abc,
                 url=meta.user.get("url"),  # None all the time, besides Connect
                 required_pkgs=meta.user.get("required_pkgs"),
             ),
