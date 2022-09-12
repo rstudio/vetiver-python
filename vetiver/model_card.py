@@ -1,8 +1,5 @@
-import logging
 from importlib_resources import files as _files
 import shutil
-
-_log = logging.getLogger(__name__)
 
 
 def model_card(path="."):
@@ -14,7 +11,5 @@ def model_card(path="."):
        Path to save model card
     """
     src_path = _files("vetiver") / "templates/model_card.qmd"
-
-    logging.info("Writing model card template:")
 
     return shutil.copy(src=src_path, dst=path)
