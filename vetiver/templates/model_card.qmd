@@ -1,34 +1,64 @@
 ---
 title: "Model Card: your model title"
-date: '`python date.today()`'
 output:
   html_document
-params:
-    board: !python pins.board_rsconnect()
-    name: isabel.zimmerman/sacramento_rf
-    version: NULL
 ---
+```{python}
+#| echo: false
+from IPython.display import display, Markdown
+import datetime
+display(Markdown(f"""
+###### {datetime.date.today()}
+"""))
+```
 
-```{python setup, include=FALSE}
-from datetime import date
-from sklearn import metrics
-import vetiver
+```{python}
+#| tags: [parameters]
+#| include: false
 import pins
 
-# library(yardstick)
-# knitr::opts_chunk$set(echo = FALSE)
-v = vetiver.VetiverModel.from_pin(pins.board_rsconnect(server_url = "https://colorado.rstudio.com/rsc/"), "isabel.zimmerman/cars_mpg")
+raw = "https://colorado.rstudio.com/rsc/"
+paths = {"v": "sacramento/"}
+board = pins.board_urls(raw, paths, allow_pickle_read=True)
 ```
+
+```{python}
+#| include: false
+import datetime
+import pandas as pd
+import plotly.express as px
+from sklearn import metrics
+import vetiver
+
+v = vetiver.VetiverModel.from_pin(board, "v")
+v_meta = board.pin_meta("v")
+```
+
 
 A [model card](https://doi.org/10.1145/3287560.3287596) provides brief, transparent, responsible reporting for a trained machine learning model.
 
 ## Model details
 
 - Developed by PERSON AND/OR TEAM
-- `python print(f"{v.description} using {v.ptype} features")`
+```{python}
+#| echo: false
+display(Markdown(f"""
+- A {v.description} using {len(v.ptype.construct().dict())} features.
+"""))
+```
 - More details about how model was developed and what it is predicting
 - More details on feature engineering and/or data preprocessing for model
-- Version `python v.metadata.version` of this model was published at `r v_meta.created`
+```{python}
+#| echo: false
+display(Markdown(f"""
+- Version {v.metadata.get("version")} was created at {
+    datetime.datetime.strptime(
+    v_meta.created, '%Y%m%dT%H%M%SZ')
+    .strftime('%Y-%m-%d %H:%M:%S')
+    }
+"""))
+```
+
 - Citation and/or license details for the model
 - If you have questions about this model, please contact PERSON@ORG.ORG
 
@@ -53,70 +83,64 @@ A [model card](https://doi.org/10.1145/3287560.3287596) provides brief, transpar
 
 - The training dataset for this model was ...
 - The training dataset for this model has the "prototype" or signature:
-
 ```{python}
-v.ptype
+#| echo: false
+v.ptype.construct().schema().get("properties")
 ```
 
 - The evaluation dataset used in this model card is ...
 - We chose this evaluation data because ...
 
+
+## Quantitative analyses
+:::{.panel-tabset}
 ```{python}
-## EVALUATION DATA:
-from vetiver.data import mtcars
+#| include: false
 ## consider using a package like skimr or DataExplorer for automated
-## presentation of evaluation data characteristics
+
 ```
-
-
-## Quantitative analyses {.tabset}
+## Overall model performance
 
 ```{python}
+#| echo: false
 ## compute predictions for your evaluation data
-## `handler_startup` is designed to get the R process ready to make predictions
-#suppressPackageStartupMessages(handler_startup(v))
-new_data["preds"] = v.model.predict(mtcars.drop(columns="mpg"))
+from vetiver.data import sacramento
+
+sacramento["preds"] = v.model.predict(sacramento.drop(columns=["price"]))
+metric_set = [metrics.mean_absolute_error, metrics.mean_squared_error, metrics.r2_score]
+
+for metric in metric_set:
+    print(metric.__qualname__, ": ", metric(y_pred=sacramento["preds"], y_true=sacramento["price"]))
 ```
 
-
-### Overall model performance
+## Disaggregated model performance
 
 ```{python}
+#| echo: false
 
-metric_set = [metrics.mean_absolute_error, metrics.mean_squared_error]
-
+dmp = pd.DataFrame()
+for metric in metric_set:
+    dmp[metric.__qualname__] = sacramento.groupby("type")\
+        .apply(lambda x: metric(y_pred=x["preds"], y_true=x["price"]))
+dmp
 ```
 
-### Disaggregated model performance
+## Visualize model performance
 
 ```{python}
-
-preds %>%
-    group_by(type) %>%
-    metrics(price, .pred)
+performance = px.scatter(sacramento, x="price", y = "preds", facet_row="type", trendline="ols")
+performance.update_yaxes(matches=None)
+performance.show()
 ```
 
-### Visualize model performance
+## Make a custom plot
 
-```{python, fig.height=3}
-preds %>%
-    ggplot(aes(price, .pred, color = type)) +
-    geom_abline(slope = 1, lty = 2, color = "gray60", size = 1.2) +
-    geom_point(alpha = 0.5, show.legend = FALSE) +
-    facet_wrap(vars(type))
+```{python}
+custom = px.violin(sacramento, x="beds", y = "price")
+custom.show()
 ```
 
-### Make a custom plot
-
-```{r}
-preds %>%
-    mutate(.resid = price - .pred) %>%
-    ggplot(aes(longitude, latitude, color = .resid)) +
-    geom_point(alpha = 0.8) +
-    scale_color_gradient2() +
-    coord_fixed()
-```
-
+:::
 
 ## Ethical considerations
 

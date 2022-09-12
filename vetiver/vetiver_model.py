@@ -87,7 +87,7 @@ class VetiverModel:
             description=meta.description,
             metadata=_model_meta(
                 user=meta.user,
-                version=meta.version.version.abc,
+                version=meta.version.version,
                 url=meta.user.get("url"),  # None all the time, besides Connect
                 required_pkgs=meta.user.get("required_pkgs"),
             ),

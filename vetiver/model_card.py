@@ -15,7 +15,6 @@ def model_card(path="."):
     """
     src_path = _files("vetiver") / "templates/model_card.qmd"
 
-    if _log is not None:
-        _log.info("Writing model card template...")
+    logging.info("Writing model card template:")
 
     return shutil.copy(src=src_path, dst=path)

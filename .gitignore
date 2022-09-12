@@ -1,5 +1,6 @@
 /docs/site/*
-
+docs/source/reference
+vetiver/templates/*.html
 # Mac specific
 .DS_Store
 
