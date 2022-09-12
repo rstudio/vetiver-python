@@ -96,7 +96,7 @@ v.ptype.construct().schema().get("properties")
 :::{.panel-tabset}
 ```{python}
 #| include: false
-## consider using a package like skimr or DataExplorer for automated
+## consider using a package like Pandas Profiling for automated EDA
 
 ```
 ## Overall model performance
