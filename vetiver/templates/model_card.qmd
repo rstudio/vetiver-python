@@ -31,6 +31,8 @@ from sklearn import metrics
 import vetiver
 
 v = vetiver.VetiverModel.from_pin(board, "v")
+# your pin will most likely have a version already, but we will make one here
+v.metadata.put()
 v_meta = board.pin_meta("v")
 ```
 
@@ -42,20 +44,24 @@ A [model card](https://doi.org/10.1145/3287560.3287596) provides brief, transpar
 - Developed by PERSON AND/OR TEAM
 ```{python}
 #| echo: false
+model_desc = v.description
+num_features = len(v.ptype.construct().dict())
+
 display(Markdown(f"""
-- A {v.description} using {len(v.ptype.construct().dict())} features.
+- A {model_desc} using {num_features} feature{'s'[:num_features^1]}.
 """))
 ```
 - More details about how model was developed and what it is predicting
 - More details on feature engineering and/or data preprocessing for model
 ```{python}
 #| echo: false
-display(Markdown(f"""
-- Version {v.metadata.get("version")} was created at {
-    datetime.datetime.strptime(
-    v_meta.created, '%Y%m%dT%H%M%SZ')
+version = v.metadata.get("version")
+time_created =  datetime.datetime
+    .strptime(v_meta.created, '%Y%m%dT%H%M%SZ')
     .strftime('%Y-%m-%d %H:%M:%S')
-    }
+
+display(Markdown(f"""
+- Version {version} was created at {time_created}
 """))
 ```
 
