@@ -1,0 +1,159 @@
+---
+title: "Model Card: your model title"
+output:
+  html_document
+---
+```{python}
+#| echo: false
+from IPython.display import display, Markdown
+import datetime
+display(Markdown(f"""
+###### {datetime.date.today()}
+"""))
+```
+
+```{python}
+#| tags: [parameters]
+#| include: false
+import pins
+
+raw = "https://colorado.rstudio.com/rsc/"
+paths = {"v": "sacramento/"}
+board = pins.board_urls(raw, paths, allow_pickle_read=True)
+```
+
+```{python}
+#| include: false
+import datetime
+import pandas as pd
+import plotly.express as px
+from sklearn import metrics
+import vetiver
+
+v = vetiver.VetiverModel.from_pin(board, "v")
+# your pin will most likely have a version already, but we will make one here
+v.metadata.put()
+v_meta = board.pin_meta("v")
+```
+
+
+A [model card](https://doi.org/10.1145/3287560.3287596) provides brief, transparent, responsible reporting for a trained machine learning model.
+
+## Model details
+
+- Developed by PERSON AND/OR TEAM
+```{python}
+#| echo: false
+model_desc = v.description
+num_features = len(v.ptype.construct().dict())
+
+display(Markdown(f"""
+- A {model_desc} using {num_features} feature{'s'[:num_features^1]}.
+"""))
+```
+- More details about how model was developed and what it is predicting
+- More details on feature engineering and/or data preprocessing for model
+```{python}
+#| echo: false
+version = v.metadata.get("version")
+time_created =  datetime.datetime
+    .strptime(v_meta.created, '%Y%m%dT%H%M%SZ')
+    .strftime('%Y-%m-%d %H:%M:%S')
+
+display(Markdown(f"""
+- Version {version} was created at {time_created}
+"""))
+```
+
+- Citation and/or license details for the model
+- If you have questions about this model, please contact PERSON@ORG.ORG
+
+## Intended use
+
+- The primary intended uses of this model are ...
+- The primary intended users of this model are ...
+- Some use cases are out of scope for this model, such as ...
+
+## Important aspects/factors
+
+- Aspects or factors (demographic, environmental, technical) that are relevant to the context of this model are ...
+- In evaluating this model, we examined aspects such as ...
+
+## Metrics
+
+- The metrics used to evaluate this model are ...
+- These metrics are computed via ...
+- We chose these metrics because ...
+
+## Training data & evaluation data
+
+- The training dataset for this model was ...
+- The training dataset for this model has the "prototype" or signature:
+```{python}
+#| echo: false
+v.ptype.construct().schema().get("properties")
+```
+
+- The evaluation dataset used in this model card is ...
+- We chose this evaluation data because ...
+
+
+## Quantitative analyses
+:::{.panel-tabset}
+```{python}
+#| include: false
+## consider using a package like Pandas Profiling for automated EDA
+
+```
+## Overall model performance
+
+```{python}
+#| echo: false
+## compute predictions for your evaluation data
+from vetiver.data import sacramento
+
+sacramento["preds"] = v.model.predict(sacramento.drop(columns=["price"]))
+metric_set = [metrics.mean_absolute_error, metrics.mean_squared_error, metrics.r2_score]
+
+for metric in metric_set:
+    print(metric.__qualname__, ": ", metric(y_pred=sacramento["preds"], y_true=sacramento["price"]))
+```
+
+## Disaggregated model performance
+
+```{python}
+#| echo: false
+
+dmp = pd.DataFrame()
+for metric in metric_set:
+    dmp[metric.__qualname__] = sacramento.groupby("type")\
+        .apply(lambda x: metric(y_pred=x["preds"], y_true=x["price"]))
+dmp
+```
+
+## Visualize model performance
+
+```{python}
+performance = px.scatter(sacramento, x="price", y = "preds", facet_row="type", trendline="ols")
+performance.update_yaxes(matches=None)
+performance.show()
+```
+
+## Make a custom plot
+
+```{python}
+custom = px.violin(sacramento, x="beds", y = "price")
+custom.show()
+```
+
+:::
+
+## Ethical considerations
+
+- We considered ...
+
+## Caveats & recommendations
+
+- This model does ...
+- This model does not ...
+- We recommend ...

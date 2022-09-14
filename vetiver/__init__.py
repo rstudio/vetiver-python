@@ -18,6 +18,7 @@ from .handlers.statsmodels import StatsmodelsHandler  # noqa
 from .handlers.xgboost import XGBoostHandler  # noqa
 from .rsconnect import deploy_rsconnect  # noqa
 from .monitor import compute_metrics, pin_metrics, plot_metrics, _rolling_df  # noqa
+from .model_card import model_card  # noqa
 
 __author__ = "Isabel Zimmerman <isabel.zimmerman@rstudio.com>"
 __all__ = []
