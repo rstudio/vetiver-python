@@ -1,5 +1,7 @@
 import nest_asyncio
 import warnings
+import sys
+from types import SimpleNamespace
 
 no_notebook = False
 try:
@@ -18,3 +20,14 @@ def _jupyter_nb():
         nest_asyncio.apply()
     else:
         return False
+
+
+modelcard_options = SimpleNamespace(quiet=False)
+
+
+def inform(log, msg):
+    if log is not None:
+        log.info(msg)
+
+    if not modelcard_options.quiet:
+        print(msg, file=sys.stderr)

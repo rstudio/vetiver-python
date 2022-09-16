@@ -69,16 +69,17 @@ def test_board_pin_write(rsc_short):
 
 @pytest.mark.xfail
 def test_deploy(rsc_short):
-    # TODO: test in Dockerfile
     v = vetiver.VetiverModel(
         model=model, ptype_data=X_df, model_name="susan/model", versioned=None
     )
 
     vetiver.vetiver_pin_write(board=rsc_short, model=v)
-
-    vetiver.deploy_rsconnect(
-        connect_server=server_from_key("susan"), board=rsc_short, pin_name="susan/model"
+    connect_server = RSConnectServer(
+        url=RSC_SERVER_URL, api_key=server_from_key("susan")
     )
-    response = vetiver.predict(RSC_SERVER_URL + "/predict/", json=X_df)
+    vetiver.deploy_rsconnect(
+        connect_server=connect_server, board=rsc_short, pin_name="susan/model"
+    )
+    response = vetiver.predict(RSC_SERVER_URL + "/predict", json=X_df)
     assert response.status_code == 200, response.text
     assert response.json() == {"prediction": [44.47, 44.47]}, response.json()
