@@ -39,6 +39,7 @@ Version
    ~VetiverModel
    ~vetiver_pin_write
    ~vetiver_create_ptype
+   ~model_card
 
 Deploy
 ==================

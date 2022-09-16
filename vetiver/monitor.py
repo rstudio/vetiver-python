@@ -11,6 +11,7 @@ def compute_metrics(
     metric_set: list,
     truth: str,
     estimate: str,
+    **kw,
 ) -> pd.DataFrame:
     """
     Compute metrics for given time period
@@ -32,6 +33,8 @@ def compute_metrics(
 
     Example
     -------
+    >>> from datetime import timedelta
+    >>> import pandas as pd
     >>> from sklearn.metrics import mean_squared_error, mean_absolute_error
     >>> df = pd.DataFrame(
     ...   {
@@ -62,7 +65,9 @@ def compute_metrics(
                     "index": i.index[0],
                     "n": len(i),
                     "metric": m.__qualname__,
-                    "estimate": m(y_pred=i[truth], y_true=i[estimate]),
+                    # TODO: non-y_pred and y_true metrics
+                    # TODO: multioutput metrics
+                    "estimate": m(y_pred=i[estimate], y_true=i[truth], **kw),
                 }
             ]
 
@@ -105,11 +110,50 @@ def pin_metrics(
         The column in df_metrics containing the aggregated dates or datetimes.
         Note that this defaults to a column named "index".
     overwrite: bool
-        If TRUE (the default), overwrite any metrics for
-        dates that exist both in the existing pin and
-        new metrics with the new values. If FALSE, error
-        when the new metrics contain overlapping dates with
+        If True, overwrite any metrics for dates that exist both
+        in the existing pin and new metrics with the new values.
+        If False, error when the new metrics contain overlapping dates with
         the existing pin.
+
+    Example
+    -------
+    >>> import pins
+    >>> import vetiver
+    >>> df = pd.DataFrame(
+    ... {'index': {0: pd.Timestamp('2021-01-01 00:00:00'),
+    ...            1: pd.Timestamp('2021-01-01 00:00:00'),
+    ...            2: pd.Timestamp('2021-01-02 00:00:00'),
+    ...            3: pd.Timestamp('2021-01-02 00:00:00')},
+    ...  'n': {0: 1, 1: 1, 2: 1, 3: 1},
+    ...  'metric': {0: 'mean_squared_error',
+    ...             1: 'mean_absolute_error',
+    ...             2: 'mean_squared_error',
+    ...             3: 'mean_absolute_error'},
+    ...  'estimate': {0: 4.0, 1: 2.0, 2: 1.0, 3: 1.0}}
+    ... )
+    >>> board = pins.board_temp()
+
+    >>> board.pin_write(df, "metrics", type = "csv") # doctest: +SKIP
+    >>> df = pd.DataFrame(
+    ... {'index': {0: pd.Timestamp('2021-01-02 00:00:00'),
+    ...            1: pd.Timestamp('2021-01-02 00:00:00'),
+    ...            2: pd.Timestamp('2021-01-03 00:00:00'),
+    ...            3: pd.Timestamp('2021-01-03 00:00:00')},
+    ...  'n': {0: 1, 1: 1, 2: 1, 3: 1},
+    ...  'metric': {0: 'mean_squared_error',
+    ...             1: 'mean_absolute_error',
+    ...             2: 'mean_squared_error',
+    ...             3: 'mean_absolute_error'},
+    ...  'estimate': {0: 4.0, 1: 6.0, 2: 2.0, 3: 1.0}}
+    ... )
+    >>> vetiver.pin_metrics(     # doctest: +SKIP
+    ...    board=board,
+    ...    df_metrics=df2,
+    ...    metrics_pin_name="metrics",
+    ...    index_name="index",
+    ...    overwrite=True)
+
+
     """
 
     old_metrics_raw = board.pin_read(metrics_pin_name)
@@ -170,6 +214,30 @@ def plot_metrics(
        Column in `df_metrics` containing metric name
     n: str
         Column in `df_metrics` containing number of observations
+
+    Example
+    -------
+    >>> import vetiver
+    >>> import pandas as pd
+    >>> df = pd.DataFrame(
+    ... {'index': {0: pd.Timestamp('2021-01-01 00:00:00'),
+    ...            1: pd.Timestamp('2021-01-01 00:00:00'),
+    ...            2: pd.Timestamp('2021-01-02 00:00:00'),
+    ...            3: pd.Timestamp('2021-01-02 00:00:00')},
+    ...  'n': {0: 1, 1: 1, 2: 1, 3: 1},
+    ...  'metric': {0: 'mean_squared_error',
+    ...             1: 'mean_absolute_error',
+    ...             2: 'mean_squared_error',
+    ...             3: 'mean_absolute_error'},
+    ...  'estimate': {0: 4.0, 1: 2.0, 2: 1.0, 3: 1.0}}
+    ... )
+    >>> plot = vetiver.plot_metrics(
+    ...     df_metrics = df,
+    ...     date = "index",
+    ...     estimate = "estimate",
+    ...     metric = "metric",
+    ...     n = "n")
+    >>> plot.show()    # doctest: +SKIP
     """
 
     fig = px.line(

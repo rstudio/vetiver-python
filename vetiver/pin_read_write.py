@@ -1,6 +1,5 @@
-import warnings
 from .vetiver_model import VetiverModel
-
+import warnings
 import logging
 import sys
 from types import SimpleNamespace
@@ -45,9 +44,6 @@ def vetiver_pin_write(board, model: VetiverModel, versioned: bool = True):
     """
     if not board.allow_pickle_read:
         raise NotImplementedError  # must be pickle-able
-
-    # warnings.simplefilter("once", ModelCard)
-    # warnings.warn(ModelCard().message)
 
     inform(
         _log,
