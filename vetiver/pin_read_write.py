@@ -1,6 +1,22 @@
 import warnings
 from .vetiver_model import VetiverModel
 
+import logging
+import sys
+from types import SimpleNamespace
+
+_log = logging.getLogger(__name__)
+
+modelcard_options = SimpleNamespace(quiet=False)
+
+
+def inform(log, msg):
+    if log is not None:
+        log.info(msg)
+
+    if not modelcard_options.quiet:
+        print(msg, file=sys.stderr)
+
 
 class ModelCard(UserWarning):
     def __init__(
@@ -30,8 +46,15 @@ def vetiver_pin_write(board, model: VetiverModel, versioned: bool = True):
     if not board.allow_pickle_read:
         raise NotImplementedError  # must be pickle-able
 
-    warnings.simplefilter("once", ModelCard)
-    warnings.warn(ModelCard().message)
+    # warnings.simplefilter("once", ModelCard)
+    # warnings.warn(ModelCard().message)
+
+    inform(
+        _log,
+        "Model Cards provide a framework for transparent, responsible "
+        "reporting. \n Use the vetiver `.qmd` Quarto template as a place to start, \n "
+        "with vetiver.model_card()",
+    )
 
     board.pin_write(
         model.model,
