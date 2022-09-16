@@ -32,7 +32,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          python -m pip install -e .[dev,torch,statsmodels]
+          python -m pip install -e .[dev,torch,statsmodels,xgboost]
       - name: Run Tests
         run: |
           pytest -m 'not rsc_test' --cov --cov-report xml
@@ -65,8 +65,8 @@ jobs:
         run: |
           pytest vetiver -m 'rsc_test'
 
-  test-no-torch:
-    name: "Test no-torch"
+  test-no-extras:
+    name: "Test no exra ml frameworks"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2

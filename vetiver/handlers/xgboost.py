@@ -3,30 +3,27 @@ import pandas as pd
 from ..meta import _model_meta
 from .base import BaseHandler
 
-sm_exists = True
+xgb_exists = True
 try:
-    import statsmodels.api
+    import xgboost
 except ImportError:
-    sm_exists = False
+    xgb_exists = False
 
 
-class StatsmodelsHandler(BaseHandler):
-    """Handler class for creating VetiverModels with statsmodels.
+class XGBoostHandler(BaseHandler):
+    """Handler class for creating VetiverModels with xgboost.
 
     Parameters
     ----------
-    model : statsmodels
-        a trained and fit statsmodels model
+    model :
+        a trained and fit xgboost model
     """
 
-    model_class = staticmethod(lambda: statsmodels.base.wrapper.ResultsWrapper)
-
-    def __init__(self, model, ptype_data):
-        super().__init__(model, ptype_data)
+    model_class = staticmethod(lambda: xgboost.Booster)
 
     def describe(self):
-        """Create description for statsmodels model"""
-        desc = f"Statsmodels {self.model.__class__} model."
+        """Create description for xgboost model"""
+        desc = f"XGBoost {self.model.__class__} model."
         return desc
 
     def create_meta(
@@ -35,8 +32,8 @@ class StatsmodelsHandler(BaseHandler):
         url: str = None,
         required_pkgs: list = [],
     ):
-        """Create metadata for statsmodel"""
-        required_pkgs = required_pkgs + ["statsmodels"]
+        """Create metadata for xgboost"""
+        required_pkgs = required_pkgs + ["xgboost"]
         meta = _model_meta(user, version, url, required_pkgs)
 
         return meta
@@ -58,12 +55,17 @@ class StatsmodelsHandler(BaseHandler):
         prediction
             Prediction from model
         """
-        if not sm_exists:
-            raise ImportError("Cannot import `statsmodels`")
 
-        if isinstance(input_data, (list, pd.DataFrame)):
-            prediction = self.model.predict(input_data)
-        else:
-            prediction = self.model.predict([input_data])
+        if not xgb_exists:
+            raise ImportError("Cannot import `xgboost`")
+
+        if not isinstance(input_data, pd.DataFrame):
+            try:
+                input_data = pd.DataFrame(input_data)
+            except ValueError:
+                raise (f"Expected a dict or DataFrame, got {type(input_data)}")
+        input_data = xgboost.DMatrix(input_data)
+
+        prediction = self.model.predict(input_data)
 
         return prediction
