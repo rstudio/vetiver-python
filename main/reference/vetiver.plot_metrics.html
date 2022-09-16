@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>vetiver.plot_metrics &#8212; vetiver Commit: f7315be documentation</title>
+    <title>vetiver.plot_metrics &#8212; vetiver Commit: c3e1feb documentation</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -79,7 +79,7 @@
       <img src="../_static/logo.png" class="logo" alt="logo">
       
       
-      <h1 class="site-logo" id="site-title">vetiver Commit: f7315be documentation</h1>
+      <h1 class="site-logo" id="site-title">vetiver Commit: c3e1feb documentation</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
@@ -114,6 +114,11 @@
  <li class="toctree-l1">
   <a class="reference internal" href="vetiver.vetiver_create_ptype.html">
    vetiver.vetiver_create_ptype
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="vetiver.model_card.html">
+   vetiver.model_card
   </a>
  </li>
 </ul>
@@ -442,6 +447,30 @@ title="Print to PDF"
 </ul>
 </dd>
 </dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">vetiver</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+<span class="gp">... </span><span class="p">{</span><span class="s1">&#39;index&#39;</span><span class="p">:</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="s1">&#39;2021-01-01 00:00:00&#39;</span><span class="p">),</span>
+<span class="gp">... </span>           <span class="mi">1</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="s1">&#39;2021-01-01 00:00:00&#39;</span><span class="p">),</span>
+<span class="gp">... </span>           <span class="mi">2</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="s1">&#39;2021-01-02 00:00:00&#39;</span><span class="p">),</span>
+<span class="gp">... </span>           <span class="mi">3</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="s1">&#39;2021-01-02 00:00:00&#39;</span><span class="p">)},</span>
+<span class="gp">... </span> <span class="s1">&#39;n&#39;</span><span class="p">:</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+<span class="gp">... </span> <span class="s1">&#39;metric&#39;</span><span class="p">:</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="s1">&#39;mean_squared_error&#39;</span><span class="p">,</span>
+<span class="gp">... </span>            <span class="mi">1</span><span class="p">:</span> <span class="s1">&#39;mean_absolute_error&#39;</span><span class="p">,</span>
+<span class="gp">... </span>            <span class="mi">2</span><span class="p">:</span> <span class="s1">&#39;mean_squared_error&#39;</span><span class="p">,</span>
+<span class="gp">... </span>            <span class="mi">3</span><span class="p">:</span> <span class="s1">&#39;mean_absolute_error&#39;</span><span class="p">},</span>
+<span class="gp">... </span> <span class="s1">&#39;estimate&#39;</span><span class="p">:</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">}}</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span> <span class="o">=</span> <span class="n">vetiver</span><span class="o">.</span><span class="n">plot_metrics</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">df_metrics</span> <span class="o">=</span> <span class="n">df</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">date</span> <span class="o">=</span> <span class="s2">&quot;index&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">estimate</span> <span class="o">=</span> <span class="s2">&quot;estimate&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">metric</span> <span class="o">=</span> <span class="s2">&quot;metric&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">n</span> <span class="o">=</span> <span class="s2">&quot;n&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>    
+</pre></div>
+</div>
 </dd></dl>
 
 </section>
