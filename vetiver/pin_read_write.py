@@ -1,20 +1,9 @@
 from .vetiver_model import VetiverModel
+from .utils import inform
 import warnings
 import logging
-import sys
-from types import SimpleNamespace
 
 _log = logging.getLogger(__name__)
-
-modelcard_options = SimpleNamespace(quiet=False)
-
-
-def inform(log, msg):
-    if log is not None:
-        log.info(msg)
-
-    if not modelcard_options.quiet:
-        print(msg, file=sys.stderr)
 
 
 class ModelCard(UserWarning):
