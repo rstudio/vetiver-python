@@ -32,8 +32,8 @@ import vetiver
 
 v = vetiver.VetiverModel.from_pin(board, "v")
 # your pin will most likely have a version already, but we will make one here
-v.metadata.put()
 v_meta = board.pin_meta("v")
+v_meta.version = '5678'
 ```
 
 
@@ -55,7 +55,7 @@ display(Markdown(f"""
 - More details on feature engineering and/or data preprocessing for model
 ```{python}
 #| echo: false
-version = v.metadata.get("version")
+version = v_meta.version
 time_created =  datetime.datetime
     .strptime(v_meta.created, '%Y%m%dT%H%M%SZ')
     .strftime('%Y-%m-%d %H:%M:%S')
