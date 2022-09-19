@@ -70,11 +70,12 @@ Monitor
 
 Model Handlers
 ==================
+
 .. autosummary::
    :toctree: reference/
-   :caption: Monitor
+   :caption: Model Handlers
 
-   ~BaseHandler
+   ~handlers.BaseHandler
    ~SKLearnHandler
    ~TorchHandler
    ~StatsmodelsHandler

@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>vetiver &#8212; vetiver Commit: c3e1feb documentation</title>
+    <title>vetiver &#8212; vetiver Commit: 90cc570 documentation</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -78,7 +78,7 @@
       <img src="_static/logo.png" class="logo" alt="logo">
       
       
-      <h1 class="site-logo" id="site-title">vetiver Commit: c3e1feb documentation</h1>
+      <h1 class="site-logo" id="site-title">vetiver Commit: 90cc570 documentation</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
@@ -192,15 +192,10 @@
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  Monitor
+  Model Handlers
  </span>
 </p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="reference/vetiver.BaseHandler.html">
-   vetiver.BaseHandler
-  </a>
- </li>
  <li class="toctree-l1">
   <a class="reference internal" href="reference/vetiver.SKLearnHandler.html">
    vetiver.SKLearnHandler
@@ -577,7 +572,7 @@ more on how to get started.</p>
 <td><p>Start API</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="reference/vetiver.VetiverAPI.vetiver_post.html#vetiver.VetiverAPI.vetiver_post" title="vetiver.VetiverAPI.vetiver_post"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vetiver_post</span></code></a>(endpoint_fx[, endpoint_name])</p></td>
-<td><p>Create new POST endpoint</p></td>
+<td><p>Create new POST endpoint that is aware of model input data</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="reference/vetiver.vetiver_endpoint.html#vetiver.vetiver_endpoint" title="vetiver.vetiver_endpoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vetiver_endpoint</span></code></a>([url])</p></td>
 <td><p>Wrap url where VetiverModel will be deployed</p></td>
@@ -625,19 +620,16 @@ more on how to get started.</p>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="reference/vetiver.BaseHandler.html#vetiver.BaseHandler" title="vetiver.BaseHandler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BaseHandler</span></code></a>(model, ptype_data)</p></td>
-<td><p>Base handler class for creating VetiverModel of different type.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="reference/vetiver.SKLearnHandler.html#vetiver.SKLearnHandler" title="vetiver.SKLearnHandler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SKLearnHandler</span></code></a>(model, ptype_data)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/vetiver.SKLearnHandler.html#vetiver.SKLearnHandler" title="vetiver.SKLearnHandler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SKLearnHandler</span></code></a>(model, ptype_data)</p></td>
 <td><p>Handler class for creating VetiverModels with sklearn.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="reference/vetiver.TorchHandler.html#vetiver.TorchHandler" title="vetiver.TorchHandler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TorchHandler</span></code></a>(model, ptype_data)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/vetiver.TorchHandler.html#vetiver.TorchHandler" title="vetiver.TorchHandler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TorchHandler</span></code></a>(model, ptype_data)</p></td>
 <td><p>Handler class for creating VetiverModels with torch.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="reference/vetiver.StatsmodelsHandler.html#vetiver.StatsmodelsHandler" title="vetiver.StatsmodelsHandler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StatsmodelsHandler</span></code></a>(model, ptype_data)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/vetiver.StatsmodelsHandler.html#vetiver.StatsmodelsHandler" title="vetiver.StatsmodelsHandler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StatsmodelsHandler</span></code></a>(model, ptype_data)</p></td>
 <td><p>Handler class for creating VetiverModels with statsmodels.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="reference/vetiver.XGBoostHandler.html#vetiver.XGBoostHandler" title="vetiver.XGBoostHandler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">XGBoostHandler</span></code></a>(model, ptype_data)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/vetiver.XGBoostHandler.html#vetiver.XGBoostHandler" title="vetiver.XGBoostHandler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">XGBoostHandler</span></code></a>(model, ptype_data)</p></td>
 <td><p>Handler class for creating VetiverModels with xgboost.</p></td>
 </tr>
 </tbody>

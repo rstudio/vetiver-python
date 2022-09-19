@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>vetiver.vetiver_pin_write &#8212; vetiver Commit: c3e1feb documentation</title>
+    <title>vetiver.vetiver_pin_write &#8212; vetiver Commit: 90cc570 documentation</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -79,7 +79,7 @@
       <img src="../_static/logo.png" class="logo" alt="logo">
       
       
-      <h1 class="site-logo" id="site-title">vetiver Commit: c3e1feb documentation</h1>
+      <h1 class="site-logo" id="site-title">vetiver Commit: 90cc570 documentation</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
@@ -193,15 +193,10 @@
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  Monitor
+  Model Handlers
  </span>
 </p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="vetiver.BaseHandler.html">
-   vetiver.BaseHandler
-  </a>
- </li>
  <li class="toctree-l1">
   <a class="reference internal" href="vetiver.SKLearnHandler.html">
    vetiver.SKLearnHandler
@@ -445,6 +440,16 @@ title="Print to PDF"
 </ul>
 </dd>
 </dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">vetiver</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pins</span> <span class="kn">import</span> <span class="n">board_temp</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model_board</span> <span class="o">=</span> <span class="n">board_temp</span><span class="p">(</span><span class="n">versioned</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">allow_pickle_read</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">vetiver</span><span class="o">.</span><span class="n">get_mock_data</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">vetiver</span><span class="o">.</span><span class="n">get_mock_model</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">v</span> <span class="o">=</span> <span class="n">vetiver</span><span class="o">.</span><span class="n">VetiverModel</span><span class="p">(</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="p">,</span> <span class="n">model_name</span> <span class="o">=</span> <span class="s2">&quot;my_model&quot;</span><span class="p">,</span> <span class="n">ptype_data</span> <span class="o">=</span> <span class="n">X</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vetiver</span><span class="o">.</span><span class="n">vetiver_pin_write</span><span class="p">(</span><span class="n">model_board</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </section>

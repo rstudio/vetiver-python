@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>vetiver.VetiverAPI.vetiver_post &#8212; vetiver Commit: c3e1feb documentation</title>
+    <title>vetiver.VetiverAPI.vetiver_post &#8212; vetiver Commit: 90cc570 documentation</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -79,7 +79,7 @@
       <img src="../_static/logo.png" class="logo" alt="logo">
       
       
-      <h1 class="site-logo" id="site-title">vetiver Commit: c3e1feb documentation</h1>
+      <h1 class="site-logo" id="site-title">vetiver Commit: 90cc570 documentation</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
@@ -193,15 +193,10 @@
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  Monitor
+  Model Handlers
  </span>
 </p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="vetiver.BaseHandler.html">
-   vetiver.BaseHandler
-  </a>
- </li>
  <li class="toctree-l1">
   <a class="reference internal" href="vetiver.SKLearnHandler.html">
    vetiver.SKLearnHandler
@@ -435,7 +430,7 @@ title="Print to PDF"
 <dl class="py method">
 <dt class="sig sig-object py" id="vetiver.VetiverAPI.vetiver_post">
 <span class="sig-prename descclassname"><span class="pre">VetiverAPI.</span></span><span class="sig-name descname"><span class="pre">vetiver_post</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint_fx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'custom_endpoint'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vetiver.VetiverAPI.vetiver_post" title="Permalink to this definition">#</a></dt>
-<dd><p>Create new POST endpoint</p>
+<dd><p>Create new POST endpoint that is aware of model input data</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -443,13 +438,18 @@ title="Print to PDF"
 <li><p><strong>endpoint_name</strong> (<em>str</em>) – Name of endpoint</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Key: endpoint_name Value: Output of endpoint_fx, in list format</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>dict</p>
-</dd>
 </dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">vetiver</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">vetiver</span><span class="o">.</span><span class="n">get_mock_data</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">vetiver</span><span class="o">.</span><span class="n">get_mock_model</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">v</span> <span class="o">=</span> <span class="n">vetiver</span><span class="o">.</span><span class="n">VetiverModel</span><span class="p">(</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="p">,</span> <span class="n">model_name</span> <span class="o">=</span> <span class="s2">&quot;model&quot;</span><span class="p">,</span> <span class="n">ptype_data</span> <span class="o">=</span> <span class="n">X</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">v_api</span> <span class="o">=</span> <span class="n">vetiver</span><span class="o">.</span><span class="n">VetiverAPI</span><span class="p">(</span><span class="n">model</span> <span class="o">=</span> <span class="n">v</span><span class="p">,</span> <span class="n">check_ptype</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">sum_values</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="n">x</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">v_api</span><span class="o">.</span><span class="n">vetiver_post</span><span class="p">(</span><span class="n">sum_values</span><span class="p">,</span> <span class="s2">&quot;sums&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </section>

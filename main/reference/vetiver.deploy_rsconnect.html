@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>vetiver.deploy_rsconnect &#8212; vetiver Commit: c3e1feb documentation</title>
+    <title>vetiver.deploy_rsconnect &#8212; vetiver Commit: 90cc570 documentation</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -79,7 +79,7 @@
       <img src="../_static/logo.png" class="logo" alt="logo">
       
       
-      <h1 class="site-logo" id="site-title">vetiver Commit: c3e1feb documentation</h1>
+      <h1 class="site-logo" id="site-title">vetiver Commit: 90cc570 documentation</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
@@ -193,15 +193,10 @@
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  Monitor
+  Model Handlers
  </span>
 </p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="vetiver.BaseHandler.html">
-   vetiver.BaseHandler
-  </a>
- </li>
  <li class="toctree-l1">
   <a class="reference internal" href="vetiver.SKLearnHandler.html">
    vetiver.SKLearnHandler
@@ -439,7 +434,7 @@ title="Print to PDF"
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>connect_server</strong> – RSConnect Server</p></li>
+<li><p><strong>connect_server</strong> (<em>rsconnect.api.RSConnectServer</em>) – RSConnect Server</p></li>
 <li><p><strong>board</strong> – Pins board</p></li>
 <li><p><strong>pin_name</strong> (<em>str</em>) – Name of pin</p></li>
 <li><p><strong>version</strong> (<em>str</em>) – Version of pin</p></li>
@@ -452,9 +447,37 @@ title="Print to PDF"
 <li><p><strong>force_generate</strong> (<em>bool</em>) – Force generating “requirements.txt” or “environment.yml”</p></li>
 <li><p><strong>log_callback</strong> (<em>Callable</em>) – Callback to use to write the log to</p></li>
 <li><p><strong>image</strong> (<em>str</em>) – Docker image to be specified for off-host execution</p></li>
+<li><p><strong>Example</strong> – </p></li>
+<li><p><strong>-------</strong> – </p></li>
+<li><p><strong>vetiver</strong> (<em>&gt;&gt;&gt; import</em>) – </p></li>
+<li><p><strong>pins</strong> (<em>&gt;&gt;&gt; import</em>) – </p></li>
+<li><p><strong>rsconnect</strong> (<em>&gt;&gt;&gt; import</em>) – </p></li>
+<li><p><strong>pins.board_temp</strong><strong>(</strong><strong>allow_pickle_read=True</strong><strong>)</strong> (<em>&gt;&gt;&gt; board =</em>) – </p></li>
+<li><p><strong>rsconnect.api.RSConnectServer</strong><strong>(</strong> (<em>&gt;&gt;&gt; connect_server =</em>) – </p></li>
+<li><p><strong>url</strong> (<em>...</em><em>    url =</em>) – </p></li>
 </ul>
 </dd>
 </dl>
+<p>:param :
+:param …    api_key = api_key)      # doctest:
+:type …    api_key = api_key)      # doctest: +SKIP
+:param &gt;&gt;&gt; X:
+:param y = vetiver.get_mock_data():
+:param &gt;&gt;&gt; model = vetiver.get_mock_model().fit(X:
+:param y):
+:param &gt;&gt;&gt; v = vetiver.VetiverModel(model = model:
+:param :
+:param …    model_name = “my_model”:
+:param :
+:param …    ptype_data = X):
+:param &gt;&gt;&gt; vetiver.deploy_rsconnect(:
+:param …    connect_server = connect_server:
+:param :
+:param …    board = board:
+:param :
+:param …    pin_name = “my_model”:
+:param … )      # doctest:
+:type … )      # doctest: +SKIP</p>
 </dd></dl>
 
 </section>
