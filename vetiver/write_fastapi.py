@@ -56,9 +56,9 @@ def write_app(
 ):
     """Write VetiverAPI app to a file
 
-    Args
-    ----
-    board :  pinse.BaseBoard
+    Parameters
+    ----------
+    board :
         API to be written
     pin_name : string
         Name of pin containing VetiverModel
@@ -66,6 +66,19 @@ def write_app(
         Pins version of VetiverModel
     file :
         Name of file
+
+    Example
+    -------
+    >>> import vetiver
+    >>> import pins
+    >>> import tempfile
+    >>> tmp = tempfile.TemporaryFile()
+    >>> board = pins.board_temp(allow_pickle_read=True)
+    >>> X, y = vetiver.get_mock_data()
+    >>> model = vetiver.get_mock_model().fit(X, y)
+    >>> v = vetiver.VetiverModel(model = model, model_name = "my_model", ptype_data = X)
+    >>> vetiver.vetiver_pin_write(board, v)
+    >>> vetiver.write_app(board, "my_model", file = tmp.name)
     """
 
     if board.versioned:

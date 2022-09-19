@@ -30,6 +30,16 @@ def vetiver_pin_write(board, model: VetiverModel, versioned: bool = True):
         VetiverModel to be written to board
     versioned: bool
         Whether or not the pin should be versioned
+
+    Example
+    -------
+    >>> import vetiver
+    >>> from pins import board_temp
+    >>> model_board = board_temp(versioned = True, allow_pickle_read = True)
+    >>> X, y = vetiver.get_mock_data()
+    >>> model = vetiver.get_mock_model().fit(X, y)
+    >>> v = vetiver.VetiverModel(model = model, model_name = "my_model", ptype_data = X)
+    >>> vetiver.vetiver_pin_write(model_board, v)
     """
     if not board.allow_pickle_read:
         raise NotImplementedError  # must be pickle-able

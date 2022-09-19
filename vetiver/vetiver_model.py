@@ -25,7 +25,7 @@ class VetiverModel:
     ----------
     model :
         A trained model, such as an sklearn or torch model
-    name : string
+    model_name : string
         Model name or ID
     ptype_data : pd.DataFrame, np.array
         Sample of data model should expect when it is being served
@@ -49,6 +49,14 @@ class VetiverModel:
     VetiverModel can also take an initialized custom VetiverHandler
     as a model, for advanced use cases or non-supported model types.
 
+    Example
+    -------
+    >>> from vetiver import mock, VetiverModel
+    >>> X, y = mock.get_mock_data()
+    >>> model = mock.get_mock_model().fit(X, y)
+    >>> v = VetiverModel(model = model, model_name = "my_model", ptype_data = X)
+    >>> v.description
+    "Scikit-learn <class 'sklearn.dummy.DummyRegressor'> model"
     """
 
     def __init__(

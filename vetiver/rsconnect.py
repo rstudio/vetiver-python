@@ -26,7 +26,7 @@ def deploy_rsconnect(
 
     Parameters
     ----------
-        connect_server:
+        connect_server: rsconnect.api.RSConnectServer
             RSConnect Server
         board:
             Pins board
@@ -52,6 +52,26 @@ def deploy_rsconnect(
             Callback to use to write the log to
         image: str
             Docker image to be specified for off-host execution
+
+        Example
+        -------
+        >>> import vetiver
+        >>> import pins
+        >>> import rsconnect
+        >>> board = pins.board_temp(allow_pickle_read=True)
+        >>> connect_server = rsconnect.api.RSConnectServer(
+        ...    url = url,
+        ...    api_key = api_key)      # doctest: +SKIP
+        >>> X, y = vetiver.get_mock_data()
+        >>> model = vetiver.get_mock_model().fit(X, y)
+        >>> v = vetiver.VetiverModel(model = model,
+        ...    model_name = "my_model",
+        ...    ptype_data = X)
+        >>> vetiver.deploy_rsconnect(
+        ...    connect_server = connect_server,
+        ...    board = board,
+        ...    pin_name = "my_model"
+        ... )      # doctest: +SKIP
     """
     if not title:
         title = pin_name + "_vetiver"

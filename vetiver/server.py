@@ -15,7 +15,7 @@ from .utils import _jupyter_nb
 class VetiverAPI:
     """Create model aware API
 
-    Attributes
+    Parameters
     ----------
     model :  VetiverModel
         Model to be deployed in API
@@ -23,8 +23,14 @@ class VetiverAPI:
         Determine if data prototype should be enforced
     app_factory :
         Type of API to be deployed
-    app :
-        API that is deployed
+
+    Example
+    -------
+    >>> import vetiver
+    >>> X, y = vetiver.get_mock_data()
+    >>> model = vetiver.get_mock_model().fit(X, y)
+    >>> v = vetiver.VetiverModel(model = model, model_name = "my_model", ptype_data = X)
+    >>> v_api = vetiver.VetiverAPI(model = v, check_ptype = True)
     """
 
     app = None
@@ -133,7 +139,7 @@ class VetiverAPI:
     def vetiver_post(
         self, endpoint_fx: Callable, endpoint_name: str = "custom_endpoint"
     ):
-        """Create new POST endpoint
+        """Create new POST endpoint that is aware of model input data
 
         Parameters
         ----------
@@ -142,17 +148,23 @@ class VetiverAPI:
         endpoint_name : str
             Name of endpoint
 
-        Returns
+        Example
         -------
-        dict
-            Key: endpoint_name Value: Output of endpoint_fx, in list format
+        >>> import vetiver
+        >>> X, y = vetiver.get_mock_data()
+        >>> model = vetiver.get_mock_model().fit(X, y)
+        >>> v = vetiver.VetiverModel(model = model, model_name = "model", ptype_data = X)
+        >>> v_api = vetiver.VetiverAPI(model = v, check_ptype = True)
+        >>> def sum_values(x):
+        ...     return x.sum()
+        >>> v_api.vetiver_post(sum_values, "sums")
         """
         if self.check_ptype is True:
 
             @self.app.post("/" + endpoint_name)
             async def custom_endpoint(input_data: self.model.ptype):
                 y = _prepare_data(input_data)
-                new = endpoint_fx(pd.Series(y))
+                new = endpoint_fx(pd.DataFrame(y))
                 return {endpoint_name: new.tolist()}
 
         else:
@@ -160,7 +172,7 @@ class VetiverAPI:
             @self.app.post("/" + endpoint_name)
             async def custom_endpoint(input_data: Request):
                 y = await input_data.json()
-                new = endpoint_fx(pd.Series(y))
+                new = endpoint_fx(pd.DataFrame(y))
 
                 return {endpoint_name: new.tolist()}
 
@@ -174,6 +186,15 @@ class VetiverAPI:
             An integer that indicates the server port that should be listened on.
         host : str
             A valid IPv4 or IPv6 address, which the application will listen on.
+
+        Example
+        -------
+        >>> import vetiver
+        >>> X, y = vetiver.get_mock_data()
+        >>> model = vetiver.get_mock_model().fit(X, y)
+        >>> v = vetiver.VetiverModel(model = model, model_name = "model", ptype_data = X)
+        >>> v_api = vetiver.VetiverAPI(model = v, check_ptype = True)
+        >>> v_api.run()     # doctest: +SKIP
         """
         _jupyter_nb()
         uvicorn.run(self.app, port=port, host=host, **kw)
@@ -209,6 +230,13 @@ def predict(endpoint, data: Union[dict, pd.DataFrame, pd.Series], **kw):
     -------
     dict
         Endpoint_name and list of endpoint_fx output
+
+    Example
+    -------
+    >>> import vetiver
+    >>> X, y = vetiver.get_mock_data()
+    >>> endpoint = vetiver.vetiver_endpoint(url='http://127.0.0.1:8000/predict')
+    >>> vetiver.predict(endpoint, X)     # doctest: +SKIP
     """
     if isinstance(endpoint, testclient.TestClient):
         requester = endpoint
@@ -273,5 +301,10 @@ def vetiver_endpoint(url="http://127.0.0.1:8000/predict"):
     -------
     url : str
         URI path to endpoint
+
+    Example
+    -------
+    >>> import vetiver
+    >>> endpoint = vetiver.vetiver_endpoint(url='http://127.0.0.1:8000/predict')
     """
     return url

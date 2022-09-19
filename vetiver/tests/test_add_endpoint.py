@@ -30,7 +30,7 @@ def test_endpoint_adds_ptype():
     data = {"B": 0, "C": 0, "D": 0}
     response = client.post("/sum", json=data)
     assert response.status_code == 200, response.text
-    assert response.json() == {"sum": 0}, response.json()
+    assert response.json() == {"sum": [0]}, response.json()
 
 
 def test_endpoint_adds_no_ptype():
@@ -40,4 +40,4 @@ def test_endpoint_adds_no_ptype():
     data = [0, 0, 0]
     response = client.post("/sum", json=data)
     assert response.status_code == 200, response.text
-    assert response.json() == {"sum": 0}, response.json()
+    assert response.json() == {"sum": [0]}, response.json()

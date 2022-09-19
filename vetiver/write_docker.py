@@ -29,8 +29,8 @@ def write_docker(
 ):
     """Writes a Dockerfile to run VetiverAPI in a container
 
-    Args
-    ----
+    Parameters
+    ----------
         app_file: str
             File containing VetiverAPI to be deployed into container
         path: str
@@ -41,6 +41,22 @@ def write_docker(
             Host address to run VetiverAPI from Dockerfile
         port: str
             Port to run VetiverAPI from Dockerfile
+
+    Example
+    -------
+    >>> import vetiver
+    >>> import tempfile
+    >>> import pins
+    >>> tmp = tempfile.TemporaryDirectory()
+    >>> board = pins.board_temp(allow_pickle_read=True)
+    >>> X, y = vetiver.get_mock_data()
+    >>> model = vetiver.get_mock_model().fit(X, y)
+    >>> v = vetiver.VetiverModel(model = model, model_name = "my_model", ptype_data = X)
+    >>> vetiver.vetiver_pin_write(board, v)
+    >>> vetiver.write_app(board,
+    ...     "my_model",
+    ...     file = tmp.name + "/app.py") # need file for model
+    >>> vetiver.write_docker(app_file = "app.py", path = tmp.name)
     """
     py_version = str(sys.version_info.major) + "." + str(sys.version_info.minor)
 
