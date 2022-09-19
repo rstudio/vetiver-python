@@ -70,15 +70,17 @@ def write_app(
     Example
     -------
     >>> import vetiver
-    >>> import pins
     >>> import tempfile
-    >>> tmp = tempfile.TemporaryFile()
+    >>> import pins
+    >>> tmp = tempfile.TemporaryDirectory()
     >>> board = pins.board_temp(allow_pickle_read=True)
     >>> X, y = vetiver.get_mock_data()
     >>> model = vetiver.get_mock_model().fit(X, y)
     >>> v = vetiver.VetiverModel(model = model, model_name = "my_model", ptype_data = X)
     >>> vetiver.vetiver_pin_write(board, v)
-    >>> vetiver.write_app(board, "my_model", file = tmp.name)
+    >>> vetiver.write_app(board,
+    ...     "my_model",
+    ...     file = tmp.name + "/app.py")
     """
 
     if board.versioned:
