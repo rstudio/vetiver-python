@@ -1,0 +1,688 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>vetiver &#8212; vetiver 0.1.7 documentation</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <link rel="shortcut icon" href="_static/logo.png"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="vetiver.VetiverModel" href="reference/vetiver.VetiverModel.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="#">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">vetiver 0.1.7 documentation</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1 current active">
+                <a class="reference internal" href="#">
+                    vetiver
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Version
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="reference/vetiver.VetiverModel.html">
+   vetiver.VetiverModel
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="reference/vetiver.vetiver_pin_write.html">
+   vetiver.vetiver_pin_write
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="reference/vetiver.vetiver_create_ptype.html">
+   vetiver.vetiver_create_ptype
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="reference/vetiver.model_card.html">
+   vetiver.model_card
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Deploy
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="reference/vetiver.VetiverAPI.html">
+   vetiver.VetiverAPI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="reference/vetiver.VetiverAPI.run.html">
+   vetiver.VetiverAPI.run
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="reference/vetiver.VetiverAPI.vetiver_post.html">
+   vetiver.VetiverAPI.vetiver_post
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="reference/vetiver.vetiver_endpoint.html">
+   vetiver.vetiver_endpoint
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="reference/vetiver.predict.html">
+   vetiver.predict
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="reference/vetiver.write_app.html">
+   vetiver.write_app
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="reference/vetiver.write_docker.html">
+   vetiver.write_docker
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="reference/vetiver.deploy_rsconnect.html">
+   vetiver.deploy_rsconnect
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Monitor
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="reference/vetiver.compute_metrics.html">
+   vetiver.compute_metrics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="reference/vetiver.pin_metrics.html">
+   vetiver.pin_metrics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="reference/vetiver.plot_metrics.html">
+   vetiver.plot_metrics
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Model Handlers
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="reference/vetiver.SKLearnHandler.html">
+   vetiver.SKLearnHandler
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="reference/vetiver.TorchHandler.html">
+   vetiver.TorchHandler
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="reference/vetiver.StatsmodelsHandler.html">
+   vetiver.StatsmodelsHandler
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="reference/vetiver.XGBoostHandler.html">
+   vetiver.XGBoostHandler
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Advanced Usage
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="advancedusage/custom_handler.html">
+   Custom Handlers
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/tidymodels/vetiver-python"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/tidymodels/vetiver-python/issues/new?title=Issue%20on%20page%20%2Findex.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/tidymodels/vetiver-python/edit/master/index.rst"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Edit this page"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="headerbtn__text-container">suggest edit</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="_sources/index.rst.txt"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.rst</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   vetiver
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#version">
+   Version
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#deploy">
+   Deploy
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#monitor">
+   Monitor
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#model-handlers">
+   Model Handlers
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#advanced-usage">
+   Advanced Usage
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>vetiver</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   vetiver
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#version">
+   Version
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#deploy">
+   Deploy
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#monitor">
+   Monitor
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#model-handlers">
+   Model Handlers
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#advanced-usage">
+   Advanced Usage
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section id="vetiver">
+<h1>vetiver<a class="headerlink" href="#vetiver" title="Permalink to this headline">#</a></h1>
+<p>The goal of vetiver is to provide fluent tooling to version, share, deploy, and monitor a trained model. Functions handle both recording and checking the model’s input data prototype, and predicting from a remote API endpoint.
+You can use vetiver with:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/">scikit-learn</a></p></li>
+<li><p><a class="reference external" href="https://pytorch.org/">pytorch</a></p></li>
+<li><p><a class="reference external" href="https://www.statsmodels.org/">statsmodels</a></p></li>
+<li><p><a class="reference external" href="https://xgboost.readthedocs.io/">xgboost</a></p></li>
+</ul>
+<p>You can install the released version of vetiver from <a class="reference external" href="https://pypi.org/project/vetiver/">PyPI</a>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python -m pip install vetiver
+</pre></div>
+</div>
+<p>And the development version from <a class="reference external" href="https://github.com/rstudio/vetiver-python">GitHub</a> with:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python -m pip install git+https://github.com/rstudio/vetiver-python
+</pre></div>
+</div>
+<p>This website documents the public API of Vetiver (for Python). See <a class="reference external" href="https://vetiver.rstudio.com">vetiver.rstudio.com</a> for
+more on how to get started.</p>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+<section id="version">
+<h1>Version<a class="headerlink" href="#version" title="Permalink to this headline">#</a></h1>
+<table class="autosummary longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/vetiver.VetiverModel.html#vetiver.VetiverModel" title="vetiver.VetiverModel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VetiverModel</span></code></a>(model, model_name[, ...])</p></td>
+<td><p>Create VetiverModel class for serving.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/vetiver.vetiver_pin_write.html#vetiver.vetiver_pin_write" title="vetiver.vetiver_pin_write"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vetiver_pin_write</span></code></a>(board, model[, versioned])</p></td>
+<td><p>Pin a trained VetiverModel along with other model metadata.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/vetiver.vetiver_create_ptype.html#vetiver.vetiver_create_ptype" title="vetiver.vetiver_create_ptype"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vetiver_create_ptype</span></code></a>(data)</p></td>
+<td><p>Create zero row structure to save data types</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/vetiver.model_card.html#vetiver.model_card" title="vetiver.model_card"><code class="xref py py-obj docutils literal notranslate"><span class="pre">model_card</span></code></a>([path])</p></td>
+<td><p>Create a model card for documentation</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="deploy">
+<h1>Deploy<a class="headerlink" href="#deploy" title="Permalink to this headline">#</a></h1>
+<table class="autosummary longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/vetiver.VetiverAPI.html#vetiver.VetiverAPI" title="vetiver.VetiverAPI"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VetiverAPI</span></code></a>(model, check_ptype[, app_factory])</p></td>
+<td><p>Create model aware API</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/vetiver.VetiverAPI.run.html#vetiver.VetiverAPI.run" title="vetiver.VetiverAPI.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a>([port, host])</p></td>
+<td><p>Start API</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/vetiver.VetiverAPI.vetiver_post.html#vetiver.VetiverAPI.vetiver_post" title="vetiver.VetiverAPI.vetiver_post"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vetiver_post</span></code></a>(endpoint_fx[, endpoint_name])</p></td>
+<td><p>Create new POST endpoint that is aware of model input data</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/vetiver.vetiver_endpoint.html#vetiver.vetiver_endpoint" title="vetiver.vetiver_endpoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vetiver_endpoint</span></code></a>([url])</p></td>
+<td><p>Wrap url where VetiverModel will be deployed</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/vetiver.predict.html#vetiver.predict" title="vetiver.predict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">predict</span></code></a>(endpoint, data, **kw)</p></td>
+<td><p>Make a prediction from model endpoint</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/vetiver.write_app.html#vetiver.write_app" title="vetiver.write_app"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_app</span></code></a>(board, pin_name[, version, file, ...])</p></td>
+<td><p>Write VetiverAPI app to a file</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/vetiver.write_docker.html#vetiver.write_docker" title="vetiver.write_docker"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_docker</span></code></a>([app_file, path, rspm_env, ...])</p></td>
+<td><p>Writes a Dockerfile to run VetiverAPI in a container</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/vetiver.deploy_rsconnect.html#vetiver.deploy_rsconnect" title="vetiver.deploy_rsconnect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deploy_rsconnect</span></code></a>(connect_server, board, pin_name)</p></td>
+<td><p>Deploy to RSConnect</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="monitor">
+<h1>Monitor<a class="headerlink" href="#monitor" title="Permalink to this headline">#</a></h1>
+<table class="autosummary longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/vetiver.compute_metrics.html#vetiver.compute_metrics" title="vetiver.compute_metrics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_metrics</span></code></a>(data, date_var, period, ...)</p></td>
+<td><p>Compute metrics for given time period</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/vetiver.pin_metrics.html#vetiver.pin_metrics" title="vetiver.pin_metrics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pin_metrics</span></code></a>(board, df_metrics, metrics_pin_name)</p></td>
+<td><p>Update an existing pin storing model metrics over time</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/vetiver.plot_metrics.html#vetiver.plot_metrics" title="vetiver.plot_metrics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_metrics</span></code></a>(df_metrics[, date, estimate, ...])</p></td>
+<td><p>Plot metrics over a given time period</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="model-handlers">
+<h1>Model Handlers<a class="headerlink" href="#model-handlers" title="Permalink to this headline">#</a></h1>
+<table class="autosummary longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/vetiver.SKLearnHandler.html#vetiver.SKLearnHandler" title="vetiver.SKLearnHandler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SKLearnHandler</span></code></a>(model, ptype_data)</p></td>
+<td><p>Handler class for creating VetiverModels with sklearn.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/vetiver.TorchHandler.html#vetiver.TorchHandler" title="vetiver.TorchHandler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TorchHandler</span></code></a>(model, ptype_data)</p></td>
+<td><p>Handler class for creating VetiverModels with torch.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/vetiver.StatsmodelsHandler.html#vetiver.StatsmodelsHandler" title="vetiver.StatsmodelsHandler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StatsmodelsHandler</span></code></a>(model, ptype_data)</p></td>
+<td><p>Handler class for creating VetiverModels with statsmodels.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/vetiver.XGBoostHandler.html#vetiver.XGBoostHandler" title="vetiver.XGBoostHandler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">XGBoostHandler</span></code></a>(model, ptype_data)</p></td>
+<td><p>Handler class for creating VetiverModels with xgboost.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="advanced-usage">
+<h1>Advanced Usage<a class="headerlink" href="#advanced-usage" title="Permalink to this headline">#</a></h1>
+<div class="toctree-wrapper compound">
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced Usage</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="advancedusage/custom_handler.html">Custom Handlers</a></li>
+</ul>
+</div>
+</section>
+
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='right-next' id="next-link" href="reference/vetiver.VetiverModel.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">vetiver.VetiverModel</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Isabel Zimmerman<br/>
+  
+      &copy; Copyright 2022, RStudio.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
