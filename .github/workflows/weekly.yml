@@ -9,7 +9,7 @@ name: Weekly Tests
 on:
   schedule:
     # At 00:00 on Monday
-    - cron: "14 36 * * MON"
+    - cron: "14 36 * * WED"
 
 jobs:
   vetiver_main_pins_main:
