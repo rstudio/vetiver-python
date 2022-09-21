@@ -44,10 +44,10 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: docs/_build/*
           publish_branch: gh-pages
-          destination_dir: github.ref_name
+          destination_dir: ${{ github.ref_name }}
       - name: create symlink stable to new version
         if: github.ref_type == 'tag' && startswith(github.ref, 'refs/tags/v')
         run: |
           rm stable
-          ln -s "${{ github.ref_name }}" stable
+          ln -s ${{ github.ref_name }} stable
           ls -la

@@ -7,10 +7,9 @@
 name: Weekly Tests
 
 on:
-  workflow_dispatch:
   schedule:
     # At 00:00 on Monday
-    - cron: "0 0 * * MON"
+    - cron: "14 36 * * MON"
 
 jobs:
   vetiver_main_pins_main:
