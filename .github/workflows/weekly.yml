@@ -9,12 +9,12 @@ name: Weekly Tests
 on:
   schedule:
     # At 00:00 on Monday
-    - cron: "38 14 * * WED"
+    - cron: "03 10 * * FRI"
 
 jobs:
   vetiver_main_pins_main:
     name: 'vetiver main, pins main'
-    if: github.repository == 'tidymodels/vetiver-python'
+    if: github.repository == 'rstudio/vetiver-python'
     runs-on: ubuntu-latest
 
     strategy:
@@ -44,7 +44,7 @@ jobs:
 
   vetiver_pypi_pins_main:
     name: 'vetiver pypi, pins main'
-    if: github.repository == 'tidymodels/vetiver-python'
+    if: github.repository == 'rstudio/vetiver-python'
     runs-on: ubuntu-latest
 
     strategy:
