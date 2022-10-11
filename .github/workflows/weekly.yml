@@ -7,6 +7,8 @@
 name: Weekly Tests
 
 on:
+  push:
+    branches: ['gha-fix']
   schedule:
     # At 00:00 on Monday
     - cron: "03 14 * * FRI"
