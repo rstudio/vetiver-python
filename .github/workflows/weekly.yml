@@ -85,7 +85,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          python -m pip install .[all]
+          python -m pip install .[dev]
           python -m pip install --upgrade git+https://github.com/rstudio/pins-python
 
       - name: run RStudio Connect
@@ -131,7 +131,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          python -m pip install .[all]
+          python -m pip install .[dev]
           python -m pip install --upgrade git+https://github.com/rstudio/rsconnect-python
 
       - name: run RStudio Connect
