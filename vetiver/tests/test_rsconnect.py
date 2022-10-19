@@ -105,14 +105,23 @@ def test_deploy(rsc_short):
         entry_point="app:api",
         new=True,
         app_id=None,
-        title=None,
+        title="testapi",
         python=None,
         conda_mode=False,
         force_generate=False,
         log_callback=None,
     )
 
+    from rsconnect.api import RSConnectClient
+
+    client = RSConnectClient(connect_server)
+    dicts = client.content_search()
+    rsc_api = list(filter(lambda x: x["title"] == "testapi", dicts))
+    guid = rsc_api[0].get("guid")
+
     h = {"Authorization": f'Key {get_key("susan")}'}
-    response = vetiver.predict(RSC_SERVER_URL + "/predict", X_df, headers=h)
+
+    endpoint = vetiver.vetiver_endpoint(RSC_SERVER_URL + "/" + guid + "/predict")
+    response = vetiver.predict(endpoint, X_df, headers=h)
     assert response.status_code == 200, response.text
     assert response.json() == {"prediction": [44.47, 44.47]}, response.json()
