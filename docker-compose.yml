@@ -1,9 +1,9 @@
-version: '3.1'
+version: '3.2'
 
 services:
 
   rsconnect:
-    image: rstudio/rstudio-connect:2021.12.1
+    image: rstudio/rstudio-connect:latest
     restart: always
     ports:
       - 3939:3939
