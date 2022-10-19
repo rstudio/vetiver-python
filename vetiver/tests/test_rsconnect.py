@@ -3,7 +3,6 @@ import json
 import sklearn
 import pins
 import rsconnect
-import numpy as np
 import pandas as pd
 from pins.boards import BoardRsConnect
 from pins.rsconnect.api import RsConnectApi
@@ -78,8 +77,6 @@ def test_board_pin_write(rsc_short):
 
 
 def test_deploy(rsc_short):
-    np.random.seed(500)
-
     v = vetiver.VetiverModel(
         model=model, ptype_data=X_df, model_name="susan/model", versioned=None
     )
@@ -123,5 +120,5 @@ def test_deploy(rsc_short):
     response = vetiver.predict(endpoint, X_df, headers=h)
 
     assert isinstance(response, pd.DataFrame), response
-    assert response.iloc[0, 0] == 46.9
+    assert type(response.iloc[0, 0]) == float
     assert len(response) == 100
