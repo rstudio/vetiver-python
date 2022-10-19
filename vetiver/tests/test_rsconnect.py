@@ -2,10 +2,11 @@ import pytest
 import json
 import sklearn
 import pins
+import rsconnect
 from pins.boards import BoardRsConnect
 from pins.rsconnect.api import RsConnectApi
 from pins.rsconnect.fs import RsConnectFs
-from rsconnect.api import RSConnectServer
+from rsconnect.api import RSConnectServer, RSConnectClient
 
 import vetiver
 
@@ -86,10 +87,10 @@ def test_deploy(rsc_short):
     connect_server = RSConnectServer(url=RSC_SERVER_URL, api_key=get_key("susan"))
     assert isinstance(board.pin_read("susan/model"), sklearn.dummy.DummyRegressor)
 
-    import rsconnect
-
-    client = rsconnect.api.RSConnectClient(connect_server)
-    assert client.content_search() == []
+    client = RSConnectClient(connect_server)
+    dicts = client.content_search()
+    rsc_api = list(filter(lambda x: x["title"] == "testapi", dicts))
+    content_url = rsc_api[0].get("content_url")
 
     # vetiver.deploy_rsconnect(
     #     connect_server=connect_server, board=board, pin_name="susan/model"
@@ -112,16 +113,9 @@ def test_deploy(rsc_short):
         log_callback=None,
     )
 
-    from rsconnect.api import RSConnectClient
-
-    client = RSConnectClient(connect_server)
-    dicts = client.content_search()
-    rsc_api = list(filter(lambda x: x["title"] == "testapi", dicts))
-    guid = rsc_api[0].get("guid")
-
     h = {"Authorization": f'Key {get_key("susan")}'}
 
-    endpoint = vetiver.vetiver_endpoint(RSC_SERVER_URL + "/" + guid + "/predict")
+    endpoint = vetiver.vetiver_endpoint(content_url + "/predict")
     response = vetiver.predict(endpoint, X_df, headers=h)
     assert response.status_code == 200, response.text
     assert response.json() == {"prediction": [44.47, 44.47]}, response.json()
