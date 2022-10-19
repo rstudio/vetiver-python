@@ -119,6 +119,7 @@ def test_deploy(rsc_short):
         log_callback=None,
     )
 
-    response = vetiver.predict(RSC_SERVER_URL + "/predict", X_df)
+    h = {"Authorization": f'Key {get_key("susan")}'}
+    response = vetiver.predict(RSC_SERVER_URL + "/predict", X_df, headers=h)
     assert response.status_code == 200, response.text
     assert response.json() == {"prediction": [44.47, 44.47]}, response.json()
