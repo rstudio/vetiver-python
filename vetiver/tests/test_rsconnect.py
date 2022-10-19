@@ -101,6 +101,7 @@ def test_deploy(rsc_short):
     import rsconnect
 
     vetiver.write_app(board, "susan/model")
+    vetiver.load_pkgs(v)
     rsconnect.actions.deploy_python_fastapi(
         connect_server=connect_server,
         directory=".",
