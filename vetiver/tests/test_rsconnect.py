@@ -6,7 +6,6 @@ from pins.boards import BoardRsConnect
 from pins.rsconnect.api import RsConnectApi
 from pins.rsconnect.fs import RsConnectFs
 from rsconnect.api import RSConnectServer
-from rsconnect.actions import gather_server_details
 
 import vetiver
 
@@ -75,14 +74,6 @@ def test_board_pin_write(rsc_short):
     assert isinstance(rsc_short.pin_read("susan/model"), sklearn.dummy.DummyRegressor)
 
 
-def test_python_env(rsc_short):
-    connect_server = RSConnectServer(url=RSC_SERVER_URL, api_key=get_key("susan"))
-
-    server_details = gather_server_details(connect_server)
-
-    assert server_details.get("python").get("versions") == ["3.8.10", "3.9.5"]
-
-
 def test_deploy(rsc_short):
     v = vetiver.VetiverModel(
         model=model, ptype_data=X_df, model_name="susan/model", versioned=None
@@ -95,27 +86,31 @@ def test_deploy(rsc_short):
     connect_server = RSConnectServer(url=RSC_SERVER_URL, api_key=get_key("susan"))
     assert isinstance(board.pin_read("susan/model"), sklearn.dummy.DummyRegressor)
 
-    vetiver.deploy_rsconnect(
-        connect_server=connect_server, board=board, pin_name="susan/model"
-    )
-    # import rsconnect
+    import rsconnect
 
-    # vetiver.write_app(board, "susan/model")
-    # vetiver.load_pkgs(v)
-    # rsconnect.actions.deploy_python_fastapi(
-    #     connect_server=connect_server,
-    #     directory=".",
-    #     extra_files=None,
-    #     excludes=None,
-    #     entry_point="app:api",
-    #     new=True,
-    #     app_id=None,
-    #     title=None,
-    #     python=None,
-    #     conda_mode=False,
-    #     force_generate=False,
-    #     log_callback=None,
+    client = rsconnect.api.RSConnectClient(connect_server)
+    assert client.content_search() == []
+
+    # vetiver.deploy_rsconnect(
+    #     connect_server=connect_server, board=board, pin_name="susan/model"
     # )
+
+    vetiver.write_app(board, "susan/model")
+    vetiver.load_pkgs(v)
+    rsconnect.actions.deploy_python_fastapi(
+        connect_server=connect_server,
+        directory=".",
+        extra_files=None,
+        excludes=None,
+        entry_point="app:api",
+        new=True,
+        app_id=None,
+        title=None,
+        python=None,
+        conda_mode=False,
+        force_generate=False,
+        log_callback=None,
+    )
 
     h = {"Authorization": f'Key {get_key("susan")}'}
     response = vetiver.predict(RSC_SERVER_URL + "/predict", X_df, headers=h)
