@@ -80,7 +80,7 @@ def test_python_env(rsc_short):
 
     server_details = gather_server_details(connect_server)
 
-    assert server_details.get("python").get("versions") == "3.9.6"
+    assert server_details.get("python").get("versions") == ["3.8.10", "3.9.5"]
 
 
 def test_deploy(rsc_short):
@@ -95,9 +95,27 @@ def test_deploy(rsc_short):
     connect_server = RSConnectServer(url=RSC_SERVER_URL, api_key=get_key("susan"))
     assert isinstance(board.pin_read("susan/model"), sklearn.dummy.DummyRegressor)
 
-    vetiver.deploy_rsconnect(
-        connect_server=connect_server, board=board, pin_name="susan/model"
+    # vetiver.deploy_rsconnect(
+    #     connect_server=connect_server, board=board, pin_name="susan/model"
+    # )
+    import rsconnect
+
+    vetiver.write_app(board, "susan/model")
+    rsconnect.actions.deploy_python_fastapi(
+        connect_server=connect_server,
+        directory=".",
+        extra_files=None,
+        excludes=None,
+        entry_point="app:api",
+        new=True,
+        app_id=None,
+        title=None,
+        python=None,
+        conda_mode=False,
+        force_generate=False,
+        log_callback=None,
     )
+
     response = vetiver.predict(RSC_SERVER_URL + "/predict", json=X_df)
     assert response.status_code == 200, response.text
     assert response.json() == {"prediction": [44.47, 44.47]}, response.json()
