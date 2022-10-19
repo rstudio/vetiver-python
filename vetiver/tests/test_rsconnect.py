@@ -6,6 +6,7 @@ from pins.boards import BoardRsConnect
 from pins.rsconnect.api import RsConnectApi
 from pins.rsconnect.fs import RsConnectFs
 from rsconnect.api import RSConnectServer
+from rsconnect.actions import gather_server_details
 
 import vetiver
 
@@ -72,6 +73,14 @@ def test_board_pin_write(rsc_short):
     )
     vetiver.vetiver_pin_write(board=rsc_short, model=v)
     assert isinstance(rsc_short.pin_read("susan/model"), sklearn.dummy.DummyRegressor)
+
+
+def test_python_env(rsc_short):
+    connect_server = RSConnectServer(url=RSC_SERVER_URL, api_key=get_key("susan"))
+
+    server_details = gather_server_details(connect_server)
+
+    assert server_details.get("python").get("versions") == "3.9.6"
 
 
 def test_deploy(rsc_short):
