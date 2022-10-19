@@ -96,7 +96,9 @@ def test_deploy(rsc_short):
     assert isinstance(board.pin_read("susan/model"), sklearn.dummy.DummyRegressor)
 
     # vetiver.deploy_rsconnect(
-    #     connect_server=connect_server, board=board, pin_name="susan/model"
+    #     connect_server=connect_server,
+    #     board=board,
+    #     pin_name="susan/model"
     # )
     import rsconnect
 
@@ -117,6 +119,6 @@ def test_deploy(rsc_short):
         log_callback=None,
     )
 
-    response = vetiver.predict(RSC_SERVER_URL + "/predict", json=X_df)
+    response = vetiver.predict(RSC_SERVER_URL + "/predict", X_df)
     assert response.status_code == 200, response.text
     assert response.json() == {"prediction": [44.47, 44.47]}, response.json()
