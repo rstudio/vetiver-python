@@ -87,11 +87,6 @@ def test_deploy(rsc_short):
     connect_server = RSConnectServer(url=RSC_SERVER_URL, api_key=get_key("susan"))
     assert isinstance(board.pin_read("susan/model"), sklearn.dummy.DummyRegressor)
 
-    client = RSConnectClient(connect_server)
-    dicts = client.content_search()
-    rsc_api = list(filter(lambda x: x["title"] == "testapi", dicts))
-    content_url = rsc_api[0].get("content_url")
-
     # vetiver.deploy_rsconnect(
     #     connect_server=connect_server, board=board, pin_name="susan/model"
     # )
@@ -112,6 +107,11 @@ def test_deploy(rsc_short):
         force_generate=False,
         log_callback=None,
     )
+
+    client = RSConnectClient(connect_server)
+    dicts = client.content_search()
+    rsc_api = list(filter(lambda x: x["title"] == "testapi", dicts))
+    content_url = rsc_api[0].get("content_url")
 
     h = {"Authorization": f'Key {get_key("susan")}'}
 
