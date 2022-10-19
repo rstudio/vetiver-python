@@ -95,29 +95,27 @@ def test_deploy(rsc_short):
     connect_server = RSConnectServer(url=RSC_SERVER_URL, api_key=get_key("susan"))
     assert isinstance(board.pin_read("susan/model"), sklearn.dummy.DummyRegressor)
 
-    # vetiver.deploy_rsconnect(
-    #     connect_server=connect_server,
-    #     board=board,
-    #     pin_name="susan/model"
-    # )
-    import rsconnect
-
-    vetiver.write_app(board, "susan/model")
-    vetiver.load_pkgs(v)
-    rsconnect.actions.deploy_python_fastapi(
-        connect_server=connect_server,
-        directory=".",
-        extra_files=None,
-        excludes=None,
-        entry_point="app:api",
-        new=True,
-        app_id=None,
-        title=None,
-        python=None,
-        conda_mode=False,
-        force_generate=False,
-        log_callback=None,
+    vetiver.deploy_rsconnect(
+        connect_server=connect_server, board=board, pin_name="susan/model"
     )
+    # import rsconnect
+
+    # vetiver.write_app(board, "susan/model")
+    # vetiver.load_pkgs(v)
+    # rsconnect.actions.deploy_python_fastapi(
+    #     connect_server=connect_server,
+    #     directory=".",
+    #     extra_files=None,
+    #     excludes=None,
+    #     entry_point="app:api",
+    #     new=True,
+    #     app_id=None,
+    #     title=None,
+    #     python=None,
+    #     conda_mode=False,
+    #     force_generate=False,
+    #     log_callback=None,
+    # )
 
     h = {"Authorization": f'Key {get_key("susan")}'}
     response = vetiver.predict(RSC_SERVER_URL + "/predict", X_df, headers=h)
