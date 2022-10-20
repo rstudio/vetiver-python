@@ -3,8 +3,14 @@ import typing
 from rsconnect.actions import deploy_python_fastapi
 import shutil
 import os
+import logging
 
 from .write_fastapi import write_app
+from .vetiver_model import VetiverModel
+from .attach_pkgs import load_pkgs
+from .utils import inform
+
+_log = logging.getLogger(__name__)
 
 
 def deploy_rsconnect(
@@ -97,6 +103,14 @@ def deploy_rsconnect(
             file=tmp_app,
             overwrite=False,
         )
+
+        if not os.path.exists(temp + "/requirements.txt"):
+            inform(
+                _log,
+                "No requirements.txt found, generating with `vetiver.load_pkgs()`",
+            )
+            v = VetiverModel.from_pin(board, pin_name, version)
+            load_pkgs(v, path=temp + "/")
 
         deploy_python_fastapi(
             connect_server=connect_server,
