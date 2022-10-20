@@ -3,6 +3,8 @@ import json
 import sklearn
 import pins
 import pandas as pd
+import numpy as np
+
 from pins.boards import BoardRsConnect
 from pins.rsconnect.api import RsConnectApi
 from pins.rsconnect.fs import RsConnectFs
@@ -76,6 +78,8 @@ def test_board_pin_write(rsc_short):
 
 
 def test_deploy(rsc_short):
+    np.random.RandomState(500)
+
     v = vetiver.VetiverModel(
         model=model, ptype_data=X_df, model_name="susan/model", versioned=None
     )
