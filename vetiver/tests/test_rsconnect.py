@@ -12,6 +12,8 @@ from rsconnect.api import RSConnectServer, RSConnectClient
 
 import vetiver
 
+np.random.RandomState(500)
+
 # Load data, model
 X_df, y = vetiver.mock.get_mock_data()
 model = vetiver.mock.get_mock_model().fit(X_df, y)
@@ -78,7 +80,6 @@ def test_board_pin_write(rsc_short):
 
 
 def test_deploy(rsc_short):
-    np.random.RandomState(500)
 
     v = vetiver.VetiverModel(
         model=model, ptype_data=X_df, model_name="susan/model", versioned=None
