@@ -108,6 +108,8 @@ def deploy_rsconnect(
             f"writing app to {tmp_app}",
         )
 
+        inform(_log, f"{os.system('cat ' + tmp_app)}")
+
         if not os.path.exists(temp + "/requirements.txt"):
             inform(
                 _log,
