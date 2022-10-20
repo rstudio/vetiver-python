@@ -12,12 +12,6 @@ from rsconnect.api import RSConnectServer, RSConnectClient
 
 import vetiver
 
-np.random.RandomState(500)
-
-# Load data, model
-X_df, y = vetiver.mock.get_mock_data()
-model = vetiver.mock.get_mock_model().fit(X_df, y)
-
 RSC_SERVER_URL = "http://localhost:3939"
 RSC_KEYS_FNAME = "vetiver/tests/rsconnect_api_keys.json"
 
@@ -71,15 +65,12 @@ def rsc_short():
     rsc_delete_user_content(fs_susan.api)
 
 
-def test_board_pin_write(rsc_short):
-    v = vetiver.VetiverModel(
-        model=model, ptype_data=X_df, model_name="susan/model", versioned=None
-    )
-    vetiver.vetiver_pin_write(board=rsc_short, model=v)
-    assert isinstance(rsc_short.pin_read("susan/model"), sklearn.dummy.DummyRegressor)
-
-
 def test_deploy(rsc_short):
+    np.random.seed(500)
+
+    # Load data, model
+    X_df, y = vetiver.mock.get_mock_data()
+    model = vetiver.mock.get_mock_model().fit(X_df, y)
 
     v = vetiver.VetiverModel(
         model=model, ptype_data=X_df, model_name="susan/model", versioned=None
@@ -118,6 +109,7 @@ def test_deploy(rsc_short):
     #     log_callback=None,
     # )
 
+    # get url of where content lives
     client = RSConnectClient(connect_server)
     dicts = client.content_search()
     rsc_api = list(filter(lambda x: x["title"] == "testapi", dicts))
