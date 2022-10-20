@@ -103,6 +103,10 @@ def deploy_rsconnect(
             file=tmp_app,
             overwrite=False,
         )
+        inform(
+            _log,
+            f"writing app to {tmp_app}",
+        )
 
         if not os.path.exists(temp + "/requirements.txt"):
             inform(
@@ -111,6 +115,8 @@ def deploy_rsconnect(
             )
             v = VetiverModel.from_pin(board, pin_name, version)
             load_pkgs(v, path=temp + "/")
+
+        print(os.listdir(temp))
 
         deploy_python_fastapi(
             connect_server=connect_server,
