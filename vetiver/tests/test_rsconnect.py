@@ -128,5 +128,5 @@ def test_deploy(rsc_short):
     response = vetiver.predict(endpoint, X_df, headers=h)
 
     assert isinstance(response, pd.DataFrame), response
-    assert response.iloc[0, 0] == 46.49
+    assert response.iloc[0, 0] == 48.37
     assert len(response) == 100
