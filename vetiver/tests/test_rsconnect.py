@@ -2,7 +2,6 @@ import pytest
 import json
 import sklearn
 import pins
-import rsconnect
 import pandas as pd
 from pins.boards import BoardRsConnect
 from pins.rsconnect.api import RsConnectApi
@@ -88,26 +87,31 @@ def test_deploy(rsc_short):
     connect_server = RSConnectServer(url=RSC_SERVER_URL, api_key=get_key("susan"))
     assert isinstance(board.pin_read("susan/model"), sklearn.dummy.DummyRegressor)
 
-    # vetiver.deploy_rsconnect(
-    #     connect_server=connect_server, board=board, pin_name="susan/model"
-    # )
-
-    vetiver.write_app(board, "susan/model")
-    vetiver.load_pkgs(v)
-    rsconnect.actions.deploy_python_fastapi(
+    vetiver.deploy_rsconnect(
         connect_server=connect_server,
-        directory=".",
-        extra_files=None,
-        excludes=None,
-        entry_point="app:api",
-        new=True,
-        app_id=None,
+        board=board,
+        pin_name="susan/model",
         title="testapi",
-        python=None,
-        conda_mode=False,
-        force_generate=False,
-        log_callback=None,
+        force_generate=True,
     )
+
+    # vetiver.write_app(board, "susan/model")
+    # vetiver.load_pkgs(v)
+    # import rsconnect
+    # rsconnect.actions.deploy_python_fastapi(
+    #     connect_server=connect_server,
+    #     directory=".",
+    #     extra_files=None,
+    #     excludes=None,
+    #     entry_point="app:api",
+    #     new=True,
+    #     app_id=None,
+    #     title="testapi",
+    #     python=None,
+    #     conda_mode=False,
+    #     force_generate=False,
+    #     log_callback=None,
+    # )
 
     client = RSConnectClient(connect_server)
     dicts = client.content_search()
@@ -120,5 +124,5 @@ def test_deploy(rsc_short):
     response = vetiver.predict(endpoint, X_df, headers=h)
 
     assert isinstance(response, pd.DataFrame), response
-    assert type(response.iloc[0, 0]) == float
+    assert response.iloc[0, 0] == 46.49
     assert len(response) == 100
