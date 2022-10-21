@@ -51,7 +51,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          python -m pip install ".[dev]"
+          python -m pip install git+https://github.com/rstudio/vetiver-python.git@4b35a882ffb9a34ef02436e2ec2ec46c75cae070
       - name: run RStudio Connect
         run: |
           docker-compose up --build -d
