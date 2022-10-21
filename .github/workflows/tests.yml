@@ -52,7 +52,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           python -m pip install "vetiver[dev]"
-          python -m pip install git+https://github.com/rstudio/rsconnect-python.git
+          python -m pip install --upgrade git+https://github.com/rstudio/vetiver-python/@83620230873400fd81ac90b65468f09bb5961a0d
       - name: run RStudio Connect
         run: |
           docker-compose up --build -d
