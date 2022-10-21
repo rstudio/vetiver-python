@@ -99,7 +99,7 @@ def deploy_rsconnect(
             overwrite=False,
         )
 
-        with open(temp + "requirements.txt", "w") as file_:
+        with open(temp + "/requirements.txt", "w") as file_:
             subprocess.call(["pip", "freeze"], stdout=file_)
 
         deploy_python_fastapi(
