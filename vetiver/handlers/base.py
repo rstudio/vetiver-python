@@ -48,7 +48,7 @@ def create_handler(model, ptype_data):
 
     raise InvalidModelError(
         "Model must be a supported model type, or a "
-        "custom handler must be used. See the docs for more info on custom handlers and"
+        "custom handler must be used. See the docs for more info on custom handlers and "
         "supported types https://rstudio.github.io/vetiver-python/"
     )
 
