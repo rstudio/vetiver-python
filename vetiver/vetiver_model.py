@@ -1,7 +1,6 @@
 import json
 from warnings import warn
 from vetiver.handlers.base import create_handler
-from .meta import _model_meta
 
 
 class NoModelAvailableError(Exception):
@@ -91,12 +90,21 @@ class VetiverModel:
         self.model_name = model_name
         self.description = description if description else translator.describe()
         self.versioned = versioned
-        self.metadata = (
-            metadata
-            if metadata
-            else translator.create_meta(metadata, required_pkgs=["vetiver"])
-        )
         self.handler_predict = translator.handler_predict
+
+        if metadata:
+            user = metadata.get("user") if "user" in metadata else metadata
+            version = metadata.get("version") if "version" in metadata else None
+            url = metadata.get("url") if "url" in metadata else None
+            required_pkgs = (
+                metadata.get("required_pkgs")
+                if "required_pkgs" in metadata and metadata.get("required_pkgs")
+                else []
+            )
+        else:
+            user, version, url, required_pkgs = None, None, None, []
+
+        self.metadata = translator.create_meta(user, version, url, required_pkgs)
 
     @classmethod
     def from_pin(cls, board, name: str, version: str = None):
@@ -104,23 +112,21 @@ class VetiverModel:
         model = board.pin_read(name, version)
         meta = board.pin_meta(name, version)
 
-        if meta.user.get("ptype"):
-            get_prototype = meta.user.get("ptype")
-        elif meta.user.get("prototype"):
-            get_prototype = meta.user.get("prototype")
-        else:
-            get_prototype = None
+        if "vetiver_meta" in meta.user:
+            ptype = meta.user.get("vetiver_meta").get("prototype")
+            required_pkgs = meta.user.get("vetiver_meta").get("required_pkgs")
+            meta.user.pop("vetiver_meta")
 
         return cls(
             model=model,
             model_name=name,
             description=meta.description,
-            metadata=_model_meta(
-                user=meta.user,
-                version=meta.version.version,
-                url=meta.local.get("url"),  # None all the time, besides Connect
-                required_pkgs=meta.user.get("required_pkgs"),
-            ),
+            metadata={
+                "user": meta.user.get("user"),
+                "version": meta.version.version,
+                "url": meta.user.get("url"),  # None all the time, besides Connect,
+                "required_pkgs": required_pkgs,
+            },
             prototype_data=json.loads(get_prototype) if get_prototype else None,
             versioned=True,
         )

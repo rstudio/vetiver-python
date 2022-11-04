@@ -1,7 +1,6 @@
 import pandas as pd
 import sklearn
 
-from ..meta import _model_meta
 from .base import BaseHandler
 
 
@@ -22,14 +21,16 @@ class SKLearnHandler(BaseHandler):
         return desc
 
     def create_meta(
-        user: list = None,
+        self,
+        user: dict = None,
         version: str = None,
         url: str = None,
         required_pkgs: list = [],
     ):
         """Create metadata for sklearn model"""
-        required_pkgs = required_pkgs + ["scikit-learn"]
-        meta = _model_meta(user, version, url, required_pkgs)
+        if "scikit-learn" not in required_pkgs:
+            required_pkgs = required_pkgs + ["scikit-learn"]
+        meta = super().create_meta(user, version, url, required_pkgs)
 
         return meta
 

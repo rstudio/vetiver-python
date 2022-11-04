@@ -1,6 +1,5 @@
 import pandas as pd
 
-from ..meta import _model_meta
 from .base import BaseHandler
 
 xgb_exists = True
@@ -27,14 +26,16 @@ class XGBoostHandler(BaseHandler):
         return desc
 
     def create_meta(
+        self,
         user: list = None,
         version: str = None,
         url: str = None,
         required_pkgs: list = [],
     ):
         """Create metadata for xgboost"""
-        required_pkgs = required_pkgs + ["xgboost"]
-        meta = _model_meta(user, version, url, required_pkgs)
+        if "xgboost" not in required_pkgs:
+            required_pkgs = required_pkgs + ["xgboost"]
+        meta = super().create_meta(user, version, url, required_pkgs)
 
         return meta
 

@@ -71,14 +71,21 @@ def test_vetiver_model_basemodel_prototype():
     m = MockPrototype(B=4, C=0, D=0)
     vt4 = vt.VetiverModel(
         model=model,
+<<<<<<< HEAD
         prototype_data=m,
         model_name="model",
         versioned=None,
+=======
+        ptype_data=None,
+        model_name="iris",
+        versioned=False,
+>>>>>>> 7edbe59 (rework metadata)
         description=None,
-        metadata=None,
+        metadata={"test": 123},
     )
 
     assert vt4.model == model
+<<<<<<< HEAD
     assert vt4.prototype is m
 
 
@@ -109,6 +116,15 @@ def test_vetiver_model_use_ptype():
     assert vt5.model == model
     assert isinstance(vt5.prototype.construct(), pydantic.BaseModel)
     assert list(vt5.prototype.__fields__.values())[0].type_ == int
+=======
+    assert vt4.ptype is None
+    assert vt4.metadata == {
+        "user": {"test": 123},
+        "version": None,
+        "url": None,
+        "required_pkgs": ["scikit-learn"],
+    }
+>>>>>>> 7edbe59 (rework metadata)
 
 
 def test_vetiver_model_from_pin():

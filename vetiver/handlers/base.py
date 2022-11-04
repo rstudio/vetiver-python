@@ -83,6 +83,7 @@ class BaseHandler:
         return desc
 
     def create_meta(
+        self,
         user: list = None,
         version: str = None,
         url: str = None,

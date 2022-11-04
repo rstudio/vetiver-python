@@ -1,6 +1,5 @@
 import pandas as pd
 
-from ..meta import _model_meta
 from .base import BaseHandler
 
 sm_exists = True
@@ -27,14 +26,16 @@ class StatsmodelsHandler(BaseHandler):
         return desc
 
     def create_meta(
+        self,
         user: list = None,
         version: str = None,
         url: str = None,
         required_pkgs: list = [],
     ):
         """Create metadata for statsmodel"""
-        required_pkgs = required_pkgs + ["statsmodels"]
-        meta = _model_meta(user, version, url, required_pkgs)
+        if "statsmodels" not in required_pkgs:
+            required_pkgs = required_pkgs + ["statsmodels"]
+        meta = super().create_meta(user, version, url, required_pkgs)
 
         return meta
 

@@ -1,6 +1,5 @@
 import numpy as np
 
-from ..meta import _model_meta
 from .base import BaseHandler
 
 torch_exists = True
@@ -27,14 +26,16 @@ class TorchHandler(BaseHandler):
         return desc
 
     def create_meta(
+        self,
         user: list = None,
         version: str = None,
         url: str = None,
         required_pkgs: list = [],
     ):
         """Create metadata for torch model"""
-        required_pkgs = required_pkgs + ["torch"]
-        meta = _model_meta(user, version, url, required_pkgs)
+        if "torch" not in required_pkgs:
+            required_pkgs = required_pkgs + ["torch"]
+        meta = super().create_meta(user, version, url, required_pkgs)
 
         return meta
 
