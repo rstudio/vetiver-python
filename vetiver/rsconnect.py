@@ -3,7 +3,6 @@ import typing
 from rsconnect.actions import deploy_python_fastapi
 import shutil
 import os
-import subprocess
 
 from .write_fastapi import write_app
 
@@ -98,9 +97,6 @@ def deploy_rsconnect(
             file=tmp_app,
             overwrite=False,
         )
-
-        with open(temp + "/requirements.txt", "w") as file_:
-            subprocess.call(["pip", "freeze"], stdout=file_)
 
         deploy_python_fastapi(
             connect_server=connect_server,
