@@ -18,12 +18,6 @@ RSC_KEYS_FNAME = "vetiver/tests/rsconnect_api_keys.json"
 pytestmark = pytest.mark.rsc_test  # noqa
 
 
-def server_from_key(name):
-    with open(RSC_KEYS_FNAME) as f:
-        api_key = json.load(f)[name]
-        return RSConnectServer(RSC_SERVER_URL, api_key)
-
-
 def get_key(name):
     with open(RSC_KEYS_FNAME) as f:
         api_key = json.load(f)[name]
@@ -72,9 +66,8 @@ def test_deploy(rsc_short):
     X_df, y = vetiver.mock.get_mock_data()
     model = vetiver.mock.get_mock_model().fit(X_df, y)
 
-    v = vetiver.VetiverModel(
-        model=model, ptype_data=X_df, model_name="susan/model", versioned=None
-    )
+    v = vetiver.VetiverModel(model=model, ptype_data=X_df, model_name="susan/model")
+
     board = pins.board_rsconnect(
         server_url=RSC_SERVER_URL, api_key=get_key("susan"), allow_pickle_read=True
     )
@@ -90,24 +83,6 @@ def test_deploy(rsc_short):
         title="testapi",
         extra_files=["requirements.txt"],
     )
-
-    # vetiver.write_app(board, "susan/model")
-    # vetiver.load_pkgs(v)
-    # import rsconnect
-    # rsconnect.actions.deploy_python_fastapi(
-    #     connect_server=connect_server,
-    #     directory=".",
-    #     extra_files=None,
-    #     excludes=None,
-    #     entry_point="app:api",
-    #     new=True,
-    #     app_id=None,
-    #     title="testapi",
-    #     python=None,
-    #     conda_mode=False,
-    #     force_generate=False,
-    #     log_callback=None,
-    # )
 
     # get url of where content lives
     client = RSConnectClient(connect_server)
