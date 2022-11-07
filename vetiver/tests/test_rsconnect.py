@@ -88,7 +88,7 @@ def test_deploy(rsc_short):
         board=board,
         pin_name="susan/model",
         title="testapi",
-        force_generate=True,
+        extra_files=["requirements.txt"],
     )
 
     # vetiver.write_app(board, "susan/model")
