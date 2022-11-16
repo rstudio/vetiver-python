@@ -26,7 +26,7 @@ def test_predict_endpoint_ptype():
     data = {"B": 0, "C": 0, "D": 0}
     response = client.post("/predict", json=data)
     assert response.status_code == 200, response.text
-    assert response.json() == {"prediction": [44.47]}, response.json()
+    assert response.json() == {"predict": [44.47]}, response.json()
 
 
 def test_predict_endpoint_ptype_batch():
@@ -35,7 +35,7 @@ def test_predict_endpoint_ptype_batch():
     data = [{"B": 0, "C": 0, "D": 0}, {"B": 0, "C": 0, "D": 0}]
     response = client.post("/predict", json=data)
     assert response.status_code == 200, response.text
-    assert response.json() == {"prediction": [44.47, 44.47]}, response.json()
+    assert response.json() == {"predict": [44.47, 44.47]}, response.json()
 
 
 def test_predict_endpoint_ptype_error():
@@ -52,7 +52,7 @@ def test_predict_endpoint_no_ptype():
     data = [{"B": 0, "C": 0, "D": 0}]
     response = client.post("/predict", json=data)
     assert response.status_code == 200, response.text
-    assert response.json() == {"prediction": [44.47]}, response.json()
+    assert response.json() == {"predict": [44.47]}, response.json()
 
 
 def test_predict_endpoint_no_ptype_batch():
@@ -61,7 +61,7 @@ def test_predict_endpoint_no_ptype_batch():
     data = [[0, 0, 0], [0, 0, 0]]
     response = client.post("/predict", json=data)
     assert response.status_code == 200, response.text
-    assert response.json() == {"prediction": [44.47, 44.47]}, response.json()
+    assert response.json() == {"predict": [44.47, 44.47]}, response.json()
 
 
 def test_predict_endpoint_no_ptype_error():
