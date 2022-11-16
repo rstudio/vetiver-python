@@ -1,4 +1,5 @@
 from vetiver import mock, VetiverModel, VetiverAPI
+import pandas as pd
 from fastapi.testclient import TestClient
 
 
@@ -27,7 +28,7 @@ def test_endpoint_adds_ptype():
     app = _start_application(check_ptype=True).app
 
     client = TestClient(app)
-    data = {"B": 0, "C": 0, "D": 0}
+    data = {"B": [0], "C": [0], "D": [0]}
     response = client.post("/sum", json=data)
     assert response.status_code == 200, response.text
     assert response.json() == {"sum": [0]}, response.json()

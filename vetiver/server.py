@@ -45,10 +45,12 @@ class VetiverAPI:
         self.model = model
         self.check_ptype = check_ptype
         self.app_factory = app_factory
-        self.app = self._init_app()
+        self.app = app_factory()
+
+        self._init_app()
 
     def _init_app(self):
-        app = self.app_factory()
+        app = self.app
         app.openapi = self._custom_openapi
 
         @app.get("/", include_in_schema=False)
@@ -68,38 +70,11 @@ class VetiverAPI:
         async def ping():
             return {"ping": "pong"}
 
-        if self.check_ptype is True:
-
-            @app.post("/predict")
-            async def prediction(
-                input_data: Union[self.model.ptype, List[self.model.ptype]]
-            ):
-                if isinstance(input_data, List):
-                    served_data = _batch_data(input_data)
-                else:
-                    served_data = _prepare_data(input_data)
-
-                y = self.model.handler_predict(
-                    served_data, check_ptype=self.check_ptype
-                )
-
-                return {"prediction": y.tolist()}
-
-        elif self.check_ptype is False:
-
-            @app.post("/predict")
-            async def prediction(input_data: Request):
-                y = await input_data.json()
-
-                prediction = self.model.handler_predict(y, check_ptype=self.check_ptype)
-
-                return {"prediction": prediction.tolist()}
-
-        else:
-            raise ValueError("cannot determine `check_ptype`")
+        self.vetiver_post(self.model.handler_predict, "predict", check_ptype=self.check_ptype)
 
         @app.get("/__docs__", response_class=HTMLResponse, include_in_schema=False)
         async def rapidoc():
+            # save as html html.tpl, .format {spec_url}
             return f"""
                     <!doctype html>
                     <html>
@@ -136,9 +111,9 @@ class VetiverAPI:
             """
 
         return app
-
+    
     def vetiver_post(
-        self, endpoint_fx: Callable, endpoint_name: str = "custom_endpoint"
+        self, endpoint_fx: Callable, endpoint_name: str = None, **kw
     ):
         """Create new POST endpoint that is aware of model input data
 
@@ -151,29 +126,37 @@ class VetiverAPI:
 
         Example
         -------
-        >>> import vetiver
-        >>> X, y = vetiver.get_mock_data()
-        >>> model = vetiver.get_mock_model().fit(X, y)
-        >>> v = vetiver.VetiverModel(model = model, model_name = "model", ptype_data = X)
-        >>> v_api = vetiver.VetiverAPI(model = v, check_ptype = True)
+        >>> import vetiver as vt
+        >>> X, y = vt.get_mock_data()
+        >>> model = vt.get_mock_model().fit(X, y)
+        >>> v = vt.VetiverModel(model = model, model_name = "model", ptype_data = X)
+        >>> v_api = vt.VetiverAPI(model = v, check_ptype = True)
         >>> def sum_values(x):
         ...     return x.sum()
         >>> v_api.vetiver_post(sum_values, "sums")
         """
-        if self.check_ptype is True:
+        if not endpoint_name:
+            endpoint_name = endpoint_fx.__name__
 
-            @self.app.post("/" + endpoint_name)
-            async def custom_endpoint(input_data: self.model.ptype):
-                y = _prepare_data(input_data)
-                new = endpoint_fx(pd.DataFrame(y))
+        if self.check_ptype is True:
+        
+            @self.app.post("/" + endpoint_name, name=endpoint_name)
+            async def custom_endpoint(input_data: Union[self.model.ptype, List[self.model.ptype]]):
+
+                if isinstance(input_data, List):
+                    served_data = _batch_data(input_data)
+                else:
+                    served_data = _prepare_data(input_data)
+
+                new = endpoint_fx(served_data, **kw)
                 return {endpoint_name: new.tolist()}
 
         else:
 
             @self.app.post("/" + endpoint_name)
             async def custom_endpoint(input_data: Request):
-                y = await input_data.json()
-                new = endpoint_fx(pd.DataFrame(y))
+                served_data = await input_data.json()
+                new = endpoint_fx(served_data, **kw)
 
                 return {endpoint_name: new.tolist()}
 
