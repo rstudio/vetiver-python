@@ -116,6 +116,9 @@ class VetiverModel:
             ptype = meta.user.get("vetiver_meta").get("prototype")
             required_pkgs = meta.user.get("vetiver_meta").get("required_pkgs")
             meta.user.pop("vetiver_meta")
+        else:
+            ptype = meta.user.get("ptype") if meta.user.get("ptype") else None
+            required_pkgs = meta.user.get("required_pkgs")
 
         return cls(
             model=model,

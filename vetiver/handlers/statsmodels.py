@@ -33,8 +33,8 @@ class StatsmodelsHandler(BaseHandler):
         required_pkgs: list = [],
     ):
         """Create metadata for statsmodel"""
-        if "statsmodels" not in required_pkgs:
-            required_pkgs = required_pkgs + ["statsmodels"]
+        if not list(filter(lambda x: "statsmodels" in x, required_pkgs)):
+            required_pkgs = required_pkgs + [f"statsmodels=={statsmodels.__version__}"]
         meta = super().create_meta(user, version, url, required_pkgs)
 
         return meta

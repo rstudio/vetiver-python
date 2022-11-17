@@ -2,6 +2,7 @@ from vetiver import mock, VetiverModel, VetiverAPI
 from fastapi.testclient import TestClient
 import numpy as np
 import pytest
+import sklearn
 
 
 def _start_application(save_prototype: bool = True):
@@ -18,6 +19,19 @@ def _start_application(save_prototype: bool = True):
     app = VetiverAPI(v, check_prototype=save_prototype)
 
     return app
+
+
+def test_build_sklearn():
+    X, y = mock.get_mock_data()
+    model = mock.get_mock_model().fit(X, y)
+    v = VetiverModel(
+        model=model,
+        ptype_data=X,
+        model_name="my_model",
+        description="A regression model for testing purposes",
+    )
+
+    assert v.metadata.get("required_pkgs") == [f"scikit-learn=={sklearn.__version__}"]
 
 
 def test_predict_endpoint_ptype():

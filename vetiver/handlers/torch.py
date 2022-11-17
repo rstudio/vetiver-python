@@ -33,8 +33,8 @@ class TorchHandler(BaseHandler):
         required_pkgs: list = [],
     ):
         """Create metadata for torch model"""
-        if "torch" not in required_pkgs:
-            required_pkgs = required_pkgs + ["torch"]
+        if not list(filter(lambda x: "torch" in x, required_pkgs)):
+            required_pkgs = required_pkgs + [f"torch=={torch.__version__}"]
         meta = super().create_meta(user, version, url, required_pkgs)
 
         return meta

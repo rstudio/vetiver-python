@@ -33,8 +33,8 @@ class XGBoostHandler(BaseHandler):
         required_pkgs: list = [],
     ):
         """Create metadata for xgboost"""
-        if "xgboost" not in required_pkgs:
-            required_pkgs = required_pkgs + ["xgboost"]
+        if not list(filter(lambda x: "xgboost" in x, required_pkgs)):
+            required_pkgs = required_pkgs + [f"xgboost=={xgboost.__version__}"]
         meta = super().create_meta(user, version, url, required_pkgs)
 
         return meta

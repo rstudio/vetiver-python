@@ -71,21 +71,13 @@ def test_vetiver_model_basemodel_prototype():
     m = MockPrototype(B=4, C=0, D=0)
     vt4 = vt.VetiverModel(
         model=model,
-<<<<<<< HEAD
         prototype_data=m,
         model_name="model",
-        versioned=None,
-=======
-        ptype_data=None,
-        model_name="iris",
         versioned=False,
->>>>>>> 7edbe59 (rework metadata)
-        description=None,
-        metadata={"test": 123},
+        description=None
     )
 
     assert vt4.model == model
-<<<<<<< HEAD
     assert vt4.prototype is m
 
 
@@ -106,25 +98,23 @@ def test_vetiver_model_no_prototype():
 def test_vetiver_model_use_ptype():
     vt5 = vt.VetiverModel(
         model=model,
-        ptype_data=X_df,
+        prototype_data=None,
         model_name="model",
         versioned=None,
         description=None,
-        metadata=None,
+        metadata={"test": 123},
     )
 
     assert vt5.model == model
     assert isinstance(vt5.prototype.construct(), pydantic.BaseModel)
     assert list(vt5.prototype.__fields__.values())[0].type_ == int
-=======
-    assert vt4.ptype is None
+    assert vt4.prototype is None
     assert vt4.metadata == {
         "user": {"test": 123},
         "version": None,
         "url": None,
-        "required_pkgs": ["scikit-learn"],
+        "required_pkgs": [f"scikit-learn=={sklearn.__version__}"],
     }
->>>>>>> 7edbe59 (rework metadata)
 
 
 def test_vetiver_model_from_pin():
@@ -135,12 +125,17 @@ def test_vetiver_model_from_pin():
         model_name="model",
         versioned=None,
         description=None,
-        metadata=None,
+        metadata={"test": 123},
     )
+
     board = pins.board_temp(allow_pickle_read=True)
     vt.vetiver_pin_write(board=board, model=v)
     v2 = vt.VetiverModel.from_pin(board, "model")
+
     assert isinstance(v2, vt.VetiverModel)
     assert isinstance(v2.model, sklearn.base.BaseEstimator)
     assert isinstance(v2.prototype.construct(), pydantic.BaseModel)
+    assert v2.metadata.get("user") == {"test": 123}
+    assert v2.metadata.get("version") is not None
+
     board.pin_delete("model")

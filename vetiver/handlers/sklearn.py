@@ -28,8 +28,10 @@ class SKLearnHandler(BaseHandler):
         required_pkgs: list = [],
     ):
         """Create metadata for sklearn model"""
-        if "scikit-learn" not in required_pkgs:
-            required_pkgs = required_pkgs + ["scikit-learn"]
+
+        if not list(filter(lambda x: "scikit-learn" in x, required_pkgs)):
+            required_pkgs = required_pkgs + [f"scikit-learn=={sklearn.__version__}"]
+
         meta = super().create_meta(user, version, url, required_pkgs)
 
         return meta
