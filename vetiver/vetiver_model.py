@@ -127,7 +127,7 @@ class VetiverModel:
             metadata={
                 "user": meta.user.get("user"),
                 "version": meta.version.version,
-                "url": meta.user.get("url"),  # None all the time, besides Connect,
+                "url": meta.local.get("url"),  # None all the time, besides Connect,
                 "required_pkgs": required_pkgs,
             },
             prototype_data=json.loads(get_prototype) if get_prototype else None,
