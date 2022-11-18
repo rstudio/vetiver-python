@@ -19,7 +19,8 @@ class TorchHandler(BaseHandler):
     """
 
     model_class = staticmethod(lambda: torch.nn.Module)
-    pkg = torch
+    if torch_exists:
+        pkg = torch
     pip_name = "torch"
 
     def handler_predict(self, input_data, check_prototype):
