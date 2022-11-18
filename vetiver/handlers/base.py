@@ -79,7 +79,8 @@ class BaseHandler:
 
     def describe(self):
         """Create description for model"""
-        desc = f"{self.model.__class__} model"
+        obj_name = type(self.model).__qualname__
+        desc = f"A {self.pip_name} {obj_name} model"
         return desc
 
     def create_meta(
@@ -90,6 +91,9 @@ class BaseHandler:
         required_pkgs: list = [],
     ):
         """Create metadata for a model"""
+        if not list(filter(lambda x: self.pip_name in x, required_pkgs)):
+            required_pkgs = required_pkgs + [f"{self.pip_name}=={self.pkg.__version__}"]
+
         meta = _model_meta(user, version, url, required_pkgs)
 
         return meta

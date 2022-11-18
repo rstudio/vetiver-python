@@ -19,25 +19,8 @@ class XGBoostHandler(BaseHandler):
     """
 
     model_class = staticmethod(lambda: xgboost.Booster)
-
-    def describe(self):
-        """Create description for xgboost model"""
-        desc = f"XGBoost {self.model.__class__} model."
-        return desc
-
-    def create_meta(
-        self,
-        user: list = None,
-        version: str = None,
-        url: str = None,
-        required_pkgs: list = [],
-    ):
-        """Create metadata for xgboost"""
-        if not list(filter(lambda x: "xgboost" in x, required_pkgs)):
-            required_pkgs = required_pkgs + [f"xgboost=={xgboost.__version__}"]
-        meta = super().create_meta(user, version, url, required_pkgs)
-
-        return meta
+    pkg = xgboost
+    pip_name = "xgboost"
 
     def handler_predict(self, input_data, check_prototype):
         """Generates method for /predict endpoint in VetiverAPI

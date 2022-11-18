@@ -97,9 +97,7 @@ class VetiverModel:
             version = metadata.get("version") if "version" in metadata else None
             url = metadata.get("url") if "url" in metadata else None
             required_pkgs = (
-                metadata.get("required_pkgs")
-                if "required_pkgs" in metadata and metadata.get("required_pkgs")
-                else []
+                metadata.get("required_pkgs") if "required_pkgs" in metadata else []
             )
         else:
             user, version, url, required_pkgs = None, None, None, []

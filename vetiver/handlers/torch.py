@@ -19,25 +19,8 @@ class TorchHandler(BaseHandler):
     """
 
     model_class = staticmethod(lambda: torch.nn.Module)
-
-    def describe(self):
-        """Create description for torch model"""
-        desc = f"Pytorch model of type {type(self.model)}"
-        return desc
-
-    def create_meta(
-        self,
-        user: list = None,
-        version: str = None,
-        url: str = None,
-        required_pkgs: list = [],
-    ):
-        """Create metadata for torch model"""
-        if not list(filter(lambda x: "torch" in x, required_pkgs)):
-            required_pkgs = required_pkgs + [f"torch=={torch.__version__}"]
-        meta = super().create_meta(user, version, url, required_pkgs)
-
-        return meta
+    pkg = torch
+    pip_name = "torch"
 
     def handler_predict(self, input_data, check_prototype):
         """Generates method for /predict endpoint in VetiverAPI

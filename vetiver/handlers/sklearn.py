@@ -14,29 +14,15 @@ class SKLearnHandler(BaseHandler):
     """
 
     model_class = staticmethod(lambda: sklearn.base.BaseEstimator)
+    pip_name = "scikit-learn"
+    pkg = sklearn
 
     def describe(self):
         """Create description for sklearn model"""
         desc = f"Scikit-learn {self.model.__class__} model"
         return desc
 
-    def create_meta(
-        self,
-        user: dict = None,
-        version: str = None,
-        url: str = None,
-        required_pkgs: list = [],
-    ):
-        """Create metadata for sklearn model"""
-
-        if not list(filter(lambda x: "scikit-learn" in x, required_pkgs)):
-            required_pkgs = required_pkgs + [f"scikit-learn=={sklearn.__version__}"]
-
-        meta = super().create_meta(user, version, url, required_pkgs)
-
-        return meta
-
-    def handler_predict(self, input_data, check_prototype):
+    def handler_predict(self, input_data, check_ptype):
         """Generates method for /predict endpoint in VetiverAPI
 
         The `handler_predict` function executes at each API call. Use this

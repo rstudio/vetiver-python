@@ -12,6 +12,8 @@ class CustomHandler(BaseHandler):
         super().__init__(model, ptype_data)
 
     model_type = staticmethod(lambda: newmodeltype)
+    pkg = statsmodels # modeling package
+    pip_name = "py-custommodel" # pkg name on pip, used for tracking pkg versions
 
     def handler_predict(self, input_data, check_ptype: bool):
         """

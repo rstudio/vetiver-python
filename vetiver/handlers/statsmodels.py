@@ -20,24 +20,8 @@ class StatsmodelsHandler(BaseHandler):
 
     model_class = staticmethod(lambda: statsmodels.base.wrapper.ResultsWrapper)
 
-    def describe(self):
-        """Create description for statsmodels model"""
-        desc = f"Statsmodels {self.model.__class__} model."
-        return desc
-
-    def create_meta(
-        self,
-        user: list = None,
-        version: str = None,
-        url: str = None,
-        required_pkgs: list = [],
-    ):
-        """Create metadata for statsmodel"""
-        if not list(filter(lambda x: "statsmodels" in x, required_pkgs)):
-            required_pkgs = required_pkgs + [f"statsmodels=={statsmodels.__version__}"]
-        meta = super().create_meta(user, version, url, required_pkgs)
-
-        return meta
+    pkg = statsmodels
+    pip_name = "statsmodels"
 
     def handler_predict(self, input_data, check_prototype):
         """Generates method for /predict endpoint in VetiverAPI
