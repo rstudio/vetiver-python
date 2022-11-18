@@ -19,9 +19,9 @@ class StatsmodelsHandler(BaseHandler):
     """
 
     model_class = staticmethod(lambda: statsmodels.base.wrapper.ResultsWrapper)
-
-    pkg = statsmodels
-    pip_name = "statsmodels"
+    if sm_exists:
+        pkg = statsmodels
+        pip_name = "statsmodels"
 
     def handler_predict(self, input_data, check_prototype):
         """Generates method for /predict endpoint in VetiverAPI

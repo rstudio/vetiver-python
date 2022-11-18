@@ -21,7 +21,7 @@ class TorchHandler(BaseHandler):
     model_class = staticmethod(lambda: torch.nn.Module)
     if torch_exists:
         pkg = torch
-    pip_name = "torch"
+        pip_name = "torch"
 
     def handler_predict(self, input_data, check_prototype):
         """Generates method for /predict endpoint in VetiverAPI
