@@ -69,7 +69,9 @@ class VetiverAPI:
         async def ping():
             return {"ping": "pong"}
 
-        self.vetiver_post(self.model.handler_predict, "predict", check_ptype=self.check_ptype)
+        self.vetiver_post(
+            self.model.handler_predict, "predict", check_ptype=self.check_ptype
+        )
 
         @app.get("/__docs__", response_class=HTMLResponse, include_in_schema=False)
         async def rapidoc():
@@ -110,10 +112,8 @@ class VetiverAPI:
             """
 
         return app
-    
-    def vetiver_post(
-        self, endpoint_fx: Callable, endpoint_name: str = None, **kw
-    ):
+
+    def vetiver_post(self, endpoint_fx: Callable, endpoint_name: str = None, **kw):
         """Create new POST endpoint that is aware of model input data
 
         Parameters
@@ -138,9 +138,11 @@ class VetiverAPI:
             endpoint_name = endpoint_fx.__name__
 
         if self.check_ptype is True:
-        
+
             @self.app.post("/" + endpoint_name, name=endpoint_name)
-            async def custom_endpoint(input_data: Union[self.model.ptype, List[self.model.ptype]]):
+            async def custom_endpoint(
+                input_data: Union[self.model.ptype, List[self.model.ptype]]
+            ):
 
                 if isinstance(input_data, List):
                     served_data = _batch_data(input_data)
@@ -196,10 +198,11 @@ class VetiverAPI:
         )
         openapi_schema["info"]["x-logo"] = {"url": "../docs/figures/logo.svg"}
         self.app.openapi_schema = openapi_schema
+
         return self.app.openapi_schema
 
 
-def predict(endpoint, data: Union[dict, pd.DataFrame, pd.Series], **kw):
+def predict(endpoint, data: Union[dict, pd.DataFrame, pd.Series], **kw) -> pd.DataFrame:
     """Make a prediction from model endpoint
 
     Parameters
@@ -256,14 +259,14 @@ def predict(endpoint, data: Union[dict, pd.DataFrame, pd.Series], **kw):
     return response_df
 
 
-def _prepare_data(pred_data):
+def _prepare_data(pred_data: list) -> list:
     served_data = []
     for key, value in pred_data:
         served_data.append(value)
     return served_data
 
 
-def _batch_data(pred_data):
+def _batch_data(pred_data) -> pd.DataFrame:
     columns = pred_data[0].dict().keys()
 
     data = [line.dict() for line in pred_data]
@@ -272,7 +275,7 @@ def _batch_data(pred_data):
     return served_data
 
 
-def vetiver_endpoint(url="http://127.0.0.1:8000/predict"):
+def vetiver_endpoint(url: str = "http://127.0.0.1:8000/predict") -> str:
     """Wrap url where VetiverModel will be deployed
 
     Parameters
