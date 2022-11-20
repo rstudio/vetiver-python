@@ -2,6 +2,7 @@ import pytest
 
 import numpy as np
 import pandas as pd
+from requests.exceptions import HTTPError
 from fastapi.testclient import TestClient
 
 from vetiver import mock, VetiverModel, VetiverAPI
@@ -20,6 +21,7 @@ def test_predict_sklearn_dict_ptype():
         description="A regression model for testing purposes",
     )
     app = VetiverAPI(v, check_ptype=True)
+    app.app.root_path = '/predict'
     client = TestClient(app.app)
     data = {"B": 0, "C": 0, "D": 0}
 
@@ -42,6 +44,7 @@ def test_predict_sklearn_no_ptype():
         description="A regression model for testing purposes",
     )
     app = VetiverAPI(v, check_ptype=False)
+    app.app.root_path = '/predict'
     client = TestClient(app.app)
 
     response = predict(endpoint=client, data=X)
@@ -63,6 +66,7 @@ def test_predict_sklearn_df_check_ptype():
         description="A regression model for testing purposes",
     )
     app = VetiverAPI(v, check_ptype=True)
+    app.app.root_path = '/predict'
     client = TestClient(app.app)
 
     response = predict(endpoint=client, data=X)
@@ -85,6 +89,7 @@ def test_predict_sklearn_series_check_ptype():
         description="A regression model for testing purposes",
     )
     app = VetiverAPI(v, check_ptype=True)
+    app.app.root_path = '/predict'
     client = TestClient(app.app)
 
     response = predict(endpoint=client, data=ser)
@@ -93,8 +98,9 @@ def test_predict_sklearn_series_check_ptype():
     assert response.iloc[0, 0] == 44.47
     assert len(response) == 1
 
-
-def test_predict_sklearn_type_error():
+@pytest.mark.parametrize(
+    'data', [(0,0), 0, 0., '0'])
+def test_predict_sklearn_type_error(data):
     np.random.seed(500)
     X, y = mock.get_mock_data()
     model = mock.get_mock_model().fit(X, y)
@@ -106,8 +112,27 @@ def test_predict_sklearn_type_error():
         description="A regression model for testing purposes",
     )
     app = VetiverAPI(v, check_ptype=True)
+    app.app.root_path = '/predict'
     client = TestClient(app.app)
-    data = (0, 0)
+    msg = f"Predict expects a DataFrame or dict. Given type is {type(data)}"
 
-    with pytest.raises(TypeError):
+    with pytest.raises(TypeError, match=msg):
         predict(endpoint=client, data=data)
+
+def test_predict_server_error():
+    np.random.seed(500)
+    X, y = mock.get_mock_data()
+    model = mock.get_mock_model().fit(X, y)
+    v = VetiverModel(
+        model=model,
+        ptype_data=X,
+        model_name="my_model",
+        versioned=None,
+        description="A regression model for testing purposes",
+    )
+    app = VetiverAPI(v, check_ptype=True)
+    app.app.root_path = '/i_do_not_exists'
+    client = TestClient(app.app)
+
+    with pytest.raises(HTTPError):
+        res = predict(endpoint=client, data=X)
