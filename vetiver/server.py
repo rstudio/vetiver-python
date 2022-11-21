@@ -2,6 +2,7 @@ from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.openapi.utils import get_openapi
 from fastapi import testclient
+import httpx
 
 import uvicorn
 import requests
@@ -240,7 +241,7 @@ def predict(endpoint, data: Union[dict, pd.DataFrame, pd.Series], **kw):
     """
     if isinstance(endpoint, testclient.TestClient):
         requester = endpoint
-        endpoint = "/predict"
+        endpoint = requester.app.root_path
     else:
         requester = requests
 
@@ -255,20 +256,20 @@ def predict(endpoint, data: Union[dict, pd.DataFrame, pd.Series], **kw):
     elif isinstance(data, dict):
         response = requester.post(endpoint, json=data, **kw)
     else:
-        try:
-            response = requester.post(endpoint, json=data, **kw)
-        except TypeError:
+        response = requester.post(endpoint, json=data, **kw)
+
+    try:
+        response.raise_for_status()
+    except (requests.exceptions.HTTPError, httpx.HTTPStatusError) as e:
+        if response.status_code == 422:
             raise TypeError(
-                f"Predict expects a DataFrame or dict. Given type is {type(data)}"
+                f"Predict expects DataFrame, Series, or dict. Given type is {type(data)}"
             )
+        raise requests.exceptions.HTTPError(
+            f"Could not obtain data from endpoint with error: {e}"
+        )
 
     response_df = pd.DataFrame.from_dict(response.json())
-
-    if isinstance(response_df.iloc[0, 0], dict):
-        if "type_error.dict" in response_df.iloc[0, 0].values():
-            raise TypeError(
-                f"Predict expects a DataFrame or dict. Given type is {type(data)}"
-            )
 
     return response_df
 

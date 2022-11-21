@@ -11,7 +11,7 @@ import vetiver  # noqa
 
 
 @pytest.fixture
-def build_xgb():
+def xgb_model():
     # read in data
     dtrain = xgb.DMatrix(mtcars.drop(columns="mpg"), label=mtcars["mpg"])
     # specify parameters via map
@@ -27,44 +27,56 @@ def build_xgb():
     return vetiver.VetiverModel(fit, "xgb", mtcars.drop(columns="mpg"))
 
 
-def test_vetiver_build(build_xgb):
-    api = vetiver.VetiverAPI(build_xgb)
-    client = TestClient(api.app)
+@pytest.fixture
+def vetiver_client(xgb_model):  # With check_ptype=True
+    app = vetiver.VetiverAPI(xgb_model, check_ptype=True)
+    app.app.root_path = "/predict"
+    client = TestClient(app.app)
+
+    return client
+
+
+@pytest.fixture
+def vetiver_client_check_ptype_false(xgb_model):  # With check_ptype=True
+    app = vetiver.VetiverAPI(xgb_model, check_ptype=False)
+    app.app.root_path = "/predict"
+    client = TestClient(app.app)
+
+    return client
+
+
+def test_vetiver_build(vetiver_client):
     data = mtcars.head(1).drop(columns="mpg")
 
-    response = vetiver.predict(endpoint=client, data=data)
+    response = vetiver.predict(endpoint=vetiver_client, data=data)
 
     assert response.iloc[0, 0] == 21.064373016357422
     assert len(response) == 1
 
 
-def test_batch(build_xgb):
-    api = vetiver.VetiverAPI(build_xgb)
-    client = TestClient(api.app)
+def test_batch(vetiver_client):
     data = mtcars.head(3).drop(columns="mpg")
 
-    response = vetiver.predict(endpoint=client, data=data)
+    response = vetiver.predict(endpoint=vetiver_client, data=data)
 
     assert response.iloc[0, 0] == 21.064373016357422
     assert len(response) == 3
 
 
-def test_no_ptype(build_xgb):
-    api = vetiver.VetiverAPI(build_xgb, check_ptype=False)
-    client = TestClient(api.app)
+def test_no_ptype(vetiver_client_check_ptype_false):
     data = mtcars.head(1).drop(columns="mpg")
 
-    response = vetiver.predict(endpoint=client, data=data)
+    response = vetiver.predict(endpoint=vetiver_client_check_ptype_false, data=data)
 
     assert response.iloc[0, 0] == 21.064373016357422
     assert len(response) == 1
 
 
-def test_serialize(build_xgb):
+def test_serialize(xgb_model):
     import pins
 
     board = pins.board_temp(allow_pickle_read=True)
-    vetiver.vetiver_pin_write(board=board, model=build_xgb)
+    vetiver.vetiver_pin_write(board=board, model=xgb_model)
     assert isinstance(
         board.pin_read("xgb"),
         xgb.Booster,
