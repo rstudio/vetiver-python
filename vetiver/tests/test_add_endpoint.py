@@ -1,10 +1,16 @@
-from vetiver import mock, VetiverModel, VetiverAPI
+import pytest
+
+import numpy as np
 import pandas as pd
 from fastapi.testclient import TestClient
-from fastapi.encoders import jsonable_encoder
+
+from vetiver import mock, VetiverModel, VetiverAPI
+import vetiver
 
 
-def _start_application(check_ptype):
+@pytest.fixture
+def vetiver_model():
+    np.random.seed(500)
     X, y = mock.get_mock_data()
     model = mock.get_mock_model().fit(X, y)
     v = VetiverModel(
@@ -15,35 +21,50 @@ def _start_application(check_ptype):
         description="A regression model for testing purposes",
     )
 
-    def sum_values(x):
-        x = pd.DataFrame(jsonable_encoder(x))
-        return x.sum()
+    return v
 
-    app = VetiverAPI(v, check_ptype=check_ptype)
 
+def sum_values(x):
+    return x.sum()
+
+
+@pytest.fixture
+def vetiver_client(vetiver_model):  # With check_ptype=True
+
+    app = VetiverAPI(vetiver_model, check_ptype=True)
     app.vetiver_post(sum_values, "sum")
 
-    return app
+    app.app.root_path = "/sum"
+    client = TestClient(app.app)
+
+    return client
 
 
-def test_endpoint_adds_ptype():
+@pytest.fixture
+def vetiver_client_check_ptype_false(vetiver_model):  # With check_ptype=False
 
-    app = _start_application(check_ptype=True).app
+    app = VetiverAPI(vetiver_model, check_ptype=False)
+    app.vetiver_post(sum_values, "sum")
 
-    client = TestClient(app)
-    data = {"B": [1, 1, 1], "C": [2, 2, 2], "D": [3, 3, 3]}
-    response = client.post("/sum", json=data)
+    app.app.root_path = "/sum"
+    client = TestClient(app.app)
 
-    assert response.status_code == 200, response.text
-    assert response.json() == {"sum": [3, 6, 9]}, response.json()
+    return client
 
 
-def test_endpoint_adds_no_ptype():
-    app = _start_application(check_ptype=False).app
+def test_endpoint_adds_ptype(vetiver_client):
 
-    client = TestClient(app)
-    data = {"B": [1, 1, 1], "C": [2, 2, 2], "D": [3, 3, 3]}
-    response = client.post("/sum", json=data)
+    data = pd.DataFrame({"B": [1, 1, 1], "C": [2, 2, 2], "D": [3, 3, 3]})
+    response = vetiver.predict(endpoint=vetiver_client, data=data)
+
+    assert isinstance(response, pd.DataFrame)
+    assert response.to_json() == '{"sum":{"0":3,"1":6,"2":9}}', response.to_json()
+
+
+def test_endpoint_adds_no_ptype(vetiver_client_check_ptype_false):
+
+    data = pd.DataFrame({"B": [1, 1, 1], "C": [2, 2, 2], "D": [3, 3, 3]})
+    response = vetiver.predict(endpoint=vetiver_client_check_ptype_false, data=data)
 
     assert response.status_code == 200, response.text
     assert response.json() == {"sum": [3, 6, 9]}, response.json()
