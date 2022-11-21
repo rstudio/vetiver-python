@@ -24,18 +24,20 @@ def vetiver_model():
 
     return v
 
+
 @pytest.fixture
 def vetiver_client(vetiver_model):  # With check_ptype=True
     app = VetiverAPI(vetiver_model, check_ptype=True)
-    app.app.root_path = '/predict'
+    app.app.root_path = "/predict"
     client = TestClient(app.app)
 
     return client
 
+
 @pytest.fixture
-def vetiver_client_check_ptype_false(vetiver_model):  # With check_ptype=True
+def vetiver_client_check_ptype_false(vetiver_model):  # With check_ptype=False
     app = VetiverAPI(vetiver_model, check_ptype=False)
-    app.app.root_path = '/predict'
+    app.app.root_path = "/predict"
     client = TestClient(app.app)
 
     return client
@@ -77,19 +79,20 @@ def test_predict_sklearn_series_check_ptype(vetiver_client):
     assert response.iloc[0, 0] == 44.47
     assert len(response) == 1
 
-@pytest.mark.parametrize(
-    'data', [(0,0), 0, 0., '0'])
+
+@pytest.mark.parametrize("data", [(0, 0), 0, 0.0, "0"])
 def test_predict_sklearn_type_error(data, vetiver_client):
-    msg = f"Predict expects a DataFrame or dict. Given type is {type(data)}"
+    msg = f"Predict expects DataFrame, Series, or dict. Given type is {type(data)}"
 
     with pytest.raises(TypeError, match=msg):
         predict(endpoint=vetiver_client, data=data)
 
+
 def test_predict_server_error(vetiver_model):
     X, y = mock.get_mock_data()
     app = VetiverAPI(vetiver_model, check_ptype=True)
-    app.app.root_path = '/i_do_not_exists'
+    app.app.root_path = "/i_do_not_exists"
     client = TestClient(app.app)
 
     with pytest.raises(HTTPError):
-        res = predict(endpoint=client, data=X)
+        predict(endpoint=client, data=X)

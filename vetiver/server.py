@@ -258,14 +258,12 @@ def predict(endpoint, data: Union[dict, pd.DataFrame, pd.Series], **kw):
     else:
         response = requester.post(endpoint, json=data, **kw)
 
-    response_json = response.json()
-
     try:
         response.raise_for_status()
     except (requests.exceptions.HTTPError, httpx.HTTPStatusError) as e:
         if response.status_code == 422:
             raise TypeError(
-                f"Predict expects a DataFrame or dict. Given type is {type(data)}"
+                f"Predict expects DataFrame, Series, or dict. Given type is {type(data)}"
             )
         raise requests.exceptions.HTTPError(
             f"Could not obtain data from endpoint with error: {e}"
