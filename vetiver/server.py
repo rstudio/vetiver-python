@@ -1,16 +1,16 @@
-from fastapi import FastAPI, Request
-from fastapi.responses import HTMLResponse, RedirectResponse
-from fastapi.openapi.utils import get_openapi
-from fastapi import testclient
+from typing import Callable, List, Union
+from urllib.parse import urljoin
+
 import httpx
-
-import uvicorn
-import requests
 import pandas as pd
-from typing import Callable, Union, List
+import requests
+import uvicorn
+from fastapi import FastAPI, Request, testclient
+from fastapi.openapi.utils import get_openapi
+from fastapi.responses import HTMLResponse, RedirectResponse
 
-from .vetiver_model import VetiverModel
 from .utils import _jupyter_nb
+from .vetiver_model import VetiverModel
 
 
 class VetiverAPI:
@@ -140,7 +140,7 @@ class VetiverAPI:
 
         if self.check_ptype is True:
 
-            @self.app.post("/" + endpoint_name, name=endpoint_name)
+            @self.app.post(urljoin("/", endpoint_name), name=endpoint_name)
             async def custom_endpoint(
                 input_data: Union[self.model.ptype, List[self.model.ptype]]
             ):
@@ -155,7 +155,7 @@ class VetiverAPI:
 
         else:
 
-            @self.app.post("/" + endpoint_name)
+            @self.app.post(urljoin("/", endpoint_name))
             async def custom_endpoint(input_data: Request):
                 served_data = await input_data.json()
                 new = endpoint_fx(served_data, **kw)

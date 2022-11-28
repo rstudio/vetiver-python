@@ -28,6 +28,11 @@ def sum_values(x):
     return x.sum()
 
 
+def sum_dict(x):
+    x = pd.DataFrame(x)
+    return x.sum()
+
+
 @pytest.fixture
 def vetiver_client(vetiver_model):  # With check_ptype=True
 
@@ -44,7 +49,7 @@ def vetiver_client(vetiver_model):  # With check_ptype=True
 def vetiver_client_check_ptype_false(vetiver_model):  # With check_ptype=False
 
     app = VetiverAPI(vetiver_model, check_ptype=False)
-    app.vetiver_post(sum_values, "sum")
+    app.vetiver_post(sum_dict, "sum")
 
     app.app.root_path = "/sum"
     client = TestClient(app.app)
@@ -66,5 +71,5 @@ def test_endpoint_adds_no_ptype(vetiver_client_check_ptype_false):
     data = pd.DataFrame({"B": [1, 1, 1], "C": [2, 2, 2], "D": [3, 3, 3]})
     response = vetiver.predict(endpoint=vetiver_client_check_ptype_false, data=data)
 
-    assert response.status_code == 200, response.text
-    assert response.json() == {"sum": [3, 6, 9]}, response.json()
+    assert isinstance(response, pd.DataFrame)
+    assert response.to_json() == '{"sum":{"0":3,"1":6,"2":9}}', response.to_json()
