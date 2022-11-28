@@ -1,8 +1,9 @@
+import os
+import shutil
 import tempfile
 import typing
+
 from rsconnect.actions import deploy_python_fastapi
-import shutil
-import os
 
 from .write_fastapi import write_app
 
@@ -22,57 +23,58 @@ def deploy_rsconnect(
     log_callback: typing.Callable = None,
     image: str = None,
 ):
-    """Deploy to RSConnect
+    """Deploy to Posit Connect
 
     Parameters
     ----------
-        connect_server: rsconnect.api.RSConnectServer
-            RSConnect Server
-        board:
-            Pins board
-        pin_name: str
-            Name of pin
-        version: str
-            Version of pin
-        extra_files: typing.List[str]
-            Any extra files to include in
-        new:
-            Force as a new deploy
-        app_id:
-            ID of an existing application to deploy new files for.
-        title: str
-            Optional title for the deploy.
-        python: str
-            Optional name of a Python executable
-        conda_mode: bool
-            Use conda to build an environment.yml
-        force_generate: bool
-            Force generating "requirements.txt" or "environment.yml"
-        log_callback: typing.Callable
-            Callback to use to write the log to
-        image: str
-            Docker image to be specified for off-host execution
+    connect_server : rsconnect.api.RSConnectServer
+        Posit Connect Server
+    board :
+        Pins board
+    pin_name : str
+        Name of pin
+    version : str
+        Version of pin
+    extra_files : typing.List[str]
+        Any extra files to include
+    new : bool
+        Force as a new deploy
+    app_id : int
+        ID of an existing application to deploy new files for.
+    title : str
+        Optional title for the deploy.
+    python : str
+        Optional name of a Python executable
+    conda_mode : bool
+        Use conda to build an environment.yml
+    force_generate : bool
+        Force generating requirements.txt or environment.yml
+    log_callback : typing.Callable
+        Callback to use to write the log to
+    image : str
+        Docker image to be specified for off-host execution
 
-        Example
-        -------
-        >>> import vetiver
-        >>> import pins
-        >>> import rsconnect
-        >>> board = pins.board_temp(allow_pickle_read=True)
-        >>> connect_server = rsconnect.api.RSConnectServer(
-        ...    url = url,
-        ...    api_key = api_key)      # doctest: +SKIP
-        >>> X, y = vetiver.get_mock_data()
-        >>> model = vetiver.get_mock_model().fit(X, y)
-        >>> v = vetiver.VetiverModel(model = model,
-        ...    model_name = "my_model",
-        ...    ptype_data = X)
-        >>> vetiver.deploy_rsconnect(
-        ...    connect_server = connect_server,
-        ...    board = board,
-        ...    pin_name = "my_model"
-        ... )      # doctest: +SKIP
+    Example
+    -------
+    >>> import vetiver
+    >>> import pins
+    >>> import rsconnect
+    >>> board = pins.board_temp(allow_pickle_read=True)
+    >>> connect_server = rsconnect.api.RSConnectServer(
+    ...    url = url,
+    ...    api_key = api_key)      # doctest: +SKIP
+    >>> X, y = vetiver.get_mock_data()
+    >>> model = vetiver.get_mock_model().fit(X, y)
+    >>> v = vetiver.VetiverModel(model = model,
+    ...    model_name = "my_model",
+    ...    ptype_data = X)
+    >>> vetiver.deploy_rsconnect(
+    ...    connect_server = connect_server,
+    ...    board = board,
+    ...    pin_name = "my_model"
+    ... )      # doctest: +SKIP
     """
+
     if not title:
         title = pin_name + "_vetiver"
 

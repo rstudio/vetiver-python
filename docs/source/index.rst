@@ -75,7 +75,7 @@ Model Handlers
    :toctree: reference/
    :caption: Model Handlers
 
-   ~handlers.BaseHandler
+   ~BaseHandler
    ~SKLearnHandler
    ~TorchHandler
    ~StatsmodelsHandler
