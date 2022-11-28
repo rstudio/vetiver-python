@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>vetiver.deploy_rsconnect &#8212; vetiver Commit: ebfb3bd documentation</title>
+    <title>vetiver.deploy_rsconnect &#8212; vetiver Commit: 6b69b13 documentation</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -79,7 +79,7 @@
       <img src="../_static/logo.png" class="logo" alt="logo">
       
       
-      <h1 class="site-logo" id="site-title">vetiver Commit: ebfb3bd documentation</h1>
+      <h1 class="site-logo" id="site-title">vetiver Commit: 6b69b13 documentation</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
@@ -197,6 +197,11 @@
  </span>
 </p>
 <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="vetiver.BaseHandler.html">
+   vetiver.BaseHandler
+  </a>
+ </li>
  <li class="toctree-l1">
   <a class="reference internal" href="vetiver.SKLearnHandler.html">
    vetiver.SKLearnHandler
@@ -430,54 +435,46 @@ title="Print to PDF"
 <dl class="py function">
 <dt class="sig sig-object py" id="vetiver.deploy_rsconnect">
 <span class="sig-prename descclassname"><span class="pre">vetiver.</span></span><span class="sig-name descname"><span class="pre">deploy_rsconnect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">connect_server</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">board</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pin_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_files</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">python</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conda_mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_generate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_callback</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Callable</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vetiver.deploy_rsconnect" title="Permalink to this definition">#</a></dt>
-<dd><p>Deploy to RSConnect</p>
+<dd><p>Deploy to Posit Connect</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>connect_server</strong> (<em>rsconnect.api.RSConnectServer</em>) – RSConnect Server</p></li>
+<li><p><strong>connect_server</strong> (<em>rsconnect.api.RSConnectServer</em>) – Posit Connect Server</p></li>
 <li><p><strong>board</strong> – Pins board</p></li>
 <li><p><strong>pin_name</strong> (<em>str</em>) – Name of pin</p></li>
 <li><p><strong>version</strong> (<em>str</em>) – Version of pin</p></li>
-<li><p><strong>extra_files</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – Any extra files to include in</p></li>
-<li><p><strong>new</strong> – Force as a new deploy</p></li>
-<li><p><strong>app_id</strong> – ID of an existing application to deploy new files for.</p></li>
+<li><p><strong>extra_files</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – Any extra files to include</p></li>
+<li><p><strong>new</strong> (<em>bool</em>) – Force as a new deploy</p></li>
+<li><p><strong>app_id</strong> (<em>int</em>) – ID of an existing application to deploy new files for.</p></li>
 <li><p><strong>title</strong> (<em>str</em>) – Optional title for the deploy.</p></li>
 <li><p><strong>python</strong> (<em>str</em>) – Optional name of a Python executable</p></li>
 <li><p><strong>conda_mode</strong> (<em>bool</em>) – Use conda to build an environment.yml</p></li>
-<li><p><strong>force_generate</strong> (<em>bool</em>) – Force generating “requirements.txt” or “environment.yml”</p></li>
+<li><p><strong>force_generate</strong> (<em>bool</em>) – Force generating requirements.txt or environment.yml</p></li>
 <li><p><strong>log_callback</strong> (<em>Callable</em>) – Callback to use to write the log to</p></li>
 <li><p><strong>image</strong> (<em>str</em>) – Docker image to be specified for off-host execution</p></li>
-<li><p><strong>Example</strong> – </p></li>
-<li><p><strong>-------</strong> – </p></li>
-<li><p><strong>vetiver</strong> (<em>&gt;&gt;&gt; import</em>) – </p></li>
-<li><p><strong>pins</strong> (<em>&gt;&gt;&gt; import</em>) – </p></li>
-<li><p><strong>rsconnect</strong> (<em>&gt;&gt;&gt; import</em>) – </p></li>
-<li><p><strong>pins.board_temp</strong><strong>(</strong><strong>allow_pickle_read=True</strong><strong>)</strong> (<em>&gt;&gt;&gt; board =</em>) – </p></li>
-<li><p><strong>rsconnect.api.RSConnectServer</strong><strong>(</strong> (<em>&gt;&gt;&gt; connect_server =</em>) – </p></li>
-<li><p><strong>url</strong> (<em>...</em><em>    url =</em>) – </p></li>
 </ul>
 </dd>
 </dl>
-<p>:param :
-:param …    api_key = api_key)      # doctest:
-:type …    api_key = api_key)      # doctest: +SKIP
-:param &gt;&gt;&gt; X:
-:param y = vetiver.get_mock_data():
-:param &gt;&gt;&gt; model = vetiver.get_mock_model().fit(X:
-:param y):
-:param &gt;&gt;&gt; v = vetiver.VetiverModel(model = model:
-:param :
-:param …    model_name = “my_model”:
-:param :
-:param …    ptype_data = X):
-:param &gt;&gt;&gt; vetiver.deploy_rsconnect(:
-:param …    connect_server = connect_server:
-:param :
-:param …    board = board:
-:param :
-:param …    pin_name = “my_model”:
-:param … )      # doctest:
-:type … )      # doctest: +SKIP</p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">vetiver</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pins</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">rsconnect</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">board</span> <span class="o">=</span> <span class="n">pins</span><span class="o">.</span><span class="n">board_temp</span><span class="p">(</span><span class="n">allow_pickle_read</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">connect_server</span> <span class="o">=</span> <span class="n">rsconnect</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">RSConnectServer</span><span class="p">(</span>
+<span class="gp">... </span>   <span class="n">url</span> <span class="o">=</span> <span class="n">url</span><span class="p">,</span>
+<span class="gp">... </span>   <span class="n">api_key</span> <span class="o">=</span> <span class="n">api_key</span><span class="p">)</span>      
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">vetiver</span><span class="o">.</span><span class="n">get_mock_data</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">vetiver</span><span class="o">.</span><span class="n">get_mock_model</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">v</span> <span class="o">=</span> <span class="n">vetiver</span><span class="o">.</span><span class="n">VetiverModel</span><span class="p">(</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="p">,</span>
+<span class="gp">... </span>   <span class="n">model_name</span> <span class="o">=</span> <span class="s2">&quot;my_model&quot;</span><span class="p">,</span>
+<span class="gp">... </span>   <span class="n">ptype_data</span> <span class="o">=</span> <span class="n">X</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vetiver</span><span class="o">.</span><span class="n">deploy_rsconnect</span><span class="p">(</span>
+<span class="gp">... </span>   <span class="n">connect_server</span> <span class="o">=</span> <span class="n">connect_server</span><span class="p">,</span>
+<span class="gp">... </span>   <span class="n">board</span> <span class="o">=</span> <span class="n">board</span><span class="p">,</span>
+<span class="gp">... </span>   <span class="n">pin_name</span> <span class="o">=</span> <span class="s2">&quot;my_model&quot;</span>
+<span class="gp">... </span><span class="p">)</span>      
+</pre></div>
+</div>
 </dd></dl>
 
 </section>
