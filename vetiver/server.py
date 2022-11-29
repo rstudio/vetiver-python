@@ -1,4 +1,4 @@
-from typing import Callable, List, Union, Any
+from typing import Callable, List, Union, Any, Dict
 from urllib.parse import urljoin
 
 import httpx
@@ -261,14 +261,14 @@ def predict(endpoint, data: Union[dict, pd.DataFrame, pd.Series], **kw) -> pd.Da
     return response_df
 
 
-def _prepare_data(pred_data: dict[str, Any]) -> list[Any]:
+def _prepare_data(pred_data: Dict[str, Any]) -> List[Any]:
     served_data = []
     for key, value in pred_data:
         served_data.append(value)
     return served_data
 
 
-def _batch_data(pred_data: list[Any]) -> pd.DataFrame:
+def _batch_data(pred_data: List[Any]) -> pd.DataFrame:
     columns = pred_data[0].dict().keys()
 
     data = [line.dict() for line in pred_data]
