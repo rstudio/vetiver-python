@@ -93,12 +93,10 @@ class VetiverModel:
         self.handler_predict = translator.handler_predict
 
         if metadata:
-            user = metadata.get("user") if "user" in metadata else metadata
-            version = metadata.get("version") if "version" in metadata else None
-            url = metadata.get("url") if "url" in metadata else None
-            required_pkgs = (
-                metadata.get("required_pkgs") if "required_pkgs" in metadata else []
-            )
+            user = metadata.get("user", metadata)
+            version = metadata.get("version", None)
+            url = metadata.get("url", None)
+            required_pkgs = metadata.get("required_pkgs", [])
         else:
             user, version, url, required_pkgs = None, None, None, []
 
