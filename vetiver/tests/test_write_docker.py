@@ -1,13 +1,10 @@
 import os
 import sys
-import pytest
 import vetiver
 
 # Load data, model
 X_df, y = vetiver.get_mock_data()
 model = vetiver.get_mock_model().fit(X_df, y)
-
-pytest.mark("docker")
 
 
 def test_vetiver_write_app_no_rspm():

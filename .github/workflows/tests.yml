@@ -85,7 +85,8 @@ jobs:
             python script/setup-docker/docker.py
             docker build -t mock .
             docker run -d -v $PWD/pinsboard:/vetiver/pinsboard -p 8080:8080 mock
-            curl -s --retry 10 --retry-connrefused http://localhost:8080
+            sleep 5
+            curl -s --retry 10 --retry-connrefused http://0.0.0.0:8080
 
   test-no-extras:
     name: "Test no exra ml frameworks"
