@@ -79,7 +79,7 @@ COPY vetiver_requirements.txt /vetiver/requirements.txt
 RUN pip install --no-cache-dir --upgrade -r /vetiver/requirements.txt
 
 # copy app file
-COPY {app_file} /vetiver/app
+COPY {app_file} /vetiver/app/{app_file}
 
 # expose port
 EXPOSE {port}

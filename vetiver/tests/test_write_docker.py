@@ -1,10 +1,13 @@
 import os
 import sys
+import pytest
 import vetiver
 
 # Load data, model
 X_df, y = vetiver.get_mock_data()
 model = vetiver.get_mock_model().fit(X_df, y)
+
+pytest.mark("docker")
 
 
 def test_vetiver_write_app_no_rspm():
@@ -29,7 +32,7 @@ COPY vetiver_requirements.txt /vetiver/requirements.txt
 RUN pip install --no-cache-dir --upgrade -r /vetiver/requirements.txt
 
 # copy app file
-COPY app.py /vetiver/app
+COPY app.py /vetiver/app/app.py
 
 # expose port
 EXPOSE 8080
@@ -64,7 +67,7 @@ RUN pip config set global.index-url https://colorado.rstudio.com/rspm/pypi/lates
 RUN pip install --no-cache-dir --upgrade -r /vetiver/requirements.txt
 
 # copy app file
-COPY app.py /vetiver/app
+COPY app.py /vetiver/app/app.py
 
 # expose port
 EXPOSE 8080
