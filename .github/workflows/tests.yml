@@ -79,11 +79,10 @@ jobs:
         - name: Install dependencies
           run: |
             python -m pip install --upgrade pip
-            python -m pip install ".[dev]"
+            python -m pip install -e ".[dev]"
         - name: run Docker
           run: |
             python script/setup-docker/docker.py
-            pip freeze > vetiver_requirements.txt
             docker build -t mock .
             docker run -d -v $PWD/pinsboard:/vetiver/pinsboard -p 8080:8080 mock
             curl -s --retry 10 --retry-connrefused http://localhost:8080
