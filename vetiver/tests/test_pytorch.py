@@ -66,7 +66,7 @@ def test_torch_predict_ptype():
     response = client.post("/predict", json=data)
 
     assert response.status_code == 200, response.text
-    assert response.json() == {"prediction": [-4.060722351074219]}, response.text
+    assert response.json() == {"predict": [-4.060722351074219]}, response.text
 
 
 def test_torch_predict_ptype_batch():
@@ -81,7 +81,7 @@ def test_torch_predict_ptype_batch():
 
     assert response.status_code == 200, response.text
     assert response.json() == {
-        "prediction": [[-4.060722351074219], [-4.060722351074219]]
+        "predict": [[-4.060722351074219], [-4.060722351074219]]
     }, response.text
 
 
@@ -109,7 +109,7 @@ def test_torch_predict_no_ptype_batch():
     response = client.post("/predict", json=data)
     assert response.status_code == 200, response.text
     assert response.json() == {
-        "prediction": [[-4.060722351074219], [-4.060722351074219]]
+        "predict": [[-4.060722351074219], [-4.060722351074219]]
     }, response.text
 
 
@@ -123,4 +123,4 @@ def test_torch_predict_no_ptype():
     data = [[3.3]]
     response = client.post("/predict", json=data)
     assert response.status_code == 200, response.text
-    assert response.json() == {"prediction": [[-4.060722351074219]]}, response.text
+    assert response.json() == {"predict": [[-4.060722351074219]]}, response.text
