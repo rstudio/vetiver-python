@@ -1,6 +1,10 @@
 import sys
 import warnings
 
+from .write_fastapi import write_app
+from .attach_pkgs import load_pkgs
+from .vetiver_model import VetiverModel
+
 
 def vetiver_write_docker(
     app_file: str = "app.py",
@@ -90,3 +94,39 @@ CMD ["uvicorn", "app.app:api", "--host", "{host}", "--port", "{port}"]
 
     f = open(f"{path}Dockerfile", "x")
     f.write(docker_script)
+
+
+def prepare_docker(
+    board,
+    pin_name: str,
+    path: str,
+    version=None,
+    rspm_env: bool = False,
+    host: str = "0.0.0.0",
+    port: str = "8080",
+):
+    """Create all files needed for Docker
+
+    Parameters
+    ----------
+        board :
+            Pin board for model
+        pin_name : str
+            Name of pin
+        path :
+            Path to output
+        version :
+            Pin version to be used
+        rspm_env: bool
+            Whether or not RStudio Package Manager should be used
+        host: str
+            Host address to run VetiverAPI from Dockerfile
+        port: str
+            Port to run VetiverAPI from Dockerfile
+
+    """
+    # urljoin everything
+    v = VetiverModel.from_pin(board=board, pin_name=pin_name, version=version)
+    write_app(board=board, pin_name=pin_name, version=version, path=path)
+    load_pkgs(v, path=f"{path}vetiver_")
+    write_docker(path=path, rspm_env=rspm_env, host=host, port=port)
