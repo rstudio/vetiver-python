@@ -50,7 +50,6 @@ def test_vetiver_build(vetiver_client):
 
     response = vetiver.predict(endpoint=vetiver_client, data=data)
 
-    assert build_xgb.metadata.get("required_pkgs") == [f"xgboost=={xgb.__version__}"]
     assert response.iloc[0, 0] == 21.064373016357422
     assert len(response) == 1
 

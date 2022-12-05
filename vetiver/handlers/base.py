@@ -83,14 +83,17 @@ class BaseHandler:
         desc = f"A {self.pip_name} {obj_name} model"
         return desc
 
-    def create_meta(
-        self,
-        user: list = None,
-        version: str = None,
-        url: str = None,
-        required_pkgs: list = [],
-    ):
+    def create_meta(self, metadata):
         """Create metadata for a model"""
+
+        if metadata:
+            user = metadata.get("user", metadata)
+            version = metadata.get("version", None)
+            url = metadata.get("url", None)
+            required_pkgs = metadata.get("required_pkgs", [])
+        else:
+            user, version, url, required_pkgs = None, None, None, []
+
         if not list(filter(lambda x: self.pip_name in x, required_pkgs)):
             required_pkgs = required_pkgs + [f"{self.pip_name}=={self.pkg.__version__}"]
 

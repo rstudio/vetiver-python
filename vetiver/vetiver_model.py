@@ -91,16 +91,7 @@ class VetiverModel:
         self.description = description if description else translator.describe()
         self.versioned = versioned
         self.handler_predict = translator.handler_predict
-
-        if metadata:
-            user = metadata.get("user", metadata)
-            version = metadata.get("version", None)
-            url = metadata.get("url", None)
-            required_pkgs = metadata.get("required_pkgs", [])
-        else:
-            user, version, url, required_pkgs = None, None, None, []
-
-        self.metadata = translator.create_meta(user, version, url, required_pkgs)
+        self.metadata = translator.create_meta(metadata)
 
     @classmethod
     def from_pin(cls, board, name: str, version: str = None):
@@ -113,7 +104,7 @@ class VetiverModel:
             required_pkgs = meta.user.get("vetiver_meta").get("required_pkgs")
             meta.user.pop("vetiver_meta")
         else:
-            ptype = meta.user.get("ptype") if meta.user.get("ptype") else None
+            ptype = meta.user.get("ptype", None)
             required_pkgs = meta.user.get("required_pkgs")
 
         return cls(
