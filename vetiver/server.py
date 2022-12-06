@@ -82,11 +82,21 @@ class VetiverAPI:
 
             return RedirectResponse(redirect)
 
-        if self.model.metadata.get("url") is not None:
+        # metadata is a dict
+        try:
+            if self.model.metadata.get("url") is not None:
 
-            @app.get("/pin-url")
-            def pin_url():
-                return repr(self.model.metadata.get("url"))
+                @app.get("/pin-url")
+                def pin_url():
+                    return repr(self.model.get("url"))
+
+        # metadata is type VetiverMeta
+        except AttributeError:
+            if self.model.metadata.url is not None:
+
+                @app.get("/pin-url")
+                def pin_url():
+                    return repr(self.model.metadata.url)
 
         @app.get("/ping", include_in_schema=True)
         async def ping():

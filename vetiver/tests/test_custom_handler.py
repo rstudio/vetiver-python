@@ -40,7 +40,7 @@ def test_custom_vetiver_model():
     )
 
     assert v.description == "A random_pkg DummyRegressor model"
-    assert v.metadata.get("required_pkgs") == [f"random_pkg=={pd.__version__}"]
+    assert v.metadata.required_pkgs == [f"random_pkg=={pd.__version__}"]
     assert isinstance(v.model, sklearn.dummy.DummyRegressor)
     assert isinstance(v.prototype.construct(), pydantic.BaseModel)
 

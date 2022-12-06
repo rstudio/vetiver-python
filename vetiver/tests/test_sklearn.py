@@ -31,7 +31,7 @@ def test_build_sklearn():
         description="A regression model for testing purposes",
     )
 
-    assert v.metadata.get("required_pkgs") == [f"scikit-learn=={sklearn.__version__}"]
+    assert v.metadata.required_pkgs == [f"scikit-learn=={sklearn.__version__}"]
 
 
 def test_predict_endpoint_ptype():

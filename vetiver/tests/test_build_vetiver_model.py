@@ -1,6 +1,7 @@
 import sklearn
 
 import vetiver as vt
+from vetiver.meta import VetiverMeta
 from vetiver.mock import get_mock_data, get_mock_model
 
 import pandas as pd
@@ -105,6 +106,7 @@ def test_vetiver_model_use_ptype():
         metadata={"test": 123},
     )
 
+<<<<<<< HEAD
     assert vt5.model == model
     assert isinstance(vt5.prototype.construct(), pydantic.BaseModel)
     assert list(vt5.prototype.__fields__.values())[0].type_ == int
@@ -115,6 +117,16 @@ def test_vetiver_model_use_ptype():
         "url": None,
         "required_pkgs": [f"scikit-learn=={sklearn.__version__}"],
     }
+=======
+    assert vt4.model == model
+    assert vt4.ptype is None
+    assert vt4.metadata == VetiverMeta(
+        user={"test": 123},
+        version=None,
+        url=None,
+        required_pkgs=[f"scikit-learn=={sklearn.__version__}"],
+    )
+>>>>>>> 38a4b80 (use dataclass rather than dict)
 
 
 def test_vetiver_model_from_pin():
@@ -134,8 +146,15 @@ def test_vetiver_model_from_pin():
 
     assert isinstance(v2, vt.VetiverModel)
     assert isinstance(v2.model, sklearn.base.BaseEstimator)
+<<<<<<< HEAD
     assert isinstance(v2.prototype.construct(), pydantic.BaseModel)
     assert v2.metadata.get("user") == {"test": 123}
     assert v2.metadata.get("version") is not None
+=======
+    assert isinstance(v2.ptype.construct(), pydantic.BaseModel)
+    assert v2.metadata.user == {"test": 123}
+    assert v2.metadata.version is not None
+    assert v2.metadata.required_pkgs == [f"scikit-learn=={sklearn.__version__}"]
+>>>>>>> 38a4b80 (use dataclass rather than dict)
 
     board.pin_delete("model")

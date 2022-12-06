@@ -3,7 +3,7 @@ from functools import singledispatch
 from contextlib import suppress
 
 from ..prototype import vetiver_create_prototype
-from ..meta import _model_meta
+from ..meta import VetiverMeta
 
 
 class InvalidModelError(Exception):
@@ -86,20 +86,7 @@ class BaseHandler:
     def create_meta(self, metadata):
         """Create metadata for a model"""
 
-        if metadata:
-            user = metadata.get("user", metadata)
-            version = metadata.get("version", None)
-            url = metadata.get("url", None)
-            required_pkgs = metadata.get("required_pkgs", [])
-        else:
-            user, version, url, required_pkgs = None, None, None, []
-
-        if not list(filter(lambda x: self.pip_name in x, required_pkgs)):
-            required_pkgs = required_pkgs + [f"{self.pip_name}=={self.pkg.__version__}"]
-
-        meta = _model_meta(user, version, url, required_pkgs)
-
-        return meta
+        return VetiverMeta.from_dict(metadata, self.pip_name, self.pkg)
 
     def construct_prototype(self):
         """Create data prototype for a model
