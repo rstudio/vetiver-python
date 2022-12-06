@@ -1,5 +1,8 @@
 import vetiver
 import pins
+import numpy as np
+
+np.random.seed(500)
 
 X, y = vetiver.get_mock_data()
 model = vetiver.get_mock_model().fit(X, y)

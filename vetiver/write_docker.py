@@ -1,5 +1,6 @@
 import sys
 import warnings
+from pathlib import Path
 
 from .write_fastapi import write_app
 from .attach_pkgs import load_pkgs
@@ -92,14 +93,14 @@ EXPOSE {port}
 CMD ["uvicorn", "app.app:api", "--host", "{host}", "--port", "{port}"]
 """
 
-    f = open(f"{path}Dockerfile", "x")
+    f = open(Path(path, "Dockerfile"), "x")
     f.write(docker_script)
 
 
 def prepare_docker(
     board,
     pin_name: str,
-    path: str = "",
+    path: str = "./",
     version=None,
     rspm_env: bool = False,
     host: str = "0.0.0.0",
@@ -125,8 +126,10 @@ def prepare_docker(
             Port to run VetiverAPI from Dockerfile
 
     """
-    # urljoin everything
+
     v = VetiverModel.from_pin(board=board, name=pin_name, version=version)
-    write_app(board=board, pin_name=pin_name, version=version, file=f"{path}app.py")
-    load_pkgs(v, path=f"{path}vetiver_")
+    write_app(
+        board=board, pin_name=pin_name, version=version, file=Path(path, "app.py")
+    )
+    load_pkgs(v, path=Path(path, "vetiver_"))
     write_docker(path=path, rspm_env=rspm_env, host=host, port=port)
