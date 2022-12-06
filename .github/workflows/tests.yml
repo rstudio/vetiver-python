@@ -80,13 +80,16 @@ jobs:
           run: |
             python -m pip install --upgrade pip
             python -m pip install -e ".[dev]"
-        - name: run Docker
+        - name: Run Docker
           run: |
             python script/setup-docker/docker.py
             docker build -t mock .
             docker run -d -v $PWD/pinsboard:/vetiver/pinsboard -p 8080:8080 mock
             sleep 5
             curl -s --retry 10 --retry-connrefused http://0.0.0.0:8080
+        - name: Run tests
+          run: |
+            pytest vetiver -m 'docker'
 
   test-no-extras:
     name: "Test no exra ml frameworks"

@@ -9,6 +9,5 @@ board = pins.board_folder("pinsboard", allow_pickle_read=True)
 v = vetiver.VetiverModel(model, "mymodel", ptype_data=X)
 
 vetiver.vetiver_pin_write(board, v)
-vetiver.load_pkgs(v, path="vetiver_")
-vetiver.write_app(board, "mymodel")
-vetiver.write_docker()
+
+vetiver.prepare_docker(board, "mymodel")

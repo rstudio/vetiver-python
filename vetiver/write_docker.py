@@ -99,7 +99,7 @@ CMD ["uvicorn", "app.app:api", "--host", "{host}", "--port", "{port}"]
 def prepare_docker(
     board,
     pin_name: str,
-    path: str,
+    path: str = "",
     version=None,
     rspm_env: bool = False,
     host: str = "0.0.0.0",
@@ -126,7 +126,7 @@ def prepare_docker(
 
     """
     # urljoin everything
-    v = VetiverModel.from_pin(board=board, pin_name=pin_name, version=version)
-    write_app(board=board, pin_name=pin_name, version=version, path=path)
+    v = VetiverModel.from_pin(board=board, name=pin_name, version=version)
+    write_app(board=board, pin_name=pin_name, version=version, file=f"{path}app.py")
     load_pkgs(v, path=f"{path}vetiver_")
     write_docker(path=path, rspm_env=rspm_env, host=host, port=port)
