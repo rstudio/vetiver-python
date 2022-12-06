@@ -55,7 +55,7 @@ lint:
 	flake8 vetiver
 
 test: clean-test
-	pytest -m 'not rsc_test'
+	pytest -m 'not rsc_test and not docker'
 
 test-rsc: clean-test
 	pytest
