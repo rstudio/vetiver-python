@@ -12,6 +12,7 @@ addopts = "--doctest-modules"
 doctest_optionflags = "NORMALIZE_WHITESPACE"
 markers = [
     "rsc_test: tests for rstudio connect",
+    "docker: tests for docker deployments"
 ]
 
 [tool.setuptools_scm]
