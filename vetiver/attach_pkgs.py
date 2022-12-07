@@ -1,6 +1,7 @@
 import tempfile
 import os
-from vetiver import VetiverModel
+from .vetiver_model import VetiverModel
+from vetiver import __version__ as version
 
 
 def load_pkgs(model: VetiverModel = None, packages: list = None, path=""):
@@ -16,11 +17,17 @@ def load_pkgs(model: VetiverModel = None, packages: list = None, path=""):
             Where to save output file
     """
 
-    required_pkgs = ["vetiver"]
+    required_pkgs = [f"vetiver=={version}"]
     if packages:
         required_pkgs = list(set(required_pkgs + packages))
-    if model.metadata.get("required_pkgs"):
-        required_pkgs = list(set(required_pkgs + model.metadata.get("required_pkgs")))
+    try:
+        if model.metadata.get("required_pkgs"):
+            required_pkgs = list(
+                set(required_pkgs + model.metadata.get("required_pkgs"))
+            )
+    except AttributeError:
+        if model.metadata.required_pkgs:
+            required_pkgs = list(set(required_pkgs + model.metadata.required_pkgs))
 
     tmp = tempfile.NamedTemporaryFile(suffix=".in", delete=False)
     tmp.close()
