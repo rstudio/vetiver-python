@@ -1,7 +1,6 @@
 import tempfile
 import os
 from .vetiver_model import VetiverModel
-from vetiver import __version__ as version
 
 
 def load_pkgs(model: VetiverModel = None, packages: list = None, path=""):
@@ -17,7 +16,7 @@ def load_pkgs(model: VetiverModel = None, packages: list = None, path=""):
             Where to save output file
     """
 
-    required_pkgs = [f"vetiver=={version}"]
+    required_pkgs = ["vetiver"]
     if packages:
         required_pkgs = list(set(required_pkgs + packages))
     try:
