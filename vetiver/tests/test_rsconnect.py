@@ -66,7 +66,7 @@ def test_deploy(rsc_short):
     X_df, y = vetiver.mock.get_mock_data()
     model = vetiver.mock.get_mock_model().fit(X_df, y)
 
-    v = vetiver.VetiverModel(model=model, ptype_data=X_df, model_name="susan/model")
+    v = vetiver.VetiverModel(model=model, prototype_data=X_df, model_name="susan/model")
 
     board = pins.board_rsconnect(
         server_url=RSC_SERVER_URL, api_key=get_key("susan"), allow_pickle_read=True

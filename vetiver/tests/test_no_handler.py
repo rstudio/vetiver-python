@@ -9,7 +9,7 @@ def test_not_implemented_error():
     with pytest.raises(InvalidModelError):
         VetiverModel(
             model=y,
-            ptype_data=X,
+            prototype_data=X,
             model_name="my_model",
             versioned=None,
             description="A regression model for testing purposes",

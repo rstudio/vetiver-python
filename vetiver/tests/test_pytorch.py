@@ -45,7 +45,7 @@ def test_vetiver_build():
 
     vt2 = VetiverModel(
         model=torch_model,
-        ptype_data=x_train,
+        prototype_data=x_train,
         model_name="torch",
         versioned=None,
         description=None,
@@ -58,7 +58,7 @@ def test_vetiver_build():
 def test_torch_predict_ptype():
     torch.manual_seed(3)
     x_train, torch_model = _build_torch_v()
-    v = VetiverModel(torch_model, model_name="torch", ptype_data=x_train)
+    v = VetiverModel(torch_model, model_name="torch", prototype_data=x_train)
     v_api = VetiverAPI(v)
 
     client = TestClient(v_api.app)
@@ -72,7 +72,7 @@ def test_torch_predict_ptype():
 def test_torch_predict_ptype_batch():
     torch.manual_seed(3)
     x_train, torch_model = _build_torch_v()
-    v = VetiverModel(torch_model, model_name="torch", ptype_data=x_train)
+    v = VetiverModel(torch_model, model_name="torch", prototype_data=x_train)
     v_api = VetiverAPI(v)
 
     client = TestClient(v_api.app)
@@ -88,7 +88,7 @@ def test_torch_predict_ptype_batch():
 def test_torch_predict_ptype_error():
 
     x_train, torch_model = _build_torch_v()
-    v = VetiverModel(torch_model, model_name="torch", ptype_data=x_train)
+    v = VetiverModel(torch_model, model_name="torch", prototype_data=x_train)
     v_api = VetiverAPI(v)
 
     client = TestClient(v_api.app)

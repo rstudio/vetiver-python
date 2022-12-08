@@ -80,7 +80,7 @@ def vetiver_create_ptype(data):
 @vetiver_create_ptype.register
 def _(data: pd.DataFrame):
     """
-    Create ptype for a pandas dataframe
+    Create input data prototype for a pandas dataframe
 
     Parameters
     ----------
@@ -124,7 +124,7 @@ def _(data: pd.DataFrame):
 @vetiver_create_ptype.register
 def _(data: np.ndarray):
     """
-    Create ptype for a numpy array
+    Create input data prototype for a numpy array
 
     Parameters
     ----------
@@ -163,7 +163,7 @@ def _(data: np.ndarray):
 @vetiver_create_ptype.register
 def _(data: dict):
     """
-    Create ptype for a dict
+    Create input data prototype for a dict
 
     Parameters
     ----------
@@ -176,7 +176,7 @@ def _(data: dict):
 @vetiver_create_ptype.register
 def _(data: BaseModel):
     """
-    Create ptype for a pydantic BaseModel object
+    Create input data prototype for a pydantic BaseModel object
 
     Parameters
     ----------
@@ -189,7 +189,7 @@ def _(data: BaseModel):
 @vetiver_create_ptype.register
 def _(data: NoneType):
     """
-    Create ptype for None
+    Create input data prototype for None
 
     Parameters
     ----------

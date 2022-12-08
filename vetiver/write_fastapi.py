@@ -76,7 +76,7 @@ def write_app(
     >>> board = pins.board_temp(allow_pickle_read=True)
     >>> X, y = vetiver.get_mock_data()
     >>> model = vetiver.get_mock_model().fit(X, y)
-    >>> v = vetiver.VetiverModel(model = model, model_name = "my_model", ptype_data = X)
+    >>> v = vetiver.VetiverModel(model, "my_model", prototype_data = X)
     >>> vetiver.vetiver_pin_write(board, v)
     >>> vetiver.write_app(board,
     ...     "my_model",

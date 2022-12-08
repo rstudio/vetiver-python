@@ -1,5 +1,5 @@
 import json
-
+from warnings import warn
 from vetiver.handlers.base import create_handler
 from .meta import _model_meta
 
@@ -27,8 +27,10 @@ class VetiverModel:
         A trained model, such as an sklearn or torch model
     model_name : string
         Model name or ID
-    ptype_data : pd.DataFrame, np.array
+    prototype_data : pd.DataFrame, np.array
         Sample of data model should expect when it is being served
+    ptype_data : pd.DataFrame, np.array
+        Deprecated, in favor of prototype_data
     versioned :
         Should the model be versioned when created?
     description : str
@@ -54,7 +56,7 @@ class VetiverModel:
     >>> from vetiver import mock, VetiverModel
     >>> X, y = mock.get_mock_data()
     >>> model = mock.get_mock_model().fit(X, y)
-    >>> v = VetiverModel(model = model, model_name = "my_model", ptype_data = X)
+    >>> v = VetiverModel(model = model, model_name = "my_model", prototype_data = X)
     >>> v.description
     "Scikit-learn <class 'sklearn.dummy.DummyRegressor'> model"
     """
@@ -63,13 +65,23 @@ class VetiverModel:
         self,
         model,
         model_name: str,
+        prototype_data=None,
         ptype_data=None,
         versioned=None,
         description: str = None,
         metadata: dict = None,
         **kwargs
     ):
-        translator = create_handler(model, ptype_data)
+        if ptype_data is not None:
+            prototype_data = ptype_data
+            warn(
+                "argument for saving input data prototype has changed to\
+             `save_prototype`, from `save_ptype",
+                DeprecationWarning,
+                stacklevel=2,
+            )
+
+        translator = create_handler(model, prototype_data)
 
         self.model = translator.model
         self.ptype = translator.construct_ptype()
@@ -99,7 +111,7 @@ class VetiverModel:
                 url=meta.local.get("url"),  # None all the time, besides Connect
                 required_pkgs=meta.user.get("required_pkgs"),
             ),
-            ptype_data=json.loads(meta.user.get("ptype"))
+            prototype_data=json.loads(meta.user.get("ptype"))
             if meta.user.get("ptype")
             else None,
             versioned=True,

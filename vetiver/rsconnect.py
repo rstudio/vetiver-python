@@ -67,7 +67,7 @@ def deploy_rsconnect(
     >>> model = vetiver.get_mock_model().fit(X, y)
     >>> v = vetiver.VetiverModel(model = model,
     ...    model_name = "my_model",
-    ...    ptype_data = X)
+    ...    prototype_data = X)
     >>> vetiver.deploy_rsconnect(
     ...    connect_server = connect_server,
     ...    board = board,

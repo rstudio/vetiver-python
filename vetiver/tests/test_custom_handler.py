@@ -6,8 +6,8 @@ from vetiver import mock, VetiverModel, BaseHandler
 
 
 class CustomHandler(BaseHandler):
-    def __init__(self, model, ptype_data):
-        super().__init__(model, ptype_data)
+    def __init__(self, model, prototype_data):
+        super().__init__(model, prototype_data)
 
     model_type = staticmethod(lambda: sklearn.dummy.DummyRegressor)
 
@@ -32,7 +32,7 @@ def test_custom_vetiver_model():
 
     v = VetiverModel(
         model=custom_handler,
-        ptype_data=X,
+        prototype_data=X,
         model_name="my_model",
         versioned=None,
         description="A regression model for testing purposes",
@@ -50,7 +50,7 @@ def test_custom_vetiver_model_no_ptype():
 
     v = VetiverModel(
         model=custom_handler,
-        ptype_data=X,
+        prototype_data=X,
         model_name="my_model",
         versioned=None,
         description="A regression model for testing purposes",

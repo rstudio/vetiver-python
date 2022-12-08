@@ -15,7 +15,7 @@ def vetiver_model():
     model = mock.get_mock_model().fit(X, y)
     v = VetiverModel(
         model=model,
-        ptype_data=X,
+        prototype_data=X,
         model_name="my_model",
         versioned=None,
         description="A regression model for testing purposes",

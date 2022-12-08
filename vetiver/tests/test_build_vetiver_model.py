@@ -17,7 +17,7 @@ def test_vetiver_model_array_ptype():
     # build VetiverModel, no ptype
     vt1 = vt.VetiverModel(
         model=model,
-        ptype_data=X_array,
+        prototype_data=X_array,
         model_name="iris",
         versioned=None,
         description=None,
@@ -33,7 +33,7 @@ def test_vetiver_model_df_ptype():
     # build VetiverModel, df ptype_data
     vt2 = vt.VetiverModel(
         model=model,
-        ptype_data=X_df,
+        prototype_data=X_df,
         model_name="iris",
         versioned=None,
         description=None,
@@ -49,7 +49,7 @@ def test_vetiver_model_dict_ptype():
     dict_data = {"B": 0, "C": 0, "D": 0}
     vt3 = vt.VetiverModel(
         model=model,
-        ptype_data=dict_data,
+        prototype_data=dict_data,
         model_name="iris",
         versioned=None,
         description=None,
@@ -65,7 +65,7 @@ def test_vetiver_model_no_ptype():
     # build VetiverModel, no ptype
     vt4 = vt.VetiverModel(
         model=model,
-        ptype_data=None,
+        prototype_data=None,
         model_name="iris",
         versioned=None,
         description=None,
@@ -80,7 +80,7 @@ def test_vetiver_model_from_pin():
 
     v = vt.VetiverModel(
         model=model,
-        ptype_data=X_df,
+        prototype_data=X_df,
         model_name="model",
         versioned=None,
         description=None,

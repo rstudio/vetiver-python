@@ -27,11 +27,11 @@ class VetiverAPI:
 
     Example
     -------
-    >>> import vetiver
-    >>> X, y = vetiver.get_mock_data()
-    >>> model = vetiver.get_mock_model().fit(X, y)
-    >>> v = vetiver.VetiverModel(model = model, model_name = "my_model", ptype_data = X)
-    >>> v_api = vetiver.VetiverAPI(model = v, check_ptype = True)
+    >>> import vetiver as vt
+    >>> X, y = vt.get_mock_data()
+    >>> model = vt.get_mock_model().fit(X, y)
+    >>> v = vt.VetiverModel(model = model, model_name = "my_model", prototype_data = X)
+    >>> v_api = vt.VetiverAPI(model = v, check_ptype = True)
     """
 
     app = None
@@ -129,7 +129,7 @@ class VetiverAPI:
         >>> import vetiver as vt
         >>> X, y = vt.get_mock_data()
         >>> model = vt.get_mock_model().fit(X, y)
-        >>> v = vt.VetiverModel(model = model, model_name = "model", ptype_data = X)
+        >>> v = vt.VetiverModel(model = model, model_name = "model", prototype_data = X)
         >>> v_api = vt.VetiverAPI(model = v, check_ptype = True)
         >>> def sum_values(x):
         ...     return x.sum()
@@ -175,11 +175,11 @@ class VetiverAPI:
 
         Example
         -------
-        >>> import vetiver
-        >>> X, y = vetiver.get_mock_data()
-        >>> model = vetiver.get_mock_model().fit(X, y)
-        >>> v = vetiver.VetiverModel(model = model, model_name = "model", ptype_data = X)
-        >>> v_api = vetiver.VetiverAPI(model = v, check_ptype = True)
+        >>> import vetiver as vt
+        >>> X, y = vt.get_mock_data()
+        >>> model = vt.get_mock_model().fit(X, y)
+        >>> v = vt.VetiverModel(model = model, model_name = "model", prototype_data = X)
+        >>> v_api = vt.VetiverAPI(model = v, check_ptype = True)
         >>> v_api.run()     # doctest: +SKIP
         """
         _jupyter_nb()
