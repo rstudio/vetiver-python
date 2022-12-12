@@ -17,7 +17,10 @@ The goal of vetiver is to provide fluent tooling to version, share, deploy, and 
 You can use vetiver with:
 
 -   [scikit-learn](https://scikit-learn.org/)
--   [PyTorch](https://pytorch.org/)
+-   [torch](https://pytorch.org/)
+-   [statsmodels](https://www.statsmodels.org/stable/index.html)
+-   [xgboost](https://xgboost.readthedocs.io/en/stable/)
+-   or utilize [custom handlers](https://rstudio.github.io/vetiver-python/stable/advancedusage/custom_handler.html) to support your own models!
 
 ## Installation
 
