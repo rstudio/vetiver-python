@@ -75,8 +75,8 @@ class VetiverModel:
         if ptype_data is not None:
             prototype_data = ptype_data
             warn(
-                "argument for saving input data prototype has changed to\
-             `save_prototype`, from `save_ptype",
+                "argument for saving input data prototype has changed to "
+                "save_prototype, from save_ptype",
                 DeprecationWarning,
                 stacklevel=2,
             )

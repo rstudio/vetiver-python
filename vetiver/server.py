@@ -1,4 +1,4 @@
-from typing import Callable, List, Union, Any, Dict
+from typing import Any, Callable, Dict, List, Union
 from urllib.parse import urljoin
 
 import httpx
@@ -8,6 +8,7 @@ import uvicorn
 from fastapi import FastAPI, Request, testclient
 from fastapi.openapi.utils import get_openapi
 from fastapi.responses import HTMLResponse, RedirectResponse
+from warnings import warn
 
 from .utils import _jupyter_nb
 from .vetiver_model import VetiverModel
@@ -20,8 +21,10 @@ class VetiverAPI:
     ----------
     model :  VetiverModel
         Model to be deployed in API
-    check_ptype : bool
+    check_prototype : bool
         Determine if data prototype should be enforced
+    check_ptype : bool
+        Deprecated in favor of check_prototype
     app_factory :
         Type of API to be deployed
 
@@ -31,7 +34,7 @@ class VetiverAPI:
     >>> X, y = vt.get_mock_data()
     >>> model = vt.get_mock_model().fit(X, y)
     >>> v = vt.VetiverModel(model = model, model_name = "my_model", prototype_data = X)
-    >>> v_api = vt.VetiverAPI(model = v, check_ptype = True)
+    >>> v_api = vt.VetiverAPI(model = v, check_prototype = True)
     """
 
     app = None
@@ -39,13 +42,23 @@ class VetiverAPI:
     def __init__(
         self,
         model: VetiverModel,
-        check_ptype: bool = True,
+        check_prototype: bool = True,
+        check_ptype: bool = None,
         app_factory=FastAPI,
     ) -> None:
         self.model = model
-        self.check_ptype = check_ptype
         self.app_factory = app_factory
         self.app = app_factory()
+
+        if check_ptype is not None:
+            check_prototype = check_ptype
+            warn(
+                "argument for checking input data prototype has changed to "
+                "check_prototype, from check_ptype",
+                DeprecationWarning,
+                stacklevel=2,
+            )
+        self.check_prototype = check_prototype
 
         self._init_app()
 
@@ -71,7 +84,7 @@ class VetiverAPI:
             return {"ping": "pong"}
 
         self.vetiver_post(
-            self.model.handler_predict, "predict", check_ptype=self.check_ptype
+            self.model.handler_predict, "predict", check_prototype=self.check_prototype
         )
 
         @app.get("/__docs__", response_class=HTMLResponse, include_in_schema=False)
@@ -130,7 +143,7 @@ class VetiverAPI:
         >>> X, y = vt.get_mock_data()
         >>> model = vt.get_mock_model().fit(X, y)
         >>> v = vt.VetiverModel(model = model, model_name = "model", prototype_data = X)
-        >>> v_api = vt.VetiverAPI(model = v, check_ptype = True)
+        >>> v_api = vt.VetiverAPI(model = v, check_prototype = True)
         >>> def sum_values(x):
         ...     return x.sum()
         >>> v_api.vetiver_post(sum_values, "sums")
@@ -138,7 +151,7 @@ class VetiverAPI:
         if not endpoint_name:
             endpoint_name = endpoint_fx.__name__
 
-        if self.check_ptype is True:
+        if self.check_prototype is True:
 
             @self.app.post(urljoin("/", endpoint_name), name=endpoint_name)
             async def custom_endpoint(
@@ -179,7 +192,7 @@ class VetiverAPI:
         >>> X, y = vt.get_mock_data()
         >>> model = vt.get_mock_model().fit(X, y)
         >>> v = vt.VetiverModel(model = model, model_name = "model", prototype_data = X)
-        >>> v_api = vt.VetiverAPI(model = v, check_ptype = True)
+        >>> v_api = vt.VetiverAPI(model = v, check_prototype = True)
         >>> v_api.run()     # doctest: +SKIP
         """
         _jupyter_nb()

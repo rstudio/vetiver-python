@@ -27,7 +27,7 @@ def vetiver_model():
 
 @pytest.fixture
 def vetiver_client(vetiver_model):  # With check_ptype=True
-    app = VetiverAPI(vetiver_model, check_ptype=True)
+    app = VetiverAPI(vetiver_model, check_prototype=True)
     app.app.root_path = "/predict"
     client = TestClient(app.app)
 
@@ -36,7 +36,7 @@ def vetiver_client(vetiver_model):  # With check_ptype=True
 
 @pytest.fixture
 def vetiver_client_check_ptype_false(vetiver_model):  # With check_ptype=False
-    app = VetiverAPI(vetiver_model, check_ptype=False)
+    app = VetiverAPI(vetiver_model, check_prototype=False)
     app.app.root_path = "/predict"
     client = TestClient(app.app)
 
@@ -90,7 +90,7 @@ def test_predict_sklearn_type_error(data, vetiver_client):
 
 def test_predict_server_error(vetiver_model):
     X, y = mock.get_mock_data()
-    app = VetiverAPI(vetiver_model, check_ptype=True)
+    app = VetiverAPI(vetiver_model, check_prototype=True)
     app.app.root_path = "/i_do_not_exists"
     client = TestClient(app.app)
 

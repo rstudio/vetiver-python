@@ -38,7 +38,7 @@ class XGBoostHandler(BaseHandler):
 
         return meta
 
-    def handler_predict(self, input_data, check_ptype):
+    def handler_predict(self, input_data, check_prototype):
         """Generates method for /predict endpoint in VetiverAPI
 
         The `handler_predict` function executes at each API call. Use this

@@ -102,7 +102,7 @@ def test_torch_predict_no_ptype_batch():
     torch.manual_seed(3)
     x_train, torch_model = _build_torch_v()
     v = VetiverModel(torch_model, model_name="torch")
-    v_api = VetiverAPI(v, check_ptype=False)
+    v_api = VetiverAPI(v, check_prototype=False)
 
     client = TestClient(v_api.app)
     data = [[3.3], [3.3]]
@@ -117,7 +117,7 @@ def test_torch_predict_no_ptype():
     torch.manual_seed(3)
     x_train, torch_model = _build_torch_v()
     v = VetiverModel(torch_model, model_name="torch")
-    v_api = VetiverAPI(v, check_ptype=False)
+    v_api = VetiverAPI(v, check_prototype=False)
 
     client = TestClient(v_api.app)
     data = [[3.3]]

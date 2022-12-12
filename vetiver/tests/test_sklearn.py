@@ -15,7 +15,7 @@ def _start_application(save_ptype: bool = True):
         description="A regression model for testing purposes",
     )
 
-    app = VetiverAPI(v, check_ptype=save_ptype)
+    app = VetiverAPI(v, check_prototype=save_ptype)
 
     return app
 
