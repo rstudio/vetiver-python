@@ -1,4 +1,5 @@
 from .vetiver_model import VetiverModel
+from .meta import VetiverMeta
 from .utils import inform
 import warnings
 import logging
@@ -50,10 +51,16 @@ def vetiver_pin_write(board, model: VetiverModel, versioned: bool = True):
         "reporting. \n Use the vetiver `.qmd` Quarto template as a place to start, \n "
         "with vetiver.model_card()",
     )
+<<<<<<< HEAD
 
     # convert older model's ptype to prototype
     if hasattr(model, "ptype"):
         model.prototype = model.ptype
+=======
+    # metadata is dict
+    if isinstance(model.metadata, dict):
+        model.metadata = VetiverMeta.from_dict(model.metadata)
+>>>>>>> bfe7205 (coerce VetiverMeta rather than try/except)
 
     board.pin_write(
         model.model,
@@ -61,6 +68,7 @@ def vetiver_pin_write(board, model: VetiverModel, versioned: bool = True):
         type="joblib",
         description=model.description,
         metadata={
+<<<<<<< HEAD
             "user": model.metadata.get("user"),
             "vetiver_meta": {
                 "required_pkgs": model.metadata.get("required_pkgs"),
@@ -69,6 +77,16 @@ def vetiver_pin_write(board, model: VetiverModel, versioned: bool = True):
             versioned=versioned,
         )
     # metadata is VetiverMeta
+=======
+            "user": model.metadata.user,
+            "vetiver_meta": {
+                "required_pkgs": model.metadata.required_pkgs,
+                "ptype": None if model.ptype is None else model.ptype().json(),
+            },
+        },
+        versioned=versioned,
+    )
+>>>>>>> bfe7205 (coerce VetiverMeta rather than try/except)
 
 
 def vetiver_pin_read(board, name: str, version: str = None) -> VetiverModel:

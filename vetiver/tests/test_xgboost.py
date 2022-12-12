@@ -51,7 +51,7 @@ def test_model(xgb_model):
     v = xgb_model
 
     assert v.metadata.required_pkgs == [f"xgboost=={xgb.__version__}"]
-    assert v.metadata.user is None
+    assert not v.metadata.user
 
 >>>>>>> 38a4b80 (use dataclass rather than dict)
 
