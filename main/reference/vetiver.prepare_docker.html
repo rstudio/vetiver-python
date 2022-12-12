@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>vetiver.vetiver_write_app &#8212; vetiver Commit: a060e87 documentation</title>
+    <title>vetiver.prepare_docker &#8212; vetiver Commit: a060e87 documentation</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -34,6 +34,8 @@
     <link rel="shortcut icon" href="../_static/logo.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="vetiver.deploy_rsconnect" href="vetiver.deploy_rsconnect.html" />
+    <link rel="prev" title="vetiver.load_pkgs" href="vetiver.load_pkgs.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -125,7 +127,7 @@
   Deploy
  </span>
 </p>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="vetiver.VetiverAPI.html">
    vetiver.VetiverAPI
@@ -166,8 +168,8 @@
    vetiver.load_pkgs
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="vetiver.prepare_docker.html">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
    vetiver.prepare_docker
   </a>
  </li>
@@ -332,7 +334,7 @@ title="Source repository"
       </li>
       
       <li>
-        <a href="https://github.com/tidymodels/vetiver-python/issues/new?title=Issue%20on%20page%20%2Freference/vetiver.vetiver_write_app.html&body=Your%20issue%20content%20here."
+        <a href="https://github.com/tidymodels/vetiver-python/issues/new?title=Issue%20on%20page%20%2Freference/vetiver.prepare_docker.html&body=Your%20issue%20content%20here."
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -349,7 +351,7 @@ title="Open an issue"
       </li>
       
       <li>
-        <a href="https://github.com/tidymodels/vetiver-python/edit/master/reference/vetiver.vetiver_write_app.rst"
+        <a href="https://github.com/tidymodels/vetiver-python/edit/master/reference/vetiver.prepare_docker.rst"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -377,7 +379,7 @@ title="Edit this page"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="../_sources/reference/vetiver.vetiver_write_app.rst.txt"
+        <a href="../_sources/reference/vetiver.prepare_docker.rst.txt"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -426,7 +428,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>vetiver.vetiver_write_app</h1>
+                <h1>vetiver.prepare_docker</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -438,12 +440,26 @@ title="Print to PDF"
                 
               <div>
                 
-  <section id="vetiver-vetiver-write-app">
-<h1>vetiver.vetiver_write_app<a class="headerlink" href="#vetiver-vetiver-write-app" title="Permalink to this headline">#</a></h1>
+  <section id="vetiver-prepare-docker">
+<h1>vetiver.prepare_docker<a class="headerlink" href="#vetiver-prepare-docker" title="Permalink to this headline">#</a></h1>
 <dl class="py function">
-<dt class="sig sig-object py" id="vetiver.vetiver_write_app">
-<span class="sig-prename descclassname"><span class="pre">vetiver.</span></span><span class="sig-name descname"><span class="pre">vetiver_write_app</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">board</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pin_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'app.py'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vetiver.vetiver_write_app" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
+<dt class="sig sig-object py" id="vetiver.prepare_docker">
+<span class="sig-prename descclassname"><span class="pre">vetiver.</span></span><span class="sig-name descname"><span class="pre">prepare_docker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">board</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pin_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'./'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rspm_env</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">host</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'0.0.0.0'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'8080'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vetiver.prepare_docker" title="Permalink to this definition">#</a></dt>
+<dd><p>Create all files needed for Docker</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>board</strong> – Pin board for model</p></li>
+<li><p><strong>pin_name</strong> (<em>str</em>) – Name of pin</p></li>
+<li><p><strong>path</strong> – Path to output</p></li>
+<li><p><strong>version</strong> – Pin version to be used</p></li>
+<li><p><strong>rspm_env</strong> (<em>bool</em>) – Whether or not RStudio Package Manager should be used</p></li>
+<li><p><strong>host</strong> (<em>str</em>) – Host address to run VetiverAPI from Dockerfile</p></li>
+<li><p><strong>port</strong> (<em>str</em>) – Port to run VetiverAPI from Dockerfile</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 </section>
 
@@ -455,6 +471,20 @@ title="Print to PDF"
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="vetiver.load_pkgs.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">vetiver.load_pkgs</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="vetiver.deploy_rsconnect.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">vetiver.deploy_rsconnect</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
 </div>
             </footer>
         </div>

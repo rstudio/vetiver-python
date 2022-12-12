@@ -55,6 +55,8 @@ Deploy
    ~predict
    ~write_app
    ~write_docker
+   ~load_pkgs
+   ~prepare_docker
    ~deploy_rsconnect
 
 Monitor
