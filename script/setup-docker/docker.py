@@ -9,7 +9,7 @@ model = vetiver.get_mock_model().fit(X, y)
 
 board = pins.board_folder("pinsboard", allow_pickle_read=True)
 
-v = vetiver.VetiverModel(model, "mymodel", ptype_data=X)
+v = vetiver.VetiverModel(model, "mymodel", prototype_data=X)
 
 vetiver.vetiver_pin_write(board, v)
 
