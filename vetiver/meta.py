@@ -17,7 +17,7 @@ class VetiverMeta:
         return data
 
     @classmethod
-    def from_dict(cls, metadata, pip_name) -> "VetiverMeta":
+    def from_dict(cls, metadata, pip_name=None) -> "VetiverMeta":
 
         metadata = {} if metadata is None else metadata
 
