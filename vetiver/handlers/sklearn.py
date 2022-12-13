@@ -15,12 +15,6 @@ class SKLearnHandler(BaseHandler):
 
     model_class = staticmethod(lambda: sklearn.base.BaseEstimator)
     pip_name = "scikit-learn"
-    pkg = sklearn
-
-    def describe(self):
-        """Create description for sklearn model"""
-        desc = f"Scikit-learn {self.model.__class__} model"
-        return desc
 
     def handler_predict(self, input_data, check_ptype):
         """Generates method for /predict endpoint in VetiverAPI

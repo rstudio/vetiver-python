@@ -43,7 +43,7 @@ def create_handler(model, prototype_data):
     >>> model = vetiver.mock.get_mock_model()
     >>> handler = vetiver.create_handler(model, X)
     >>> handler.describe()
-    "Scikit-learn <class 'sklearn.dummy.DummyRegressor'> model"
+    'A scikit-learn DummyRegressor model'
     """
 
     raise InvalidModelError(
@@ -79,14 +79,20 @@ class BaseHandler:
 
     def describe(self):
         """Create description for model"""
+
+        pip_name = self.pip_name if hasattr(self, "pip_name") else ""
         obj_name = type(self.model).__qualname__
-        desc = f"A {self.pip_name} {obj_name} model"
+
+        desc = f"A {pip_name} {obj_name} model"
+
         return desc
 
     def create_meta(self, metadata):
         """Create metadata for a model"""
 
-        return VetiverMeta.from_dict(metadata, self.pip_name, self.pkg)
+        pip_name = self.pip_name if hasattr(self, "pip_name") else None
+
+        return VetiverMeta.from_dict(metadata, pip_name)
 
     def construct_prototype(self):
         """Create data prototype for a model

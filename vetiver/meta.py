@@ -17,7 +17,7 @@ class VetiverMeta:
         return data
 
     @classmethod
-    def from_dict(cls, metadata, pip_name=None, pkg=None) -> "VetiverMeta":
+    def from_dict(cls, metadata, pip_name) -> "VetiverMeta":
 
         metadata = {} if metadata is None else metadata
 
@@ -26,7 +26,8 @@ class VetiverMeta:
         url = metadata.get("url", None)
         required_pkgs = metadata.get("required_pkgs", [])
 
-        if not list(filter(lambda x: pip_name in x, required_pkgs)):
-            required_pkgs = required_pkgs + [f"{pip_name}=={pkg.__version__}"]
+        if pip_name:
+            if not list(filter(lambda x: pip_name in x, required_pkgs)):
+                required_pkgs = required_pkgs + [f"{pip_name}"]
 
         return cls(user, version, url, required_pkgs)

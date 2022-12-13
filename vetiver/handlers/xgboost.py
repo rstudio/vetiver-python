@@ -20,7 +20,6 @@ class XGBoostHandler(BaseHandler):
 
     model_class = staticmethod(lambda: xgboost.Booster)
     if xgb_exists:
-        pkg = xgboost
         pip_name = "xgboost"
 
     def handler_predict(self, input_data, check_prototype):

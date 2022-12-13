@@ -10,8 +10,6 @@ class CustomHandler(BaseHandler):
         super().__init__(model, prototype_data)
 
     model_type = staticmethod(lambda: sklearn.dummy.DummyRegressor)
-    pkg = pd  # random non modeling package chosen for init purposes
-    pip_name = "random_pkg"
 
     def handler_predict(self, input_data, check_ptype):
         if check_ptype is True:
@@ -39,8 +37,8 @@ def test_custom_vetiver_model():
         versioned=None,
     )
 
-    assert v.description == "A random_pkg DummyRegressor model"
-    assert v.metadata.required_pkgs == [f"random_pkg=={pd.__version__}"]
+    assert v.description == "A  DummyRegressor model"
+    assert not v.metadata.required_pkgs
     assert isinstance(v.model, sklearn.dummy.DummyRegressor)
     assert isinstance(v.prototype.construct(), pydantic.BaseModel)
 

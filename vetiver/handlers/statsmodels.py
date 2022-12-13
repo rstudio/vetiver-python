@@ -20,7 +20,6 @@ class StatsmodelsHandler(BaseHandler):
 
     model_class = staticmethod(lambda: statsmodels.base.wrapper.ResultsWrapper)
     if sm_exists:
-        pkg = statsmodels
         pip_name = "statsmodels"
 
     def handler_predict(self, input_data, check_prototype):

@@ -61,7 +61,7 @@ class VetiverModel:
     >>> model = mock.get_mock_model().fit(X, y)
     >>> v = VetiverModel(model = model, model_name = "my_model", prototype_data = X)
     >>> v.description
-    "Scikit-learn <class 'sklearn.dummy.DummyRegressor'> model"
+    'A scikit-learn DummyRegressor model'
     """
 
     def __init__(

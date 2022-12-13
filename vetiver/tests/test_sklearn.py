@@ -2,7 +2,6 @@ from vetiver import mock, VetiverModel, VetiverAPI
 from fastapi.testclient import TestClient
 import numpy as np
 import pytest
-import sklearn
 
 
 def _start_application(save_prototype: bool = True):
@@ -31,7 +30,7 @@ def test_build_sklearn():
         description="A regression model for testing purposes",
     )
 
-    assert v.metadata.required_pkgs == [f"scikit-learn=={sklearn.__version__}"]
+    assert v.metadata.required_pkgs == ["scikit-learn"]
 
 
 def test_predict_endpoint_ptype():

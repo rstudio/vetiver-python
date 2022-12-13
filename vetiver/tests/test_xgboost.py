@@ -50,7 +50,7 @@ def vetiver_client_check_ptype_false(xgb_model):  # With check_prototype=True
 def test_model(xgb_model):
     v = xgb_model
 
-    assert v.metadata.required_pkgs == [f"xgboost=={xgb.__version__}"]
+    assert v.metadata.required_pkgs == ["xgboost"]
     assert not v.metadata.user
 
 >>>>>>> 38a4b80 (use dataclass rather than dict)
