@@ -78,12 +78,20 @@ jobs:
             python-version: 3.8
         - name: Install dependencies
           run: |
+<<<<<<< HEAD
+=======
+            python -m pip install --upgrade pip
+>>>>>>> aa70c3e (always install latest vetiver in docker)
             python -m pip install ".[dev]"
             python -m pip install --upgrade git+https://github.com/rstudio/vetiver-python@${{ github.sha }}
         - name: run Docker
           run: |
             python script/setup-docker/docker.py
+<<<<<<< HEAD
             pip freeze > vetiver_requirements.txt
+=======
+            pip freeze > requirements.txt
+>>>>>>> aa70c3e (always install latest vetiver in docker)
             docker build -t mock .
             docker run -d -v $PWD/pinsboard:/vetiver/pinsboard -p 8080:8080 mock
             sleep 5
