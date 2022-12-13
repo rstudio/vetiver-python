@@ -40,7 +40,7 @@ def test_custom_vetiver_model():
 
     assert v.description == "A regression model for testing purposes"
     assert isinstance(v.model, sklearn.dummy.DummyRegressor)
-    assert isinstance(v.ptype.construct(), pydantic.BaseModel)
+    assert isinstance(v.prototype.construct(), pydantic.BaseModel)
 
 
 def test_custom_vetiver_model_no_ptype():
@@ -58,4 +58,4 @@ def test_custom_vetiver_model_no_ptype():
 
     assert v.description == "A regression model for testing purposes"
     assert isinstance(v.model, sklearn.dummy.DummyRegressor)
-    assert isinstance(v.ptype.construct(), pydantic.BaseModel)
+    assert isinstance(v.prototype.construct(), pydantic.BaseModel)

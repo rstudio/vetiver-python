@@ -51,6 +51,10 @@ def vetiver_pin_write(board, model: VetiverModel, versioned: bool = True):
         "with vetiver.model_card()",
     )
 
+    # convert older model's ptype to prototype
+    if hasattr(model, "ptype"):
+        model.prototype = model.ptype
+
     board.pin_write(
         model.model,
         name=model.model_name,
@@ -58,7 +62,9 @@ def vetiver_pin_write(board, model: VetiverModel, versioned: bool = True):
         description=model.description,
         metadata={
             "required_pkgs": model.metadata.get("required_pkgs"),
-            "ptype": None if model.ptype is None else model.ptype().json(),
+            "ptype": None
+            if model.prototype is None
+            else model.prototype().json(),  # ptype_change
         },
         versioned=versioned,
     )

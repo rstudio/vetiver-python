@@ -151,11 +151,14 @@ class VetiverAPI:
         if not endpoint_name:
             endpoint_name = endpoint_fx.__name__
 
+        if hasattr(self.model, "ptype"):
+            self.model.prototype = self.model.ptype
+
         if self.check_prototype is True:
 
             @self.app.post(urljoin("/", endpoint_name), name=endpoint_name)
             async def custom_endpoint(
-                input_data: Union[self.model.ptype, List[self.model.ptype]]
+                input_data: Union[self.model.prototype, List[self.model.prototype]]
             ):
 
                 if isinstance(input_data, List):

@@ -18,15 +18,15 @@ def test_vetiver_model_array_ptype():
     vt1 = vt.VetiverModel(
         model=model,
         prototype_data=X_array,
-        model_name="iris",
+        model_name="model",
         versioned=None,
         description=None,
         metadata=None,
     )
 
     assert vt1.model == model
-    assert isinstance(vt1.ptype.construct(), pydantic.BaseModel)
-    assert list(vt1.ptype.__fields__.values())[0].type_ == int
+    assert isinstance(vt1.prototype.construct(), pydantic.BaseModel)
+    assert list(vt1.prototype.__fields__.values())[0].type_ == int
 
 
 def test_vetiver_model_df_ptype():
@@ -34,15 +34,15 @@ def test_vetiver_model_df_ptype():
     vt2 = vt.VetiverModel(
         model=model,
         prototype_data=X_df,
-        model_name="iris",
+        model_name="model",
         versioned=None,
         description=None,
         metadata=None,
     )
 
     assert vt2.model == model
-    assert isinstance(vt2.ptype.construct(), pydantic.BaseModel)
-    assert list(vt2.ptype.__fields__.values())[0].type_ == int
+    assert isinstance(vt2.prototype.construct(), pydantic.BaseModel)
+    assert list(vt2.prototype.__fields__.values())[0].type_ == int
 
 
 def test_vetiver_model_dict_ptype():
@@ -50,15 +50,15 @@ def test_vetiver_model_dict_ptype():
     vt3 = vt.VetiverModel(
         model=model,
         prototype_data=dict_data,
-        model_name="iris",
+        model_name="model",
         versioned=None,
         description=None,
         metadata=None,
     )
 
     assert vt3.model == model
-    assert isinstance(vt3.ptype.construct(), pydantic.BaseModel)
-    assert list(vt3.ptype.__fields__.values())[0].type_ == int
+    assert isinstance(vt3.prototype.construct(), pydantic.BaseModel)
+    assert list(vt3.prototype.__fields__.values())[0].type_ == int
 
 
 def test_vetiver_model_no_ptype():
@@ -66,14 +66,14 @@ def test_vetiver_model_no_ptype():
     vt4 = vt.VetiverModel(
         model=model,
         prototype_data=None,
-        model_name="iris",
+        model_name="model",
         versioned=None,
         description=None,
         metadata=None,
     )
 
     assert vt4.model == model
-    assert vt4.ptype is None
+    assert vt4.prototype is None
 
 
 def test_vetiver_model_from_pin():
@@ -91,5 +91,5 @@ def test_vetiver_model_from_pin():
     v2 = vt.VetiverModel.from_pin(board, "model")
     assert isinstance(v2, vt.VetiverModel)
     assert isinstance(v2.model, sklearn.base.BaseEstimator)
-    assert isinstance(v2.ptype.construct(), pydantic.BaseModel)
+    assert isinstance(v2.prototype.construct(), pydantic.BaseModel)
     board.pin_delete("model")
