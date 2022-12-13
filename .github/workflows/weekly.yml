@@ -45,10 +45,7 @@ jobs:
 
       - name: Run tests
         run: |
-          pytest
-
-      - name: Upload coverage
-        uses: codecov/codecov-action@v2
+          make test
 
   vetiver_pypi_pins_main:
     name: 'vetiver pypi, pins main'
@@ -95,7 +92,7 @@ jobs:
 
       - name: Run Tests
         run: |
-          pytest
+          make test
 
   vetiver_pypi_rsconnect_latest:
     name: 'vetiver pypi, rsconnect latest'
@@ -130,6 +127,7 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install .[dev]
           python -m pip install --upgrade git+https://github.com/rstudio/rsconnect-python
+          pip freeze > requirements.txt
 
       - name: run RStudio Connect
         run: |
@@ -141,7 +139,7 @@ jobs:
 
       - name: Run Tests
         run: |
-          pytest
+          pytest -m 'rsc_test'
 
   vetiver_latest_rsconnect_latest:
     name: 'vetiver latest, rsconnect latest'
@@ -164,6 +162,7 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install '.[all]'
           python -m pip install --upgrade git+https://github.com/rstudio/rsconnect-python
+          pip freeze > requirements.txt
 
       - name: run RStudio Connect
         run: |
@@ -175,4 +174,4 @@ jobs:
 
       - name: Run Tests
         run: |
-          pytest
+          pytest -m 'rsc_test'
