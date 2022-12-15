@@ -62,9 +62,7 @@ def vetiver_pin_write(board, model: VetiverModel, versioned: bool = True):
         description=model.description,
         metadata={
             "required_pkgs": model.metadata.get("required_pkgs"),
-            "ptype": None
-            if model.prototype is None
-            else model.prototype().json(),  # ptype_change
+            "prototype": None if model.prototype is None else model.prototype().json(),
         },
         versioned=versioned,
     )

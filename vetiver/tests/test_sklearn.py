@@ -4,18 +4,18 @@ import numpy as np
 import pytest
 
 
-def _start_application(save_ptype: bool = True):
+def _start_application(save_prototype: bool = True):
     X, y = mock.get_mock_data()
     model = mock.get_mock_model().fit(X, y)
     v = VetiverModel(
         model=model,
-        prototype_data=X if save_ptype else None,
+        prototype_data=X if save_prototype else None,
         model_name="my_model",
         versioned=None,
         description="A regression model for testing purposes",
     )
 
-    app = VetiverAPI(v, check_prototype=save_ptype)
+    app = VetiverAPI(v, check_prototype=save_prototype)
 
     return app
 
@@ -48,7 +48,7 @@ def test_predict_endpoint_ptype_error():
 
 def test_predict_endpoint_no_ptype():
     np.random.seed(500)
-    client = TestClient(_start_application(save_ptype=False).app)
+    client = TestClient(_start_application(save_prototype=False).app)
     data = [{"B": 0, "C": 0, "D": 0}]
     response = client.post("/predict", json=data)
     assert response.status_code == 200, response.text
@@ -57,7 +57,7 @@ def test_predict_endpoint_no_ptype():
 
 def test_predict_endpoint_no_ptype_batch():
     np.random.seed(500)
-    client = TestClient(_start_application(save_ptype=False).app)
+    client = TestClient(_start_application(save_prototype=False).app)
     data = [[0, 0, 0], [0, 0, 0]]
     response = client.post("/predict", json=data)
     assert response.status_code == 200, response.text
@@ -66,7 +66,7 @@ def test_predict_endpoint_no_ptype_batch():
 
 def test_predict_endpoint_no_ptype_error():
     np.random.seed(500)
-    client = TestClient(_start_application(save_ptype=False).app)
+    client = TestClient(_start_application(save_prototype=False).app)
     data = {"hell0", 9, 32.0}
     with pytest.raises(TypeError):
         client.post("/predict", json=data)

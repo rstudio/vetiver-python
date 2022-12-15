@@ -43,7 +43,7 @@ from vetiver import mock, VetiverModel
 X, y = mock.get_mock_data()
 model = mock.get_mock_model().fit(X, y)
 
-v = VetiverModel(model, save_ptype=True, ptype_data=X, model_name='mock_model')
+v = VetiverModel(model, model_name='mock_model', prototype_data=X)
 ```
 
 You can **version** and **share** your `VetiverModel()` by choosing a [pins](https://rstudio.github.io/pins-python/) "board" for it, including a local folder, RStudio Connect, Amazon S3, and more.
@@ -60,7 +60,7 @@ You can **deploy** your pinned `VetiverModel()` using `VetiverAPI()`, an extensi
 
 ```python
 from vetiver import VetiverAPI
-app = VetiverAPI(v, check_ptype = True)
+app = VetiverAPI(v, check_prototype = True)
 ```
 
 To start a server using this object, use `app.run(port = 8080)` or your port of choice.

@@ -101,6 +101,13 @@ class VetiverModel:
         model = board.pin_read(name, version)
         meta = board.pin_meta(name, version)
 
+        if meta.user.get("ptype"):
+            get_prototype = meta.user.get("ptype")
+        elif meta.user.get("prototype"):
+            get_prototype = meta.user.get("prototype")
+        else:
+            get_prototype = None
+
         return cls(
             model=model,
             model_name=name,
@@ -111,8 +118,6 @@ class VetiverModel:
                 url=meta.local.get("url"),  # None all the time, besides Connect
                 required_pkgs=meta.user.get("required_pkgs"),
             ),
-            prototype_data=json.loads(meta.user.get("ptype"))
-            if meta.user.get("ptype")
-            else None,
+            prototype_data=json.loads(get_prototype) if get_prototype else None,
             versioned=True,
         )
