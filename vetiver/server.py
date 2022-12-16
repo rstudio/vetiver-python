@@ -63,6 +63,9 @@ class VetiverAPI:
                 DeprecationWarning,
                 stacklevel=2,
             )
+        if hasattr(self.model, "ptype"):
+            self.model.prototype = self.model.ptype
+            delattr(self.model, "ptype")
 
         self.check_prototype = check_prototype
 
