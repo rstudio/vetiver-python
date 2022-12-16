@@ -43,21 +43,22 @@ class VetiverAPI:
         self,
         model: VetiverModel,
         check_prototype: bool = True,
-        check_ptype: bool = None,
         app_factory=FastAPI,
+        **kwargs,
     ) -> None:
         self.model = model
         self.app_factory = app_factory
         self.app = app_factory()
 
-        if check_ptype is not None:
-            check_prototype = check_ptype
+        if "check_ptype" in kwargs:
+            check_prototype = kwargs.pop("check_ptype")
             warn(
                 "argument for checking input data prototype has changed to "
                 "check_prototype, from check_ptype",
                 DeprecationWarning,
                 stacklevel=2,
             )
+
         self.check_prototype = check_prototype
 
         self._init_app()
@@ -150,9 +151,6 @@ class VetiverAPI:
         """
         if not endpoint_name:
             endpoint_name = endpoint_fx.__name__
-
-        if hasattr(self.model, "ptype"):
-            self.model.prototype = self.model.ptype
 
         if self.check_prototype is True:
 

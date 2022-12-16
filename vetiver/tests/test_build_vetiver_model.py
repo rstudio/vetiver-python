@@ -13,8 +13,7 @@ X_array = pd.DataFrame(X_df).to_numpy()
 model = get_mock_model().fit(X_df, y)
 
 
-def test_vetiver_model_array_ptype():
-    # build VetiverModel, no ptype
+def test_vetiver_model_array_prototype():
     vt1 = vt.VetiverModel(
         model=model,
         prototype_data=X_array,
@@ -29,8 +28,7 @@ def test_vetiver_model_array_ptype():
     assert list(vt1.prototype.__fields__.values())[0].type_ == int
 
 
-def test_vetiver_model_df_ptype():
-    # build VetiverModel, df ptype_data
+def test_vetiver_model_df_prototype():
     vt2 = vt.VetiverModel(
         model=model,
         prototype_data=X_df,
@@ -45,7 +43,7 @@ def test_vetiver_model_df_ptype():
     assert list(vt2.prototype.__fields__.values())[0].type_ == int
 
 
-def test_vetiver_model_dict_ptype():
+def test_vetiver_model_dict_prototype():
     dict_data = {"B": 0, "C": 0, "D": 0}
     vt3 = vt.VetiverModel(
         model=model,
@@ -61,8 +59,7 @@ def test_vetiver_model_dict_ptype():
     assert list(vt3.prototype.__fields__.values())[0].type_ == int
 
 
-def test_vetiver_model_no_ptype():
-    # build VetiverModel, no ptype
+def test_vetiver_model_no_prototype():
     vt4 = vt.VetiverModel(
         model=model,
         prototype_data=None,
@@ -74,6 +71,21 @@ def test_vetiver_model_no_ptype():
 
     assert vt4.model == model
     assert vt4.prototype is None
+
+
+def test_vetiver_model_use_ptype():
+    vt5 = vt.VetiverModel(
+        model=model,
+        ptype_data=X_df,
+        model_name="model",
+        versioned=None,
+        description=None,
+        metadata=None,
+    )
+
+    assert vt5.model == model
+    assert isinstance(vt5.prototype.construct(), pydantic.BaseModel)
+    assert list(vt5.prototype.__fields__.values())[0].type_ == int
 
 
 def test_vetiver_model_from_pin():

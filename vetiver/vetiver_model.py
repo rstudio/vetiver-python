@@ -66,17 +66,16 @@ class VetiverModel:
         model,
         model_name: str,
         prototype_data=None,
-        ptype_data=None,
         versioned=None,
         description: str = None,
         metadata: dict = None,
         **kwargs
     ):
-        if ptype_data is not None:
-            prototype_data = ptype_data
+        if "ptype_data" in kwargs:
+            prototype_data = kwargs.pop("ptype_data")
             warn(
                 "argument for saving input data prototype has changed to "
-                "save_prototype, from save_ptype",
+                "prototype_data, from ptype_data",
                 DeprecationWarning,
                 stacklevel=2,
             )
@@ -84,7 +83,7 @@ class VetiverModel:
         translator = create_handler(model, prototype_data)
 
         self.model = translator.model
-        self.prototype = translator.construct_ptype()
+        self.prototype = translator.construct_prototype()
         self.model_name = model_name
         self.description = description if description else translator.describe()
         self.versioned = versioned
