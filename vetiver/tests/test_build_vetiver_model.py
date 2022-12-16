@@ -13,6 +13,12 @@ X_array = pd.DataFrame(X_df).to_numpy()
 model = get_mock_model().fit(X_df, y)
 
 
+class MockPrototype(pydantic.BaseModel):
+    B: int
+    C: int
+    D: int
+
+
 def test_vetiver_model_array_prototype():
     vt1 = vt.VetiverModel(
         model=model,
@@ -24,6 +30,7 @@ def test_vetiver_model_array_prototype():
     )
 
     assert vt1.model == model
+    assert issubclass(vt1.prototype, vt.Prototype)
     assert isinstance(vt1.prototype.construct(), pydantic.BaseModel)
     assert list(vt1.prototype.__fields__.values())[0].type_ == int
 
@@ -57,6 +64,22 @@ def test_vetiver_model_dict_prototype():
     assert vt3.model == model
     assert isinstance(vt3.prototype.construct(), pydantic.BaseModel)
     assert list(vt3.prototype.__fields__.values())[0].type_ == int
+
+
+def test_vetiver_model_basemodel_prototype():
+
+    m = MockPrototype(B=4, C=0, D=0)
+    vt4 = vt.VetiverModel(
+        model=model,
+        prototype_data=m,
+        model_name="model",
+        versioned=None,
+        description=None,
+        metadata=None,
+    )
+
+    assert vt4.model == model
+    assert vt4.prototype is m
 
 
 def test_vetiver_model_no_prototype():

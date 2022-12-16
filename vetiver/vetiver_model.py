@@ -41,9 +41,9 @@ class VetiverModel:
 
     Attributes
     ----------
-    prototype : pydantic.main.BaseModel
+    prototype : vetiver.Prototype
         Data prototype
-    handler_predict:
+    handler_predict: Callable
         Method to make predictions from a trained model
 
     Notes

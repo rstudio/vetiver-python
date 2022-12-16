@@ -15,12 +15,13 @@ from .types import create_prototype
 
 class InvalidPTypeError(Exception):
     """
-    Throw an error if ptype cannot be recognised
+    Throw an error if prototype cannot be recognised
     """
 
     def __init__(
         self,
-        message="`ptype_data` must be a pd.DataFrame, a pydantic BaseModel or np.ndarray",
+        message="`prototype_data` must be a pd.DataFrame, a pydantic BaseModel, dict or "
+        "np.ndarray",
     ):
         self.message = message
         super().__init__(self.message)
@@ -33,14 +34,14 @@ type {_data_type}. If your datatype is not one of \
 you should write a function to create the prototype. Here is \
 a template for such a function: \
 
-    from pydantic import create_model
-    from vetiver.prototype import vetiver_create_ptype
+    from vetiver.prototype import vetiver_create_prototype
+    from vetiver.types import create_prototype
 
-    @vetiver_create_ptype.register
+    @vetiver_create_prototype.register
     def _(data: {_data_type}):
         data_dict = ... # convert data to a dictionary
-        ptype = create_model("ptype", **data_dict)
-        return ptype
+        prototype = create_prototype(**data_dict)
+        return prototype
 
 If your datatype is a common type, please consider submitting \
 a pull request.
@@ -70,7 +71,7 @@ def vetiver_create_prototype(data):
 
     Returns
     -------
-    ptype : pydantic.main.BaseModel
+    prototype : vetiver.Prototype
         Data prototype
 
     """
@@ -91,17 +92,17 @@ def _(data: pd.DataFrame):
     --------
     >>> from pydantic import BaseModel
     >>> df = pd.DataFrame({'x': [1, 2, 3], 'y': [4, 5, 6]})
-    >>> prototype = vetiver_create_ptype(df)
+    >>> prototype = vetiver_create_prototype(df)
     >>> issubclass(prototype, BaseModel)
     True
     >>> prototype()
-    ptype(x=1, y=4)
+    prototype(x=1, y=4)
 
     The data prototype created for the dataframe is equivalent to:
 
     >>> class another_prototype(BaseModel):
     ...     class Config:
-    ...         title = 'ptype'
+    ...         title = 'prototype'
     ...     x: int = 1
     ...     y: int = 4
 
@@ -134,14 +135,14 @@ def _(data: np.ndarray):
     Examples
     --------
     >>> arr = np.array([[1, 4], [2, 5], [3, 6]])
-    >>> prototype = vetiver_create_ptype(arr)
+    >>> prototype = vetiver_create_prototype(arr)
     >>> prototype()
-    ptype(0=1, 1=4)
+    prototype(0=1, 1=4)
 
     >>> arr2 = np.array([[1, 'a'], [2, 'b'], [3, 'c']], dtype=object)
-    >>> prototype2 = vetiver_create_ptype(arr2)
+    >>> prototype2 = vetiver_create_prototype(arr2)
     >>> prototype2()
-    ptype(0=1, 1='a')
+    prototype(0=1, 1='a')
     """
 
     def _item(value):
