@@ -23,10 +23,10 @@ class VetiverAPI:
         Model to be deployed in API
     check_prototype : bool
         Determine if data prototype should be enforced
-    check_ptype : bool
-        Deprecated in favor of check_prototype
     app_factory :
         Type of API to be deployed
+    **kwargs: dict
+        Deprecated parameters.
 
     Example
     -------
@@ -35,6 +35,11 @@ class VetiverAPI:
     >>> model = vt.get_mock_model().fit(X, y)
     >>> v = vt.VetiverModel(model = model, model_name = "my_model", prototype_data = X)
     >>> v_api = vt.VetiverAPI(model = v, check_prototype = True)
+
+    Notes
+    -----
+    Parameter `check_ptype` was changed to `check_prototype`. Handling of `check_ptype`
+    will be removed in a future version.
     """
 
     app = None

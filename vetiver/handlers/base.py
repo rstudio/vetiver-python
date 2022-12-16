@@ -2,7 +2,7 @@ from vetiver.handlers import base
 from functools import singledispatch
 from contextlib import suppress
 
-from ..ptype import vetiver_create_ptype
+from ..prototype import vetiver_create_prototype
 from ..meta import _model_meta
 
 
@@ -106,7 +106,7 @@ class BaseHandler:
         prototype : pd.DataFrame or None
             Zero-row DataFrame for storing data types
         """
-        prototype = vetiver_create_ptype(self.prototype_data)
+        prototype = vetiver_create_prototype(self.prototype_data)
         return prototype
 
     def handler_startup():

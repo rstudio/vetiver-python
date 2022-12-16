@@ -29,8 +29,6 @@ class VetiverModel:
         Model name or ID
     prototype_data : pd.DataFrame, np.array
         Sample of data model should expect when it is being served
-    ptype_data : pd.DataFrame, np.array
-        Deprecated, in favor of prototype_data
     versioned :
         Should the model be versioned when created?
     description : str
@@ -38,10 +36,12 @@ class VetiverModel:
         If omitted, a brief description will be generated.
     metadata : dict
         Other details to be saved and accessed for serving
+    **kwargs: dict
+        Deprecated parameters.
 
     Attributes
     ----------
-    ptype : pydantic.main.BaseModel
+    prototype : pydantic.main.BaseModel
         Data prototype
     handler_predict:
         Method to make predictions from a trained model
@@ -50,6 +50,10 @@ class VetiverModel:
     -----
     VetiverModel can also take an initialized custom VetiverHandler
     as a model, for advanced use cases or non-supported model types.
+    Parameter `ptype_data` was changed to `prototype_data`. Handling of `ptype_data`
+    will be removed in a future version.
+
+
 
     Example
     -------

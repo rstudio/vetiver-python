@@ -8,21 +8,9 @@ except ImportError:
 
 import pandas as pd
 import numpy as np
-from pydantic import BaseModel, create_model
-
-
-class NoAvailablePTypeError(Exception):
-    """
-    Throw an error if we cannot create
-    a 0 row input data prototype for `model`
-    """
-
-    def __init__(
-        self,
-        message="There is no method to create a 0-row input data prototype for `model`",
-    ):
-        self.message = message
-        super().__init__(self.message)
+import pydantic
+from warnings import warn
+from .types import create_prototype
 
 
 class InvalidPTypeError(Exception):
@@ -39,14 +27,14 @@ class InvalidPTypeError(Exception):
 
 
 CREATE_PTYPE_TPL = """\
-Failed to create a data prototype (ptype) from data of \
+Failed to create a data prototype from data of \
 type {_data_type}. If your datatype is not one of \
 (pd.DataFrame, pydantic.BaseModel, np.ndarry, dict), \
-you should write a function to create the ptype. Here is \
+you should write a function to create the prototype. Here is \
 a template for such a function: \
 
     from pydantic import create_model
-    from vetiver.ptype import vetiver_create_ptype
+    from vetiver.prototype import vetiver_create_ptype
 
     @vetiver_create_ptype.register
     def _(data: {_data_type}):
@@ -59,8 +47,20 @@ a pull request.
 """
 
 
-@singledispatch
 def vetiver_create_ptype(data):
+
+    warn(
+        "argument for creating input data prototypes has changed to "
+        "vetiver_create_prototype, from vetiver_create_ptype",
+        DeprecationWarning,
+        stacklevel=2,
+    )
+
+    return vetiver_create_prototype(data)
+
+
+@singledispatch
+def vetiver_create_prototype(data):
     """Create zero row structure to save data types
 
     Parameters
@@ -77,7 +77,7 @@ def vetiver_create_ptype(data):
     raise InvalidPTypeError(message=CREATE_PTYPE_TPL.format(_data_type=type(data)))
 
 
-@vetiver_create_ptype.register
+@vetiver_create_prototype.register
 def _(data: pd.DataFrame):
     """
     Create input data prototype for a pandas dataframe
@@ -117,11 +117,11 @@ def _(data: pd.DataFrame):
     True
     """
     dict_data = data.iloc[0, :].to_dict()
-    ptype = create_model("ptype", **dict_data)
-    return ptype
+    prototype = create_prototype(**dict_data)
+    return prototype
 
 
-@vetiver_create_ptype.register
+@vetiver_create_prototype.register
 def _(data: np.ndarray):
     """
     Create input data prototype for a numpy array
@@ -156,11 +156,11 @@ def _(data: np.ndarray):
     dict_data = dict(enumerate(data[0], 0))
     # pydantic requires strings as indicies
     dict_data = {f"{key}": _item(value) for key, value in dict_data.items()}
-    ptype = create_model("ptype", **dict_data)
-    return ptype
+    prototype = create_prototype(**dict_data)
+    return prototype
 
 
-@vetiver_create_ptype.register
+@vetiver_create_prototype.register
 def _(data: dict):
     """
     Create input data prototype for a dict
@@ -170,11 +170,11 @@ def _(data: dict):
     data : dict
         Dictionary
     """
-    return create_model("ptype", **data)
+    return create_prototype(**data)
 
 
-@vetiver_create_ptype.register
-def _(data: BaseModel):
+@vetiver_create_prototype.register
+def _(data: pydantic.BaseModel):
     """
     Create input data prototype for a pydantic BaseModel object
 
@@ -186,7 +186,7 @@ def _(data: BaseModel):
     return data
 
 
-@vetiver_create_ptype.register
+@vetiver_create_prototype.register
 def _(data: NoneType):
     """
     Create input data prototype for None

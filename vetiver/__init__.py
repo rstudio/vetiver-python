@@ -2,7 +2,7 @@
 # Change to import.metadata when minimum python>=3.8
 from importlib_metadata import version as _version
 
-from .ptype import *  # noqa
+from .prototype import *  # noqa
 from .vetiver_model import VetiverModel  # noqa
 from .server import VetiverAPI, vetiver_endpoint, predict  # noqa
 from .mock import get_mock_data, get_mock_model  # noqa
@@ -19,6 +19,7 @@ from .handlers.xgboost import XGBoostHandler  # noqa
 from .rsconnect import deploy_rsconnect  # noqa
 from .monitor import compute_metrics, pin_metrics, plot_metrics, _rolling_df  # noqa
 from .model_card import model_card  # noqa
+from .types import create_prototype, Prototype  # noqa
 
 __author__ = "Isabel Zimmerman <isabel.zimmerman@rstudio.com>"
 __all__ = []
