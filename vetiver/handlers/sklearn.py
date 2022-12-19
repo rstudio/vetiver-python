@@ -33,7 +33,7 @@ class SKLearnHandler(BaseHandler):
 
         return meta
 
-    def handler_predict(self, input_data, check_ptype):
+    def handler_predict(self, input_data, check_prototype):
         """Generates method for /predict endpoint in VetiverAPI
 
         The `handler_predict` function executes at each API call. Use this
@@ -51,7 +51,7 @@ class SKLearnHandler(BaseHandler):
             Prediction from model
         """
 
-        if not check_ptype or isinstance(input_data, pd.DataFrame):
+        if not check_prototype or isinstance(input_data, pd.DataFrame):
             prediction = self.model.predict(input_data)
         else:
             prediction = self.model.predict([input_data])

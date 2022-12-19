@@ -2,7 +2,7 @@ from vetiver.handlers import base
 from functools import singledispatch
 from contextlib import suppress
 
-from ..ptype import vetiver_create_ptype
+from ..prototype import vetiver_create_prototype
 from ..meta import _model_meta
 
 
@@ -20,14 +20,14 @@ class InvalidModelError(Exception):
 
 
 @singledispatch
-def create_handler(model, ptype_data):
+def create_handler(model, prototype_data):
     """check for model type to handle prediction
 
     Parameters
     ----------
     model: object
         Description of parameter `x`.
-    ptype_data : object
+    prototype_data : object
         An object with information (data) whose layout is to be determined.
 
     Returns
@@ -63,7 +63,7 @@ class BaseHandler:
     ----------
     model :
         a trained model
-    ptype_data :
+    prototype_data :
         An object with information (data) whose layout is to be determined.
     """
 
@@ -73,9 +73,9 @@ class BaseHandler:
         with suppress(AttributeError, NameError):
             create_handler.register(cls.model_class(), cls)
 
-    def __init__(self, model, ptype_data):
+    def __init__(self, model, prototype_data):
         self.model = model
-        self.ptype_data = ptype_data
+        self.prototype_data = prototype_data
 
     def describe(self):
         """Create description for model"""
@@ -93,21 +93,21 @@ class BaseHandler:
 
         return meta
 
-    def construct_ptype(self):
+    def construct_prototype(self):
         """Create data prototype for a model
 
         Parameters
         ----------
-        ptype_data : pd.DataFrame, np.ndarray, or None
-            Training data to create ptype
+        prototype_data : pd.DataFrame, np.ndarray, or None
+            Training data to create prototype
 
         Returns
         -------
-        ptype : pd.DataFrame or None
+        prototype : pd.DataFrame or None
             Zero-row DataFrame for storing data types
         """
-        ptype = vetiver_create_ptype(self.ptype_data)
-        return ptype
+        prototype = vetiver_create_prototype(self.prototype_data)
+        return prototype
 
     def handler_startup():
         """Include required packages for prediction
@@ -117,7 +117,7 @@ class BaseHandler:
         """
         ...
 
-    def handler_predict(self, input_data, check_ptype):
+    def handler_predict(self, input_data, check_prototype):
         """Generates method for /predict endpoint in VetiverAPI
 
         The `handler_predict` function executes at each API call. Use this
@@ -128,8 +128,8 @@ class BaseHandler:
         ----------
         input_data:
             Data used to generate prediction
-        check_ptype:
-            If type should be checked against `ptype` or not
+        check_prototype:
+            If type should be checked against `prototype` or not
 
         Returns
         -------
@@ -144,8 +144,8 @@ Handler = BaseHandler
 
 
 @create_handler.register
-def _(model: base.BaseHandler, ptype_data):
-    if model.ptype_data is None and ptype_data is not None:
-        model.ptype_data = ptype_data
+def _(model: base.BaseHandler, prototype_data):
+    if model.prototype_data is None and prototype_data is not None:
+        model.prototype_data = prototype_data
 
     return model

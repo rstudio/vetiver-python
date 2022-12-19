@@ -15,7 +15,7 @@ def vetiver_model():
     model = mock.get_mock_model().fit(X, y)
     v = VetiverModel(
         model=model,
-        ptype_data=X,
+        prototype_data=X,
         model_name="my_model",
         versioned=None,
         description="A regression model for testing purposes",
@@ -34,9 +34,9 @@ def sum_dict(x):
 
 
 @pytest.fixture
-def vetiver_client(vetiver_model):  # With check_ptype=True
+def vetiver_client(vetiver_model):  # With check_prototype=True
 
-    app = VetiverAPI(vetiver_model, check_ptype=True)
+    app = VetiverAPI(vetiver_model, check_prototype=True)
     app.vetiver_post(sum_values, "sum")
 
     app.app.root_path = "/sum"
@@ -46,9 +46,9 @@ def vetiver_client(vetiver_model):  # With check_ptype=True
 
 
 @pytest.fixture
-def vetiver_client_check_ptype_false(vetiver_model):  # With check_ptype=False
+def vetiver_client_check_ptype_false(vetiver_model):  # With check_prototype=False
 
-    app = VetiverAPI(vetiver_model, check_ptype=False)
+    app = VetiverAPI(vetiver_model, check_prototype=False)
     app.vetiver_post(sum_dict, "sum")
 
     app.app.root_path = "/sum"

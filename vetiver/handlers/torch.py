@@ -38,7 +38,7 @@ class TorchHandler(BaseHandler):
 
         return meta
 
-    def handler_predict(self, input_data, check_ptype):
+    def handler_predict(self, input_data, check_prototype):
         """Generates method for /predict endpoint in VetiverAPI
 
         The `handler_predict` function executes at each API call. Use this
@@ -57,8 +57,8 @@ class TorchHandler(BaseHandler):
         """
         if not torch_exists:
             raise ImportError("Cannot import `torch`.")
-        if check_ptype:
-            input_data = np.array(input_data, dtype=np.array(self.ptype_data).dtype)
+        if check_prototype:
+            input_data = np.array(input_data, dtype=np.array(self.prototype_data).dtype)
             prediction = self.model(torch.from_numpy(input_data))
 
         # do not check ptype

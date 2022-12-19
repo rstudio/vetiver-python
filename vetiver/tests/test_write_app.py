@@ -10,7 +10,7 @@ model = vetiver.get_mock_model().fit(X_df, y)
 def test_write_app():
     file = "app.py"
     v = vetiver.VetiverModel(
-        model=model, ptype_data=X_df, model_name="model", versioned=None
+        model=model, prototype_data=X_df, model_name="model", versioned=None
     )
     model_board = pins.board_folder(path=".", versioned=True, allow_pickle_read=True)
     vetiver.vetiver_pin_write(board=model_board, model=v)

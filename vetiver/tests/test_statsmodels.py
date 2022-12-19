@@ -24,8 +24,8 @@ def sm_model():
 
 
 @pytest.fixture
-def vetiver_client(sm_model):  # With check_ptype=True
-    app = vetiver.VetiverAPI(sm_model, check_ptype=True)
+def vetiver_client(sm_model):  # With check_prototype=True
+    app = vetiver.VetiverAPI(sm_model, check_prototype=True)
     app.app.root_path = "/predict"
     client = TestClient(app.app)
 
@@ -33,8 +33,8 @@ def vetiver_client(sm_model):  # With check_ptype=True
 
 
 @pytest.fixture
-def vetiver_client_check_ptype_false(sm_model):  # With check_ptype=True
-    app = vetiver.VetiverAPI(sm_model, check_ptype=False)
+def vetiver_client_check_ptype_false(sm_model):  # With check_prototype=True
+    app = vetiver.VetiverAPI(sm_model, check_prototype=False)
     app.app.root_path = "/predict"
     client = TestClient(app.app)
 
