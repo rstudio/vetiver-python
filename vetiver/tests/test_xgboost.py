@@ -44,8 +44,6 @@ def vetiver_client_check_ptype_false(xgb_model):  # With check_prototype=True
 
     return client
 
-<<<<<<< HEAD
-=======
 
 def test_model(xgb_model):
     v = xgb_model
@@ -53,7 +51,6 @@ def test_model(xgb_model):
     assert v.metadata.required_pkgs == ["xgboost"]
     assert not v.metadata.user
 
->>>>>>> 38a4b80 (use dataclass rather than dict)
 
 def test_vetiver_build(vetiver_client):
     data = mtcars.head(1).drop(columns="mpg")
