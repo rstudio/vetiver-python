@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>vetiver.VetiverAPI &#8212; vetiver Commit: fea51a5 documentation</title>
+    <title>vetiver.VetiverAPI &#8212; vetiver Commit: 612d957 documentation</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -79,7 +79,7 @@
       <img src="../_static/logo.png" class="logo" alt="logo">
       
       
-      <h1 class="site-logo" id="site-title">vetiver Commit: fea51a5 documentation</h1>
+      <h1 class="site-logo" id="site-title">vetiver Commit: 612d957 documentation</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
@@ -444,28 +444,32 @@ title="Print to PDF"
 <h1>vetiver.VetiverAPI<a class="headerlink" href="#vetiver-vetiverapi" title="Permalink to this headline">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="vetiver.VetiverAPI">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vetiver.</span></span><span class="sig-name descname"><span class="pre">VetiverAPI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model:</span> <span class="pre">vetiver.vetiver_model.VetiverModel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_ptype:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app_factory=&lt;class</span> <span class="pre">'fastapi.applications.FastAPI'&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vetiver.VetiverAPI" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vetiver.</span></span><span class="sig-name descname"><span class="pre">VetiverAPI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model:</span> <span class="pre">vetiver.vetiver_model.VetiverModel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_prototype:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app_factory=&lt;class</span> <span class="pre">'fastapi.applications.FastAPI'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vetiver.VetiverAPI" title="Permalink to this definition">#</a></dt>
 <dd><p>Create model aware API</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>model</strong> (<a class="reference internal" href="vetiver.VetiverModel.html#vetiver.VetiverModel" title="vetiver.VetiverModel"><em>VetiverModel</em></a>) – Model to be deployed in API</p></li>
-<li><p><strong>check_ptype</strong> (<em>bool</em>) – Determine if data prototype should be enforced</p></li>
+<li><p><strong>check_prototype</strong> (<em>bool</em>) – Determine if data prototype should be enforced</p></li>
 <li><p><strong>app_factory</strong> – Type of API to be deployed</p></li>
+<li><p><strong>**kwargs</strong> (<em>dict</em>) – Deprecated parameters.</p></li>
 </ul>
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">vetiver</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">vetiver</span><span class="o">.</span><span class="n">get_mock_data</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">vetiver</span><span class="o">.</span><span class="n">get_mock_model</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">v</span> <span class="o">=</span> <span class="n">vetiver</span><span class="o">.</span><span class="n">VetiverModel</span><span class="p">(</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="p">,</span> <span class="n">model_name</span> <span class="o">=</span> <span class="s2">&quot;my_model&quot;</span><span class="p">,</span> <span class="n">ptype_data</span> <span class="o">=</span> <span class="n">X</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">v_api</span> <span class="o">=</span> <span class="n">vetiver</span><span class="o">.</span><span class="n">VetiverAPI</span><span class="p">(</span><span class="n">model</span> <span class="o">=</span> <span class="n">v</span><span class="p">,</span> <span class="n">check_ptype</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">vetiver</span> <span class="k">as</span> <span class="nn">vt</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">vt</span><span class="o">.</span><span class="n">get_mock_data</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">vt</span><span class="o">.</span><span class="n">get_mock_model</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">v</span> <span class="o">=</span> <span class="n">vt</span><span class="o">.</span><span class="n">VetiverModel</span><span class="p">(</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="p">,</span> <span class="n">model_name</span> <span class="o">=</span> <span class="s2">&quot;my_model&quot;</span><span class="p">,</span> <span class="n">prototype_data</span> <span class="o">=</span> <span class="n">X</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">v_api</span> <span class="o">=</span> <span class="n">vt</span><span class="o">.</span><span class="n">VetiverAPI</span><span class="p">(</span><span class="n">model</span> <span class="o">=</span> <span class="n">v</span><span class="p">,</span> <span class="n">check_prototype</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
+<p class="rubric">Notes</p>
+<p>Parameter <cite>check_ptype</cite> was changed to <cite>check_prototype</cite>. Handling of <cite>check_ptype</cite>
+will be removed in a future version.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="vetiver.VetiverAPI.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model:</span> <span class="pre">vetiver.vetiver_model.VetiverModel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_ptype:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app_factory=&lt;class</span> <span class="pre">'fastapi.applications.FastAPI'&gt;</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#vetiver.VetiverAPI.__init__" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model:</span> <span class="pre">vetiver.vetiver_model.VetiverModel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_prototype:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app_factory=&lt;class</span> <span class="pre">'fastapi.applications.FastAPI'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#vetiver.VetiverAPI.__init__" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <p class="rubric">Methods</p>
@@ -475,7 +479,7 @@ title="Print to PDF"
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#vetiver.VetiverAPI.__init__" title="vetiver.VetiverAPI.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(model[, check_ptype, app_factory])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#vetiver.VetiverAPI.__init__" title="vetiver.VetiverAPI.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(model[, check_prototype, app_factory])</p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="vetiver.VetiverAPI.run.html#vetiver.VetiverAPI.run" title="vetiver.VetiverAPI.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a>([port, host])</p></td>

@@ -14,7 +14,7 @@
    .. autosummary::
    
       ~XGBoostHandler.__init__
-      ~XGBoostHandler.construct_ptype
+      ~XGBoostHandler.construct_prototype
       ~XGBoostHandler.create_meta
       ~XGBoostHandler.describe
       ~XGBoostHandler.handler_predict

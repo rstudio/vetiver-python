@@ -14,7 +14,7 @@
    .. autosummary::
    
       ~StatsmodelsHandler.__init__
-      ~StatsmodelsHandler.construct_ptype
+      ~StatsmodelsHandler.construct_prototype
       ~StatsmodelsHandler.create_meta
       ~StatsmodelsHandler.describe
       ~StatsmodelsHandler.handler_predict

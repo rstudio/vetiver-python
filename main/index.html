@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>vetiver &#8212; vetiver Commit: fea51a5 documentation</title>
+    <title>vetiver &#8212; vetiver Commit: 612d957 documentation</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -78,7 +78,7 @@
       <img src="_static/logo.png" class="logo" alt="logo">
       
       
-      <h1 class="site-logo" id="site-title">vetiver Commit: fea51a5 documentation</h1>
+      <h1 class="site-logo" id="site-title">vetiver Commit: 612d957 documentation</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
@@ -564,7 +564,7 @@ more on how to get started.</p>
 <td><p>Pin a trained VetiverModel along with other model metadata.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="reference/vetiver.vetiver_create_ptype.html#vetiver.vetiver_create_ptype" title="vetiver.vetiver_create_ptype"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vetiver_create_ptype</span></code></a>(data)</p></td>
-<td><p>Create zero row structure to save data types</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="reference/vetiver.model_card.html#vetiver.model_card" title="vetiver.model_card"><code class="xref py py-obj docutils literal notranslate"><span class="pre">model_card</span></code></a>([path])</p></td>
 <td><p>Create a model card for documentation</p></td>
@@ -580,7 +580,7 @@ more on how to get started.</p>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="reference/vetiver.VetiverAPI.html#vetiver.VetiverAPI" title="vetiver.VetiverAPI"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VetiverAPI</span></code></a>(model, check_ptype[, app_factory])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/vetiver.VetiverAPI.html#vetiver.VetiverAPI" title="vetiver.VetiverAPI"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VetiverAPI</span></code></a>(model, check_prototype[, app_factory])</p></td>
 <td><p>Create model aware API</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="reference/vetiver.VetiverAPI.run.html#vetiver.VetiverAPI.run" title="vetiver.VetiverAPI.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a>([port, host])</p></td>
@@ -641,19 +641,19 @@ more on how to get started.</p>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="reference/vetiver.BaseHandler.html#vetiver.BaseHandler" title="vetiver.BaseHandler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BaseHandler</span></code></a>(model, ptype_data)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/vetiver.BaseHandler.html#vetiver.BaseHandler" title="vetiver.BaseHandler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BaseHandler</span></code></a>(model, prototype_data)</p></td>
 <td><p>Base handler class for creating VetiverModel of different type.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="reference/vetiver.SKLearnHandler.html#vetiver.SKLearnHandler" title="vetiver.SKLearnHandler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SKLearnHandler</span></code></a>(model, ptype_data)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/vetiver.SKLearnHandler.html#vetiver.SKLearnHandler" title="vetiver.SKLearnHandler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SKLearnHandler</span></code></a>(model, prototype_data)</p></td>
 <td><p>Handler class for creating VetiverModels with sklearn.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="reference/vetiver.TorchHandler.html#vetiver.TorchHandler" title="vetiver.TorchHandler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TorchHandler</span></code></a>(model, ptype_data)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/vetiver.TorchHandler.html#vetiver.TorchHandler" title="vetiver.TorchHandler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TorchHandler</span></code></a>(model, prototype_data)</p></td>
 <td><p>Handler class for creating VetiverModels with torch.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="reference/vetiver.StatsmodelsHandler.html#vetiver.StatsmodelsHandler" title="vetiver.StatsmodelsHandler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StatsmodelsHandler</span></code></a>(model, ptype_data)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/vetiver.StatsmodelsHandler.html#vetiver.StatsmodelsHandler" title="vetiver.StatsmodelsHandler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StatsmodelsHandler</span></code></a>(model, prototype_data)</p></td>
 <td><p>Handler class for creating VetiverModels with statsmodels.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="reference/vetiver.XGBoostHandler.html#vetiver.XGBoostHandler" title="vetiver.XGBoostHandler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">XGBoostHandler</span></code></a>(model, ptype_data)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/vetiver.XGBoostHandler.html#vetiver.XGBoostHandler" title="vetiver.XGBoostHandler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">XGBoostHandler</span></code></a>(model, prototype_data)</p></td>
 <td><p>Handler class for creating VetiverModels with xgboost.</p></td>
 </tr>
 </tbody>

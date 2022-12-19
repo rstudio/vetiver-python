@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>vetiver.StatsmodelsHandler &#8212; vetiver Commit: fea51a5 documentation</title>
+    <title>vetiver.StatsmodelsHandler &#8212; vetiver Commit: 612d957 documentation</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -79,7 +79,7 @@
       <img src="../_static/logo.png" class="logo" alt="logo">
       
       
-      <h1 class="site-logo" id="site-title">vetiver Commit: fea51a5 documentation</h1>
+      <h1 class="site-logo" id="site-title">vetiver Commit: 612d957 documentation</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
@@ -444,7 +444,7 @@ title="Print to PDF"
 <h1>vetiver.StatsmodelsHandler<a class="headerlink" href="#vetiver-statsmodelshandler" title="Permalink to this headline">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="vetiver.StatsmodelsHandler">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vetiver.</span></span><span class="sig-name descname"><span class="pre">StatsmodelsHandler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ptype_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vetiver.StatsmodelsHandler" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vetiver.</span></span><span class="sig-name descname"><span class="pre">StatsmodelsHandler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prototype_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vetiver.StatsmodelsHandler" title="Permalink to this definition">#</a></dt>
 <dd><p>Handler class for creating VetiverModels with statsmodels.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -453,7 +453,7 @@ title="Print to PDF"
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="vetiver.StatsmodelsHandler.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ptype_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vetiver.StatsmodelsHandler.__init__" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prototype_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vetiver.StatsmodelsHandler.__init__" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <p class="rubric">Methods</p>
@@ -463,10 +463,10 @@ title="Print to PDF"
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#vetiver.StatsmodelsHandler.__init__" title="vetiver.StatsmodelsHandler.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(model, ptype_data)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#vetiver.StatsmodelsHandler.__init__" title="vetiver.StatsmodelsHandler.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(model, prototype_data)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">construct_ptype</span></code>()</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">construct_prototype</span></code>()</p></td>
 <td><p>Create data prototype for a model</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_meta</span></code>([version, url, required_pkgs])</p></td>
@@ -475,7 +475,7 @@ title="Print to PDF"
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">describe</span></code>()</p></td>
 <td><p>Create description for statsmodels model</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">handler_predict</span></code>(input_data, check_ptype)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">handler_predict</span></code>(input_data, check_prototype)</p></td>
 <td><p>Generates method for /predict endpoint in VetiverAPI</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">handler_startup</span></code>()</p></td>

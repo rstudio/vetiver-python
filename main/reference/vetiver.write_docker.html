@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>vetiver.write_docker &#8212; vetiver Commit: fea51a5 documentation</title>
+    <title>vetiver.write_docker &#8212; vetiver Commit: 612d957 documentation</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -79,7 +79,7 @@
       <img src="../_static/logo.png" class="logo" alt="logo">
       
       
-      <h1 class="site-logo" id="site-title">vetiver Commit: fea51a5 documentation</h1>
+      <h1 class="site-logo" id="site-title">vetiver Commit: 612d957 documentation</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
@@ -465,7 +465,7 @@ title="Print to PDF"
 <span class="gp">&gt;&gt;&gt; </span><span class="n">board</span> <span class="o">=</span> <span class="n">pins</span><span class="o">.</span><span class="n">board_temp</span><span class="p">(</span><span class="n">allow_pickle_read</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">vetiver</span><span class="o">.</span><span class="n">get_mock_data</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">vetiver</span><span class="o">.</span><span class="n">get_mock_model</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">v</span> <span class="o">=</span> <span class="n">vetiver</span><span class="o">.</span><span class="n">VetiverModel</span><span class="p">(</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="p">,</span> <span class="n">model_name</span> <span class="o">=</span> <span class="s2">&quot;my_model&quot;</span><span class="p">,</span> <span class="n">ptype_data</span> <span class="o">=</span> <span class="n">X</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">v</span> <span class="o">=</span> <span class="n">vetiver</span><span class="o">.</span><span class="n">VetiverModel</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;my_model&quot;</span><span class="p">,</span> <span class="n">prototype_data</span> <span class="o">=</span> <span class="n">X</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">vetiver</span><span class="o">.</span><span class="n">vetiver_pin_write</span><span class="p">(</span><span class="n">board</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">vetiver</span><span class="o">.</span><span class="n">write_app</span><span class="p">(</span><span class="n">board</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="s2">&quot;my_model&quot;</span><span class="p">,</span>
