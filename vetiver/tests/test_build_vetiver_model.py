@@ -75,7 +75,7 @@ def test_vetiver_model_basemodel_prototype():
         prototype_data=m,
         model_name="model",
         versioned=False,
-        description=None
+        description=None,
     )
 
     assert vt4.model == model
@@ -107,7 +107,7 @@ def test_vetiver_model_use_ptype():
     )
 
     assert vt5.model == model
-    assert vt5.ptype is None
+    assert vt5.prototype is None
     assert vt5.metadata == VetiverMeta(
         user={"test": 123},
         version=None,
@@ -134,8 +134,8 @@ def test_vetiver_model_from_pin():
     assert isinstance(v2, vt.VetiverModel)
     assert isinstance(v2.model, sklearn.base.BaseEstimator)
     assert isinstance(v2.prototype.construct(), pydantic.BaseModel)
-    assert v2.metadata.get("user") == {"test": 123}
-    assert v2.metadata.get("version") is not None
+    assert v2.metadata.user == {"test": 123}
+    assert v2.metadata.version is not None
     assert v2.metadata.required_pkgs == ["scikit-learn"]
-    
+
     board.pin_delete("model")

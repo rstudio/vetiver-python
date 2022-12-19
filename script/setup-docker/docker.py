@@ -13,5 +13,4 @@ v = vetiver.VetiverModel(model, "mymodel", ptype_data=X)
 
 vetiver.vetiver_pin_write(board, v)
 
-
 vetiver.prepare_docker(board, "mymodel")

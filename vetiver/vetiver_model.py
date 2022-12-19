@@ -100,11 +100,18 @@ class VetiverModel:
         meta = board.pin_meta(name, version)
 
         if "vetiver_meta" in meta.user:
-            ptype = meta.user.get("vetiver_meta").get("prototype")
-            required_pkgs = meta.user.get("vetiver_meta").get("required_pkgs")
+            get_prototype = meta.user.get("vetiver_meta").get("prototype", None)
+            required_pkgs = meta.user.get("vetiver_meta").get("required_pkgs", None)
             meta.user.pop("vetiver_meta")
         else:
-            ptype = meta.user.get("ptype", None)
+            # ptype = meta.user.get("ptype", None)
+
+            get_prototype = meta.user.get("ptype")
+            # elif meta.user.get("prototype"):
+            #     get_prototype = meta.user.get("prototype")
+            # else:
+            #     get_prototype = None
+
             required_pkgs = meta.user.get("required_pkgs")
 
         return cls(

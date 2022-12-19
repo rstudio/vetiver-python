@@ -12,7 +12,6 @@ class CustomHandler(BaseHandler):
         super().__init__(model, ptype_data)
 
     model_type = staticmethod(lambda: newmodeltype)
-    pkg = sklearn # modeling package
     pip_name = "scikit-learn" # pkg name on pip, used for tracking pkg versions
 
     def handler_predict(self, input_data, check_ptype: bool):

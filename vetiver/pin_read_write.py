@@ -55,6 +55,7 @@ def vetiver_pin_write(board, model: VetiverModel, versioned: bool = True):
     # convert older model's ptype to prototype
     if hasattr(model, "ptype"):
         model.prototype = model.ptype
+        delattr(model, "ptype")
     # metadata is dict
     if isinstance(model.metadata, dict):
         model.metadata = VetiverMeta.from_dict(model.metadata)
@@ -68,7 +69,7 @@ def vetiver_pin_write(board, model: VetiverModel, versioned: bool = True):
             "user": model.metadata.user,
             "vetiver_meta": {
                 "required_pkgs": model.metadata.required_pkgs,
-                "ptype": None if model.prototype is None else model.prototype().json(),
+                "prototype": None if not model.prototype else model.prototype().json(),
             },
         },
         versioned=versioned,
