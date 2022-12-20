@@ -20,6 +20,19 @@ def _start_application(save_prototype: bool = True):
     return app
 
 
+def test_build_sklearn():
+    X, y = mock.get_mock_data()
+    model = mock.get_mock_model().fit(X, y)
+    v = VetiverModel(
+        model=model,
+        ptype_data=X,
+        model_name="my_model",
+        description="A regression model for testing purposes",
+    )
+
+    assert v.metadata.required_pkgs == ["scikit-learn"]
+
+
 def test_predict_endpoint_ptype():
     np.random.seed(500)
     client = TestClient(_start_application().app)

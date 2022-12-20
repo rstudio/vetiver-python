@@ -35,10 +35,10 @@ def test_custom_vetiver_model():
         prototype_data=X,
         model_name="my_model",
         versioned=None,
-        description="A regression model for testing purposes",
     )
 
-    assert v.description == "A regression model for testing purposes"
+    assert v.description == "A  DummyRegressor model"
+    assert not v.metadata.required_pkgs
     assert isinstance(v.model, sklearn.dummy.DummyRegressor)
     assert isinstance(v.prototype.construct(), pydantic.BaseModel)
 

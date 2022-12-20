@@ -1,4 +1,5 @@
 from .vetiver_model import VetiverModel
+from .meta import VetiverMeta
 from .utils import inform
 import warnings
 import logging
@@ -54,6 +55,10 @@ def vetiver_pin_write(board, model: VetiverModel, versioned: bool = True):
     # convert older model's ptype to prototype
     if hasattr(model, "ptype"):
         model.prototype = model.ptype
+        delattr(model, "ptype")
+    # metadata is dict
+    if isinstance(model.metadata, dict):
+        model.metadata = VetiverMeta.from_dict(model.metadata)
 
     board.pin_write(
         model.model,
@@ -61,8 +66,11 @@ def vetiver_pin_write(board, model: VetiverModel, versioned: bool = True):
         type="joblib",
         description=model.description,
         metadata={
-            "required_pkgs": model.metadata.get("required_pkgs"),
-            "prototype": None if model.prototype is None else model.prototype().json(),
+            "user": model.metadata.user,
+            "vetiver_meta": {
+                "required_pkgs": model.metadata.required_pkgs,
+                "prototype": None if not model.prototype else model.prototype().json(),
+            },
         },
         versioned=versioned,
     )

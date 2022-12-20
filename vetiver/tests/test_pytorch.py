@@ -53,6 +53,7 @@ def test_vetiver_build():
     )
 
     assert vt2.model == torch_model
+    assert vt2.metadata.required_pkgs == ["torch"]
 
 
 def test_torch_predict_ptype():

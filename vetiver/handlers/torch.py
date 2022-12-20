@@ -1,6 +1,5 @@
 import numpy as np
 
-from ..meta import _model_meta
 from .base import BaseHandler
 
 torch_exists = True
@@ -20,23 +19,8 @@ class TorchHandler(BaseHandler):
     """
 
     model_class = staticmethod(lambda: torch.nn.Module)
-
-    def describe(self):
-        """Create description for torch model"""
-        desc = f"Pytorch model of type {type(self.model)}"
-        return desc
-
-    def create_meta(
-        user: list = None,
-        version: str = None,
-        url: str = None,
-        required_pkgs: list = [],
-    ):
-        """Create metadata for torch model"""
-        required_pkgs = required_pkgs + ["torch"]
-        meta = _model_meta(user, version, url, required_pkgs)
-
-        return meta
+    if torch_exists:
+        pip_name = "torch"
 
     def handler_predict(self, input_data, check_prototype):
         """Generates method for /predict endpoint in VetiverAPI

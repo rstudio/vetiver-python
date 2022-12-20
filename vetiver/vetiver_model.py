@@ -1,7 +1,6 @@
 import json
 from warnings import warn
 from vetiver.handlers.base import create_handler
-from .meta import _model_meta
 
 
 class NoModelAvailableError(Exception):
@@ -62,7 +61,7 @@ class VetiverModel:
     >>> model = mock.get_mock_model().fit(X, y)
     >>> v = VetiverModel(model = model, model_name = "my_model", prototype_data = X)
     >>> v.description
-    "Scikit-learn <class 'sklearn.dummy.DummyRegressor'> model"
+    'A scikit-learn DummyRegressor model'
     """
 
     def __init__(
@@ -91,12 +90,8 @@ class VetiverModel:
         self.model_name = model_name
         self.description = description if description else translator.describe()
         self.versioned = versioned
-        self.metadata = (
-            metadata
-            if metadata
-            else translator.create_meta(metadata, required_pkgs=["vetiver"])
-        )
         self.handler_predict = translator.handler_predict
+        self.metadata = translator.create_meta(metadata)
 
     @classmethod
     def from_pin(cls, board, name: str, version: str = None):
@@ -104,23 +99,31 @@ class VetiverModel:
         model = board.pin_read(name, version)
         meta = board.pin_meta(name, version)
 
-        if meta.user.get("ptype"):
-            get_prototype = meta.user.get("ptype")
-        elif meta.user.get("prototype"):
-            get_prototype = meta.user.get("prototype")
+        if "vetiver_meta" in meta.user:
+            get_prototype = meta.user.get("vetiver_meta").get("prototype", None)
+            required_pkgs = meta.user.get("vetiver_meta").get("required_pkgs", None)
+            meta.user.pop("vetiver_meta")
         else:
-            get_prototype = None
+            # ptype = meta.user.get("ptype", None)
+
+            get_prototype = meta.user.get("ptype")
+            # elif meta.user.get("prototype"):
+            #     get_prototype = meta.user.get("prototype")
+            # else:
+            #     get_prototype = None
+
+            required_pkgs = meta.user.get("required_pkgs")
 
         return cls(
             model=model,
             model_name=name,
             description=meta.description,
-            metadata=_model_meta(
-                user=meta.user,
-                version=meta.version.version,
-                url=meta.local.get("url"),  # None all the time, besides Connect
-                required_pkgs=meta.user.get("required_pkgs"),
-            ),
+            metadata={
+                "user": meta.user.get("user"),
+                "version": meta.version.version,
+                "url": meta.local.get("url"),  # None all the time, besides Connect,
+                "required_pkgs": required_pkgs,
+            },
             prototype_data=json.loads(get_prototype) if get_prototype else None,
             versioned=True,
         )

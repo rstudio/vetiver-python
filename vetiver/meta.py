@@ -1,23 +1,33 @@
-def _model_meta(
-    user: dict = None, version: str = None, url: str = None, required_pkgs: list = None
-):
-    """Populate relevant metadata for VetiverModel
+from dataclasses import dataclass, asdict, field
+from typing import Mapping
 
-    Args
-    ----
-        user: dict
-           Extra user-defined information
-        version: str
-            Model version, generally populated from pins
-        url: str
-            Discoverable URL for API
-        required_pkgs: list
-            Packages necessary to make predictions
-    """
-    meta = {
-        "user": user,
-        "version": version,
-        "url": url,
-        "required_pkgs": required_pkgs,
-    }
-    return meta
+
+@dataclass
+class VetiverMeta:
+    """Metadata in a VetiverModel"""
+
+    user: "dict | None" = field(default_factory=dict)
+    version: "str | None" = None
+    url: "str | None" = None
+    required_pkgs: "list | None" = field(default_factory=list)
+
+    def to_dict(self) -> Mapping:
+        data = asdict(self)
+
+        return data
+
+    @classmethod
+    def from_dict(cls, metadata, pip_name=None) -> "VetiverMeta":
+
+        metadata = {} if metadata is None else metadata
+
+        user = metadata.get("user", metadata)
+        version = metadata.get("version", None)
+        url = metadata.get("url", None)
+        required_pkgs = metadata.get("required_pkgs", [])
+
+        if pip_name:
+            if not list(filter(lambda x: pip_name in x, required_pkgs)):
+                required_pkgs = required_pkgs + [f"{pip_name}"]
+
+        return cls(user, version, url, required_pkgs)

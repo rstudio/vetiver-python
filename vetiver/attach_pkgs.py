@@ -1,6 +1,7 @@
 import tempfile
 import os
-from vetiver import VetiverModel
+from .vetiver_model import VetiverModel
+from .meta import VetiverMeta
 
 
 def load_pkgs(model: VetiverModel = None, packages: list = None, path=""):
@@ -19,8 +20,12 @@ def load_pkgs(model: VetiverModel = None, packages: list = None, path=""):
     required_pkgs = ["vetiver"]
     if packages:
         required_pkgs = list(set(required_pkgs + packages))
-    if model.metadata.get("required_pkgs"):
-        required_pkgs = list(set(required_pkgs + model.metadata.get("required_pkgs")))
+
+    if isinstance(model.metadata, dict):
+        model.metadata = VetiverMeta.from_dict(model.metadata)
+
+    if model.metadata.required_pkgs:
+        required_pkgs = list(set(required_pkgs + model.metadata.required_pkgs))
 
     tmp = tempfile.NamedTemporaryFile(suffix=".in", delete=False)
     tmp.close()

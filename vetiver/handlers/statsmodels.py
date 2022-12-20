@@ -1,6 +1,5 @@
 import pandas as pd
 
-from ..meta import _model_meta
 from .base import BaseHandler
 
 sm_exists = True
@@ -20,23 +19,8 @@ class StatsmodelsHandler(BaseHandler):
     """
 
     model_class = staticmethod(lambda: statsmodels.base.wrapper.ResultsWrapper)
-
-    def describe(self):
-        """Create description for statsmodels model"""
-        desc = f"Statsmodels {self.model.__class__} model."
-        return desc
-
-    def create_meta(
-        user: list = None,
-        version: str = None,
-        url: str = None,
-        required_pkgs: list = [],
-    ):
-        """Create metadata for statsmodel"""
-        required_pkgs = required_pkgs + ["statsmodels"]
-        meta = _model_meta(user, version, url, required_pkgs)
-
-        return meta
+    if sm_exists:
+        pip_name = "statsmodels"
 
     def handler_predict(self, input_data, check_prototype):
         """Generates method for /predict endpoint in VetiverAPI

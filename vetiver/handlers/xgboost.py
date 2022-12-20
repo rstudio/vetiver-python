@@ -1,6 +1,5 @@
 import pandas as pd
 
-from ..meta import _model_meta
 from .base import BaseHandler
 
 xgb_exists = True
@@ -20,23 +19,8 @@ class XGBoostHandler(BaseHandler):
     """
 
     model_class = staticmethod(lambda: xgboost.Booster)
-
-    def describe(self):
-        """Create description for xgboost model"""
-        desc = f"XGBoost {self.model.__class__} model."
-        return desc
-
-    def create_meta(
-        user: list = None,
-        version: str = None,
-        url: str = None,
-        required_pkgs: list = [],
-    ):
-        """Create metadata for xgboost"""
-        required_pkgs = required_pkgs + ["xgboost"]
-        meta = _model_meta(user, version, url, required_pkgs)
-
-        return meta
+    if xgb_exists:
+        pip_name = "xgboost"
 
     def handler_predict(self, input_data, check_prototype):
         """Generates method for /predict endpoint in VetiverAPI

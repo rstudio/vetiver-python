@@ -3,7 +3,7 @@ from functools import singledispatch
 from contextlib import suppress
 
 from ..prototype import vetiver_create_prototype
-from ..meta import _model_meta
+from ..meta import VetiverMeta
 
 
 class InvalidModelError(Exception):
@@ -43,7 +43,7 @@ def create_handler(model, prototype_data):
     >>> model = vetiver.mock.get_mock_model()
     >>> handler = vetiver.create_handler(model, X)
     >>> handler.describe()
-    "Scikit-learn <class 'sklearn.dummy.DummyRegressor'> model"
+    'A scikit-learn DummyRegressor model'
     """
 
     raise InvalidModelError(
@@ -79,19 +79,20 @@ class BaseHandler:
 
     def describe(self):
         """Create description for model"""
-        desc = f"{self.model.__class__} model"
+
+        pip_name = self.pip_name if hasattr(self, "pip_name") else ""
+        obj_name = type(self.model).__qualname__
+
+        desc = f"A {pip_name} {obj_name} model"
+
         return desc
 
-    def create_meta(
-        user: list = None,
-        version: str = None,
-        url: str = None,
-        required_pkgs: list = [],
-    ):
+    def create_meta(self, metadata):
         """Create metadata for a model"""
-        meta = _model_meta(user, version, url, required_pkgs)
 
-        return meta
+        pip_name = self.pip_name if hasattr(self, "pip_name") else None
+
+        return VetiverMeta.from_dict(metadata, pip_name)
 
     def construct_prototype(self):
         """Create data prototype for a model

@@ -12,6 +12,7 @@ from warnings import warn
 
 from .utils import _jupyter_nb
 from .vetiver_model import VetiverModel
+from .meta import VetiverMeta
 
 
 class VetiverAPI:
@@ -82,11 +83,14 @@ class VetiverAPI:
 
             return RedirectResponse(redirect)
 
-        if self.model.metadata.get("url") is not None:
+        if isinstance(self.model.metadata, dict):
+            self.model.metadata = VetiverMeta.from_dict(self.model.metadata)
+
+        if self.model.metadata.url is not None:
 
             @app.get("/pin-url")
             def pin_url():
-                return repr(self.model.metadata.get("url"))
+                return repr(self.model.metadata.url)
 
         @app.get("/ping", include_in_schema=True)
         async def ping():
