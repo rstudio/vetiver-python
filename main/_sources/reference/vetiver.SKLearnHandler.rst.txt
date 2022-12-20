@@ -25,4 +25,10 @@
 
    
    
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~SKLearnHandler.pip_name
+   
    
