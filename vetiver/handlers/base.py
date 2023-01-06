@@ -1,4 +1,3 @@
-from vetiver.handlers import base
 from functools import singledispatch
 from contextlib import suppress
 
@@ -145,7 +144,7 @@ Handler = BaseHandler
 
 
 @create_handler.register
-def _(model: base.BaseHandler, prototype_data):
+def _(model: BaseHandler, prototype_data):
     if model.prototype_data is None and prototype_data is not None:
         model.prototype_data = prototype_data
 

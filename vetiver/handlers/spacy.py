@@ -16,9 +16,12 @@ class SpacyHandler(BaseHandler):
         a trained and fit spacy model
     """
 
-    model_class = staticmethod(lambda: spacy.Doc)
+    model_class = staticmethod(lambda: spacy.pipeline.Pipe)
+
     if spacy_exists:
         pip_name = "spacy"
+
+    # what to do about prototypes?
 
     def handler_predict(self, input_data, check_prototype):
         """Generates method for /predict endpoint in VetiverAPI
@@ -40,6 +43,12 @@ class SpacyHandler(BaseHandler):
         if not spacy_exists:
             raise ImportError("Cannot import `spacy`")
 
-        prediction = self.model.predict([input_data])
+        doc = spacy.tokens.Doc.from_json(input_data)
+
+        # if not isinstance (doc, list):
+        #     doc = [doc]
+        # needs to be in doc format to make prediction
+        # doc is not json serializable
+        prediction = self.model.predict([doc])
 
         return prediction
