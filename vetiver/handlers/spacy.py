@@ -16,7 +16,7 @@ class SpacyHandler(BaseHandler):
         a trained and fit spacy model
     """
 
-    model_class = staticmethod(lambda: spacy.pipeline.Pipe)
+    model_class = staticmethod(lambda: spacy.Language)
 
     if spacy_exists:
         pip_name = "spacy"
@@ -43,12 +43,26 @@ class SpacyHandler(BaseHandler):
         if not spacy_exists:
             raise ImportError("Cannot import `spacy`")
 
-        doc = spacy.tokens.Doc.from_json(input_data)
+        articles = input_data.get("data")
+        response_body = []
+        texts = (article.get("text") for article in articles)
+        for doc in self.model.pipe(texts):
+            response_body.append(get_data(doc))
 
-        # if not isinstance (doc, list):
-        #     doc = [doc]
-        # needs to be in doc format to make prediction
-        # doc is not json serializable
-        prediction = self.model.predict([doc])
+        # response_body = []
+        # for doc in self.model.pipe(input_data.get("text")):
+        #     response_body.append(get_data(doc))
 
-        return prediction
+        return response_body
+
+
+def get_data(doc):
+    ents = [
+        {
+            "label": ent.label_,
+            "start": ent.start_char,
+            "end": ent.end_char,
+        }
+        for ent in doc.ents
+    ]
+    return {"text": doc.text, "ents": ents}
