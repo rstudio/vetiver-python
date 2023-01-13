@@ -1,4 +1,5 @@
 import sklearn
+import sys
 
 import vetiver as vt
 from vetiver.meta import VetiverMeta
@@ -113,6 +114,7 @@ def test_vetiver_model_use_ptype():
         version=None,
         url=None,
         required_pkgs=["scikit-learn"],
+        python_version=sys.version,
     )
 
 
@@ -137,5 +139,41 @@ def test_vetiver_model_from_pin():
     assert v2.metadata.user == {"test": 123}
     assert v2.metadata.version is not None
     assert v2.metadata.required_pkgs == ["scikit-learn"]
+    assert v2.metadata.python_version == sys.version
+
+    board.pin_delete("model")
+
+
+def test_vetiver_model_from_pin_user_metadata():
+    """
+    Test if standard keys as part of :dataclass:`VetiverMeta` are picked
+    """
+    custom_meta = {
+        "test": 123,
+        "required_pkgs": ["foo", "bar"],
+        "python_version": "baz",
+    }
+    loaded_pkgs = custom_meta["required_pkgs"] + ["scikit-learn"]
+
+    v = vt.VetiverModel(
+        model=model,
+        prototype_data=X_df,
+        model_name="model",
+        versioned=None,
+        description=None,
+        metadata=custom_meta,
+    )
+
+    board = pins.board_temp(allow_pickle_read=True)
+    vt.vetiver_pin_write(board=board, model=v)
+    v2 = vt.VetiverModel.from_pin(board, "model")
+
+    assert isinstance(v2, vt.VetiverModel)
+    assert isinstance(v2.model, sklearn.base.BaseEstimator)
+    assert isinstance(v2.prototype.construct(), pydantic.BaseModel)
+    assert v2.metadata.user == custom_meta
+    assert v2.metadata.version is not None
+    assert v2.metadata.required_pkgs == loaded_pkgs
+    assert v2.metadata.python_version == custom_meta["python_version"]
 
     board.pin_delete("model")
