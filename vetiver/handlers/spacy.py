@@ -1,4 +1,5 @@
 from .base import BaseHandler
+import pandas as pd
 
 spacy_exists = True
 try:
@@ -43,17 +44,12 @@ class SpacyHandler(BaseHandler):
         if not spacy_exists:
             raise ImportError("Cannot import `spacy`")
 
-        articles = input_data.get("data")
         response_body = []
-        texts = (article.get("text") for article in articles)
-        for doc in self.model.pipe(texts):
+
+        for doc in self.model.pipe(input_data.text):
             response_body.append(get_data(doc))
 
-        # response_body = []
-        # for doc in self.model.pipe(input_data.get("text")):
-        #     response_body.append(get_data(doc))
-
-        return response_body
+        return pd.Series(response_body)
 
 
 def get_data(doc):
