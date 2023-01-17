@@ -21,11 +21,11 @@ def spacy_model():
         doc.ents = spans
         return doc
 
-    nlp = spacy.load("en_core_web_sm")
+    nlp = spacy.blank("en")
     animals = list(nlp.pipe(["dog", "cat", "turtle"]))
     matcher = spacy.matcher.PhraseMatcher(nlp.vocab)
     matcher.add("ANIMAL", animals)
-    nlp.add_pipe("animals", after="ner")
+    nlp.add_pipe("animals")
     df = pd.DataFrame({"text": ["i have a dog", "my turtle is smarter than my dog"]})
 
     return vetiver.VetiverModel(nlp, "animals", prototype_data=df)
