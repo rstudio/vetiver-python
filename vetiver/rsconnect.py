@@ -54,8 +54,8 @@ def deploy_rsconnect(
     image : str
         Docker image to be specified for off-host execution
 
-    Example
-    -------
+    Examples
+    ------
     >>> import vetiver
     >>> import pins
     >>> import rsconnect

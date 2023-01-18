@@ -47,7 +47,7 @@ def write_docker(
         port: str
             Port to run VetiverAPI from Dockerfile
 
-    Example
+    Examples
     -------
     >>> import vetiver
     >>> import tempfile

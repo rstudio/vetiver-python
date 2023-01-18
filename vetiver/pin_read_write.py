@@ -32,7 +32,7 @@ def vetiver_pin_write(board, model: VetiverModel, versioned: bool = True):
     versioned: bool
         Whether or not the pin should be versioned
 
-    Example
+    Examples
     -------
     >>> import vetiver
     >>> from pins import board_temp

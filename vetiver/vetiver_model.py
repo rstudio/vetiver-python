@@ -54,7 +54,7 @@ class VetiverModel:
 
 
 
-    Example
+    Examples
     -------
     >>> from vetiver import mock, VetiverModel
     >>> X, y = mock.get_mock_data()
