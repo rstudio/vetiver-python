@@ -29,7 +29,7 @@ class VetiverAPI:
     **kwargs: dict
         Deprecated parameters.
 
-    Example
+    Examples
     -------
     >>> import vetiver as vt
     >>> X, y = vt.get_mock_data()
@@ -150,7 +150,7 @@ class VetiverAPI:
         endpoint_name : str
             Name of endpoint
 
-        Example
+        Examples
         -------
         >>> import vetiver as vt
         >>> X, y = vt.get_mock_data()
@@ -199,7 +199,7 @@ class VetiverAPI:
         host : str
             A valid IPv4 or IPv6 address, which the application will listen on.
 
-        Example
+        Examples
         -------
         >>> import vetiver as vt
         >>> X, y = vt.get_mock_data()
@@ -244,7 +244,7 @@ def predict(endpoint, data: Union[dict, pd.DataFrame, pd.Series], **kw) -> pd.Da
     dict
         Endpoint_name and list of endpoint_fx output
 
-    Example
+    Examples
     -------
     >>> import vetiver
     >>> X, y = vetiver.get_mock_data()
@@ -316,7 +316,7 @@ def vetiver_endpoint(url: str = "http://127.0.0.1:8000/predict") -> str:
     url : str
         URI path to endpoint
 
-    Example
+    Examples
     -------
     >>> import vetiver
     >>> endpoint = vetiver.vetiver_endpoint(url='http://127.0.0.1:8000/predict')
