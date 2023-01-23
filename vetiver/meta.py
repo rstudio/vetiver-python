@@ -11,7 +11,7 @@ class VetiverMeta:
     version: "str | None" = None
     url: "str | None" = None
     required_pkgs: "list | None" = field(default_factory=list)
-    python_version: "str | None" = None
+    python_version: "tuple | None" = None
 
     def to_dict(self) -> Mapping:
         data = asdict(self)
@@ -27,7 +27,7 @@ class VetiverMeta:
         version = metadata.get("version", None)
         url = metadata.get("url", None)
         required_pkgs = metadata.get("required_pkgs", [])
-        python_version = metadata.get("python_version", sys.version)
+        python_version = tuple(metadata.get("python_version", sys.version_info))
 
         if pip_name:
             if not list(filter(lambda x: pip_name in x, required_pkgs)):
