@@ -56,11 +56,11 @@ def test_vetiver_build(spacy_model):
     response = spacy_model.handler_predict(df, True)
 
     assert isinstance(response, pd.Series)
-    assert response.iloc[0].get("text") == "i have a dog"
+    assert response.iloc[0].ents == ("dog",)
 
 
 def test_vetiver_post(vetiver_client):
-    df = pd.DataFrame({"text": ["i have a dog", "my turtle is smarter than my dog"]})
+    df = pd.DataFrame({"text": ["one", "my turtle is smarter than my dog"]})
 
     response = vetiver.predict(endpoint=vetiver_client, data=df)
 

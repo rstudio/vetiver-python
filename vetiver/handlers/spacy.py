@@ -1,4 +1,5 @@
 from .base import BaseHandler
+from ..prototype import vetiver_create_prototype
 import pandas as pd
 
 spacy_exists = True
@@ -22,7 +23,20 @@ class SpacyHandler(BaseHandler):
     if spacy_exists:
         pip_name = "spacy"
 
-    # what to do about prototypes?
+    def construct_prototype(self):
+        """Create data prototype for a spacy model, which is one column of string data
+
+        Returns
+        -------
+        prototype :
+            Input data prototype for spacy model
+        """
+        if self.prototype_data is not None:
+            raise TypeError
+
+        prototype = vetiver_create_prototype(pd.DataFrame({"text": ["text"]}))
+
+        return prototype
 
     def handler_predict(self, input_data, check_prototype):
         """Generates method for /predict endpoint in VetiverAPI
@@ -46,19 +60,15 @@ class SpacyHandler(BaseHandler):
 
         response_body = []
 
-        for doc in self.model.pipe(input_data.text):
-            response_body.append(get_data(doc))
+        for dic in input_data:
+            doc = self.model(dic.text)
+            response_body.append(doc.to_json())
 
         return pd.Series(response_body)
 
 
-def get_data(doc):
-    ents = [
-        {
-            "label": ent.label_,
-            "start": ent.start_char,
-            "end": ent.end_char,
-        }
-        for ent in doc.ents
-    ]
-    return {"text": doc.text, "ents": ents}
+# def get_data(doc):
+#     ents = [
+#         doc.to_dict()
+#     ]
+#     return {"text": doc.text, "ents": ents}
