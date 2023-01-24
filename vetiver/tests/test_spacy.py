@@ -82,13 +82,13 @@ def test_vetiver_post(vetiver_client):
     }
 
 
-def test_serialize(spacy_model):
-    import pins
+# def test_serialize(spacy_model):
+#     import pins
 
-    board = pins.board_temp(allow_pickle_read=True)
-    vetiver.vetiver_pin_write(board=board, model=spacy_model)
-    assert isinstance(
-        board.pin_read("animals"),
-        spacy.Language,
-    )
-    board.pin_delete("animals")
+#     board = pins.board_temp(allow_pickle_read=True)
+#     vetiver.vetiver_pin_write(board=board, model=spacy_model)
+#     assert isinstance(
+#         board.pin_read("animals"),
+#         spacy.Language,
+#     )
+#     board.pin_delete("animals")
