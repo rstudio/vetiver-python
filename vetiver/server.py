@@ -12,6 +12,7 @@ from warnings import warn
 
 from .utils import _jupyter_nb
 from .vetiver_model import VetiverModel
+from .handlers.spacy import SpacyHandler
 from .meta import VetiverMeta
 
 
@@ -173,6 +174,8 @@ class VetiverAPI:
 
                 if isinstance(input_data, List):
                     served_data = _batch_data(input_data)
+                elif isinstance(self.model.translator, SpacyHandler):
+                    served_data = input_data
                 else:
                     served_data = _prepare_data(input_data)
 

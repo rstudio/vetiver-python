@@ -60,15 +60,7 @@ class SpacyHandler(BaseHandler):
 
         response_body = []
 
-        for dic in input_data:
-            doc = self.model(dic.text)
+        for doc in self.model.pipe(input_data.text):
             response_body.append(doc.to_json())
 
         return pd.Series(response_body)
-
-
-# def get_data(doc):
-#     ents = [
-#         doc.to_dict()
-#     ]
-#     return {"text": doc.text, "ents": ents}

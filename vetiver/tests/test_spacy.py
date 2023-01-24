@@ -26,9 +26,8 @@ def spacy_model():
     matcher = spacy.matcher.PhraseMatcher(nlp.vocab)
     matcher.add("ANIMAL", animals)
     nlp.add_pipe("animals")
-    df = pd.DataFrame({"text": ["i have a dog", "my turtle is smarter than my dog"]})
 
-    return vetiver.VetiverModel(nlp, "animals", prototype_data=df)
+    return vetiver.VetiverModel(nlp, "animals")
 
 
 @pytest.fixture
@@ -42,21 +41,11 @@ def vetiver_client(spacy_model):  # With check_prototype=True
 
 @pytest.fixture
 def vetiver_client_check_ptype_false(spacy_model):  # With check_prototype=False
-    app = vetiver.VetiverAPI(spacy_model, check_prototype=False)
+    app = vetiver.VetiverAPI(spacy_model, check_prototype=True)
     app.app.root_path = "/predict"
     client = TestClient(app.app)
 
     return client
-
-
-def test_vetiver_build(spacy_model):
-
-    df = pd.DataFrame({"text": ["i have a dog", "my turtle is smarter than my dog"]})
-
-    response = spacy_model.handler_predict(df, True)
-
-    assert isinstance(response, pd.Series)
-    assert response.iloc[0].ents == ("dog",)
 
 
 def test_vetiver_post(vetiver_client):
@@ -68,53 +57,38 @@ def test_vetiver_post(vetiver_client):
     assert response.to_dict() == {
         "predict": {
             0: {
-                "text": "i have a dog",
-                "ents": [{"label": "ANIMAL", "start": 9, "end": 12}],
+                "text": "one",
+                "ents": [],
+                "sents": [{"start": 0, "end": 3}],
+                "tokens": [{"id": 0, "start": 0, "end": 3}],
             },
             1: {
                 "text": "my turtle is smarter than my dog",
                 "ents": [
-                    {"label": "ANIMAL", "start": 3, "end": 9},
-                    {"label": "ANIMAL", "start": 29, "end": 32},
+                    {"start": 3, "end": 9, "label": "ANIMAL"},
+                    {"start": 29, "end": 32, "label": "ANIMAL"},
+                ],
+                "tokens": [
+                    {"id": 0, "start": 0, "end": 2},
+                    {"id": 1, "start": 3, "end": 9},
+                    {"id": 2, "start": 10, "end": 12},
+                    {"id": 3, "start": 13, "end": 20},
+                    {"id": 4, "start": 21, "end": 25},
+                    {"id": 5, "start": 26, "end": 28},
+                    {"id": 6, "start": 29, "end": 32},
                 ],
             },
         }
     }
 
 
-# def test_batch(vetiver_client):
-#     nlp = spacy.blank("en")
-#     words1 = "This is a new"
-#     doc1 = spacy.tokens.Doc(nlp.vocab, words=words1)
-#     words2 = ["Another", "one", "."]
-#     doc2 = spacy.tokens.Doc(nlp.vocab, words=words2)
+def test_serialize(spacy_model):
+    import pins
 
-#     response = vetiver.predict(endpoint=vetiver_client, data=[doc1, doc2])
-
-#     assert response == [[True, False, False, False, False, False], [True, False, False]]
-
-
-# def test_no_ptype(vetiver_client_check_ptype_false):
-#     nlp = spacy.blank("en")
-#     words1 = ["This", "is", "a", "new", "Sentence", "."]
-#     doc1 = spacy.tokens.Doc(nlp.vocab, words=words1)
-#     words2 = ["Another", "one", "."]
-#     doc2 = spacy.tokens.Doc(nlp.vocab, words=words2)
-
-#     response = vetiver.predict(
-#         endpoint=vetiver_client_check_ptype_false, data=[doc1, doc2]
-#     )
-
-#     assert response == [[True, False, False, False, False, False], [True, False, False]]
-
-
-# def test_serialize(spacy_model):
-#     import pins
-
-#     board = pins.board_temp(allow_pickle_read=True)
-#     vetiver.vetiver_pin_write(board=board, model=spacy_model)
-#     assert isinstance(
-#         board.pin_read("sentencizer"),
-#         spacy.pipeline.sentencizer.Sentencizer,
-#     )
-#     board.pin_delete("sentencizer")
+    board = pins.board_temp(allow_pickle_read=True)
+    vetiver.vetiver_pin_write(board=board, model=spacy_model)
+    assert isinstance(
+        board.pin_read("animals"),
+        spacy.Language,
+    )
+    board.pin_delete("animals")

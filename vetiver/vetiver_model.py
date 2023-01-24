@@ -86,6 +86,7 @@ class VetiverModel:
         translator = create_handler(model, prototype_data)
 
         self.model = translator.model
+        self.translator = type(translator)
         self.prototype = translator.construct_prototype()
         self.model_name = model_name
         self.description = description if description else translator.describe()
@@ -102,6 +103,7 @@ class VetiverModel:
         if "vetiver_meta" in meta.user:
             get_prototype = meta.user.get("vetiver_meta").get("prototype", None)
             required_pkgs = meta.user.get("vetiver_meta").get("required_pkgs", None)
+            python_version = meta.user.get("vetiver_meta").get("python_version", None)
             meta.user.pop("vetiver_meta")
         else:
             # ptype = meta.user.get("ptype", None)
@@ -113,6 +115,7 @@ class VetiverModel:
             #     get_prototype = None
 
             required_pkgs = meta.user.get("required_pkgs")
+            python_version = meta.user.get("python_version")
 
         return cls(
             model=model,
@@ -123,6 +126,7 @@ class VetiverModel:
                 "version": meta.version.version,
                 "url": meta.local.get("url"),  # None all the time, besides Connect,
                 "required_pkgs": required_pkgs,
+                "python_version": python_version,
             },
             prototype_data=json.loads(get_prototype) if get_prototype else None,
             versioned=True,
