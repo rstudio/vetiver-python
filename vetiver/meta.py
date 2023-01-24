@@ -1,3 +1,4 @@
+import sys
 from dataclasses import dataclass, asdict, field
 from typing import Mapping
 
@@ -10,6 +11,7 @@ class VetiverMeta:
     version: "str | None" = None
     url: "str | None" = None
     required_pkgs: "list | None" = field(default_factory=list)
+    python_version: "tuple | None" = None
 
     def to_dict(self) -> Mapping:
         data = asdict(self)
@@ -25,9 +27,10 @@ class VetiverMeta:
         version = metadata.get("version", None)
         url = metadata.get("url", None)
         required_pkgs = metadata.get("required_pkgs", [])
+        python_version = tuple(metadata.get("python_version", sys.version_info))
 
         if pip_name:
             if not list(filter(lambda x: pip_name in x, required_pkgs)):
                 required_pkgs = required_pkgs + [f"{pip_name}"]
 
-        return cls(user, version, url, required_pkgs)
+        return cls(user, version, url, required_pkgs, python_version)
