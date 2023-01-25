@@ -1,0 +1,14 @@
+api_version: 1
+created: 20221212T191456Z
+description: Scikit-learn <class 'sklearn.dummy.DummyRegressor'> model
+file: mymodel.joblib
+file_size: 341
+pin_hash: 4f5e341649623871
+title: 'mymodel: a pinned DummyRegressor object'
+type: joblib
+user:
+  user: {}
+  vetiver_meta:
+    ptype: '{"B": 75, "C": 19, "D": 1}'
+    required_pkgs:
+    - scikit-learn==1.0.2
