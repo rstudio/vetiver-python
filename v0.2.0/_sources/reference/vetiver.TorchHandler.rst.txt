@@ -1,0 +1,28 @@
+﻿vetiver.TorchHandler
+====================
+
+.. currentmodule:: vetiver
+
+.. autoclass:: TorchHandler
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~TorchHandler.__init__
+      ~TorchHandler.construct_prototype
+      ~TorchHandler.create_meta
+      ~TorchHandler.describe
+      ~TorchHandler.handler_predict
+      ~TorchHandler.handler_startup
+      ~TorchHandler.model_class
+   
+   
+
+   
+   
+   
