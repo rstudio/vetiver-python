@@ -1,7 +1,7 @@
-from typing import List
 from functools import singledispatch
 from contextlib import suppress
 import pandas as pd
+import pydantic
 
 from ..prototype import vetiver_create_prototype
 from ..meta import VetiverMeta
@@ -119,29 +119,33 @@ class BaseHandler:
         """
         ...
 
+    @singledispatch
     def _prepare_data(self, pred_data) -> pd.DataFrame:
         """Convert prototype to dataframe data
 
         Parameters
         ----------
-        prototype_data : pd.DataFrame, np.ndarray, or None
-            Training data to create prototype
+        pred_data : pydantic.BaseModel
+            User data from given to API endpoint
 
         Returns
         -------
-        prototype : pd.DataFrame or None
-            Zero-row DataFrame for storing data types
-        """        
-        if isinstance(pred_data, List):
-            columns = pred_data[0].dict().keys()
-            data = [line.dict() for line in pred_data]
-            served_data = pd.DataFrame(data, columns=columns)
-        else:
-           served_data = []
-           for key, value in pred_data:
-                served_data.append(value)
+        pd.DataFrame
+            BaseModel data translated into DataFrame
+        """
+        served_data = []
+        for key, value in pred_data:
+            served_data.append(value)
 
         return served_data
+
+    @_prepare_data.register
+    def _basemodel(self, pred_data: pydantic.BaseModel):
+        return pd.DataFrame([dict(s) for s in pred_data])
+
+    @_prepare_data.register
+    def _list(self, pred_data: list):
+        return pd.DataFrame([dict(s) for s in pred_data])
 
     def handler_predict(self, input_data, check_prototype):
         """Generates method for /predict endpoint in VetiverAPI
