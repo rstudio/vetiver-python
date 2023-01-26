@@ -171,12 +171,12 @@ class VetiverAPI:
                 input_data: Union[self.model.prototype, List[self.model.prototype]]
             ):
 
-                if isinstance(input_data, List):
-                    served_data = _batch_data(input_data)
-                else:
-                    served_data = _prepare_data(input_data)
+                # if isinstance(input_data, List):
+                #     served_data = _batch_data(input_data)
+                # else:
+                #     served_data = _prepare_data(input_data)
 
-                new = endpoint_fx(served_data, **kw)
+                new = endpoint_fx(input_data, **kw)
                 return {endpoint_name: new.tolist()}
 
         else:
@@ -285,22 +285,6 @@ def predict(endpoint, data: Union[dict, pd.DataFrame, pd.Series], **kw) -> pd.Da
     response_df = pd.DataFrame.from_dict(response.json())
 
     return response_df
-
-
-def _prepare_data(pred_data: Dict[str, Any]) -> List[Any]:
-    served_data = []
-    for key, value in pred_data:
-        served_data.append(value)
-    return served_data
-
-
-def _batch_data(pred_data: List[Any]) -> pd.DataFrame:
-    columns = pred_data[0].dict().keys()
-
-    data = [line.dict() for line in pred_data]
-
-    served_data = pd.DataFrame(data, columns=columns)
-    return served_data
 
 
 def vetiver_endpoint(url: str = "http://127.0.0.1:8000/predict") -> str:

@@ -43,6 +43,9 @@ class XGBoostHandler(BaseHandler):
         if not xgb_exists:
             raise ImportError("Cannot import `xgboost`")
 
+        if check_prototype:
+            input_data = self._prepare_data(input_data)
+            
         if not isinstance(input_data, pd.DataFrame):
             try:
                 input_data = pd.DataFrame(input_data)

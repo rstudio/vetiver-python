@@ -25,7 +25,7 @@ def vetiver_model():
 
 
 def sum_values(x):
-    return x.sum()
+    return pd.DataFrame([dict(s) for s in x]).sum()
 
 
 def sum_dict(x):
