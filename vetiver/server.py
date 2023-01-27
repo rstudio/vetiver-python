@@ -255,9 +255,7 @@ def predict(endpoint, data: Union[dict, pd.DataFrame, pd.Series], **kw) -> pd.Da
     if isinstance(data, pd.DataFrame):
         response = requester.post(endpoint, data=data.to_json(orient="records"), **kw)
     elif isinstance(data, pd.Series):
-        response = requester.post(endpoint, data=data.to_json(), **kw)
-    elif isinstance(data, list):
-        response = requester.post(endpoint, json=data, **kw)
+        response = requester.post(endpoint, json=[data.to_dict()], **kw)
     elif isinstance(data, dict):
         response = requester.post(endpoint, json=[data], **kw)
     else:

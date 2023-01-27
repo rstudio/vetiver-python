@@ -1,4 +1,3 @@
-from typing import List
 from functools import singledispatch
 from contextlib import suppress
 import pandas as pd
@@ -191,7 +190,7 @@ def _prepare_data(pred_data) -> pd.DataFrame:
 
 
 @_prepare_data.register(pydantic.BaseModel)
-@_prepare_data.register(List)
+@_prepare_data.register(list)
 def _basemodel_list_data(pred_data):
 
     return pd.DataFrame([dict(s) for s in pred_data])
