@@ -1,3 +1,4 @@
+from typing import List
 from functools import singledispatch
 from contextlib import suppress
 import pandas as pd
@@ -119,8 +120,7 @@ class BaseHandler:
         """
         ...
 
-    @singledispatch
-    def _prepare_data(self, pred_data) -> pd.DataFrame:
+    def _process_input(self, pred_data) -> pd.DataFrame:
         """Convert prototype to dataframe data
 
         Parameters
@@ -133,19 +133,10 @@ class BaseHandler:
         pd.DataFrame
             BaseModel data translated into DataFrame
         """
-        served_data = []
-        for key, value in pred_data:
-            served_data.append(value)
 
-        return served_data
+        new = _prepare_data(pred_data)
 
-    @_prepare_data.register
-    def _basemodel(self, pred_data: pydantic.BaseModel):
-        return pd.DataFrame([dict(s) for s in pred_data])
-
-    @_prepare_data.register
-    def _list(self, pred_data: list):
-        return pd.DataFrame([dict(s) for s in pred_data])
+        return new
 
     def handler_predict(self, input_data, check_prototype):
         """Generates method for /predict endpoint in VetiverAPI
@@ -179,3 +170,37 @@ def _(model: BaseHandler, prototype_data):
         model.prototype_data = prototype_data
 
     return model
+
+
+@singledispatch
+def _prepare_data(pred_data) -> pd.DataFrame:
+    """Convert prototype to dataframe data
+
+    Parameters
+    ----------
+    pred_data : pydantic.BaseModel
+        User data from given to API endpoint
+
+    Returns
+    -------
+    pd.DataFrame
+        BaseModel data translated into DataFrame
+    """
+
+    raise TypeError("Data should be list, dict, pd.DataFrame")
+
+
+@_prepare_data.register(pydantic.BaseModel)
+@_prepare_data.register(List)
+def _basemodel_list_data(pred_data):
+
+    return pd.DataFrame([dict(s) for s in pred_data])
+
+
+# @_prepare_data.register(dict)
+# def _dict_data(pred_data):
+#     served_data = []
+#     for key, value in pred_data:
+#         served_data.append(value)
+
+#     return served_data

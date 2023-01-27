@@ -34,7 +34,7 @@ class SKLearnHandler(BaseHandler):
             Prediction from model
         """
         if check_prototype:
-            input_data = self._prepare_data(input_data)
+            input_data = self._process_input(input_data)
 
         if not check_prototype or isinstance(input_data, pd.DataFrame):
             prediction = self.model.predict(input_data)

@@ -1,4 +1,4 @@
-from typing import Any, Callable, Dict, List, Union
+from typing import Callable, List, Union
 from urllib.parse import urljoin
 
 import httpx
@@ -167,15 +167,7 @@ class VetiverAPI:
         if self.check_prototype is True:
 
             @self.app.post(urljoin("/", endpoint_name), name=endpoint_name)
-            async def custom_endpoint(
-                input_data: Union[self.model.prototype, List[self.model.prototype]]
-            ):
-
-                # if isinstance(input_data, List):
-                #     served_data = _batch_data(input_data)
-                # else:
-                #     served_data = _prepare_data(input_data)
-
+            async def custom_endpoint(input_data: List[self.model.prototype]):
                 new = endpoint_fx(input_data, **kw)
                 return {endpoint_name: new.tolist()}
 
@@ -261,13 +253,13 @@ def predict(endpoint, data: Union[dict, pd.DataFrame, pd.Series], **kw) -> pd.Da
     # TO DO: dispatch
 
     if isinstance(data, pd.DataFrame):
-        data_json = data.to_json(orient="records")
-        response = requester.post(endpoint, data=data_json, **kw)
+        response = requester.post(endpoint, data=data.to_json(orient="records"), **kw)
     elif isinstance(data, pd.Series):
-        data_dict = data.to_json()
-        response = requester.post(endpoint, data=data_dict, **kw)
-    elif isinstance(data, dict):
+        response = requester.post(endpoint, data=data.to_json(), **kw)
+    elif isinstance(data, list):
         response = requester.post(endpoint, json=data, **kw)
+    elif isinstance(data, dict):
+        response = requester.post(endpoint, json=[data], **kw)
     else:
         response = requester.post(endpoint, json=data, **kw)
 

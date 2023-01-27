@@ -41,9 +41,9 @@ class TorchHandler(BaseHandler):
         """
         if not torch_exists:
             raise ImportError("Cannot import `torch`.")
-        
+
         if check_prototype:
-            input_data = self._prepare_data(input_data)
+            input_data = self._process_input(input_data)
             input_data = np.array(input_data, dtype=np.array(self.prototype_data).dtype)
             prediction = self.model(torch.from_numpy(input_data))
 

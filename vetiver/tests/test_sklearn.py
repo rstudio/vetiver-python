@@ -1,85 +1,98 @@
-from vetiver import mock, VetiverModel, VetiverAPI
-from fastapi.testclient import TestClient
-import numpy as np
 import pytest
 
+import numpy as np
+import pandas as pd
+from requests.exceptions import HTTPError
+from fastapi.testclient import TestClient
 
-def _start_application(save_prototype: bool = True):
+from vetiver import mock, VetiverModel, VetiverAPI
+from vetiver.server import predict
+
+
+@pytest.fixture
+def vetiver_model():
+    np.random.seed(500)
     X, y = mock.get_mock_data()
     model = mock.get_mock_model().fit(X, y)
     v = VetiverModel(
         model=model,
-        prototype_data=X if save_prototype else None,
+        prototype_data=X,
         model_name="my_model",
         versioned=None,
         description="A regression model for testing purposes",
     )
 
-    app = VetiverAPI(v, check_prototype=save_prototype)
-
-    return app
+    return v
 
 
-def test_build_sklearn():
-    X, y = mock.get_mock_data()
-    model = mock.get_mock_model().fit(X, y)
-    v = VetiverModel(
-        model=model,
-        ptype_data=X,
-        model_name="my_model",
-        description="A regression model for testing purposes",
-    )
+@pytest.fixture
+def vetiver_client(vetiver_model):  # With check_ptype=True
+    app = VetiverAPI(vetiver_model, check_prototype=True)
+    app.app.root_path = "/predict"
+    client = TestClient(app.app)
 
-    assert v.metadata.required_pkgs == ["scikit-learn"]
+    return client
 
 
-def test_predict_endpoint_ptype():
-    np.random.seed(500)
-    client = TestClient(_start_application().app)
+@pytest.fixture
+def vetiver_client_check_ptype_false(vetiver_model):  # With check_ptype=False
+    app = VetiverAPI(vetiver_model, check_prototype=False)
+    app.app.root_path = "/predict"
+    client = TestClient(app.app)
+
+    return client
+
+
+def test_predict_sklearn_dict_ptype(vetiver_client):
     data = {"B": 0, "C": 0, "D": 0}
-    response = client.post("/predict", json=data)
-    assert response.status_code == 200, response.text
-    assert response.json() == {"predict": [44.47]}, response.json()
+
+    response = predict(endpoint=vetiver_client, data=data)
+
+    assert isinstance(response, pd.DataFrame), response
+    assert response.iloc[0, 0] == 44.47
+    assert len(response) == 1
 
 
-def test_predict_endpoint_ptype_batch():
-    np.random.seed(500)
-    client = TestClient(_start_application().app)
-    data = [{"B": 0, "C": 0, "D": 0}, {"B": 0, "C": 0, "D": 0}]
-    response = client.post("/predict", json=data)
-    assert response.status_code == 200, response.text
-    assert response.json() == {"predict": [44.47, 44.47]}, response.json()
+def test_predict_sklearn_no_ptype(vetiver_client_check_ptype_false):
+    X, y = mock.get_mock_data()
+    response = predict(endpoint=vetiver_client_check_ptype_false, data=X)
+
+    assert isinstance(response, pd.DataFrame), response
+    assert response.iloc[0, 0] == 44.47
+    assert len(response) == 100
 
 
-def test_predict_endpoint_ptype_error():
-    np.random.seed(500)
-    client = TestClient(_start_application().app)
-    data = {"B": 0, "C": "a", "D": 0}
-    response = client.post("/predict", json=data)
-    assert response.status_code == 422, response.text  # value is not a valid integer
+def test_predict_sklearn_df_check_ptype(vetiver_client):
+    X, y = mock.get_mock_data()
+    response = predict(endpoint=vetiver_client, data=X)
+
+    assert isinstance(response, pd.DataFrame), response
+    assert response.iloc[0, 0] == 44.47
+    assert len(response) == 100
 
 
-def test_predict_endpoint_no_ptype():
-    np.random.seed(500)
-    client = TestClient(_start_application(save_prototype=False).app)
-    data = [{"B": 0, "C": 0, "D": 0}]
-    response = client.post("/predict", json=data)
-    assert response.status_code == 200, response.text
-    assert response.json() == {"predict": [44.47]}, response.json()
+def test_predict_sklearn_series_check_ptype(vetiver_client):
+    ser = pd.Series(data=[0, 0, 0])
+    response = predict(endpoint=vetiver_client, data=ser)
+
+    assert isinstance(response, pd.DataFrame), response
+    assert response.iloc[0, 0] == 44.47
+    assert len(response) == 1
 
 
-def test_predict_endpoint_no_ptype_batch():
-    np.random.seed(500)
-    client = TestClient(_start_application(save_prototype=False).app)
-    data = [[0, 0, 0], [0, 0, 0]]
-    response = client.post("/predict", json=data)
-    assert response.status_code == 200, response.text
-    assert response.json() == {"predict": [44.47, 44.47]}, response.json()
+@pytest.mark.parametrize("data", [(0, 0), 0, 0.0, "0"])
+def test_predict_sklearn_type_error(data, vetiver_client):
+    msg = f"Predict expects DataFrame, Series, or dict. Given type is {type(data)}"
+
+    with pytest.raises(TypeError, match=msg):
+        predict(endpoint=vetiver_client, data=data)
 
 
-def test_predict_endpoint_no_ptype_error():
-    np.random.seed(500)
-    client = TestClient(_start_application(save_prototype=False).app)
-    data = {"hell0", 9, 32.0}
-    with pytest.raises(TypeError):
-        client.post("/predict", json=data)
+def test_predict_server_error(vetiver_model):
+    X, y = mock.get_mock_data()
+    app = VetiverAPI(vetiver_model, check_prototype=True)
+    app.app.root_path = "/i_do_not_exists"
+    client = TestClient(app.app)
+
+    with pytest.raises(HTTPError):
+        predict(endpoint=client, data=X)
