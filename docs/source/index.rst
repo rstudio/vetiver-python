@@ -83,8 +83,11 @@ Model Handlers
    ~StatsmodelsHandler
    ~XGBoostHandler
 
-Advanced Usage
-==================
+
 .. toctree::
    advancedusage/custom_handler.md
    :caption: Advanced Usage
+
+.. toctree::
+   changelog/index.md
+   :caption: Changelog
