@@ -5,9 +5,13 @@ import httpx
 import pandas as pd
 import requests
 import uvicorn
-from fastapi import FastAPI, Request, testclient
+from fastapi import FastAPI, Request, testclient, status
+from fastapi.encoders import jsonable_encoder
+from fastapi.exceptions import RequestValidationError
 from fastapi.openapi.utils import get_openapi
-from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.responses import HTMLResponse, RedirectResponse, JSONResponse
+from fastapi.responses import PlainTextResponse
+from starlette.exceptions import HTTPException as StarletteHTTPException
 from warnings import warn
 
 from .utils import _jupyter_nb
@@ -138,6 +142,19 @@ class VetiverAPI:
                     </html>
             """
 
+        @app.exception_handler(RequestValidationError)
+        async def validation_exception_handler(
+            request: Request, exc: RequestValidationError
+        ):
+            return JSONResponse(
+                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                content=jsonable_encoder({"detail": exc.errors(), "body": exc.body}),
+            )
+
+        @app.exception_handler(StarletteHTTPException)
+        async def http_exception_handler(request, exc):
+            return PlainTextResponse(str(exc.detail), status_code=exc.status_code)
+
         return app
 
     def vetiver_post(self, endpoint_fx: Callable, endpoint_name: str = None, **kw):
@@ -266,7 +283,7 @@ def predict(endpoint, data: Union[dict, pd.DataFrame, pd.Series], **kw) -> pd.Da
     except (requests.exceptions.HTTPError, httpx.HTTPStatusError) as e:
         if response.status_code == 422:
             raise TypeError(
-                f"Predict expects DataFrame, Series, or dict. Given type is {type(data)}"
+                PlainTextResponse(str(response), status_code=response.status_code)
             )
         raise requests.exceptions.HTTPError(
             f"Could not obtain data from endpoint with error: {e}"
