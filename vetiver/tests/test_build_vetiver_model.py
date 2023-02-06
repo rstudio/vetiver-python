@@ -177,3 +177,29 @@ def test_vetiver_model_from_pin_user_metadata():
     assert v2.metadata.python_version == tuple(custom_meta["python_version"])
 
     board.pin_delete("model")
+
+
+def test_vetiver_model_from_pin_no_version():
+    """
+    Test if standard keys as part of :dataclass:`VetiverMeta` are picked
+    """
+    custom_meta = {
+        "required_pkgs": None,
+        "python_version": None,
+    }
+
+    v = vt.VetiverModel(
+        model=model,
+        prototype_data=X_df,
+        model_name="model",
+        metadata=custom_meta,
+    )
+
+    board = pins.board_temp(allow_pickle_read=True)
+    vt.vetiver_pin_write(board=board, model=v)
+    v2 = vt.VetiverModel.from_pin(board, "model")
+
+    assert v2.metadata.required_pkgs == ["scikit-learn"]
+    assert v2.metadata.python_version is None
+
+    board.pin_delete("model")
