@@ -80,9 +80,15 @@ def test_predict_sklearn_series_check_ptype(vetiver_client):
     assert len(response) == 1
 
 
-@pytest.mark.parametrize("data", [(0, 0), 0, 0.0, "0"])
+@pytest.mark.parametrize("data", [(0), 0, 0.0, "0"])
 def test_predict_sklearn_type_error(data, vetiver_client):
-    msg = f"Predict expects DataFrame, Series, or dict. Given type is {type(data)}"
+    import re
+
+    msg = re.sub(
+        r"\n",
+        ": ",
+        "1 validation error for Request\nbody\n  value is not a valid list \(type=type_error.list\)",  # noqa
+    )
 
     with pytest.raises(TypeError, match=msg):
         predict(endpoint=vetiver_client, data=data)

@@ -106,7 +106,7 @@ def test_torch_predict_ptype_error(vetiver_client_prototype):
 
     data = {"0": "bad"}
 
-    with pytest.raises(requests.exceptions.HTTPError):
+    with pytest.raises(TypeError):
         predict(endpoint=vetiver_client_prototype, data=data)
 
 
