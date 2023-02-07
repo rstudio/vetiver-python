@@ -71,8 +71,9 @@ docs-clean:
 	$(MAKE) -C docs clean
 
 docs doc documentation:
-	$(MAKE) -C docs html
-	$(BROWSER) docs/_build/html/index.html
+	python -m quartodoc build
+	python -m quartodoc interlinks
+	quarto render
 
 release: dist
 	twine upload dist/*

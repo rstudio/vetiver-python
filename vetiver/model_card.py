@@ -3,12 +3,13 @@ import shutil
 
 
 def model_card(path="."):
-    """Create a model card for documentation
+    """
+    Create a model card for documentation
 
     Parameters
     ----------
     path : str
-       Path to save model card
+        Path to save model card
 
     Notes
     -----

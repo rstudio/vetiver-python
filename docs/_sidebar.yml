@@ -1,0 +1,32 @@
+website:
+  sidebar:
+    contents:
+    - reference/index.qmd
+    - contents:
+      - reference/VetiverModel.qmd
+      - reference/vetiver_pin_write.qmd
+      - reference/vetiver_create_prototype.qmd
+      - reference/model_card.qmd
+      section: Version
+    - contents:
+      - reference/VetiverAPI.qmd
+      - reference/vetiver_endpoint.qmd
+      - reference/predict.qmd
+      - reference/write_app.qmd
+      - reference/prepare_docker.qmd
+      - reference/write_docker.qmd
+      - reference/deploy_rsconnect.qmd
+      section: Deploy
+    - contents:
+      - reference/compute_metrics.qmd
+      - reference/pin_metrics.qmd
+      - reference/plot_metrics.qmd
+      section: Monitor
+    - contents:
+      - reference/BaseHandler.qmd
+      - reference/SKLearnHandler.qmd
+      - reference/TorchHandler.qmd
+      - reference/StatsmodelsHandler.qmd
+      - reference/XGBoostHandler.qmd
+      section: Model Handlers
+    id: reference
