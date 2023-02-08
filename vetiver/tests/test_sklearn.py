@@ -8,11 +8,13 @@ from fastapi.testclient import TestClient
 from vetiver import mock, VetiverModel, VetiverAPI
 from vetiver.server import predict
 
+np.random.seed(500)
+X, y = mock.get_mock_data()
+
 
 @pytest.fixture
 def vetiver_model():
     np.random.seed(500)
-    X, y = mock.get_mock_data()
     model = mock.get_mock_model().fit(X, y)
     v = VetiverModel(
         model=model,
@@ -43,41 +45,30 @@ def vetiver_client_check_ptype_false(vetiver_model):  # With check_ptype=False
     return client
 
 
-def test_predict_sklearn_dict_ptype(vetiver_client):
-    data = {"B": 0, "C": 0, "D": 0}
+@pytest.mark.parametrize(
+    "data,length",
+    [({"B": 0, "C": 0, "D": 0}, 1), (pd.Series(data=[0, 0, 0]), 1), (X, 100)],
+)
+def test_predict_sklearn_ptype(data, length, vetiver_client):
 
     response = predict(endpoint=vetiver_client, data=data)
 
     assert isinstance(response, pd.DataFrame), response
     assert response.iloc[0, 0] == 44.47
-    assert len(response) == 1
+    assert len(response) == length
 
 
-def test_predict_sklearn_no_ptype(vetiver_client_check_ptype_false):
+@pytest.mark.parametrize(
+    "data,length",
+    [({"B": 0, "C": 0, "D": 0}, 1), (pd.Series(data=[0, 0, 0]), 1), (X, 100)],
+)
+def test_predict_sklearn_no_ptype(data, length, vetiver_client_check_ptype_false):
     X, y = mock.get_mock_data()
-    response = predict(endpoint=vetiver_client_check_ptype_false, data=X)
+    response = predict(endpoint=vetiver_client_check_ptype_false, data=data)
 
     assert isinstance(response, pd.DataFrame), response
     assert response.iloc[0, 0] == 44.47
-    assert len(response) == 100
-
-
-def test_predict_sklearn_df_check_ptype(vetiver_client):
-    X, y = mock.get_mock_data()
-    response = predict(endpoint=vetiver_client, data=X)
-
-    assert isinstance(response, pd.DataFrame), response
-    assert response.iloc[0, 0] == 44.47
-    assert len(response) == 100
-
-
-def test_predict_sklearn_series_check_ptype(vetiver_client):
-    ser = pd.Series(data=[0, 0, 0])
-    response = predict(endpoint=vetiver_client, data=ser)
-
-    assert isinstance(response, pd.DataFrame), response
-    assert response.iloc[0, 0] == 44.47
-    assert len(response) == 1
+    assert len(response) == length
 
 
 @pytest.mark.parametrize("data", [(0), 0, 0.0, "0"])
