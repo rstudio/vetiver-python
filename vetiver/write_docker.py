@@ -136,7 +136,7 @@ def prepare_docker(
     >>> model = vetiver.get_mock_model().fit(X, y)
     >>> v = vetiver.VetiverModel(model, "my_model", prototype_data = X)
     >>> vetiver.vetiver_pin_write(board, v)
-    >>> vetiver.prepare_docker(board = board, pin_name = "my_model")
+    >>> vetiver.prepare_docker(board = board, pin_name = "my_model", path = tmp.name)
     """
 
     v = VetiverModel.from_pin(board=board, name=pin_name, version=version)
