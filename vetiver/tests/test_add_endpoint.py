@@ -5,6 +5,7 @@ import pandas as pd
 from fastapi.testclient import TestClient
 
 from vetiver import mock, VetiverModel, VetiverAPI
+from vetiver.helpers import api_data_to_frame
 import vetiver
 
 
@@ -25,12 +26,7 @@ def vetiver_model():
 
 
 def sum_values(x):
-    return pd.DataFrame([dict(s) for s in x]).sum()
-
-
-def sum_dict(x):
-    x = pd.DataFrame(x)
-    return x.sum()
+    return api_data_to_frame(x).sum()
 
 
 @pytest.fixture
@@ -49,7 +45,7 @@ def vetiver_client(vetiver_model):  # With check_prototype=True
 def vetiver_client_check_ptype_false(vetiver_model):  # With check_prototype=False
 
     app = VetiverAPI(vetiver_model, check_prototype=False)
-    app.vetiver_post(sum_dict, "sum")
+    app.vetiver_post(sum_values, "sum")
 
     app.app.root_path = "/sum"
     client = TestClient(app.app)

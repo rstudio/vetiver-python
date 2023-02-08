@@ -1,6 +1,7 @@
 import pandas as pd
 
 from .base import BaseHandler
+from ..helpers import api_data_to_frame
 
 sm_exists = True
 try:
@@ -43,7 +44,8 @@ class StatsmodelsHandler(BaseHandler):
             raise ImportError("Cannot import `statsmodels`")
 
         if check_prototype:
-            input_data = self._process_input(input_data)
+            input_data = api_data_to_frame(input_data)
+
         if isinstance(input_data, (list, pd.DataFrame)):
             prediction = self.model.predict(input_data)
         else:

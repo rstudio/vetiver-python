@@ -1,7 +1,5 @@
 from functools import singledispatch
 from contextlib import suppress
-import pandas as pd
-import pydantic
 
 from ..prototype import vetiver_create_prototype
 from ..meta import VetiverMeta
@@ -119,24 +117,6 @@ class BaseHandler:
         """
         ...
 
-    def _process_input(self, pred_data) -> pd.DataFrame:
-        """Convert prototype to dataframe data
-
-        Parameters
-        ----------
-        pred_data : pydantic.BaseModel
-            User data from given to API endpoint
-
-        Returns
-        -------
-        pd.DataFrame
-            BaseModel data translated into DataFrame
-        """
-
-        new = _prepare_data(pred_data)
-
-        return new
-
     def handler_predict(self, input_data, check_prototype):
         """Generates method for /predict endpoint in VetiverAPI
 
@@ -169,37 +149,3 @@ def _(model: BaseHandler, prototype_data):
         model.prototype_data = prototype_data
 
     return model
-
-
-@singledispatch
-def _prepare_data(pred_data) -> pd.DataFrame:
-    """Convert prototype to dataframe data
-
-    Parameters
-    ----------
-    pred_data : pydantic.BaseModel
-        User data from given to API endpoint
-
-    Returns
-    -------
-    pd.DataFrame
-        BaseModel data translated into DataFrame
-    """
-
-    raise TypeError("Data should be list, dict, pd.DataFrame")
-
-
-@_prepare_data.register(pydantic.BaseModel)
-@_prepare_data.register(list)
-def _basemodel_list_data(pred_data):
-
-    return pd.DataFrame([dict(s) for s in pred_data])
-
-
-# @_prepare_data.register(dict)
-# def _dict_data(pred_data):
-#     served_data = []
-#     for key, value in pred_data:
-#         served_data.append(value)
-
-#     return served_data

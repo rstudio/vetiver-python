@@ -2,6 +2,7 @@ import pandas as pd
 import sklearn
 
 from .base import BaseHandler
+from ..helpers import api_data_to_frame
 
 
 class SKLearnHandler(BaseHandler):
@@ -34,7 +35,7 @@ class SKLearnHandler(BaseHandler):
             Prediction from model
         """
         if check_prototype:
-            input_data = self._process_input(input_data)
+            input_data = api_data_to_frame(input_data)
 
         if not check_prototype or isinstance(input_data, pd.DataFrame):
             prediction = self.model.predict(input_data)
