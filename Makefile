@@ -1,4 +1,4 @@
-.PHONY: clean-pyc clean-build clean
+.PHONY: clean-pyc clean-build clean docs
 UNAME := $(shell uname)
 
 RSC_API_KEYS=vetiver/tests/rsconnect_api_keys.json
@@ -61,10 +61,7 @@ coverage:
 	$(BROWSER) htmlcov/index.html
 
 docs doc documentation:
-	$(MAKE) --directory=docs doc
-	python -m quartodoc build
-	python -m quartodoc interlinks
-	quarto render
+	$(MAKE) -C docs clean
 
 release: dist
 	twine upload dist/*
