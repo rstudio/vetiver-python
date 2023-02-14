@@ -175,17 +175,17 @@ class VetiverAPI:
 
             @self.app.post(urljoin("/", endpoint_name), name=endpoint_name)
             async def custom_endpoint(input_data: List[self.model.prototype]):
-                new = endpoint_fx(input_data, **kw)
-                return {endpoint_name: new.tolist()}
+                predictions = endpoint_fx(input_data, **kw)
+                return {endpoint_name: predictions}
 
         else:
 
             @self.app.post(urljoin("/", endpoint_name))
             async def custom_endpoint(input_data: Request):
                 served_data = await input_data.json()
-                new = endpoint_fx(served_data, **kw)
+                predictions = endpoint_fx(served_data, **kw)
 
-                return {endpoint_name: new.tolist()}
+                return {endpoint_name: predictions}
 
     def run(self, port: int = 8000, host: str = "127.0.0.1", **kw):
         """

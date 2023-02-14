@@ -53,4 +53,4 @@ class TorchHandler(BaseHandler):
             input_data = torch.tensor(input_data)
             prediction = self.model(input_data)
 
-        return prediction
+        return prediction.tolist()

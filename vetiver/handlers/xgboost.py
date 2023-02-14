@@ -56,4 +56,4 @@ class XGBoostHandler(BaseHandler):
 
         prediction = self.model.predict(input_data)
 
-        return prediction
+        return prediction.tolist()

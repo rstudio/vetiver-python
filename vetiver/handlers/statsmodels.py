@@ -51,4 +51,4 @@ class StatsmodelsHandler(BaseHandler):
         else:
             prediction = self.model.predict([input_data])
 
-        return prediction
+        return prediction.tolist()
