@@ -25,7 +25,7 @@ jobs:
         uses: quarto-dev/quarto-actions/setup@v2
       - name: build docs
         run: |
-          make docs
+          make docs-latest
       - name: save docs
         uses: actions/upload-artifact@v3
         with:
@@ -33,10 +33,14 @@ jobs:
           path: docs/_site/
       - name: publish dev docs
         if: github.ref_name == 'main' && github.ref_type == 'branch'
+        run: |
+          make docs-
+      - name: publish dev docs
+        if: github.ref_name == 'main' && github.ref_type == 'branch'
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: docs/_site/*
+          publish_dir: docs/latest/*
           publish_branch: gh-pages
           destination_dir: main
       - name: publish stable docs
@@ -44,7 +48,7 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: docs/_site/*
+          publish_dir: docs/stable/*
           publish_branch: gh-pages
           destination_dir: ${{ github.ref_name }}
       - name: create symlink stable to new version

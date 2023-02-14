@@ -1,9 +1,9 @@
 project:
   type: website
-  output-dir: _site
+  pre-render: prepare.py
 
 website:
-  title: "Vetiver for Python"
+  title: "Vetiver {{< env VERSION >}}"
   description: "Version, share, deploy, and monitor your Python models"
   repo-url: https://github.com/rstudio/vetiver-python
   repo-actions: [edit, issue]
@@ -76,10 +76,6 @@ quartodoc:
         - StatsmodelsHandler
         - XGBoostHandler
 
-    # - title: "Advanced Usage"
-    #   contents:
-    #
-
 metadata-files:
   - _sidebar.yml
 
@@ -88,6 +84,9 @@ filters:
 
 interlinks:
   sources: {}
+
+profile:
+  default: latest
 
 format:
   html:
