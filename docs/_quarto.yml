@@ -1,6 +1,7 @@
 project:
   type: website
-  pre-render: prepare.py
+  pre-render: version_config.py
+  output-dir: _site
 
 website:
   title: "Vetiver {{< env VERSION >}}"
@@ -21,22 +22,25 @@ website:
         href: https://github.com/rstudio/vetiver-python
         aria-label: Vetiver python GitHub
   navbar:
-      logo: figures/logo.svg
-      search: true
-      left:
-        - text: "Reference"
-          file: reference/index.qmd
-        - text: "Advanced Usage"
-          menu:
-            - custom_handler.md
-        - text: "Changelog"
-          file: changelog.md
-        - text: "Vetiver main site"
-          href: https://vetiver.rstudio.com
+    logo: figures/logo.svg
+    search: true
+    left:
+      - href: index.qmd
+        text: Home
+      - text: "Reference"
+        file: reference/index.qmd
+      - text: "Advanced Usage"
+        menu:
+          - custom_handler.md
+      - text: "Changelog"
+        file: changelog.md
+      - text: "Vetiver main site"
+        href: https://vetiver.rstudio.com
 
 quartodoc:
   style: pkgdown
   package: vetiver
+  display_name: full
   sidebar: "_sidebar.yml"
   sections:
     - title: Version

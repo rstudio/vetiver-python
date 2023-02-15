@@ -60,13 +60,8 @@ coverage:
 	coverage html
 	$(BROWSER) htmlcov/index.html
 
-docs doc documentation: docs-latest docs-stable
-
-docs-latest:
-	$(MAKE) -C docs latest
-
-docs-stable:
-	$(MAKE) -C docs stable
+docs doc documentation:
+	$(MAKE) -C docs docs
 
 release: dist
 	twine upload dist/*

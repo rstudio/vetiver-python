@@ -1,3 +1,0 @@
-project:
-  title: "Vetiver {{< env VERSION >}}"
-  output-dir: stable
