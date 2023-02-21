@@ -7,4 +7,4 @@
 	python version_config.py
 	python -m quartodoc build
 	python -m quartodoc interlinks
-	quarto preview
+	quarto render

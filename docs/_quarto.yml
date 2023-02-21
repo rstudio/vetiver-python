@@ -4,12 +4,12 @@ project:
   output-dir: _site
 
 website:
-  title: "Vetiver {{< env VERSION >}}"
+  title: "Vetiver (Python)"
   description: "Version, share, deploy, and monitor your Python models"
   repo-url: https://github.com/rstudio/vetiver-python
   repo-actions: [edit, issue]
   page-navigation: true
-  favicon: "images/favicon.ico"
+  favicon: "figures/logo.svg"
   page-footer:
     left: |
       Proudly supported by
@@ -22,11 +22,12 @@ website:
         href: https://github.com/rstudio/vetiver-python
         aria-label: Vetiver python GitHub
   navbar:
-    logo: figures/logo.svg
+    background: primary
+    pinned: true
+    logo: "figures/logo.svg"
+    logo-alt: "vetiver-home"
     search: true
     left:
-      - href: index.qmd
-        text: Home
       - text: "Reference"
         file: reference/index.qmd
       - text: "Advanced Usage"
@@ -37,10 +38,18 @@ website:
       - text: "Vetiver main site"
         href: https://vetiver.rstudio.com
 
+  sidebar:
+    - id: reference
+      contents: "_sidebar.yml"
+
 quartodoc:
   style: pkgdown
+  title: "Vetiver-{{< env VERSION >}}"
   package: vetiver
-  display_name: full
+  display_name: relative
+  renderer:
+    style: markdown
+    display_name: relative
   sidebar: "_sidebar.yml"
   sections:
     - title: Version
@@ -55,8 +64,8 @@ quartodoc:
       desc: ""
       contents:
         - VetiverAPI
-        # - VetiverAPI.run
-        # - VetiverAPI.vetiver_post
+        - VetiverAPI.run
+        - VetiverAPI.vetiver_post
         - vetiver_endpoint
         - predict
         - write_app
