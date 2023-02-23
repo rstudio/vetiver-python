@@ -2,7 +2,6 @@ import pandas as pd
 import sklearn
 
 from .base import BaseHandler
-from ..helpers import api_data_to_frame
 
 
 class SKLearnHandler(BaseHandler):
@@ -34,12 +33,14 @@ class SKLearnHandler(BaseHandler):
         prediction
             Prediction from model
         """
-        if check_prototype:
-            input_data = api_data_to_frame(input_data)
+        # if check_prototype:
+        #     input_data = api_data_to_frame(input_data)
 
         if not check_prototype or isinstance(input_data, pd.DataFrame):
             prediction = self.model.predict(input_data)
         else:
             prediction = self.model.predict([input_data])
+
+        # some sort of post-prediction/pre send back to user hook
 
         return prediction.tolist()

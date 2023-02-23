@@ -1,7 +1,6 @@
 import numpy as np
 
 from .base import BaseHandler
-from ..helpers import api_data_to_frame
 
 torch_exists = True
 try:
@@ -44,7 +43,7 @@ class TorchHandler(BaseHandler):
             raise ImportError("Cannot import `torch`.")
 
         if check_prototype:
-            input_data = api_data_to_frame(input_data)
+            # input_data = api_data_to_frame(input_data)
             input_data = np.array(input_data, dtype=np.array(self.prototype_data).dtype)
             prediction = self.model(torch.from_numpy(input_data))
 

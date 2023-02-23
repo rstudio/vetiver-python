@@ -26,7 +26,11 @@ def vetiver_model():
 
 
 def sum_values(x):
-    return api_data_to_frame(x).sum()
+    return x.sum().to_list()
+
+
+def sum_values_no_prototype(x):
+    return api_data_to_frame(x).sum().to_list()
 
 
 @pytest.fixture
@@ -45,7 +49,7 @@ def vetiver_client(vetiver_model):  # With check_prototype=True
 def vetiver_client_check_ptype_false(vetiver_model):  # With check_prototype=False
 
     app = VetiverAPI(vetiver_model, check_prototype=False)
-    app.vetiver_post(sum_values, "sum")
+    app.vetiver_post(sum_values_no_prototype, "sum")
 
     app.app.root_path = "/sum"
     client = TestClient(app.app)

@@ -1,7 +1,6 @@
 import pandas as pd
 
 from .base import BaseHandler
-from ..helpers import api_data_to_frame
 
 xgb_exists = True
 try:
@@ -44,8 +43,8 @@ class XGBoostHandler(BaseHandler):
         if not xgb_exists:
             raise ImportError("Cannot import `xgboost`")
 
-        if check_prototype:
-            input_data = api_data_to_frame(input_data)
+        # if check_prototype:
+        #     input_data = api_data_to_frame(input_data)
 
         if not isinstance(input_data, pd.DataFrame):
             try:

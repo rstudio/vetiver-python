@@ -16,6 +16,7 @@ from warnings import warn
 from .utils import _jupyter_nb
 from .vetiver_model import VetiverModel
 from .meta import VetiverMeta
+from .helpers import api_data_to_frame
 
 
 class VetiverAPI:
@@ -175,7 +176,8 @@ class VetiverAPI:
 
             @self.app.post(urljoin("/", endpoint_name), name=endpoint_name)
             async def custom_endpoint(input_data: List[self.model.prototype]):
-                predictions = endpoint_fx(input_data, **kw)
+                _to_frame = api_data_to_frame(input_data)
+                predictions = endpoint_fx(_to_frame, **kw)
                 return {endpoint_name: predictions}
 
         else:
