@@ -9,6 +9,8 @@ name: Weekly Tests
 on:
   schedule:
     - cron: "03 14 * * MON"
+  push:
+    branches: ['update-weekly']
 
 jobs:
   vetiver_main_pins_main:
@@ -101,7 +103,7 @@ jobs:
     strategy:
       matrix:
         # Minimum and Maximum supported versions
-        python-version: ['3.10']
+        python-version: ['3.9']
 
     steps:
       - name: Get latest release with tag from GitHub API
@@ -148,7 +150,7 @@ jobs:
     strategy:
       matrix:
         # Minimum and Maximum supported versions
-        python-version: ['3.10']
+        python-version: ['3.9']
 
     steps:
       - uses: actions/checkout@v2
