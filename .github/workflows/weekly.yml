@@ -9,6 +9,8 @@ name: Weekly Tests
 on:
   schedule:
     - cron: "03 14 * * MON"
+  push:
+    branches: ['update-weekly']
 
 jobs:
   vetiver_main_pins_main:
@@ -19,7 +21,7 @@ jobs:
     strategy:
       matrix:
         # Minimum and Maximum supported versions
-        python-version: ['3.10']
+        python-version: ['3.9.5']
 
 
     steps:
