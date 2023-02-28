@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Vetiver (Python) – index</title>
+<title>Vetiver (Python) – vetiver_create_prototype</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -29,7 +29,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../reference/VetiverModel.html" rel="next">
+<link href="../reference/model_card.model_card.html" rel="next">
+<link href="../reference/vetiver_pin_write.html" rel="prev">
 <link href="../figures/logo.svg" rel="icon" type="image/svg+xml">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -127,7 +128,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../reference/index.html" class="sidebar-item-text sidebar-link active">Vetiver-0.0.post1+gfc0e53b</a>
+  <a href="../reference/index.html" class="sidebar-item-text sidebar-link">Vetiver-0.0.post1+gfc0e53b</a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -150,7 +151,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../reference/vetiver_create_prototype.html" class="sidebar-item-text sidebar-link">vetiver_create_prototype</a>
+  <a href="../reference/vetiver_create_prototype.html" class="sidebar-item-text sidebar-link active">vetiver_create_prototype</a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -285,116 +286,50 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="vetiver--env-version" class="level1">
-<h1>Vetiver-0.0.post1+gfc0e53b</h1>
-<section id="version" class="level2">
-<h2 class="anchored" data-anchor-id="version">Version</h2>
+<section id="vetiver_create_prototype" class="level2">
+<h2 class="anchored" data-anchor-id="vetiver_create_prototype">vetiver_create_prototype</h2>
+<p><code>vetiver_create_prototype(data)</code></p>
+<p>Create zero row structure to save data types</p>
+<section id="parameters" class="level3">
+<h3 class="anchored" data-anchor-id="parameters">Parameters</h3>
 <table class="table">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 71%">
+<col style="width: 11%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
 <tbody>
 <tr class="odd">
-<td><a href="../reference/VetiverModel.html">VetiverModel</a></td>
-<td>Create VetiverModel class for serving.</td>
-</tr>
-<tr class="even">
-<td><a href="../reference/vetiver_pin_write.html">vetiver_pin_write</a></td>
-<td>Pin a trained VetiverModel along with other model metadata.</td>
-</tr>
-<tr class="odd">
-<td><a href="../reference/vetiver_create_prototype.html">vetiver_create_prototype</a></td>
-<td>Create zero row structure to save data types</td>
-</tr>
-<tr class="even">
-<td><a href="../reference/model_card.model_card.html">model_card.model_card</a></td>
-<td>Create a model card for documentation</td>
+<td><code>data</code></td>
+<td>object</td>
+<td>An object with information (data) whose layout is to be determined.</td>
+<td>required</td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="deploy" class="level2">
-<h2 class="anchored" data-anchor-id="deploy">Deploy</h2>
+<section id="returns" class="level3">
+<h3 class="anchored" data-anchor-id="returns">Returns</h3>
 <table class="table">
+<thead>
+<tr class="header">
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
 <tbody>
 <tr class="odd">
-<td><a href="../reference/VetiverAPI.html">VetiverAPI</a></td>
-<td>Create model aware API</td>
-</tr>
-<tr class="even">
-<td><a href="../reference/VetiverAPI.run.html">VetiverAPI.run</a></td>
-<td>Start API</td>
-</tr>
-<tr class="odd">
-<td><a href="../reference/VetiverAPI.vetiver_post.html">VetiverAPI.vetiver_post</a></td>
-<td>Create new POST endpoint that is aware of model input data</td>
-</tr>
-<tr class="even">
-<td><a href="../reference/vetiver_endpoint.html">vetiver_endpoint</a></td>
-<td>Wrap url where VetiverModel will be deployed</td>
-</tr>
-<tr class="odd">
-<td><a href="../reference/predict.html">predict</a></td>
-<td>Make a prediction from model endpoint</td>
-</tr>
-<tr class="even">
-<td><a href="../reference/write_app.html">write_app</a></td>
-<td>Write VetiverAPI app to a file</td>
-</tr>
-<tr class="odd">
-<td><a href="../reference/prepare_docker.html">prepare_docker</a></td>
-<td>Create all files needed for Docker</td>
-</tr>
-<tr class="even">
-<td><a href="../reference/write_docker.write_docker.html">write_docker.write_docker</a></td>
-<td>Writes a Dockerfile to run VetiverAPI in a container</td>
-</tr>
-<tr class="odd">
-<td><a href="../reference/deploy_rsconnect.html">deploy_rsconnect</a></td>
-<td>Deploy to Posit Connect</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="monitor" class="level2">
-<h2 class="anchored" data-anchor-id="monitor">Monitor</h2>
-<table class="table">
-<tbody>
-<tr class="odd">
-<td><a href="../reference/compute_metrics.html">compute_metrics</a></td>
-<td>Compute metrics for given time period</td>
-</tr>
-<tr class="even">
-<td><a href="../reference/pin_metrics.html">pin_metrics</a></td>
-<td>Update an existing pin storing model metrics over time</td>
-</tr>
-<tr class="odd">
-<td><a href="../reference/plot_metrics.html">plot_metrics</a></td>
-<td>Plot metrics over a given time period</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="model-handlers" class="level2">
-<h2 class="anchored" data-anchor-id="model-handlers">Model Handlers</h2>
-<table class="table">
-<tbody>
-<tr class="odd">
-<td><a href="../reference/BaseHandler.html">BaseHandler</a></td>
-<td>Base handler class for creating VetiverModel of different type.</td>
-</tr>
-<tr class="even">
-<td><a href="../reference/SKLearnHandler.html">SKLearnHandler</a></td>
-<td>Handler class for creating VetiverModels with sklearn.</td>
-</tr>
-<tr class="odd">
-<td><a href="../reference/TorchHandler.html">TorchHandler</a></td>
-<td>Handler class for creating VetiverModels with torch.</td>
-</tr>
-<tr class="even">
-<td><a href="../reference/StatsmodelsHandler.html">StatsmodelsHandler</a></td>
-<td>Handler class for creating VetiverModels with statsmodels.</td>
-</tr>
-<tr class="odd">
-<td><a href="../reference/XGBoostHandler.html">XGBoostHandler</a></td>
-<td>Handler class for creating VetiverModels with xgboost.</td>
+<td>vetiver.Prototype</td>
+<td>Data prototype</td>
 </tr>
 </tbody>
 </table>
@@ -539,10 +474,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="../reference/vetiver_pin_write.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">vetiver_pin_write</span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../reference/VetiverModel.html" class="pagination-link">
-        <span class="nav-page-text">VetiverModel</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../reference/model_card.model_card.html" class="pagination-link">
+        <span class="nav-page-text">model_card.model_card</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

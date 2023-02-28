@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Vetiver (Python) – index</title>
+<title>Vetiver (Python) – compute_metrics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,6 +20,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -29,7 +92,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../reference/VetiverModel.html" rel="next">
+<link href="../reference/pin_metrics.html" rel="next">
+<link href="../reference/deploy_rsconnect.html" rel="prev">
 <link href="../figures/logo.svg" rel="icon" type="image/svg+xml">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -127,7 +191,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../reference/index.html" class="sidebar-item-text sidebar-link active">Vetiver-0.0.post1+gfc0e53b</a>
+  <a href="../reference/index.html" class="sidebar-item-text sidebar-link">Vetiver-0.0.post1+gfc0e53b</a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -225,7 +289,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../reference/compute_metrics.html" class="sidebar-item-text sidebar-link">compute_metrics</a>
+  <a href="../reference/compute_metrics.html" class="sidebar-item-text sidebar-link active">compute_metrics</a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -285,119 +349,82 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="vetiver--env-version" class="level1">
-<h1>Vetiver-0.0.post1+gfc0e53b</h1>
-<section id="version" class="level2">
-<h2 class="anchored" data-anchor-id="version">Version</h2>
+<section id="compute_metrics" class="level2">
+<h2 class="anchored" data-anchor-id="compute_metrics">compute_metrics</h2>
+<p><code>compute_metrics(data, date_var, period, metric_set, truth, estimate, kw)</code></p>
+<p>Compute metrics for given time period</p>
+<section id="parameters" class="level3">
+<h3 class="anchored" data-anchor-id="parameters">Parameters</h3>
 <table class="table">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 16%">
+<col style="width: 62%">
+<col style="width: 9%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
 <tbody>
 <tr class="odd">
-<td><a href="../reference/VetiverModel.html">VetiverModel</a></td>
-<td>Create VetiverModel class for serving.</td>
+<td><code>data</code></td>
+<td>DataFrame</td>
+<td>Pandas dataframe</td>
+<td>required</td>
 </tr>
 <tr class="even">
-<td><a href="../reference/vetiver_pin_write.html">vetiver_pin_write</a></td>
-<td>Pin a trained VetiverModel along with other model metadata.</td>
+<td><code>date_var</code></td>
+<td>str</td>
+<td>Column in <code>data</code> containing dates</td>
+<td>required</td>
 </tr>
 <tr class="odd">
-<td><a href="../reference/vetiver_create_prototype.html">vetiver_create_prototype</a></td>
-<td>Create zero row structure to save data types</td>
+<td><code>period</code></td>
+<td>datetime.timedelta</td>
+<td>Defining period to group by</td>
+<td>required</td>
 </tr>
 <tr class="even">
-<td><a href="../reference/model_card.model_card.html">model_card.model_card</a></td>
-<td>Create a model card for documentation</td>
+<td><code>metric_set</code></td>
+<td>list</td>
+<td>List of metrics to compute, that have the parameters <code>y_true</code> and <code>y_pred</code></td>
+<td>required</td>
+</tr>
+<tr class="odd">
+<td><code>truth</code></td>
+<td>str</td>
+<td>Column name for true results</td>
+<td>required</td>
+</tr>
+<tr class="even">
+<td><code>estimate</code></td>
+<td>str</td>
+<td>Column name for predicted results</td>
+<td>required</td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="deploy" class="level2">
-<h2 class="anchored" data-anchor-id="deploy">Deploy</h2>
-<table class="table">
-<tbody>
-<tr class="odd">
-<td><a href="../reference/VetiverAPI.html">VetiverAPI</a></td>
-<td>Create model aware API</td>
-</tr>
-<tr class="even">
-<td><a href="../reference/VetiverAPI.run.html">VetiverAPI.run</a></td>
-<td>Start API</td>
-</tr>
-<tr class="odd">
-<td><a href="../reference/VetiverAPI.vetiver_post.html">VetiverAPI.vetiver_post</a></td>
-<td>Create new POST endpoint that is aware of model input data</td>
-</tr>
-<tr class="even">
-<td><a href="../reference/vetiver_endpoint.html">vetiver_endpoint</a></td>
-<td>Wrap url where VetiverModel will be deployed</td>
-</tr>
-<tr class="odd">
-<td><a href="../reference/predict.html">predict</a></td>
-<td>Make a prediction from model endpoint</td>
-</tr>
-<tr class="even">
-<td><a href="../reference/write_app.html">write_app</a></td>
-<td>Write VetiverAPI app to a file</td>
-</tr>
-<tr class="odd">
-<td><a href="../reference/prepare_docker.html">prepare_docker</a></td>
-<td>Create all files needed for Docker</td>
-</tr>
-<tr class="even">
-<td><a href="../reference/write_docker.write_docker.html">write_docker.write_docker</a></td>
-<td>Writes a Dockerfile to run VetiverAPI in a container</td>
-</tr>
-<tr class="odd">
-<td><a href="../reference/deploy_rsconnect.html">deploy_rsconnect</a></td>
-<td>Deploy to Posit Connect</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="monitor" class="level2">
-<h2 class="anchored" data-anchor-id="monitor">Monitor</h2>
-<table class="table">
-<tbody>
-<tr class="odd">
-<td><a href="../reference/compute_metrics.html">compute_metrics</a></td>
-<td>Compute metrics for given time period</td>
-</tr>
-<tr class="even">
-<td><a href="../reference/pin_metrics.html">pin_metrics</a></td>
-<td>Update an existing pin storing model metrics over time</td>
-</tr>
-<tr class="odd">
-<td><a href="../reference/plot_metrics.html">plot_metrics</a></td>
-<td>Plot metrics over a given time period</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="model-handlers" class="level2">
-<h2 class="anchored" data-anchor-id="model-handlers">Model Handlers</h2>
-<table class="table">
-<tbody>
-<tr class="odd">
-<td><a href="../reference/BaseHandler.html">BaseHandler</a></td>
-<td>Base handler class for creating VetiverModel of different type.</td>
-</tr>
-<tr class="even">
-<td><a href="../reference/SKLearnHandler.html">SKLearnHandler</a></td>
-<td>Handler class for creating VetiverModels with sklearn.</td>
-</tr>
-<tr class="odd">
-<td><a href="../reference/TorchHandler.html">TorchHandler</a></td>
-<td>Handler class for creating VetiverModels with torch.</td>
-</tr>
-<tr class="even">
-<td><a href="../reference/StatsmodelsHandler.html">StatsmodelsHandler</a></td>
-<td>Handler class for creating VetiverModels with statsmodels.</td>
-</tr>
-<tr class="odd">
-<td><a href="../reference/XGBoostHandler.html">XGBoostHandler</a></td>
-<td>Handler class for creating VetiverModels with xgboost.</td>
-</tr>
-</tbody>
-</table>
+<section id="examples" class="level3">
+<h3 class="anchored" data-anchor-id="examples">Examples</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">from</span> datetime <span class="im">import</span> timedelta</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">from</span> sklearn.metrics <span class="im">import</span> mean_squared_error, mean_absolute_error</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> df <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>...   {</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>...        <span class="st">"index"</span>: [<span class="st">"2021-01-01"</span>, <span class="st">"2021-01-02"</span>, <span class="st">"2021-01-03"</span>],</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>...        <span class="st">"truth"</span>: [<span class="dv">200</span>, <span class="dv">201</span>, <span class="dv">199</span>],</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>...        <span class="st">"pred"</span>: [<span class="dv">198</span>, <span class="dv">200</span>, <span class="dv">199</span>],</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>...   }</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>... )</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> td <span class="op">=</span> timedelta(days <span class="op">=</span> <span class="dv">1</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> metric_set <span class="op">=</span> [mean_squared_error, mean_absolute_error]</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> metrics <span class="op">=</span> compute_metrics(df, <span class="st">"index"</span>, td, metric_set, <span class="st">"truth"</span>, <span class="st">"pred"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
 </section>
@@ -539,10 +566,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="../reference/deploy_rsconnect.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">deploy_rsconnect</span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../reference/VetiverModel.html" class="pagination-link">
-        <span class="nav-page-text">VetiverModel</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../reference/pin_metrics.html" class="pagination-link">
+        <span class="nav-page-text">pin_metrics</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
