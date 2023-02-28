@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Vetiver (Python) – changelog</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./figures/logo.svg" rel="icon" type="image/svg+xml">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    <img src="./figures/logo.svg" alt="vetiver-home" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Vetiver (Python)</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./reference/index.html">
+ <span class="menu-text">Reference</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-advanced-usage" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Advanced Usage</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-advanced-usage">    
+        <li>
+    <a class="dropdown-item" href="./custom_handler.html">
+ <span class="dropdown-text">Custom Handlers</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link active" href="./changelog.html" aria-current="page">
+ <span class="menu-text">Changelog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://vetiver.rstudio.com">
+ <span class="menu-text">Vetiver main site</span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+
+<section id="release-notes" class="level1">
+<h1>Release notes</h1>
+<p>For full details, view the <a href="https://github.com/rstudio/vetiver-python/commits/">commit logs</a>.</p>
+<section id="v0.2.0" class="level2">
+<h2 class="anchored" data-anchor-id="v0.2.0">v0.2.0</h2>
+<section id="whats-changed" class="level3">
+<h3 class="anchored" data-anchor-id="whats-changed">What’s Changed</h3>
+<p><a href="https://github.com/rstudio/vetiver-python/compare/v0.1.8...v0.2.0"><strong>Full Changelog</strong></a></p>
+<ul>
+<li>DOC: Added missing <code>model_name</code> to <code>VetiverModel</code> in <a href="https://github.com/rstudio/vetiver-python/pull/128">GH128</a></li>
+<li>BUG, MAINT: Catch non 200 codes in <a href="https://github.com/rstudio/vetiver-python/pull/129">GH129</a></li>
+<li>DOC: fix <code>deploy_rsconnect</code> example in <a href="https://github.com/rstudio/vetiver-python/pull/134">GH1234</a></li>
+<li>ENH: Make <code>vetiver_post</code> extensible for all endpoints in <a href="https://github.com/rstudio/vetiver-python/pull/130">GH130</a></li>
+<li>TEST: ci testing to run generated dockerfile in <a href="https://github.com/rstudio/vetiver-python/pull/136">GH136</a></li>
+<li>MAINT: rsconnect-python&gt;=1.8.0 in <a href="https://github.com/rstudio/vetiver-python/pull/132">GH132</a></li>
+<li>ENH: New <code>prepare_docker</code> function in <a href="https://github.com/rstudio/vetiver-python/pull/137">GH137</a></li>
+<li>DOC: refresh README and add to docs in <a href="https://github.com/rstudio/vetiver-python/pull/141">GH141</a></li>
+<li>TEST: Update weekly tests: only run necessary tests in <a href="https://github.com/rstudio/vetiver-python/pull/142">GH142</a></li>
+<li>MAINT: update <code>ptype_data</code> to <code>prototype_data</code> in <a href="https://github.com/rstudio/vetiver-python/pull/138">GH138</a></li>
+<li>ENH: Refactor metadata in <a href="https://github.com/rstudio/vetiver-python/pull/126">GH126</a></li>
+<li>MAINT: remove stars for explicit imports in <a href="https://github.com/rstudio/vetiver-python/pull/145">GH145</a></li>
+<li>DOC: Changing language from “Example” to “Examples” for docstrings in <a href="https://github.com/rstudio/vetiver-python/pull/146">GH146</a></li>
+<li>ENH: Added Python version to <code>vetiver_pin_write</code> in <a href="https://github.com/rstudio/vetiver-python/pull/127">GH127</a></li>
+</ul>
+</section>
+</section>
+<section id="v0.1.8" class="level2">
+<h2 class="anchored" data-anchor-id="v0.1.8">v0.1.8</h2>
+<section id="whats-changed-1" class="level3">
+<h3 class="anchored" data-anchor-id="whats-changed-1">What’s Changed</h3>
+<p><a href="https://github.com/rstudio/vetiver-python/compare/v0.1.7...v0.1.8"><strong>Full Changelog</strong></a></p>
+<ul>
+<li>TEST: pins&lt;&gt;vetiver compatibility test in <a href="https://github.com/rstudio/vetiver-python/pull/113">GH113</a></li>
+<li>TEST: Update weekly tests to include <code>rsconnect-python</code> in <a href="https://github.com/rstudio/vetiver-python/pull/117">GH117</a></li>
+<li>DOC: Missing whitespace in InvalidModelError in <a href="https://github.com/rstudio/vetiver-python/pull/120">GH120</a></li>
+<li>MAINT: Remove xfail from <code>test_rsconnect</code> in <a href="https://github.com/rstudio/vetiver-python/pull/119">GH119</a></li>
+<li>MAINT: Add httpx in <a href="https://github.com/rstudio/vetiver-python/pull/125">GH125</a></li>
+<li>ENH: Add pin URL to REST API and metadata in <a href="https://github.com/rstudio/vetiver-python/pull/123">GH123</a></li>
+</ul>
+</section>
+</section>
+<section id="v0.1.7" class="level2">
+<h2 class="anchored" data-anchor-id="v0.1.7">v0.1.7</h2>
+<section id="whats-changed-2" class="level3">
+<h3 class="anchored" data-anchor-id="whats-changed-2">What’s Changed</h3>
+<p><a href="https://github.com/rstudio/vetiver-python/compare/v0.1.6...v0.1.7"><strong>Full Changelog</strong></a></p>
+<ul>
+<li>ENH, DOC: have stable and latest docs in <a href="https://github.com/rstudio/vetiver-python/pull/93">GH93</a></li>
+<li>BUG: bug fix for load_pkgs function on Windows OS in <a href="https://github.com/rstudio/vetiver-python/pull/98">GH98</a></li>
+<li>MAINT: Update attach_pkgs.py in <a href="https://github.com/rstudio/vetiver-python/pull/99">GH99</a></li>
+<li>ENH: implement statsmodels handler in <a href="https://github.com/rstudio/vetiver-python/pull/100">GH100</a></li>
+<li>FEAT: xgboost handler in <a href="https://github.com/rstudio/vetiver-python/pull/101">GH101</a></li>
+<li>ENH: adding model card template in <a href="https://github.com/rstudio/vetiver-python/pull/106">GH106</a></li>
+<li>BUG: refactor pseudo version to pin_url in model card in <a href="https://github.com/rstudio/vetiver-python/pull/107">GH107</a></li>
+<li>DOC: adding docs, small refactoring in <a href="https://github.com/rstudio/vetiver-python/pull/108">GH108</a></li>
+<li>ENH, DOC: add examples to docstrings in <a href="https://github.com/rstudio/vetiver-python/pull/109">GH109</a></li>
+</ul>
+</section>
+</section>
+<section id="v0.1.6" class="level2">
+<h2 class="anchored" data-anchor-id="v0.1.6">v0.1.6</h2>
+<section id="whats-changed-3" class="level3">
+<h3 class="anchored" data-anchor-id="whats-changed-3">What’s Changed</h3>
+<p><a href="https://github.com/rstudio/vetiver-python/compare/v0.1.5...v0.1.6"><strong>Full Changelog</strong></a></p>
+<ul>
+<li>ENH: add <code>rsconnect_deploy</code> support for <code>board_folder</code> in <a href="https://github.com/rstudio/vetiver-python/pull/77">GH77</a></li>
+<li>ENH: model monitoring in <a href="https://github.com/rstudio/vetiver-python/pull/76">GH76</a></li>
+<li>DOC: add mini chicago dataset in <a href="https://github.com/rstudio/vetiver-python/pull/81">GH81</a></li>
+<li>MAINT: remove trailing slashes in API paths <a href="https://github.com/rstudio/vetiver-python/pull/83">GH</a></li>
+<li>ENH: explicitly add <code>n</code> to hover data in <code>plot_metrics</code> in <a href="https://github.com/rstudio/vetiver-python/pull/84">GH84</a></li>
+<li>ENH: initial vetiver_pin_metrics implementation in <a href="https://github.com/rstudio/vetiver-python/pull/82">GH82</a></li>
+<li>MAINT, ENH: Use setuptools_scm for tagged versioning in <a href="https://github.com/rstudio/vetiver-python/pull/86">GH86</a></li>
+<li>ENH: handlers to register themselves in <a href="https://github.com/rstudio/vetiver-python/pull/87">GH87</a></li>
+<li>BUG: coerce date var to datetime in <a href="https://github.com/rstudio/vetiver-python/pull/89">GH89</a></li>
+</ul>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">Proudly supported by <a href="https://posit.co/"><img src="https://www.rstudio.com/assets/img/posit-logo-fullcolor-TM.svg" class="img-fluid" alt="Posit PBC" width="65"></a></div>   
+      <div class="nav-footer-center">
+        <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="https://vetiver.rstudio.com">Main site</a>
+  </li>  
+</ul>
+      </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/rstudio/vetiver-python">
+      <i class="bi bi-github" role="img" aria-label="Vetiver python GitHub">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+</body></html>

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Vetiver (Python) – vetiver_pin_write</title>
+<title>Vetiver (Python) – prepare_docker</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -92,8 +92,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../reference/vetiver_create_prototype.html" rel="next">
-<link href="../reference/VetiverModel.html" rel="prev">
+<link href="../reference/write_docker.write_docker.html" rel="next">
+<link href="../reference/write_app.html" rel="prev">
 <link href="../figures/logo.svg" rel="icon" type="image/svg+xml">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -191,7 +191,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../reference/index.html" class="sidebar-item-text sidebar-link">Vetiver-0.0.post1+gfc0e53b</a>
+  <a href="../reference/index.html" class="sidebar-item-text sidebar-link">Vetiver-0.0.post1+gd275a2e</a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -209,7 +209,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../reference/vetiver_pin_write.html" class="sidebar-item-text sidebar-link active">vetiver_pin_write</a>
+  <a href="../reference/vetiver_pin_write.html" class="sidebar-item-text sidebar-link">vetiver_pin_write</a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -264,7 +264,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../reference/prepare_docker.html" class="sidebar-item-text sidebar-link">prepare_docker</a>
+  <a href="../reference/prepare_docker.html" class="sidebar-item-text sidebar-link active">prepare_docker</a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -349,18 +349,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
-<section id="vetiver_pin_write" class="level2">
-<h2 class="anchored" data-anchor-id="vetiver_pin_write">vetiver_pin_write</h2>
-<p><code>vetiver_pin_write(board, model, versioned=True)</code></p>
-<p>Pin a trained VetiverModel along with other model metadata.</p>
+<section id="prepare_docker" class="level2">
+<h2 class="anchored" data-anchor-id="prepare_docker">prepare_docker</h2>
+<p><code>prepare_docker(board, pin_name, path='./', version=None, rspm_env=False, host='0.0.0.0', port='8080')</code></p>
+<p>Create all files needed for Docker</p>
 <section id="parameters" class="level3">
 <h3 class="anchored" data-anchor-id="parameters">Parameters</h3>
 <table class="table">
 <colgroup>
+<col style="width: 13%">
 <col style="width: 9%">
-<col style="width: 26%">
-<col style="width: 56%">
-<col style="width: 8%">
+<col style="width: 62%">
+<col style="width: 14%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -374,20 +374,44 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <tr class="odd">
 <td><code>board</code></td>
 <td></td>
-<td>A pin board, created by <code>pins.board_folder()</code> or another <code>board_</code> function.</td>
+<td>Pin board for model</td>
 <td>required</td>
 </tr>
 <tr class="even">
-<td><code>model</code></td>
-<td>vetiver.vetiver_model.VetiverModel</td>
-<td>VetiverModel to be written to board</td>
+<td><code>pin_name</code></td>
+<td>str</td>
+<td>Name of pin</td>
 <td>required</td>
 </tr>
 <tr class="odd">
-<td><code>versioned</code></td>
+<td><code>path</code></td>
+<td>str</td>
+<td>Path to output</td>
+<td><code>'./'</code></td>
+</tr>
+<tr class="even">
+<td><code>version</code></td>
+<td></td>
+<td>Pin version to be used</td>
+<td><code>None</code></td>
+</tr>
+<tr class="odd">
+<td><code>rspm_env</code></td>
 <td>bool</td>
-<td>Whether or not the pin should be versioned</td>
-<td><code>True</code></td>
+<td>Whether or not RStudio Package Manager should be used</td>
+<td><code>False</code></td>
+</tr>
+<tr class="even">
+<td><code>host</code></td>
+<td>str</td>
+<td>Host address to run VetiverAPI from Dockerfile</td>
+<td><code>'0.0.0.0'</code></td>
+</tr>
+<tr class="odd">
+<td><code>port</code></td>
+<td>str</td>
+<td>Port to run VetiverAPI from Dockerfile</td>
+<td><code>'8080'</code></td>
 </tr>
 </tbody>
 </table>
@@ -395,12 +419,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="examples" class="level3">
 <h3 class="anchored" data-anchor-id="examples">Examples</h3>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> vetiver</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">from</span> pins <span class="im">import</span> board_temp</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> model_board <span class="op">=</span> board_temp(versioned <span class="op">=</span> <span class="va">True</span>, allow_pickle_read <span class="op">=</span> <span class="va">True</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> X, y <span class="op">=</span> vetiver.get_mock_data()</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> model <span class="op">=</span> vetiver.get_mock_model().fit(X, y)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> v <span class="op">=</span> vetiver.VetiverModel(model, <span class="st">"my_model"</span>, prototype_data <span class="op">=</span> X)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> vetiver.vetiver_pin_write(model_board, v)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> tempfile</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> pins</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> tmp <span class="op">=</span> tempfile.TemporaryDirectory()</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> board <span class="op">=</span> pins.board_temp(allow_pickle_read<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> X, y <span class="op">=</span> vetiver.get_mock_data()</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> model <span class="op">=</span> vetiver.get_mock_model().fit(X, y)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> v <span class="op">=</span> vetiver.VetiverModel(model, <span class="st">"my_model"</span>, prototype_data <span class="op">=</span> X)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> vetiver.vetiver_pin_write(board, v)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> vetiver.prepare_docker(board <span class="op">=</span> board, pin_name <span class="op">=</span> <span class="st">"my_model"</span>, path <span class="op">=</span> tmp.name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
 </section>
@@ -542,13 +569,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../reference/VetiverModel.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">VetiverModel</span>
+      <a href="../reference/write_app.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">write_app</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../reference/vetiver_create_prototype.html" class="pagination-link">
-        <span class="nav-page-text">vetiver_create_prototype</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../reference/write_docker.write_docker.html" class="pagination-link">
+        <span class="nav-page-text">write_docker.write_docker</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

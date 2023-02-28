@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Vetiver (Python) – compute_metrics</title>
+<title>Vetiver (Python) – vetiver_endpoint</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -92,8 +92,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../reference/pin_metrics.html" rel="next">
-<link href="../reference/deploy_rsconnect.html" rel="prev">
+<link href="../reference/predict.html" rel="next">
+<link href="../reference/VetiverAPI.vetiver_post.html" rel="prev">
 <link href="../figures/logo.svg" rel="icon" type="image/svg+xml">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -191,7 +191,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../reference/index.html" class="sidebar-item-text sidebar-link">Vetiver-0.0.post1+gfc0e53b</a>
+  <a href="../reference/index.html" class="sidebar-item-text sidebar-link">Vetiver-0.0.post1+gd275a2e</a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -249,7 +249,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../reference/vetiver_endpoint.html" class="sidebar-item-text sidebar-link">vetiver_endpoint</a>
+  <a href="../reference/vetiver_endpoint.html" class="sidebar-item-text sidebar-link active">vetiver_endpoint</a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -289,7 +289,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../reference/compute_metrics.html" class="sidebar-item-text sidebar-link active">compute_metrics</a>
+  <a href="../reference/compute_metrics.html" class="sidebar-item-text sidebar-link">compute_metrics</a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -349,18 +349,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
-<section id="compute_metrics" class="level2">
-<h2 class="anchored" data-anchor-id="compute_metrics">compute_metrics</h2>
-<p><code>compute_metrics(data, date_var, period, metric_set, truth, estimate, kw)</code></p>
-<p>Compute metrics for given time period</p>
+<section id="vetiver_endpoint" class="level2">
+<h2 class="anchored" data-anchor-id="vetiver_endpoint">vetiver_endpoint</h2>
+<p><code>vetiver_endpoint(url='http://127.0.0.1:8000/predict')</code></p>
+<p>Wrap url where VetiverModel will be deployed</p>
 <section id="parameters" class="level3">
 <h3 class="anchored" data-anchor-id="parameters">Parameters</h3>
 <table class="table">
 <colgroup>
-<col style="width: 11%">
-<col style="width: 16%">
-<col style="width: 62%">
-<col style="width: 9%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 30%">
+<col style="width: 47%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -372,59 +372,35 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>data</code></td>
-<td>DataFrame</td>
-<td>Pandas dataframe</td>
-<td>required</td>
-</tr>
-<tr class="even">
-<td><code>date_var</code></td>
+<td><code>url</code></td>
 <td>str</td>
-<td>Column in <code>data</code> containing dates</td>
-<td>required</td>
+<td>URI path to endpoint</td>
+<td><code>'http://127.0.0.1:8000/predict'</code></td>
 </tr>
+</tbody>
+</table>
+</section>
+<section id="returns" class="level3">
+<h3 class="anchored" data-anchor-id="returns">Returns</h3>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
 <tr class="odd">
-<td><code>period</code></td>
-<td>datetime.timedelta</td>
-<td>Defining period to group by</td>
-<td>required</td>
-</tr>
-<tr class="even">
-<td><code>metric_set</code></td>
-<td>list</td>
-<td>List of metrics to compute, that have the parameters <code>y_true</code> and <code>y_pred</code></td>
-<td>required</td>
-</tr>
-<tr class="odd">
-<td><code>truth</code></td>
 <td>str</td>
-<td>Column name for true results</td>
-<td>required</td>
-</tr>
-<tr class="even">
-<td><code>estimate</code></td>
-<td>str</td>
-<td>Column name for predicted results</td>
-<td>required</td>
+<td>URI path to endpoint</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="examples" class="level3">
 <h3 class="anchored" data-anchor-id="examples">Examples</h3>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">from</span> datetime <span class="im">import</span> timedelta</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">from</span> sklearn.metrics <span class="im">import</span> mean_squared_error, mean_absolute_error</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> df <span class="op">=</span> pd.DataFrame(</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>...   {</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>...        <span class="st">"index"</span>: [<span class="st">"2021-01-01"</span>, <span class="st">"2021-01-02"</span>, <span class="st">"2021-01-03"</span>],</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>...        <span class="st">"truth"</span>: [<span class="dv">200</span>, <span class="dv">201</span>, <span class="dv">199</span>],</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>...        <span class="st">"pred"</span>: [<span class="dv">198</span>, <span class="dv">200</span>, <span class="dv">199</span>],</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>...   }</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>... )</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> td <span class="op">=</span> timedelta(days <span class="op">=</span> <span class="dv">1</span>)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> metric_set <span class="op">=</span> [mean_squared_error, mean_absolute_error]</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> metrics <span class="op">=</span> compute_metrics(df, <span class="st">"index"</span>, td, metric_set, <span class="st">"truth"</span>, <span class="st">"pred"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> vetiver</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> endpoint <span class="op">=</span> vetiver.vetiver_endpoint(url<span class="op">=</span><span class="st">'http://127.0.0.1:8000/predict'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
 </section>
@@ -566,13 +542,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../reference/deploy_rsconnect.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">deploy_rsconnect</span>
+      <a href="../reference/VetiverAPI.vetiver_post.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">VetiverAPI.vetiver_post</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../reference/pin_metrics.html" class="pagination-link">
-        <span class="nav-page-text">pin_metrics</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../reference/predict.html" class="pagination-link">
+        <span class="nav-page-text">predict</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

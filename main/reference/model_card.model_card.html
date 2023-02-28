@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Vetiver (Python) – sklearnhandler</title>
+<title>Vetiver (Python) – model_card.model_card</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -29,8 +29,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../reference/TorchHandler.html" rel="next">
-<link href="../reference/BaseHandler.html" rel="prev">
+<link href="../reference/VetiverAPI.html" rel="next">
+<link href="../reference/vetiver_create_prototype.html" rel="prev">
 <link href="../figures/logo.svg" rel="icon" type="image/svg+xml">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -128,7 +128,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../reference/index.html" class="sidebar-item-text sidebar-link">Vetiver-0.0.post1+gfc0e53b</a>
+  <a href="../reference/index.html" class="sidebar-item-text sidebar-link">Vetiver-0.0.post1+gd275a2e</a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -156,7 +156,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../reference/model_card.model_card.html" class="sidebar-item-text sidebar-link">model_card.model_card</a>
+  <a href="../reference/model_card.model_card.html" class="sidebar-item-text sidebar-link active">model_card.model_card</a>
   </div>
 </li>
       </ul>
@@ -256,7 +256,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../reference/SKLearnHandler.html" class="sidebar-item-text sidebar-link active">SKLearnHandler</a>
+  <a href="../reference/SKLearnHandler.html" class="sidebar-item-text sidebar-link">SKLearnHandler</a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -286,19 +286,13 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="SKLearnHandler" class="level2">
-<h2 class="anchored" data-anchor-id="SKLearnHandler">SKLearnHandler</h2>
-<p><code>SKLearnHandler()</code></p>
-<p>Handler class for creating VetiverModels with sklearn.</p>
+<section id="model_card.model_card" class="level2">
+<h2 class="anchored" data-anchor-id="model_card.model_card">model_card.model_card</h2>
+<p><code>model_card.model_card(path='.')</code></p>
+<p>Create a model card for documentation</p>
 <section id="parameters" class="level3">
 <h3 class="anchored" data-anchor-id="parameters">Parameters</h3>
 <table class="table">
-<colgroup>
-<col style="width: 12%">
-<col style="width: 38%">
-<col style="width: 34%">
-<col style="width: 15%">
-</colgroup>
 <thead>
 <tr class="header">
 <th>Name</th>
@@ -309,13 +303,17 @@ ul.task-list li input[type="checkbox"] {
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>model</code></td>
-<td>sklearn.base.BaseEstimator</td>
-<td>a trained sklearn model</td>
-<td>required</td>
+<td><code>path</code></td>
+<td>str</td>
+<td>Path to save model card</td>
+<td><code>'.'</code></td>
 </tr>
 </tbody>
 </table>
+</section>
+<section id="notes" class="level3">
+<h3 class="anchored" data-anchor-id="notes">Notes</h3>
+<p>This model card is generated as a Quarto document. For more info on Quarto, visit https://quarto.org/</p>
 
 
 </section>
@@ -457,13 +455,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../reference/BaseHandler.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">BaseHandler</span>
+      <a href="../reference/vetiver_create_prototype.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">vetiver_create_prototype</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../reference/TorchHandler.html" class="pagination-link">
-        <span class="nav-page-text">TorchHandler</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../reference/VetiverAPI.html" class="pagination-link">
+        <span class="nav-page-text">VetiverAPI</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
