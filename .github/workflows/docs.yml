@@ -36,7 +36,7 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: docs/_site/*
+          publish_dir: docs/_site
           publish_branch: gh-pages
           destination_dir: main
       - name: publish stable docs
@@ -44,7 +44,7 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: docs/_site/*
+          publish_dir: docs/_site
           publish_branch: gh-pages
           destination_dir: ${{ github.ref_name }}
       - name: create symlink stable to new version
