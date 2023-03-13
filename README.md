@@ -1,4 +1,4 @@
-# vetiver <a href='https://rstudio.github.io/vetiver-python/'><img src='docs/figures/logo.png' align="right" height="139" /></a>
+# vetiver <a href='https://rstudio.github.io/vetiver-python/'><img src='docs/figures/logo.png' align="right" height="138" /></a>
 
 <!-- badges: start -->
 
@@ -49,7 +49,7 @@ model = mock.get_mock_model().fit(X, y)
 v = VetiverModel(model, model_name='mock_model', prototype_data=X)
 ```
 
-You can **version** and **share** your `VetiverModel()` by choosing a [pins](https://rstudio.github.io/pins-python/) "board" for it, including a local folder, RStudio Connect, Amazon S3, and more.
+You can **version** and **share** your `VetiverModel()` by choosing a [pins](https://rstudio.github.io/pins-python/) "board" for it, including a local folder, [Connect](https://posit.co/products/enterprise/connect/), Amazon S3, and more.
 
 ```python
 from pins import board_temp
@@ -72,6 +72,6 @@ To start a server using this object, use `app.run(port = 8080)` or your port of 
 
 This project is released with a [Contributor Code of Conduct](https://www.contributor-covenant.org/version/2/1/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
 
-- For questions and discussions about deploying models, statistical modeling, and machine learning, please [post on RStudio Community](https://community.rstudio.com/new-topic?category_id=15&tags=vetiver,question).
+- For questions and discussions about deploying models, statistical modeling, and machine learning, please [post on Posit Community](https://community.rstudio.com/new-topic?category_id=15&tags=vetiver,question).
 
 - If you think you have encountered a bug, please [submit an issue](https://github.com/rstudio/vetiver-python/issues).

@@ -54,7 +54,7 @@ jobs:
           python -m pip install ".[dev]"
           python -m pip install --upgrade git+https://github.com/rstudio/vetiver-python@${{ github.sha }}
           echo {{ github.sha }}
-      - name: run RStudio Connect
+      - name: run Connect
         run: |
           docker-compose up --build -d
           pip freeze > requirements.txt

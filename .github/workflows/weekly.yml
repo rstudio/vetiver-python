@@ -37,7 +37,7 @@ jobs:
           python -m pip install '.[all]'
           python -m pip install --upgrade git+https://github.com/rstudio/pins-python
 
-      - name: run RStudio Connect
+      - name: run Connect
         run: |
           docker-compose up --build -d
           make dev
@@ -84,7 +84,7 @@ jobs:
           python -m pip install .[dev]
           python -m pip install --upgrade git+https://github.com/rstudio/pins-python
 
-      - name: run RStudio Connect
+      - name: run Connect
         run: |
           docker-compose up --build -d
           make dev
@@ -131,7 +131,7 @@ jobs:
           python -m pip install --upgrade git+https://github.com/rstudio/rsconnect-python
           pip freeze > requirements.txt
 
-      - name: run RStudio Connect
+      - name: run Connect
         run: |
           docker-compose up --build -d
           make dev
@@ -166,7 +166,7 @@ jobs:
           python -m pip install --upgrade git+https://github.com/rstudio/rsconnect-python
           pip freeze > requirements.txt
 
-      - name: run RStudio Connect
+      - name: run Connect
         run: |
           docker-compose up --build -d
           make dev

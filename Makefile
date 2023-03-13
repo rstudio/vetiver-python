@@ -22,9 +22,9 @@ help:
 	@echo "release - package and upload a release"
 	@echo "dist - package"
 	@echo "install - install the package to the active Python's site-packages"
-	@echo "dev - generate RStudio Connect API keys"
-	@echo "dev-start - start up development RStudio Connect in Docker"
-	@echo "dev-stop - stop RStudio Connect dev container"
+	@echo "dev - generate Connect API keys"
+	@echo "dev-start - start up development Connect in Docker"
+	@echo "dev-stop - stop Connect dev container"
 
 clean: clean-build clean-pyc clean-test
 
