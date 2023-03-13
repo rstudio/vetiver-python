@@ -1,5 +1,7 @@
 from .base import BaseHandler
 from ..prototype import vetiver_create_prototype
+from ..helpers import api_data_to_frame
+
 import pandas as pd
 
 spacy_exists = True
@@ -31,10 +33,16 @@ class SpacyHandler(BaseHandler):
         prototype :
             Input data prototype for spacy model
         """
-        if self.prototype_data is not None:
-            raise TypeError
+        if self.prototype_data is None:
+            text_column_name = "text"
 
-        prototype = vetiver_create_prototype(pd.DataFrame({"text": ["text"]}))
+        else:
+            if len(self.prototype_data.columns) != 1:
+                raise TypeError("Expected 1 column of text data")
+
+            text_column_name = self.prototype_data.columns[0]
+
+        prototype = vetiver_create_prototype(pd.DataFrame({text_column_name: ["text"]}))
 
         return prototype
 
@@ -60,7 +68,9 @@ class SpacyHandler(BaseHandler):
 
         response_body = []
 
-        for doc in self.model.pipe(input_data.text):
+        input_data = api_data_to_frame(input_data)
+
+        for doc in self.model.pipe(input_data.iloc[:, 0]):
             response_body.append(doc.to_json())
 
         return pd.Series(response_body)

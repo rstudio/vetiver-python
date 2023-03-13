@@ -27,12 +27,14 @@ def spacy_model():
     matcher.add("ANIMAL", animals)
     nlp.add_pipe("animals")
 
-    return vetiver.VetiverModel(nlp, "animals")
+    return nlp
 
 
 @pytest.fixture
-def vetiver_client(spacy_model):  # With check_prototype=True
-    app = vetiver.VetiverAPI(spacy_model, check_prototype=True)
+def vetiver_client_with_prototype(spacy_model):  # With check_prototype=True
+    df = pd.DataFrame({"new_column": ["one", "two", "three"]})
+    v = vetiver.VetiverModel(spacy_model, "animals", prototype_data=df)
+    app = vetiver.VetiverAPI(v, check_prototype=True)
     app.app.root_path = "/predict"
     client = TestClient(app.app)
 
@@ -40,50 +42,65 @@ def vetiver_client(spacy_model):  # With check_prototype=True
 
 
 @pytest.fixture
-<<<<<<< HEAD
-def vetiver_client_check_ptype_false(spacy_model):  # With check_prototype=False
-    app = vetiver.VetiverAPI(spacy_model, check_prototype=True)
-<<<<<<< HEAD
-=======
-def vetiver_client_check_ptype_false(spacy_model):  # With check_ptype=True
-    app = vetiver.VetiverAPI(spacy_model, check_ptype=False)
->>>>>>> b600e38 (testing spacy)
-=======
->>>>>>> 64158ab (specify in server to not preprocess data)
+def vetiver_client_no_prototype(spacy_model):  # With check_prototype=False
+    v = vetiver.VetiverModel(spacy_model, "animals")
+    app = vetiver.VetiverAPI(v, check_prototype=False)
     app.app.root_path = "/predict"
     client = TestClient(app.app)
 
     return client
 
 
-def test_vetiver_post(vetiver_client):
-    df = pd.DataFrame({"text": ["one", "my turtle is smarter than my dog"]})
+def test_vetiver_predict_with_prototype(vetiver_client_with_prototype):
+    df = pd.DataFrame({"new_column": ["turtles", "i have a dog"]})
 
-    response = vetiver.predict(endpoint=vetiver_client, data=df)
+    response = vetiver.predict(endpoint=vetiver_client_with_prototype, data=df)
 
     assert isinstance(response, pd.DataFrame), response
     assert response.to_dict() == {
         "predict": {
-            0: {
-                "text": "one",
+            "0": {
+                "text": "turtles",
                 "ents": [],
-                "sents": [{"start": 0, "end": 3}],
-                "tokens": [{"id": 0, "start": 0, "end": 3}],
+                "sents": [{"start": 0, "end": 7}],
+                "tokens": [{"id": 0, "start": 0, "end": 7}],
             },
-            1: {
-                "text": "my turtle is smarter than my dog",
-                "ents": [
-                    {"start": 3, "end": 9, "label": "ANIMAL"},
-                    {"start": 29, "end": 32, "label": "ANIMAL"},
-                ],
+            "1": {
+                "text": "i have a dog",
+                "ents": [{"start": 9, "end": 12, "label": "ANIMAL"}],
                 "tokens": [
-                    {"id": 0, "start": 0, "end": 2},
-                    {"id": 1, "start": 3, "end": 9},
-                    {"id": 2, "start": 10, "end": 12},
-                    {"id": 3, "start": 13, "end": 20},
-                    {"id": 4, "start": 21, "end": 25},
-                    {"id": 5, "start": 26, "end": 28},
-                    {"id": 6, "start": 29, "end": 32},
+                    {"id": 0, "start": 0, "end": 1},
+                    {"id": 1, "start": 2, "end": 6},
+                    {"id": 2, "start": 7, "end": 8},
+                    {"id": 3, "start": 9, "end": 12},
+                ],
+            },
+        }
+    }
+
+
+def test_vetiver_predict_no_prototype(vetiver_client_no_prototype):
+    df = pd.DataFrame({"uhhh": ["turtles", "i have a dog"]})
+
+    response = vetiver.predict(endpoint=vetiver_client_no_prototype, data=df)
+
+    assert isinstance(response, pd.DataFrame), response
+    assert response.to_dict() == {
+        "predict": {
+            "0": {
+                "text": "turtles",
+                "ents": [],
+                "sents": [{"start": 0, "end": 7}],
+                "tokens": [{"id": 0, "start": 0, "end": 7}],
+            },
+            "1": {
+                "text": "i have a dog",
+                "ents": [{"start": 9, "end": 12, "label": "ANIMAL"}],
+                "tokens": [
+                    {"id": 0, "start": 0, "end": 1},
+                    {"id": 1, "start": 2, "end": 6},
+                    {"id": 2, "start": 7, "end": 8},
+                    {"id": 3, "start": 9, "end": 12},
                 ],
             },
         }
