@@ -16,7 +16,7 @@ from warnings import warn
 from .utils import _jupyter_nb
 from .vetiver_model import VetiverModel
 from .meta import VetiverMeta
-from .helpers import api_data_to_frame
+from .helpers import api_data_to_frame, response_to_frame
 
 
 class VetiverAPI:
@@ -178,7 +178,11 @@ class VetiverAPI:
             async def custom_endpoint(input_data: List[self.model.prototype]):
                 _to_frame = api_data_to_frame(input_data)
                 predictions = endpoint_fx(_to_frame, **kw)
-                return {endpoint_name: predictions}
+
+                if isinstance(predictions, List):
+                    return {endpoint_name: predictions}
+                else:
+                    return predictions
 
         else:
 
@@ -187,7 +191,10 @@ class VetiverAPI:
                 served_data = await input_data.json()
                 predictions = endpoint_fx(served_data, **kw)
 
-                return {endpoint_name: predictions}
+                if isinstance(predictions, List):
+                    return {endpoint_name: predictions}
+                else:
+                    return predictions
 
     def run(self, port: int = 8000, host: str = "127.0.0.1", **kw):
         """
@@ -262,7 +269,9 @@ def predict(endpoint, data: Union[dict, pd.DataFrame, pd.Series], **kw) -> pd.Da
     # TO DO: dispatch
 
     if isinstance(data, pd.DataFrame):
-        response = requester.post(endpoint, data=data.to_json(orient="records"), **kw)
+        response = requester.post(
+            endpoint, content=data.to_json(orient="records"), **kw
+        )
     elif isinstance(data, pd.Series):
         response = requester.post(endpoint, json=[data.to_dict()], **kw)
     elif isinstance(data, dict):
@@ -279,9 +288,9 @@ def predict(endpoint, data: Union[dict, pd.DataFrame, pd.Series], **kw) -> pd.Da
             f"Could not obtain data from endpoint with error: {e}"
         )
 
-    response_df = pd.DataFrame.from_dict(response.json())
+    response_frame = response_to_frame(response)
 
-    return response_df
+    return response_frame
 
 
 def vetiver_endpoint(url: str = "http://127.0.0.1:8000/predict") -> str:

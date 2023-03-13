@@ -33,19 +33,8 @@ def _dict(pred_data):
     return api_data_to_frame([pred_data])
 
 
-# possible other names
-# prototype_to_frame
-# prototype_to_data
-# prototype_to_dataframe
-# prototype_to_datatype
-# prototype_to_type
-# api_data_to_
-# json_to_
-# server_data_to_
-# transport_data_to_
-# request
-# query
-# transit
-# interchange/exchange
-# transfer
-# through
+def response_to_frame(response: dict) -> pd.DataFrame:
+
+    response_df = pd.DataFrame.from_dict(response.json())
+
+    return response_df
