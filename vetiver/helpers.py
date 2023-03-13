@@ -34,7 +34,18 @@ def _dict(pred_data):
 
 
 def response_to_frame(response: dict) -> pd.DataFrame:
+    """Convert API JSON response to data frame
 
+    Parameters
+    ----------
+    response : dict
+        Response from API endpoint
+
+    Returns
+    -------
+    pd.DataFrame
+        Response translated into DataFrame
+    """
     response_df = pd.DataFrame.from_dict(response.json())
 
     return response_df
