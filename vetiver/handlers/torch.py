@@ -43,11 +43,8 @@ class TorchHandler(BaseHandler):
             raise ImportError("Cannot import `torch`.")
 
         if check_prototype:
-            # input_data = api_data_to_frame(input_data)
             input_data = np.array(input_data, dtype=np.array(self.prototype_data).dtype)
             prediction = self.model(torch.from_numpy(input_data))
-
-        # do not check ptype
         else:
             input_data = torch.tensor(input_data)
             prediction = self.model(input_data)

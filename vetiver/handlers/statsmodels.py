@@ -42,9 +42,6 @@ class StatsmodelsHandler(BaseHandler):
         if not sm_exists:
             raise ImportError("Cannot import `statsmodels`")
 
-        # if check_prototype:
-        #     input_data = api_data_to_frame(input_data)
-
         if isinstance(input_data, (list, pd.DataFrame)):
             prediction = self.model.predict(input_data)
         else:
