@@ -70,7 +70,9 @@ def vetiver_pin_write(board, model: VetiverModel, versioned: bool = True):
             "vetiver_meta": {
                 "required_pkgs": model.metadata.required_pkgs,
                 "prototype": None if not model.prototype else model.prototype().json(),
-                "python_version": list(model.metadata.python_version),
+                "python_version": None
+                if not model.metadata.python_version
+                else list(model.metadata.python_version),
             },
         },
         versioned=versioned,

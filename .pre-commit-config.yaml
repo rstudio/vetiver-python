@@ -1,6 +1,6 @@
 
 
-exclude: "(.*\\.csv)|(^examples/)|(^vetiver/tests/snapshots/)"
+exclude: "(.*\\.csv)|(^examples/)|(^vetiver/tests/snapshots/)|(^docs/_extensions/)"
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v2.4.0

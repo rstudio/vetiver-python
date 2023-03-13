@@ -26,8 +26,14 @@ class VetiverMeta:
         user = metadata.get("user", metadata)
         version = metadata.get("version", None)
         url = metadata.get("url", None)
-        required_pkgs = metadata.get("required_pkgs", [])
-        python_version = tuple(metadata.get("python_version", sys.version_info))
+        # give correct value if key doesnt exist or if value is None
+        required_pkgs = (
+            []
+            if not metadata.get("required_pkgs")
+            else metadata.get("required_pkgs", [])
+        )
+        python_version = metadata.get("python_version", sys.version_info)
+        python_version = python_version if not python_version else tuple(python_version)
 
         if pip_name:
             if not list(filter(lambda x: pip_name in x, required_pkgs)):

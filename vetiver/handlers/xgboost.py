@@ -14,7 +14,7 @@ class XGBoostHandler(BaseHandler):
 
     Parameters
     ----------
-    model :
+    model : xgboost.Booster
         a trained and fit xgboost model
     """
 

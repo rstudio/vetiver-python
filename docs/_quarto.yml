@@ -1,0 +1,106 @@
+project:
+  type: website
+  pre-render: version_config.py
+  output-dir: _site
+
+website:
+  title: "Vetiver (Python)"
+  description: "Version, share, deploy, and monitor your Python models"
+  repo-url: https://github.com/rstudio/vetiver-python
+  repo-actions: [edit, issue]
+  page-navigation: true
+  favicon: "figures/logo.svg"
+  page-footer:
+    left: |
+      Proudly supported by
+      [![](https://www.rstudio.com/assets/img/posit-logo-fullcolor-TM.svg){fig-alt="Posit PBC" width=65px}](https://posit.co/)
+    center:
+      - text: "Main site"
+        href: https://vetiver.rstudio.com
+    right:
+      - icon: github
+        href: https://github.com/rstudio/vetiver-python
+        aria-label: Vetiver python GitHub
+  navbar:
+    background: primary
+    pinned: true
+    logo: "figures/logo.svg"
+    logo-alt: "vetiver-home"
+    search: true
+    left:
+      - text: "Reference"
+        file: reference/index.qmd
+      - text: "Advanced Usage"
+        menu:
+          - custom_handler.md
+      - text: "Changelog"
+        file: changelog.md
+      - text: "Vetiver main site"
+        href: https://vetiver.rstudio.com
+
+  sidebar:
+    - id: reference
+      contents: "_sidebar.yml"
+
+quartodoc:
+  style: pkgdown
+  title: "Vetiver-{{< env VERSION >}}"
+  package: vetiver
+  display_name: relative
+  renderer:
+    style: markdown
+    display_name: relative
+  sidebar: "_sidebar.yml"
+  sections:
+    - title: Version
+      desc: ""
+      contents:
+        - VetiverModel
+        - vetiver_pin_write
+        - vetiver_create_prototype
+        - model_card.model_card
+
+    - title: Deploy
+      desc: ""
+      contents:
+        - VetiverAPI
+        - VetiverAPI.run
+        - VetiverAPI.vetiver_post
+        - vetiver_endpoint
+        - predict
+        - write_app
+        - prepare_docker
+        - write_docker.write_docker
+        - deploy_rsconnect
+
+    - title: Monitor
+      desc: ""
+      contents:
+        - compute_metrics
+        - pin_metrics
+        - plot_metrics
+
+    - title: Model Handlers
+      desc: ""
+      contents:
+        - BaseHandler
+        - SKLearnHandler
+        - TorchHandler
+        - StatsmodelsHandler
+        - XGBoostHandler
+
+metadata-files:
+  - _sidebar.yml
+
+filters:
+  - interlinks
+
+interlinks:
+  sources: {}
+
+profile:
+  default: latest
+
+format:
+  html:
+    theme: sandstone
