@@ -21,7 +21,7 @@ from .monitor import compute_metrics, pin_metrics, plot_metrics, _rolling_df  # 
 from .model_card import model_card  # noqa
 from .types import create_prototype, Prototype  # noqa
 
-__author__ = "Isabel Zimmerman <isabel.zimmerman@rstudio.com>"
+__author__ = "Isabel Zimmerman <isabel.zimmerman@posit.co>"
 __all__ = []
 __version__ = _version("vetiver")
 del _version

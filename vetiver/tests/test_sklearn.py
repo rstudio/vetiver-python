@@ -25,7 +25,7 @@ def test_build_sklearn():
     model = mock.get_mock_model().fit(X, y)
     v = VetiverModel(
         model=model,
-        ptype_data=X,
+        prototype_data=X,
         model_name="my_model",
         description="A regression model for testing purposes",
     )
