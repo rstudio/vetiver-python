@@ -31,6 +31,59 @@ jobs:
         with:
           name: docs-html
           path: docs/_site
+      # push to netlify -------------------------------------------------------
+
+      # set release name ----
+
+      - name: Configure pull release name
+        if: ${{github.event_name == 'pull_request'}}
+        run: |
+          echo "RELEASE_NAME=pr-${PR_NUMBER}" >> $GITHUB_ENV
+        env:
+          PR_NUMBER: ${{ github.event.number }}
+      - name: Configure branch release name
+        if: ${{github.event_name != 'pull_request'}}
+        run: |
+          # use branch name, but replace slashes. E.g. feat/a -> feat-a
+          echo "RELEASE_NAME=${GITHUB_REF_NAME/\//-}" >> $GITHUB_ENV
+      # deploy ----
+
+      - name: Create Github Deployment
+        uses: bobheadxi/deployments@v0.4.3
+        id: deployment
+        with:
+          step: start
+          token: ${{ secrets.GITHUB_TOKEN }}
+          env: ${{ env.RELEASE_NAME }}
+          ref: ${{ github.head_ref }}
+          transient: true
+          logs: 'https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}'
+
+      - name: Netlify docs preview
+        run: |
+          npm install -g netlify-cli
+          # push main branch to production, others to preview --
+          if [ "${ALIAS}" == "main" ]; then
+            netlify deploy --dir=_site --alias="main"
+          else
+            netlify deploy --dir=_site --alias="${ALIAS}"
+          fi
+        env:
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          ALIAS: ${{ steps.deployment.outputs.env }}
+
+      - name: Update Github Deployment
+        uses: bobheadxi/deployments@v0.4.3
+        if: ${{ always() }}
+        with:
+          step: finish
+          token: ${{ secrets.GITHUB_TOKEN }}
+          status: ${{ job.status }}
+          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+          env_url: 'https://${{ steps.deployment.outputs.env }}--taupe-sprinkles-23996f.netlify.app'
+          logs: 'https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}'
+
       - name: publish dev docs
         if: github.ref_name == 'main' && github.ref_type == 'branch'
         uses: peaceiris/actions-gh-pages@v3
