@@ -81,7 +81,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           status: ${{ job.status }}
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
-          env_url: 'https://${{ steps.deployment.outputs.env }}--taupe-sprinkles-23996f.netlify.app'
+          env_url: 'https://${{ steps.deployment.outputs.env }}--relaxed-mooncake-704252.netlify.app'
           logs: 'https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}'
 
       - name: publish dev docs
