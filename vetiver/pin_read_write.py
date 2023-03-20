@@ -3,6 +3,7 @@ from .meta import VetiverMeta
 from .utils import inform
 import warnings
 import logging
+from typing import List
 
 _log = logging.getLogger(__name__)
 
@@ -112,3 +113,36 @@ def vetiver_pin_read(board, name: str, version: str = None) -> VetiverModel:
     v = VetiverModel.from_pin(board=board, name=name, version=version)
 
     return v
+
+
+def get_board_pkgs(board) -> List[str]:
+    """
+    Extract packages required for pin board authorization
+
+    Parameters
+    ----------
+    board:
+        A pin board, created by `pins.board_folder()` or another `board_` function.
+
+    Returns
+    --------
+    list[str]
+    """
+    prot = board.fs.protocol
+
+    if prot == "rsc":
+        return ["rsconnect-python"]
+    elif prot == "file":
+        return []
+    elif prot == ["s3", "s3a"]:
+        return ["s3fs"]
+    elif prot == "abfs":
+        return ["adlfs"]
+    elif prot == ("gcs", "gs"):
+        return ["gcsfs"]
+    else:
+        warnings.warn(
+            f"required packages unknown for protocol: {prot}, "
+            "add to model's metadata to ensure they are exported"
+        )
+        return []
