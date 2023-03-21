@@ -9,6 +9,8 @@ name: Weekly Tests
 on:
   schedule:
     - cron: "03 14 * * MON"
+  push:
+    branches: ['update-weekly']
 
 jobs:
   vetiver_main_pins_main:
@@ -23,9 +25,9 @@ jobs:
 
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
-      - uses: actions/setup-python@v2
+      - uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -35,7 +37,7 @@ jobs:
           python -m pip install '.[all]'
           python -m pip install --upgrade git+https://github.com/rstudio/pins-python
 
-      - name: run RStudio Connect
+      - name: run Connect
         run: |
           docker-compose up --build -d
           make dev
@@ -72,7 +74,7 @@ jobs:
         with:
           ref: ${{ steps.latestrelease.outputs.releasetag }}
 
-      - uses: actions/setup-python@v2
+      - uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -82,7 +84,7 @@ jobs:
           python -m pip install .[dev]
           python -m pip install --upgrade git+https://github.com/rstudio/pins-python
 
-      - name: run RStudio Connect
+      - name: run Connect
         run: |
           docker-compose up --build -d
           make dev
@@ -101,7 +103,7 @@ jobs:
     strategy:
       matrix:
         # Minimum and Maximum supported versions
-        python-version: ['3.10']
+        python-version: ['3.9']
 
     steps:
       - name: Get latest release with tag from GitHub API
@@ -118,7 +120,7 @@ jobs:
         with:
           ref: ${{ steps.latestrelease.outputs.releasetag }}
 
-      - uses: actions/setup-python@v2
+      - uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -129,7 +131,7 @@ jobs:
           python -m pip install --upgrade git+https://github.com/rstudio/rsconnect-python
           pip freeze > requirements.txt
 
-      - name: run RStudio Connect
+      - name: run Connect
         run: |
           docker-compose up --build -d
           make dev
@@ -148,12 +150,12 @@ jobs:
     strategy:
       matrix:
         # Minimum and Maximum supported versions
-        python-version: ['3.10']
+        python-version: ['3.9']
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
-      - uses: actions/setup-python@v2
+      - uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -164,7 +166,7 @@ jobs:
           python -m pip install --upgrade git+https://github.com/rstudio/rsconnect-python
           pip freeze > requirements.txt
 
-      - name: run RStudio Connect
+      - name: run Connect
         run: |
           docker-compose up --build -d
           make dev

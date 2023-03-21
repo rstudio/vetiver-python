@@ -4,12 +4,13 @@ import tempfile
 import typing
 
 from rsconnect.actions import deploy_python_fastapi
+from rsconnect.api import RSConnectServer as ConnectServer
 
 from .write_fastapi import write_app
 
 
 def deploy_rsconnect(
-    connect_server,
+    connect_server: ConnectServer,
     board,
     pin_name: str,
     version: str = None,
@@ -54,7 +55,7 @@ def deploy_rsconnect(
     image : str
         Docker image to be specified for off-host execution
 
-    Example
+    Examples
     -------
     >>> import vetiver
     >>> import pins

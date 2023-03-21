@@ -36,18 +36,18 @@ def write_docker(
 
     Parameters
     ----------
-        app_file: str
-            File containing VetiverAPI to be deployed into container
-        path: str
-            Path to save Dockerfile
-        rspm_env: bool
-            Whether or not RStudio Package Manager should be used
-        host: str
-            Host address to run VetiverAPI from Dockerfile
-        port: str
-            Port to run VetiverAPI from Dockerfile
+    app_file: str
+        File containing VetiverAPI to be deployed into container
+    path: str
+        Path to save Dockerfile
+    rspm_env: bool
+        Whether or not Posit Package Manager should be used
+    host: str
+        Host address to run VetiverAPI from Dockerfile
+    port: str
+        Port to run VetiverAPI from Dockerfile
 
-    Example
+    Examples
     -------
     >>> import vetiver
     >>> import tempfile
@@ -110,21 +110,33 @@ def prepare_docker(
 
     Parameters
     ----------
-        board :
-            Pin board for model
-        pin_name : str
-            Name of pin
-        path :
-            Path to output
-        version :
-            Pin version to be used
-        rspm_env: bool
-            Whether or not RStudio Package Manager should be used
-        host: str
-            Host address to run VetiverAPI from Dockerfile
-        port: str
-            Port to run VetiverAPI from Dockerfile
+    board :
+        Pin board for model
+    pin_name : str
+        Name of pin
+    path :
+        Path to output
+    version :
+        Pin version to be used
+    rspm_env: bool
+        Whether or not Posit Package Manager should be used
+    host: str
+        Host address to run VetiverAPI from Dockerfile
+    port: str
+        Port to run VetiverAPI from Dockerfile
 
+    Examples
+    -------
+    >>> import vetiver
+    >>> import tempfile
+    >>> import pins
+    >>> tmp = tempfile.TemporaryDirectory()
+    >>> board = pins.board_temp(allow_pickle_read=True)
+    >>> X, y = vetiver.get_mock_data()
+    >>> model = vetiver.get_mock_model().fit(X, y)
+    >>> v = vetiver.VetiverModel(model, "my_model", prototype_data = X)
+    >>> vetiver.vetiver_pin_write(board, v)
+    >>> vetiver.prepare_docker(board = board, pin_name = "my_model", path = tmp.name)
     """
 
     v = VetiverModel.from_pin(board=board, name=pin_name, version=version)

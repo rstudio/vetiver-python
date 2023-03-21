@@ -67,7 +67,7 @@ def write_app(
     file :
         Name of file
 
-    Example
+    Examples
     -------
     >>> import vetiver
     >>> import tempfile

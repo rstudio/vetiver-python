@@ -1,19 +1,23 @@
-from typing import Any, Callable, Dict, List, Union
+from typing import Callable, List, Union
 from urllib.parse import urljoin
 
+import re
 import httpx
 import pandas as pd
 import requests
 import uvicorn
 from fastapi import FastAPI, Request, testclient
+from fastapi.exceptions import RequestValidationError
 from fastapi.openapi.utils import get_openapi
 from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.responses import PlainTextResponse
 from warnings import warn
 
 from .utils import _jupyter_nb
 from .vetiver_model import VetiverModel
 from .handlers.spacy import SpacyHandler
 from .meta import VetiverMeta
+from .helpers import api_data_to_frame, response_to_frame
 
 
 class VetiverAPI:
@@ -30,7 +34,7 @@ class VetiverAPI:
     **kwargs: dict
         Deprecated parameters.
 
-    Example
+    Examples
     -------
     >>> import vetiver as vt
     >>> X, y = vt.get_mock_data()
@@ -139,6 +143,10 @@ class VetiverAPI:
                     </html>
             """
 
+        @app.exception_handler(RequestValidationError)
+        async def validation_exception_handler(request, exc):
+            return PlainTextResponse(str(exc), status_code=422)
+
         return app
 
     def vetiver_post(self, endpoint_fx: Callable, endpoint_name: str = None, **kw):
@@ -151,7 +159,7 @@ class VetiverAPI:
         endpoint_name : str
             Name of endpoint
 
-        Example
+        Examples
         -------
         >>> import vetiver as vt
         >>> X, y = vt.get_mock_data()
@@ -168,28 +176,26 @@ class VetiverAPI:
         if self.check_prototype is True:
 
             @self.app.post(urljoin("/", endpoint_name), name=endpoint_name)
-            async def custom_endpoint(
-                input_data: Union[self.model.prototype, List[self.model.prototype]]
-            ):
+            async def custom_endpoint(input_data: List[self.model.prototype]):
+                _to_frame = api_data_to_frame(input_data)
+                predictions = endpoint_fx(_to_frame, **kw)
 
-                if isinstance(input_data, List):
-                    served_data = _batch_data(input_data)
-                elif isinstance(self.model.translator, SpacyHandler):
-                    served_data = input_data
+                if isinstance(predictions, List):
+                    return {endpoint_name: predictions}
                 else:
-                    served_data = _prepare_data(input_data)
-
-                new = endpoint_fx(served_data, **kw)
-                return {endpoint_name: new.tolist()}
+                    return predictions
 
         else:
 
             @self.app.post(urljoin("/", endpoint_name))
             async def custom_endpoint(input_data: Request):
                 served_data = await input_data.json()
-                new = endpoint_fx(served_data, **kw)
+                predictions = endpoint_fx(served_data, **kw)
 
-                return {endpoint_name: new.tolist()}
+                if isinstance(predictions, List):
+                    return {endpoint_name: predictions}
+                else:
+                    return predictions
 
     def run(self, port: int = 8000, host: str = "127.0.0.1", **kw):
         """
@@ -202,7 +208,7 @@ class VetiverAPI:
         host : str
             A valid IPv4 or IPv6 address, which the application will listen on.
 
-        Example
+        Examples
         -------
         >>> import vetiver as vt
         >>> X, y = vt.get_mock_data()
@@ -247,7 +253,7 @@ def predict(endpoint, data: Union[dict, pd.DataFrame, pd.Series], **kw) -> pd.Da
     dict
         Endpoint_name and list of endpoint_fx output
 
-    Example
+    Examples
     -------
     >>> import vetiver
     >>> X, y = vetiver.get_mock_data()
@@ -264,13 +270,13 @@ def predict(endpoint, data: Union[dict, pd.DataFrame, pd.Series], **kw) -> pd.Da
     # TO DO: dispatch
 
     if isinstance(data, pd.DataFrame):
-        data_json = data.to_json(orient="records")
-        response = requester.post(endpoint, data=data_json, **kw)
+        response = requester.post(
+            endpoint, data=data.to_json(orient="records"), **kw
+        )  # TO DO: httpx deprecating data in favor of content for TestClient
     elif isinstance(data, pd.Series):
-        data_dict = data.to_json()
-        response = requester.post(endpoint, data=data_dict, **kw)
+        response = requester.post(endpoint, json=[data.to_dict()], **kw)
     elif isinstance(data, dict):
-        response = requester.post(endpoint, json=data, **kw)
+        response = requester.post(endpoint, json=[data], **kw)
     else:
         response = requester.post(endpoint, json=data, **kw)
 
@@ -278,32 +284,14 @@ def predict(endpoint, data: Union[dict, pd.DataFrame, pd.Series], **kw) -> pd.Da
         response.raise_for_status()
     except (requests.exceptions.HTTPError, httpx.HTTPStatusError) as e:
         if response.status_code == 422:
-            raise TypeError(
-                f"Predict expects DataFrame, Series, or dict. Given type is {type(data)}"
-            )
+            raise TypeError(re.sub(r"\n", ": ", response.text))
         raise requests.exceptions.HTTPError(
             f"Could not obtain data from endpoint with error: {e}"
         )
 
-    response_df = pd.DataFrame.from_dict(response.json())
+    response_frame = response_to_frame(response)
 
-    return response_df
-
-
-def _prepare_data(pred_data: Dict[str, Any]) -> List[Any]:
-    served_data = []
-    for key, value in pred_data:
-        served_data.append(value)
-    return served_data
-
-
-def _batch_data(pred_data: List[Any]) -> pd.DataFrame:
-    columns = pred_data[0].dict().keys()
-
-    data = [line.dict() for line in pred_data]
-
-    served_data = pd.DataFrame(data, columns=columns)
-    return served_data
+    return response_frame
 
 
 def vetiver_endpoint(url: str = "http://127.0.0.1:8000/predict") -> str:
@@ -319,7 +307,7 @@ def vetiver_endpoint(url: str = "http://127.0.0.1:8000/predict") -> str:
     url : str
         URI path to endpoint
 
-    Example
+    Examples
     -------
     >>> import vetiver
     >>> endpoint = vetiver.vetiver_endpoint(url='http://127.0.0.1:8000/predict')

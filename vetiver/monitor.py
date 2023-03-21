@@ -31,7 +31,7 @@ def compute_metrics(
     estimate:
         Column name for predicted results
 
-    Example
+    Examples
     -------
     >>> from datetime import timedelta
     >>> import pandas as pd
@@ -115,7 +115,7 @@ def pin_metrics(
         If False, error when the new metrics contain overlapping dates with
         the existing pin.
 
-    Example
+    Examples
     -------
     >>> import pins
     >>> import vetiver
@@ -205,17 +205,17 @@ def plot_metrics(
     Parameters
     ----------
     df_metrics : DataFrame
-        Pandas dataframe of metrics over time, such as created by `compute_metircs()`
+         Pandas dataframe of metrics over time, such as created by `compute_metrics()`
     date: str
-        Column in `df_metrics` containing dates
+         Column in `df_metrics` containing dates
     estimate: str
-        Column in `df_metrics` containing metric output
+         Column in `df_metrics` containing metric output
     metric: str
-       Column in `df_metrics` containing metric name
+         Column in `df_metrics` containing metric name
     n: str
-        Column in `df_metrics` containing number of observations
+         Column in `df_metrics` containing number of observations
 
-    Example
+    Examples
     -------
     >>> import vetiver
     >>> import pandas as pd
