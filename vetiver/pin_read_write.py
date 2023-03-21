@@ -61,6 +61,8 @@ def vetiver_pin_write(board, model: VetiverModel, versioned: bool = True):
     if isinstance(model.metadata, dict):
         model.metadata = VetiverMeta.from_dict(model.metadata)
 
+    required_pkgs = get_board_pkgs(board) + model.metadata.required_pkgs
+
     board.pin_write(
         model.model,
         name=model.model_name,
@@ -69,7 +71,7 @@ def vetiver_pin_write(board, model: VetiverModel, versioned: bool = True):
         metadata={
             "user": model.metadata.user,
             "vetiver_meta": {
-                "required_pkgs": model.metadata.required_pkgs,
+                "required_pkgs": required_pkgs,
                 "prototype": None if not model.prototype else model.prototype().json(),
                 "python_version": None
                 if not model.metadata.python_version
