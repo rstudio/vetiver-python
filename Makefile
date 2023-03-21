@@ -52,6 +52,9 @@ lint:
 test: clean-test
 	pytest -m 'not rsc_test and not docker'
 
+test-pdb: clean-test
+	pytest -m 'not rsc_test and not docker' --pdb
+
 test-rsc: clean-test
 	pytest
 

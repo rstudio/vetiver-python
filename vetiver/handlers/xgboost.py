@@ -48,8 +48,9 @@ class XGBoostHandler(BaseHandler):
                 input_data = pd.DataFrame(input_data)
             except ValueError:
                 raise (f"Expected a dict or DataFrame, got {type(input_data)}")
+
         input_data = xgboost.DMatrix(input_data)
 
         prediction = self.model.predict(input_data)
 
-        return prediction
+        return prediction.tolist()
