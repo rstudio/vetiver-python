@@ -1,6 +1,7 @@
 import json
 from warnings import warn
 from vetiver.handlers.base import create_handler
+from .pin_read_write import _get_board_pkgs
 
 
 class NoModelAvailableError(Exception):
@@ -52,8 +53,6 @@ class VetiverModel:
     Parameter `ptype_data` was changed to `prototype_data`. Handling of `ptype_data`
     will be removed in a future version.
 
-
-
     Examples
     -------
     >>> from vetiver import mock, VetiverModel
@@ -101,19 +100,15 @@ class VetiverModel:
 
         if "vetiver_meta" in meta.user:
             get_prototype = meta.user.get("vetiver_meta").get("prototype", None)
-            required_pkgs = meta.user.get("vetiver_meta").get("required_pkgs", None)
+            required_pkgs = meta.user.get("vetiver_meta").get(
+                "required_pkgs", None
+            ) + _get_board_pkgs(board)
             python_version = meta.user.get("vetiver_meta").get("python_version", None)
             meta.user.pop("vetiver_meta")
+        # old pin type
         else:
-            # ptype = meta.user.get("ptype", None)
-
             get_prototype = meta.user.get("ptype")
-            # elif meta.user.get("prototype"):
-            #     get_prototype = meta.user.get("prototype")
-            # else:
-            #     get_prototype = None
-
-            required_pkgs = meta.user.get("required_pkgs")
+            required_pkgs = meta.user.get("required_pkgs") + _get_board_pkgs(board)
             python_version = meta.user.get("python_version")
 
         return cls(

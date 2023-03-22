@@ -44,7 +44,10 @@ def vetiver_pin_write(board, model: VetiverModel, versioned: bool = True):
     >>> vetiver.vetiver_pin_write(model_board, v)
     """
     if not board.allow_pickle_read:
-        raise NotImplementedError  # must be pickle-able
+        raise ValueError(
+            "board does not allow pickled models. Set "
+            "allow_pickle_read to True on board creation."
+        )
 
     inform(
         _log,
@@ -61,8 +64,6 @@ def vetiver_pin_write(board, model: VetiverModel, versioned: bool = True):
     if isinstance(model.metadata, dict):
         model.metadata = VetiverMeta.from_dict(model.metadata)
 
-    required_pkgs = get_board_pkgs(board) + model.metadata.required_pkgs
-
     board.pin_write(
         model.model,
         name=model.model_name,
@@ -71,7 +72,7 @@ def vetiver_pin_write(board, model: VetiverModel, versioned: bool = True):
         metadata={
             "user": model.metadata.user,
             "vetiver_meta": {
-                "required_pkgs": required_pkgs,
+                "required_pkgs": model.metadata.required_pkgs,
                 "prototype": None if not model.prototype else model.prototype().json(),
                 "python_version": None
                 if not model.metadata.python_version
@@ -117,7 +118,7 @@ def vetiver_pin_read(board, name: str, version: str = None) -> VetiverModel:
     return v
 
 
-def get_board_pkgs(board) -> List[str]:
+def _get_board_pkgs(board) -> List[str]:
     """
     Extract packages required for pin board authorization
 
@@ -144,7 +145,7 @@ def get_board_pkgs(board) -> List[str]:
         return ["gcsfs"]
     else:
         warnings.warn(
-            f"required packages unknown for protocol: {prot}, "
-            "add to model's metadata to ensure they are exported"
+            f"required packages unknown for board protocol: {prot}, "
+            "add to model's metadata to export"
         )
         return []
