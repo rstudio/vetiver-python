@@ -7,7 +7,7 @@ from .vetiver_model import VetiverModel  # noqa
 from .server import VetiverAPI, vetiver_endpoint, predict  # noqa
 from .mock import get_mock_data, get_mock_model  # noqa
 from .pin_read_write import vetiver_pin_write  # noqa
-from .attach_pkgs import load_pkgs  # noqa
+from .attach_pkgs import load_pkgs, get_board_pkgs  # noqa
 from .meta import VetiverMeta  # noqa
 from .write_docker import write_docker, prepare_docker  # noqa
 from .write_fastapi import write_app, vetiver_write_app  # noqa

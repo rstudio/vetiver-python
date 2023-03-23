@@ -1,7 +1,6 @@
 import json
 from warnings import warn
 from vetiver.handlers.base import create_handler
-from .pin_read_write import _get_board_pkgs
 
 
 class NoModelAvailableError(Exception):
@@ -100,15 +99,13 @@ class VetiverModel:
 
         if "vetiver_meta" in meta.user:
             get_prototype = meta.user.get("vetiver_meta").get("prototype", None)
-            required_pkgs = meta.user.get("vetiver_meta").get(
-                "required_pkgs", None
-            ) + _get_board_pkgs(board)
+            required_pkgs = meta.user.get("vetiver_meta").get("required_pkgs", None)
             python_version = meta.user.get("vetiver_meta").get("python_version", None)
             meta.user.pop("vetiver_meta")
         # old pin type
         else:
             get_prototype = meta.user.get("ptype")
-            required_pkgs = meta.user.get("required_pkgs") + _get_board_pkgs(board)
+            required_pkgs = meta.user.get("required_pkgs")
             python_version = meta.user.get("python_version")
 
         return cls(
