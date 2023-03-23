@@ -101,7 +101,7 @@ def prepare_docker(
     board,
     pin_name: str,
     path: str = "./",
-    version: str = None,
+    version=None,
     rspm_env: bool = False,
     host: str = "0.0.0.0",
     port: str = "8080",
