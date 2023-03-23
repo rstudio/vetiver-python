@@ -32,6 +32,14 @@ def create_vetiver_model():
     return vetiver.VetiverModel(model.fit(X, y), "model", prototype_data=X)
 
 
+def test_warning_if_no_protocol(create_vetiver_model):
+    with pytest.warns(UserWarning):
+        board = pins.board_temp(allow_pickle_read=True)
+        board.fs.protocol = "abc"
+
+        vetiver.get_board_pkgs(board)
+
+
 @pytest.mark.parametrize(
     "prot,output",
     [
@@ -51,11 +59,3 @@ def test_get_board_pkgs(prot, output, create_vetiver_model):
         file = Path(tempdir, "vetiver_requirements.txt")
         contents = open(file).read()
         assert f"{output}==" in contents
-
-
-def test_warning_if_no_protocol(create_vetiver_model):
-    with pytest.warns(UserWarning):
-        board = pins.board_temp(allow_pickle_read=True)
-        board.fs.protocol = "abc"
-
-        vetiver.get_board_pkgs(board)
