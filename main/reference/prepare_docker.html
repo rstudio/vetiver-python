@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.335">
+<meta name="generator" content="quarto-1.2.475">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -191,7 +191,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../reference/index.html" class="sidebar-item-text sidebar-link">Vetiver-0.2.0.post51+ga265da0</a>
+  <a href="../reference/index.html" class="sidebar-item-text sidebar-link">Vetiver-0.2.0.post59+gd405f4f</a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -428,6 +428,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> v <span class="op">=</span> vetiver.VetiverModel(model, <span class="st">"my_model"</span>, prototype_data <span class="op">=</span> X)</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> vetiver.vetiver_pin_write(board, v)</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> vetiver.prepare_docker(board <span class="op">=</span> board, pin_name <span class="op">=</span> <span class="st">"my_model"</span>, path <span class="op">=</span> tmp.name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="notes" class="level3">
+<h3 class="anchored" data-anchor-id="notes">Notes</h3>
+<p>This function uses <code>vetiver.get_board_pkgs(board)</code> for generating requirements. For more complex use cases, call <code>write_docker()</code>, <code>load_pkgs()</code>, and <code>write_app()</code> individually.</p>
 
 
 </section>
