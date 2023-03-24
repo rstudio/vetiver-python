@@ -16,7 +16,7 @@ def test_board_pin_write_error():
         model=model, prototype_data=X_df, model_name="model", versioned=None
     )
     board = pins.board_temp()
-    with pytest.raises(NotImplementedError):
+    with pytest.raises(ValueError):
         vetiver_pin_write(board=board, model=v)
 
 

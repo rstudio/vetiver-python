@@ -43,7 +43,10 @@ def vetiver_pin_write(board, model: VetiverModel, versioned: bool = True):
     >>> vetiver.vetiver_pin_write(model_board, v)
     """
     if not board.allow_pickle_read:
-        raise NotImplementedError  # must be pickle-able
+        raise ValueError(
+            "board does not allow pickled models. Set "
+            "allow_pickle_read to True on board creation."
+        )
 
     inform(
         _log,
