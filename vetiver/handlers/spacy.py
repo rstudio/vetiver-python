@@ -37,10 +37,17 @@ class SpacyHandler(BaseHandler):
             text_column_name = "text"
 
         else:
-            if len(self.prototype_data.columns) != 1:
+            if (
+                isinstance(self.prototype_data, pd.DataFrame)
+                and len(self.prototype_data.columns) != 1
+            ):
                 raise TypeError("Expected 1 column of text data")
 
-            text_column_name = self.prototype_data.columns[0]
+            text_column_name = (
+                self.prototype_data.columns[0]
+                if isinstance(self.prototype_data, pd.DataFrame)
+                else list(self.prototype_data.keys())[0]
+            )
 
         prototype = vetiver_create_prototype(pd.DataFrame({text_column_name: ["text"]}))
 
