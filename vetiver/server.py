@@ -15,7 +15,6 @@ from warnings import warn
 
 from .utils import _jupyter_nb
 from .vetiver_model import VetiverModel
-from .handlers.spacy import SpacyHandler
 from .meta import VetiverMeta
 from .helpers import api_data_to_frame, response_to_frame
 
