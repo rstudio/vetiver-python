@@ -1,12 +1,20 @@
+from __future__ import annotations
+import typing
+
 import tempfile
 import os
 import warnings
-from typing import List
 from .vetiver_model import VetiverModel
 from .meta import VetiverMeta
 
+if typing.TYPE_CHECKING:
+    from typing import Optional
+    from pathlib import Path
 
-def load_pkgs(model: VetiverModel = None, packages: list = None, path=""):
+
+def load_pkgs(
+    model: VetiverModel, packages: Optional[list] = None, path: str | Path = ""
+):
     """Load packages necessary for predictions
 
     Parameters
@@ -40,7 +48,7 @@ def load_pkgs(model: VetiverModel = None, packages: list = None, path=""):
     os.remove(tmp.name)
 
 
-def get_board_pkgs(board) -> List[str]:
+def get_board_pkgs(board) -> list[str]:
     """
     Extract packages required for pin board authorization
 

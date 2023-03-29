@@ -91,5 +91,8 @@ dev-stop:
 	docker-compose down
 	rm -f $(RSC_API_KEYS)
 
+typecheck:
+	pyright
+
 $(RSC_API_KEYS): dev-start
 	python script/setup-rsconnect/dump_api_keys.py $@
