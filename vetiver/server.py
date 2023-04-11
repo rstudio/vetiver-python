@@ -100,6 +100,10 @@ class VetiverAPI:
         async def ping():
             return {"ping": "pong"}
 
+        @app.get("/metadata")
+        async def get_metadata():
+            return self.model.metadata.to_dict()
+
         self.vetiver_post(
             self.model.handler_predict, "predict", check_prototype=self.check_prototype
         )
