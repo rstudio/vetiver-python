@@ -1,6 +1,7 @@
 from vetiver import mock, VetiverModel, VetiverAPI
 from fastapi.testclient import TestClient
 import pytest
+import sys
 
 
 @pytest.fixture
@@ -43,5 +44,5 @@ def test_get_metadata(client):
         "version": None,
         "url": None,
         "required_pkgs": ["scikit-learn"],
-        "python_version": [3, 9, 11, "final", 0],
+        "python_version": list(sys.version_info),  # JSON will return a list
     }
