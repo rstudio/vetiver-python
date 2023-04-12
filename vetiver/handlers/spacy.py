@@ -48,16 +48,8 @@ class SpacyHandler(BaseHandler):
             isinstance(self.prototype_data, dict) and len(self.prototype_data) != 1
         ):  # is dict, more than one key
             raise ValueError("Spacy prototype data must dictionary with 1 key")
-        elif self.prototype_data is None:
-            text_column_name = "text"
-        else:
-            text_column_name = (
-                self.prototype_data.columns[0]
-                if isinstance(self.prototype_data, pd.DataFrame)
-                else list(self.prototype_data.keys())[0]
-            )
 
-        prototype = vetiver_create_prototype(pd.DataFrame({text_column_name: ["text"]}))
+        prototype = vetiver_create_prototype(self.prototype_data)
 
         return prototype
 
