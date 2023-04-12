@@ -47,7 +47,7 @@ class SpacyHandler(BaseHandler):
         elif (
             isinstance(self.prototype_data, dict) and len(self.prototype_data) != 1
         ):  # is dict, more than one key
-            raise ValueError("Spacy prototype data must dictionary with 1 key")
+            raise ValueError("Spacy prototype data must be a dictionary with 1 key")
 
         prototype = vetiver_create_prototype(self.prototype_data)
 
