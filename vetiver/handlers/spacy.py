@@ -33,16 +33,24 @@ class SpacyHandler(BaseHandler):
         prototype :
             Input data prototype for spacy model
         """
-        if self.prototype_data is None:
+        if self.prototype_data is not None and not isinstance(
+            self.prototype_data, (pd.Series, pd.DataFrame, dict)
+        ):  # wrong type
+            raise TypeError(
+                "Spacy prototype must be a dict, pandas Series, or pandas DataFrame"
+            )
+        elif (
+            isinstance(self.prototype_data, pd.DataFrame)
+            and len(self.prototype_data.columns) != 1
+        ):  # is dataframe, more than one column
+            raise ValueError("Spacy prototype data must be a 1-column pandas DataFrame")
+        elif (
+            isinstance(self.prototype_data, dict) and len(self.prototype_data) != 1
+        ):  # is dict, more than one key
+            raise ValueError("Spacy prototype data must dictionary with 1 key")
+        elif self.prototype_data is None:
             text_column_name = "text"
-
         else:
-            if (
-                isinstance(self.prototype_data, pd.DataFrame)
-                and len(self.prototype_data.columns) != 1
-            ):
-                raise TypeError("Expected 1 column of text data")
-
             text_column_name = (
                 self.prototype_data.columns[0]
                 if isinstance(self.prototype_data, pd.DataFrame)
