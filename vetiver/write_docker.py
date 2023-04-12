@@ -3,7 +3,7 @@ import warnings
 from pathlib import Path
 
 from .write_fastapi import write_app
-from .attach_pkgs import load_pkgs
+from .attach_pkgs import load_pkgs, get_board_pkgs
 from .vetiver_model import VetiverModel
 
 
@@ -137,11 +137,20 @@ def prepare_docker(
     >>> v = vetiver.VetiverModel(model, "my_model", prototype_data = X)
     >>> vetiver.vetiver_pin_write(board, v)
     >>> vetiver.prepare_docker(board = board, pin_name = "my_model", path = tmp.name)
+
+    Notes
+    ------
+    This function uses `vetiver.get_board_pkgs(board)` for generating requirements.
+    For more complex use cases, call `write_docker()`, `load_pkgs()`, and
+    `write_app()` individually.
     """
 
     v = VetiverModel.from_pin(board=board, name=pin_name, version=version)
+
     write_app(
         board=board, pin_name=pin_name, version=version, file=Path(path, "app.py")
     )
-    load_pkgs(v, path=Path(path, "vetiver_"))
+
+    load_pkgs(v, path=Path(path, "vetiver_"), packages=get_board_pkgs(board))
+
     write_docker(path=path, rspm_env=rspm_env, host=host, port=port)
