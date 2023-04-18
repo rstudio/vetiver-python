@@ -16,6 +16,7 @@ from .handlers.sklearn import SKLearnHandler  # noqa
 from .handlers.torch import TorchHandler  # noqa
 from .handlers.statsmodels import StatsmodelsHandler  # noqa
 from .handlers.xgboost import XGBoostHandler  # noqa
+from .handlers.spacy import SpacyHandler  # noqa
 from .helpers import api_data_to_frame  # noqa
 from .rsconnect import deploy_rsconnect  # noqa
 from .monitor import compute_metrics, pin_metrics, plot_metrics, _rolling_df  # noqa

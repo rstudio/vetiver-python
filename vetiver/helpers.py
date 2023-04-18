@@ -28,6 +28,12 @@ def _(pred_data):
     return pd.DataFrame([dict(s) for s in pred_data])
 
 
+@api_data_to_frame.register(pd.DataFrame)
+def _pd_frame(pred_data):
+
+    return pred_data
+
+
 @api_data_to_frame.register(dict)
 def _dict(pred_data):
     return api_data_to_frame([pred_data])
