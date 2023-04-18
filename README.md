@@ -20,6 +20,7 @@ You can use vetiver with:
 -   [torch](https://pytorch.org/)
 -   [statsmodels](https://www.statsmodels.org/stable/index.html)
 -   [xgboost](https://xgboost.readthedocs.io/en/stable/)
+-   [spacy](https://spacy.io/)
 -   or utilize [custom handlers](https://rstudio.github.io/vetiver-python/stable/advancedusage/custom_handler.html) to support your own models!
 
 ## Installation
