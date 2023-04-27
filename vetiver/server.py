@@ -11,6 +11,7 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.openapi.utils import get_openapi
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.responses import PlainTextResponse
+from pydantic import schema_json_of
 from warnings import warn
 
 from .utils import _jupyter_nb
@@ -26,6 +27,8 @@ class VetiverAPI:
     ----------
     model :  VetiverModel
         Model to be deployed in API
+    show_prototype: bool = True
+
     check_prototype : bool
         Determine if data prototype should be enforced
     app_factory :
@@ -52,6 +55,7 @@ class VetiverAPI:
     def __init__(
         self,
         model: VetiverModel,
+        show_prototype: bool = True,
         check_prototype: bool = True,
         app_factory=FastAPI,
         **kwargs,
@@ -72,6 +76,7 @@ class VetiverAPI:
             self.model.prototype = self.model.ptype
             delattr(self.model, "ptype")
 
+        self.show_prototype = show_prototype
         self.check_prototype = check_prototype
 
         self._init_app()
@@ -90,19 +95,24 @@ class VetiverAPI:
         if isinstance(self.model.metadata, dict):
             self.model.metadata = VetiverMeta.from_dict(self.model.metadata)
 
+        @app.get("/ping", include_in_schema=True)
+        async def ping():
+            return {"ping": "pong"}
+
         if self.model.metadata.url is not None:
 
             @app.get("/pin-url")
             def pin_url():
                 return repr(self.model.metadata.url)
 
-        @app.get("/ping", include_in_schema=True)
-        async def ping():
-            return {"ping": "pong"}
-
         @app.get("/metadata")
         async def get_metadata():
             return self.model.metadata.to_dict()
+
+        if self.show_prototype is True:
+            @app.get("/prototype")
+            async def get_prototype():
+                return schema_json_of(self.model.prototype, title=self.model.model_name + " prototype", indent=2)
 
         self.vetiver_post(
             self.model.handler_predict, "predict", check_prototype=self.check_prototype
