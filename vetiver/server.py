@@ -47,7 +47,7 @@ class VetiverAPI:
 
     ├──/ping (GET)
     ├──/metadata (GET)
-    ├──/pin-url (GET, if model is pinned on Posit Connect)
+    ├──/pin-url (GET, if VetiverModel metadata `url` field is not None)
     └──/predict (POST)
 
     Parameter `check_ptype` was changed to `check_prototype`. Handling of `check_ptype`
