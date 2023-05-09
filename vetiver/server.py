@@ -43,6 +43,13 @@ class VetiverAPI:
 
     Notes
     -----
+    This generates an API with either 2 or 3 GET endpoints and 1 POST endpoint.
+
+    ├──/ping (GET)
+    ├──/metadata (GET)
+    ├──/pin-url (GET, if model is pinned on Posit Connect)
+    └──/predict (POST)
+
     Parameter `check_ptype` was changed to `check_prototype`. Handling of `check_ptype`
     will be removed in a future version.
     """
