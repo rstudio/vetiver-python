@@ -4,7 +4,7 @@ project:
   output-dir: _site
 
 website:
-  title: "Vetiver (Python)"
+  title: "vetiver for Python"
   description: "Version, share, deploy, and monitor your Python models"
   repo-url: https://github.com/rstudio/vetiver-python
   repo-actions: [edit, issue]
@@ -22,7 +22,7 @@ website:
         href: https://github.com/rstudio/vetiver-python
         aria-label: Vetiver python GitHub
   navbar:
-    background: primary
+    background: light
     pinned: true
     logo: "figures/logo.svg"
     logo-alt: "vetiver-home"
@@ -48,7 +48,7 @@ website:
 
 quartodoc:
   style: pkgdown
-  title: "Vetiver-{{< env VERSION >}}"
+  title: "Vetiver:v{{< env VERSION >}}"
   package: vetiver
   renderer:
     style: markdown
@@ -66,7 +66,8 @@ quartodoc:
     - title: Deploy
       desc: ""
       contents:
-        - VetiverAPI
+        - name: VetiverAPI
+          children: linked
         - VetiverAPI.run
         - VetiverAPI.vetiver_post
         - vetiver_endpoint
@@ -98,7 +99,7 @@ metadata-files:
 
 filters:
   - interlinks
-
+  
 interlinks:
   sources: {}
 
@@ -107,4 +108,7 @@ profile:
 
 format:
   html:
-    theme: sandstone
+    theme: 
+      - sandstone
+      - style.css
+
