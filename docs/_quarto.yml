@@ -99,7 +99,7 @@ metadata-files:
 
 filters:
   - interlinks
-  
+
 interlinks:
   sources: {}
 
@@ -108,7 +108,6 @@ profile:
 
 format:
   html:
-    theme: 
+    theme:
       - sandstone
       - style.css
-
