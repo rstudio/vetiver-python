@@ -186,12 +186,17 @@ class VetiverAPI:
         if not endpoint_name:
             endpoint_name = endpoint_fx.__name__
 
+        if endpoint_fx.__doc__ is not None:
+            api_desc = dedent(endpoint_fx.__doc__)
+        else:
+            api_desc = None
+
         if self.check_prototype is True:
 
             @self.app.post(
                 urljoin("/", endpoint_name),
                 name=endpoint_name,
-                description=dedent(endpoint_fx.__doc__),
+                description=api_desc,
             )
             async def custom_endpoint(input_data: List[self.model.prototype]):
                 _to_frame = api_data_to_frame(input_data)
