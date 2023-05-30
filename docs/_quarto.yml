@@ -4,7 +4,7 @@ project:
   output-dir: _site
 
 website:
-  title: "vetiver for Python"
+  title: "Vetiver for Python"
   description: "Version, share, deploy, and monitor your Python models"
   repo-url: https://github.com/rstudio/vetiver-python
   repo-actions: [edit, issue]
@@ -22,7 +22,7 @@ website:
         href: https://github.com/rstudio/vetiver-python
         aria-label: Vetiver python GitHub
   navbar:
-    background: light
+    background: "#562910"
     pinned: true
     logo: "figures/logo.svg"
     logo-alt: "vetiver-home"
@@ -40,7 +40,7 @@ website:
           - text: "vetiver.rstudio.com"
             href: https://vetiver.rstudio.com
           - text: "R package documentation"
-            href: https://rstudio.github.io/vetiver-python/
+            href: https://rstudio.github.io/vetiver-r/reference/
 
   sidebar:
     - id: reference
@@ -109,5 +109,4 @@ profile:
 format:
   html:
     theme:
-      - sandstone
-      - style.css
+      - flatly
