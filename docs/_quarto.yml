@@ -7,20 +7,12 @@ website:
   title: "Vetiver for Python"
   description: "Version, share, deploy, and monitor your Python models"
   repo-url: https://github.com/rstudio/vetiver-python
-  repo-actions: [edit, issue]
   page-navigation: true
   favicon: "figures/logo.svg"
   page-footer:
     left: |
       Proudly supported by
       [![](https://www.rstudio.com/assets/img/posit-logo-fullcolor-TM.svg){fig-alt="Posit PBC" width=65px}](https://posit.co/)
-    center:
-      - text: "vetiver.rstudio.com"
-        href: https://vetiver.rstudio.com
-    right:
-      - icon: github
-        href: https://github.com/rstudio/vetiver-python
-        aria-label: Vetiver python GitHub
   navbar:
     background: "#562910"
     pinned: true
@@ -41,6 +33,10 @@ website:
             href: https://vetiver.rstudio.com
           - text: "R package documentation"
             href: https://rstudio.github.io/vetiver-r/reference/
+    right:
+      - icon: github
+        href: https://github.com/rstudio/vetiver-python
+        aria-label: Vetiver python GitHub
 
   sidebar:
     - id: reference
