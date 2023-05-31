@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.340">
+<meta name="generator" content="quarto-1.3.361">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Vetiver (Python) – torchhandler</title>
+<title>vetiver for Python – torchhandler</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -57,7 +57,8 @@ ul.task-list li input[type="checkbox"] {
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 
@@ -75,7 +76,7 @@ ul.task-list li input[type="checkbox"] {
     <img src="../figures/logo.svg" alt="vetiver-home" class="navbar-logo">
     </a>
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">Vetiver (Python)</span>
+    <span class="navbar-title">vetiver for Python</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -103,12 +104,30 @@ ul.task-list li input[type="checkbox"] {
     <a class="nav-link" href="../changelog.html" rel="" target="">
  <span class="menu-text">Changelog</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="https://vetiver.rstudio.com" rel="" target="">
- <span class="menu-text">Vetiver main site</span></a>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-learn-more" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Learn more</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-learn-more">    
+        <li>
+    <a class="dropdown-item" href="https://vetiver.rstudio.com" rel="" target="_blank">
+ <span class="dropdown-text">vetiver.rstudio.com</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://rstudio.github.io/vetiver-r/reference/" rel="" target="_blank">
+ <span class="dropdown-text">R package documentation</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/rstudio/vetiver-python" rel="" target=""><i class="bi bi-github" role="img" aria-label="Vetiver python GitHub">
+</i> 
+ <span class="menu-text"></span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools ms-auto">
+            <div class="quarto-navbar-tools">
 </div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
@@ -133,7 +152,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../reference/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Vetiver-0.2.1.post5+gd610f25</span></a>
+ <span class="menu-text">Vetiver:v0.2.1.post13+g8fb541e</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -323,12 +342,12 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="TorchHandler" class="level2">
-<h2 class="anchored" data-anchor-id="TorchHandler">TorchHandler</h2>
-<p><code>handlers.torch.TorchHandler()</code></p>
+<section id="vetiver.TorchHandler" class="level1">
+<h1>TorchHandler</h1>
+<p><code>TorchHandler()</code></p>
 <p>Handler class for creating VetiverModels with torch.</p>
-<section id="parameters" class="level3">
-<h3 class="anchored" data-anchor-id="parameters">Parameters</h3>
+<section id="parameters" class="level2">
+<h2 class="anchored" data-anchor-id="parameters">Parameters</h2>
 <table class="table">
 <thead>
 <tr class="header">
@@ -347,8 +366,69 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 </tbody>
 </table>
+</section>
+<section id="methods" class="level2">
+<h2 class="anchored" data-anchor-id="methods">Methods</h2>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="#vetiver.TorchHandler.handler_predict">handler_predict</a></td>
+<td>Generates method for /predict endpoint in VetiverAPI</td>
+</tr>
+</tbody>
+</table>
+<section id="vetiver.TorchHandler.handler_predict" class="level3">
+<h3 class="anchored" data-anchor-id="vetiver.TorchHandler.handler_predict">handler_predict</h3>
+<p><code>TorchHandler.handler_predict(self, input_data, check_prototype)</code></p>
+<p>Generates method for /predict endpoint in VetiverAPI</p>
+<p>The <code>handler_predict</code> function executes at each API call. Use this function for calling <code>predict()</code> and any other tasks that must be executed at each API call.</p>
+<section id="parameters-1" class="level4">
+<h4 class="anchored" data-anchor-id="parameters-1">Parameters</h4>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>input_data</code></td>
+<td></td>
+<td>Test data</td>
+<td>required</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="returns" class="level4">
+<h4 class="anchored" data-anchor-id="returns">Returns</h4>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>prediction</td>
+<td>Prediction from model</td>
+</tr>
+</tbody>
+</table>
 
 
+</section>
+</section>
 </section>
 </section>
 
@@ -601,23 +681,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left">Proudly supported by <a href="https://posit.co/"><img src="https://www.rstudio.com/assets/img/posit-logo-fullcolor-TM.svg" class="img-fluid" alt="Posit PBC" width="65"></a></div>   
-    <div class="nav-footer-center">
-      <ul class="footer-items list-unstyled">
-    <li class="nav-item">
-    <a class="nav-link" href="https://vetiver.rstudio.com">Main site</a>
-  </li>  
-</ul>
-    <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/rstudio/vetiver-python/edit/main/reference/TorchHandler.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/rstudio/vetiver-python/issues/new" class="toc-action">Report an issue</a></p></div></div></div>
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">Proudly supported by <a href="https://posit.co/"><img src="https://www.rstudio.com/assets/img/posit-logo-fullcolor-TM.svg" class="img-fluid" alt="Posit PBC" width="65"></a></div>
     <div class="nav-footer-right">
-      <ul class="footer-items list-unstyled">
-    <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/rstudio/vetiver-python">
-      <i class="bi bi-github" role="img" aria-label="Vetiver python GitHub">
-</i> 
-    </a>
-  </li>  
-</ul>
+      &nbsp;
     </div>
   </div>
 </footer>
