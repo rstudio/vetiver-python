@@ -93,7 +93,18 @@ class VetiverModel:
 
     @classmethod
     def from_pin(cls, board, name: str, version: str = None):
+        """
+        Create VetiverModel from pinned model.
 
+        Parameters
+        ----------
+        board :
+            `pins` board where model is located
+        name : str
+            Model name inside pins board
+        version : str
+            What model version should be loaded
+        """
         model = board.pin_read(name, version)
         meta = board.pin_meta(name, version)
 
