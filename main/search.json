@@ -109,7 +109,7 @@
     "href": "reference/SpacyHandler.html",
     "title": "SpacyHandler",
     "section": "",
-    "text": "SpacyHandler()\nHandler class for creating VetiverModels with spacy.\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nmodel\n\na trained and fit spacy model\nrequired\n\n\n\n\n\n\n\n\n\nName\nDescription\n\n\n\n\nconstruct_prototype\nCreate data prototype for a spacy model, which is one column of string data\n\n\nhandler_predict\nGenerates method for /predict endpoint in VetiverAPI\n\n\n\n\n\nSpacyHandler.construct_prototype(self)\nCreate data prototype for a spacy model, which is one column of string data\n\n\n\n\n\nType\nDescription\n\n\n\n\n\nInput data prototype for spacy model\n\n\n\n\n\n\n\nSpacyHandler.handler_predict(self, input_data, check_prototype)\nGenerates method for /predict endpoint in VetiverAPI\nThe handler_predict function executes at each API call. Use this function for calling predict() and any other tasks that must be executed at each API call.\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ninput_data\n\nTest data\nrequired\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nprediction\nPrediction from model"
+    "text": "SpacyHandler()\nHandler class for creating VetiverModels with spacy.\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nmodel\n\na trained and fit spacy model\nrequired\n\n\n\n\n\n\n\n\n\nName\nDescription\n\n\n\n\nconstruct_prototype\nCreate data prototype for a spacy model, which is one column of string data\n\n\nhandler_predict\nGenerates method for /predict endpoint in VetiverAPI\n\n\n\n\n\nSpacyHandler.construct_prototype(self)\nCreate data prototype for a spacy model, which is one column of string data\n\n\n\n\n\nType\nDescription\n\n\n\n\n\nInput data prototype for spacy model\n\n\n\n\n\n\n\nSpacyHandler.handler_predict(self, input_data, check_prototype)\nGenerates method for /predict endpoint in VetiverAPI\nThe handler_predict function executes at each API call. Use this function for calling predict() and any other tasks that must be executed at each API call.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ninput_data\n\nTest data. The SpacyHandler expects an input of a 1 column DataFrame with the same column names as the prototype data, or column name “text” if no prototype was given.\nrequired\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nprediction\nPrediction from model"
   },
   {
     "objectID": "reference/SpacyHandler.html#parameters",
@@ -123,7 +123,7 @@
     "href": "reference/SpacyHandler.html#methods",
     "title": "SpacyHandler",
     "section": "",
-    "text": "Name\nDescription\n\n\n\n\nconstruct_prototype\nCreate data prototype for a spacy model, which is one column of string data\n\n\nhandler_predict\nGenerates method for /predict endpoint in VetiverAPI\n\n\n\n\n\nSpacyHandler.construct_prototype(self)\nCreate data prototype for a spacy model, which is one column of string data\n\n\n\n\n\nType\nDescription\n\n\n\n\n\nInput data prototype for spacy model\n\n\n\n\n\n\n\nSpacyHandler.handler_predict(self, input_data, check_prototype)\nGenerates method for /predict endpoint in VetiverAPI\nThe handler_predict function executes at each API call. Use this function for calling predict() and any other tasks that must be executed at each API call.\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ninput_data\n\nTest data\nrequired\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nprediction\nPrediction from model"
+    "text": "Name\nDescription\n\n\n\n\nconstruct_prototype\nCreate data prototype for a spacy model, which is one column of string data\n\n\nhandler_predict\nGenerates method for /predict endpoint in VetiverAPI\n\n\n\n\n\nSpacyHandler.construct_prototype(self)\nCreate data prototype for a spacy model, which is one column of string data\n\n\n\n\n\nType\nDescription\n\n\n\n\n\nInput data prototype for spacy model\n\n\n\n\n\n\n\nSpacyHandler.handler_predict(self, input_data, check_prototype)\nGenerates method for /predict endpoint in VetiverAPI\nThe handler_predict function executes at each API call. Use this function for calling predict() and any other tasks that must be executed at each API call.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ninput_data\n\nTest data. The SpacyHandler expects an input of a 1 column DataFrame with the same column names as the prototype data, or column name “text” if no prototype was given.\nrequired\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nprediction\nPrediction from model"
   },
   {
     "objectID": "reference/BaseHandler.html",
@@ -151,7 +151,7 @@
     "href": "reference/SKLearnHandler.html",
     "title": "SKLearnHandler",
     "section": "",
-    "text": "SKLearnHandler()\nHandler class for creating VetiverModels with sklearn.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nmodel\nsklearn.base.BaseEstimator\na trained sklearn model\nrequired\n\n\n\n\n\n\n\n\n\nName\nDescription\n\n\n\n\nhandler_predict\nGenerates method for /predict endpoint in VetiverAPI\n\n\n\n\n\nSKLearnHandler.handler_predict(self, input_data, check_prototype)\nGenerates method for /predict endpoint in VetiverAPI\nThe handler_predict function executes at each API call. Use this function for calling predict() and any other tasks that must be executed at each API call.\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ninput_data\n\nTest data\nrequired\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nprediction\nPrediction from model"
+    "text": "SKLearnHandler()\nHandler class for creating VetiverModels with sklearn.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nmodel\nsklearn.base.BaseEstimator\na trained sklearn model\nrequired\n\n\n\n\n\n\n\n\n\nName\nDescription\n\n\n\n\nhandler_predict\nGenerates method for /predict endpoint in VetiverAPI\n\n\n\n\n\nSKLearnHandler.handler_predict(self, input_data, check_prototype)\nGenerates method for /predict endpoint in VetiverAPI\nThe handler_predict function executes at each API call. Use this function for calling predict() and any other tasks that must be executed at each API call.\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ninput_data\n\nTest data\nrequired\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\n\nPrediction from model"
   },
   {
     "objectID": "reference/SKLearnHandler.html#parameters",
@@ -165,7 +165,7 @@
     "href": "reference/SKLearnHandler.html#methods",
     "title": "SKLearnHandler",
     "section": "",
-    "text": "Name\nDescription\n\n\n\n\nhandler_predict\nGenerates method for /predict endpoint in VetiverAPI\n\n\n\n\n\nSKLearnHandler.handler_predict(self, input_data, check_prototype)\nGenerates method for /predict endpoint in VetiverAPI\nThe handler_predict function executes at each API call. Use this function for calling predict() and any other tasks that must be executed at each API call.\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ninput_data\n\nTest data\nrequired\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nprediction\nPrediction from model"
+    "text": "Name\nDescription\n\n\n\n\nhandler_predict\nGenerates method for /predict endpoint in VetiverAPI\n\n\n\n\n\nSKLearnHandler.handler_predict(self, input_data, check_prototype)\nGenerates method for /predict endpoint in VetiverAPI\nThe handler_predict function executes at each API call. Use this function for calling predict() and any other tasks that must be executed at each API call.\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ninput_data\n\nTest data\nrequired\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\n\nPrediction from model"
   },
   {
     "objectID": "reference/vetiver_endpoint.html",
@@ -268,35 +268,35 @@
   {
     "objectID": "reference/index.html",
     "href": "reference/index.html",
-    "title": "Vetiver:v0.2.1.post19+g77439fa",
+    "title": "Vetiver:v0.2.1.post24+gc539ab8",
     "section": "",
     "text": "VetiverModel\nCreate VetiverModel class for serving.\n\n\nvetiver_pin_write\nPin a trained VetiverModel along with other model metadata.\n\n\nvetiver_create_prototype\nCreate zero row structure to save data types\n\n\nmodel_card.model_card\nCreate a model card for documentation\n\n\n\n\n\n\n\n\n\nVetiverAPI\nCreate model aware API\n\n\nVetiverAPI.run\nStart API\n\n\nVetiverAPI.vetiver_post\nCreate new POST endpoint that is aware of model input data\n\n\nvetiver_endpoint\nWrap url where VetiverModel will be deployed\n\n\npredict\nMake a prediction from model endpoint\n\n\nwrite_app\nWrite VetiverAPI app to a file\n\n\nprepare_docker\nCreate all files needed for Docker\n\n\nwrite_docker.write_docker\nWrites a Dockerfile to run VetiverAPI in a container\n\n\ndeploy_rsconnect\nDeploy to Posit Connect\n\n\n\n\n\n\n\n\n\ncompute_metrics\nCompute metrics for given time period\n\n\npin_metrics\nUpdate an existing pin storing model metrics over time\n\n\nplot_metrics\nPlot metrics over a given time period\n\n\n\n\n\n\n\n\n\nBaseHandler\nBase handler class for creating VetiverModel of different type.\n\n\nSKLearnHandler\nHandler class for creating VetiverModels with sklearn.\n\n\nTorchHandler\nHandler class for creating VetiverModels with torch.\n\n\nStatsmodelsHandler\nHandler class for creating VetiverModels with statsmodels.\n\n\nXGBoostHandler\nHandler class for creating VetiverModels with xgboost.\n\n\nSpacyHandler\nHandler class for creating VetiverModels with spacy."
   },
   {
     "objectID": "reference/index.html#version",
     "href": "reference/index.html#version",
-    "title": "Vetiver:v0.2.1.post19+g77439fa",
+    "title": "Vetiver:v0.2.1.post24+gc539ab8",
     "section": "",
     "text": "VetiverModel\nCreate VetiverModel class for serving.\n\n\nvetiver_pin_write\nPin a trained VetiverModel along with other model metadata.\n\n\nvetiver_create_prototype\nCreate zero row structure to save data types\n\n\nmodel_card.model_card\nCreate a model card for documentation"
   },
   {
     "objectID": "reference/index.html#deploy",
     "href": "reference/index.html#deploy",
-    "title": "Vetiver:v0.2.1.post19+g77439fa",
+    "title": "Vetiver:v0.2.1.post24+gc539ab8",
     "section": "",
     "text": "VetiverAPI\nCreate model aware API\n\n\nVetiverAPI.run\nStart API\n\n\nVetiverAPI.vetiver_post\nCreate new POST endpoint that is aware of model input data\n\n\nvetiver_endpoint\nWrap url where VetiverModel will be deployed\n\n\npredict\nMake a prediction from model endpoint\n\n\nwrite_app\nWrite VetiverAPI app to a file\n\n\nprepare_docker\nCreate all files needed for Docker\n\n\nwrite_docker.write_docker\nWrites a Dockerfile to run VetiverAPI in a container\n\n\ndeploy_rsconnect\nDeploy to Posit Connect"
   },
   {
     "objectID": "reference/index.html#monitor",
     "href": "reference/index.html#monitor",
-    "title": "Vetiver:v0.2.1.post19+g77439fa",
+    "title": "Vetiver:v0.2.1.post24+gc539ab8",
     "section": "",
     "text": "compute_metrics\nCompute metrics for given time period\n\n\npin_metrics\nUpdate an existing pin storing model metrics over time\n\n\nplot_metrics\nPlot metrics over a given time period"
   },
   {
     "objectID": "reference/index.html#model-handlers",
     "href": "reference/index.html#model-handlers",
-    "title": "Vetiver:v0.2.1.post19+g77439fa",
+    "title": "Vetiver:v0.2.1.post24+gc539ab8",
     "section": "",
     "text": "BaseHandler\nBase handler class for creating VetiverModel of different type.\n\n\nSKLearnHandler\nHandler class for creating VetiverModels with sklearn.\n\n\nTorchHandler\nHandler class for creating VetiverModels with torch.\n\n\nStatsmodelsHandler\nHandler class for creating VetiverModels with statsmodels.\n\n\nXGBoostHandler\nHandler class for creating VetiverModels with xgboost.\n\n\nSpacyHandler\nHandler class for creating VetiverModels with spacy."
   },
