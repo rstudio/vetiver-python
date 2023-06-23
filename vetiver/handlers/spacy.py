@@ -54,7 +54,8 @@ class SpacyHandler(BaseHandler):
         return prototype
 
     def handler_predict(self, input_data, check_prototype):
-        """Generates method for /predict endpoint in VetiverAPI
+        """
+        Generates method for /predict endpoint in VetiverAPI
 
         The `handler_predict` function executes at each API call. Use this
         function for calling `predict()` and any other tasks that must be executed
@@ -63,7 +64,9 @@ class SpacyHandler(BaseHandler):
         Parameters
         ----------
         input_data:
-            Test data
+            Test data. The SpacyHandler expects an input of a 1 column DataFrame with
+            the same column names as the prototype data, or column name "text" if no
+            prototype was given.
 
         Returns
         -------
