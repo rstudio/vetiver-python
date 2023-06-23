@@ -24,6 +24,5 @@ from .model_card import model_card  # noqa
 from .types import create_prototype, Prototype  # noqa
 
 __author__ = "Isabel Zimmerman <isabel.zimmerman@posit.co>"
-__all__ = []
 __version__ = _version("vetiver")
 del _version
