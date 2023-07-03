@@ -17,7 +17,8 @@ class SKLearnHandler(BaseHandler):
     pip_name = "scikit-learn"
 
     def handler_predict(self, input_data, check_prototype):
-        """Generates method for /predict endpoint in VetiverAPI
+        """
+        Generates method for /predict endpoint in VetiverAPI
 
         The `handler_predict` function executes at each API call. Use this
         function for calling `predict()` and any other tasks that must be executed
@@ -30,7 +31,7 @@ class SKLearnHandler(BaseHandler):
 
         Returns
         -------
-        prediction
+        prediction:
             Prediction from model
         """
 

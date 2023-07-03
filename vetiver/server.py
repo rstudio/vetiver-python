@@ -11,6 +11,7 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.openapi.utils import get_openapi
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.responses import PlainTextResponse
+from textwrap import dedent
 from pydantic import schema_json_of
 from warnings import warn
 
@@ -46,6 +47,13 @@ class VetiverAPI:
 
     Notes
     -----
+    This generates an API with either 2 or 3 GET endpoints and 1 POST endpoint.
+
+    ├──/ping (GET)
+    ├──/metadata (GET)
+    ├──/pin-url (GET, if VetiverModel metadata `url` field is not None)
+    └──/predict (POST)
+
     Parameter `check_ptype` was changed to `check_prototype`. Handling of `check_ptype`
     will be removed in a future version.
     """
@@ -95,24 +103,31 @@ class VetiverAPI:
         if isinstance(self.model.metadata, dict):
             self.model.metadata = VetiverMeta.from_dict(self.model.metadata)
 
-        @app.get("/ping", include_in_schema=True)
-        async def ping():
-            return {"ping": "pong"}
-
         if self.model.metadata.url is not None:
 
             @app.get("/pin-url")
             def pin_url():
                 return repr(self.model.metadata.url)
 
+        @app.get("/ping", include_in_schema=True)
+        async def ping():
+            """Ping endpoint for health check"""
+            return {"ping": "pong"}
+
         @app.get("/metadata")
         async def get_metadata():
+            """Get metadata from model"""
             return self.model.metadata.to_dict()
 
         if self.show_prototype is True:
+
             @app.get("/prototype")
             async def get_prototype():
-                return schema_json_of(self.model.prototype, title=self.model.model_name + " prototype", indent=2)
+                return schema_json_of(
+                    self.model.prototype,
+                    title=self.model.model_name + " prototype",
+                    indent=2,
+                )
 
         self.vetiver_post(
             self.model.handler_predict, "predict", check_prototype=self.check_prototype
@@ -186,13 +201,21 @@ class VetiverAPI:
         if not endpoint_name:
             endpoint_name = endpoint_fx.__name__
 
+        if endpoint_fx.__doc__ is not None:
+            api_desc = dedent(endpoint_fx.__doc__)
+        else:
+            api_desc = None
+
         if self.check_prototype is True:
 
-            @self.app.post(urljoin("/", endpoint_name), name=endpoint_name)
+            @self.app.post(
+                urljoin("/", endpoint_name),
+                name=endpoint_name,
+                description=api_desc,
+            )
             async def custom_endpoint(input_data: List[self.model.prototype]):
                 _to_frame = api_data_to_frame(input_data)
                 predictions = endpoint_fx(_to_frame, **kw)
-
                 if isinstance(predictions, List):
                     return {endpoint_name: predictions}
                 else:

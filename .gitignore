@@ -144,3 +144,5 @@ NOTES.md
 .Rproj.user
 
 /.quarto/
+
+/.luarc.json

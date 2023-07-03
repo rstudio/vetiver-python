@@ -4,25 +4,17 @@ project:
   output-dir: _site
 
 website:
-  title: "Vetiver (Python)"
+  title: "vetiver for Python"
   description: "Version, share, deploy, and monitor your Python models"
   repo-url: https://github.com/rstudio/vetiver-python
-  repo-actions: [edit, issue]
   page-navigation: true
   favicon: "figures/logo.svg"
   page-footer:
-    left: |
+    center: |
       Proudly supported by
       [![](https://www.rstudio.com/assets/img/posit-logo-fullcolor-TM.svg){fig-alt="Posit PBC" width=65px}](https://posit.co/)
-    center:
-      - text: "Main site"
-        href: https://vetiver.rstudio.com
-    right:
-      - icon: github
-        href: https://github.com/rstudio/vetiver-python
-        aria-label: Vetiver python GitHub
   navbar:
-    background: primary
+    background: "#562910"
     pinned: true
     logo: "figures/logo.svg"
     logo-alt: "vetiver-home"
@@ -35,8 +27,18 @@ website:
           - custom_handler.md
       - text: "Changelog"
         file: changelog.md
-      - text: "Vetiver main site"
-        href: https://vetiver.rstudio.com
+      - text: "Learn more"
+        menu:
+          - text: "vetiver.rstudio.com"
+            href: https://vetiver.rstudio.com
+            target: _blank
+          - text: "R package documentation"
+            href: https://rstudio.github.io/vetiver-r/reference/
+            target: _blank
+    right:
+      - icon: github
+        href: https://github.com/rstudio/vetiver-python
+        aria-label: Vetiver python GitHub
 
   sidebar:
     - id: reference
@@ -44,9 +46,8 @@ website:
 
 quartodoc:
   style: pkgdown
-  title: "Vetiver-{{< env VERSION >}}"
+  title: "Vetiver:v{{< env VERSION >}}"
   package: vetiver
-  display_name: relative
   renderer:
     style: markdown
     display_name: relative
@@ -63,7 +64,8 @@ quartodoc:
     - title: Deploy
       desc: ""
       contents:
-        - VetiverAPI
+        - name: VetiverAPI
+          children: linked
         - VetiverAPI.run
         - VetiverAPI.vetiver_post
         - vetiver_endpoint
@@ -104,4 +106,5 @@ profile:
 
 format:
   html:
-    theme: sandstone
+    theme:
+      - flatly
