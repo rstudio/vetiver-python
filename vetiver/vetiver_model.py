@@ -84,6 +84,7 @@ class VetiverModel:
         translator = create_handler(model, prototype_data)
 
         self.model = translator.model
+        self.prototype_data = prototype_data
         self.prototype = translator.construct_prototype()
         self.model_name = model_name
         self.description = description if description else translator.describe()
