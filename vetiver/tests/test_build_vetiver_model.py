@@ -36,8 +36,9 @@ def test_vetiver_model_array_prototype():
 
     assert vt1.model == model
     assert issubclass(vt1.prototype, vt.Prototype)
-    assert isinstance(vt1.prototype.model_construct(), pydantic.BaseModel)
-    assert vt1.prototype.model_construct().__dict__ == {"0": 96, "1": 11, "2": 33}
+    # change to model_construct for pydantic v3
+    assert isinstance(vt1.prototype.construct(), pydantic.BaseModel)
+    assert vt1.prototype.construct().__dict__ == {"0": 96, "1": 11, "2": 33}
 
 
 def test_vetiver_model_df_prototype():
@@ -51,8 +52,9 @@ def test_vetiver_model_df_prototype():
     )
 
     assert vt2.model == model
-    assert isinstance(vt2.prototype.model_construct(), pydantic.BaseModel)
-    assert vt2.prototype.model_construct().B == 96
+    # change to model_construct for pydantic v3
+    assert isinstance(vt2.prototype.construct(), pydantic.BaseModel)
+    assert vt2.prototype.construct().B == 96
 
 
 def test_vetiver_model_dict_prototype():
@@ -67,8 +69,9 @@ def test_vetiver_model_dict_prototype():
     )
 
     assert vt3.model == model
-    assert isinstance(vt3.prototype.model_construct(), pydantic.BaseModel)
-    assert vt3.prototype.model_construct().B == 0
+    # change to model_construct for pydantic v3
+    assert isinstance(vt3.prototype.construct(), pydantic.BaseModel)
+    assert vt3.prototype.construct().B == 0
 
 
 def test_vetiver_model_basemodel_prototype():
@@ -138,7 +141,8 @@ def test_vetiver_model_from_pin():
 
     assert isinstance(v2, vt.VetiverModel)
     assert isinstance(v2.model, sklearn.base.BaseEstimator)
-    assert isinstance(v2.prototype.model_construct(), pydantic.BaseModel)
+    # change to model_construct for pydantic v3
+    assert isinstance(v2.prototype.construct(), pydantic.BaseModel)
     assert v2.metadata.user == {"test": 123}
     assert v2.metadata.version is not None
     assert v2.metadata.required_pkgs == ["scikit-learn"]
@@ -173,7 +177,8 @@ def test_vetiver_model_from_pin_user_metadata():
 
     assert isinstance(v2, vt.VetiverModel)
     assert isinstance(v2.model, sklearn.base.BaseEstimator)
-    assert isinstance(v2.prototype.model_construct(), pydantic.BaseModel)
+    # change to model_construct for pydantic v3
+    assert isinstance(v2.prototype.construct(), pydantic.BaseModel)
     assert v2.metadata.user == custom_meta
     assert v2.metadata.version is not None
     assert v2.metadata.required_pkgs == loaded_pkgs
