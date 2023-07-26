@@ -117,7 +117,7 @@ def _(data: pd.DataFrame):
     >>> another_prototype.schema() == prototype.schema()
     True
     """
-    dict_data = data.iloc[0, :].to_dict()
+    dict_data = _to_field(data.iloc[0, :].to_dict())
     prototype = create_prototype(**dict_data)
     return prototype
 
@@ -156,7 +156,11 @@ def _(data: np.ndarray):
 
     dict_data = dict(enumerate(data[0], 0))
     # pydantic requires strings as indicies
-    dict_data = {f"{key}": _item(value) for key, value in dict_data.items()}
+    # if its a numpy type, we have to take the Python type due to Pydantic
+
+    dict_data = {
+        f"{key}": (type(value.item()), _item(value)) for key, value in dict_data.items()
+    }
     prototype = create_prototype(**dict_data)
     return prototype
 
@@ -171,7 +175,7 @@ def _(data: dict):
     data : dict
         Dictionary
     """
-    return create_prototype(**data)
+    return create_prototype(**_to_field(data))
 
 
 @vetiver_create_prototype.register
@@ -198,3 +202,10 @@ def _(data: NoneType):
         None
     """
     return None
+
+
+def _to_field(data):
+    basemodel_input = dict()
+    for key, value in data.items():
+        basemodel_input[key] = (type(value), value)
+    return basemodel_input
