@@ -37,6 +37,7 @@ jobs:
           python -m pip install spacy
           python -m pip install torch
           python -m pip install statsmodels
+          python -m pip install typing_extensions==4.7.1
       - name: Run Tests
         run: |
           pytest -m 'not rsc_test and not docker' --cov --cov-report xml
