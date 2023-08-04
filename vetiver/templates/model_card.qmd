@@ -45,7 +45,7 @@ A [model card](https://doi.org/10.1145/3287560.3287596) provides brief, transpar
 ```{python}
 #| echo: false
 model_desc = v.description
-num_features = len(v.ptype.construct().dict())
+num_features = len(v.prototype.construct().dict())
 
 display(Markdown(f"""
 - A {model_desc} using {num_features} feature{'s'[:num_features^1]}.
@@ -91,7 +91,7 @@ display(Markdown(f"""
 - The training dataset for this model has the "prototype" or signature:
 ```{python}
 #| echo: false
-v.ptype.construct().schema().get("properties")
+v.prototype.construct().schema().get("properties")
 ```
 
 - The evaluation dataset used in this model card is ...
