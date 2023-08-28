@@ -5,11 +5,10 @@ import numpy as np
 import pytest
 import sys
 
-np.random.seed(500)
-
 
 @pytest.fixture
 def vetiver_model():
+    np.random.seed(500)
     X, y = mock.get_mock_data()
     model = mock.get_mock_model().fit(X, y)
     v = VetiverModel(
@@ -31,6 +30,8 @@ def client(vetiver_model):
 
 @pytest.fixture
 def complex_prototype_model():
+    np.random.seed(500)
+
     class CustomPrototype(BaseModel):
         B: conint(gt=42)
         C: conint(gt=42)
@@ -40,7 +41,8 @@ def complex_prototype_model():
     model = mock.get_mock_model().fit(X, y)
     v = VetiverModel(
         model=model,
-        prototype_data=CustomPrototype.model_construct(),
+        # move to model_construct for pydantic 3
+        prototype_data=CustomPrototype.construct(),
         model_name="my_model",
         versioned=None,
         description="A regression model for testing purposes",
