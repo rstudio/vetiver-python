@@ -116,7 +116,7 @@ jobs:
           pytest vetiver/tests/test_sklearn.py
 
   test-pydantic-old:
-    name: "Test no exra ml frameworks"
+    name: "Test pydantic v1"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
