@@ -3,6 +3,7 @@ from urllib.parse import urljoin
 
 import re
 import httpx
+import json
 import pandas as pd
 import requests
 import uvicorn
@@ -12,7 +13,6 @@ from fastapi.openapi.utils import get_openapi
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.responses import PlainTextResponse
 from textwrap import dedent
-from pydantic import schema_json_of
 from warnings import warn
 
 from .utils import _jupyter_nb
@@ -123,11 +123,15 @@ class VetiverAPI:
 
             @app.get("/prototype")
             async def get_prototype():
-                return schema_json_of(
+                # to handle pydantic<2 and >=2
+                pt = getattr(
                     self.model.prototype,
-                    title=self.model.model_name + " prototype",
-                    indent=2,
-                )
+                    "model_json_schema",
+                    self.model.prototype.schema_json,
+                )()
+                if isinstance(pt, str):
+                    pt = json.loads(pt)
+                return pt
 
         self.vetiver_post(
             self.model.handler_predict, "predict", check_prototype=self.check_prototype
