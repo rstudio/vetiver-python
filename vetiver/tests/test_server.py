@@ -81,9 +81,9 @@ def test_get_prototype(client):
     assert response.status_code == 200, response.text
     assert response.json() == {
         "properties": {
-            "B": {"default": 88, "title": "B", "type": "integer"},
-            "C": {"default": 67, "title": "C", "type": "integer"},
-            "D": {"default": 28, "title": "D", "type": "integer"},
+            "B": {"default": 55, "title": "B", "type": "integer"},
+            "C": {"default": 65, "title": "C", "type": "integer"},
+            "D": {"default": 17, "title": "D", "type": "integer"},
         },
         "title": "prototype",
         "type": "object",
