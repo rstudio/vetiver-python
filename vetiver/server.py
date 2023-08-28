@@ -124,14 +124,15 @@ class VetiverAPI:
             @app.get("/prototype")
             async def get_prototype():
                 # to handle pydantic<2 and >=2
-                pt = getattr(
+                prototype_schema = getattr(
                     self.model.prototype,
                     "model_json_schema",
                     self.model.prototype.schema_json,
                 )()
-                if isinstance(pt, str):
-                    pt = json.loads(pt)
-                return pt
+                # pydantic<2 returns a string, need to handle that
+                if isinstance(prototype_schema, str):
+                    prototype_schema = json.loads(prototype_schema)
+                return prototype_schema
 
         self.vetiver_post(
             self.model.handler_predict, "predict", check_prototype=self.check_prototype
