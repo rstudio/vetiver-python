@@ -8,6 +8,9 @@ from vetiver.mock import get_mock_data, get_mock_model
 import pandas as pd
 import pydantic
 import pins
+import numpy as np
+
+np.random.seed(50)
 
 # Load data, model
 X_df, y = get_mock_data()
@@ -33,8 +36,9 @@ def test_vetiver_model_array_prototype():
 
     assert vt1.model == model
     assert issubclass(vt1.prototype, vt.Prototype)
+    # change to model_construct for pydantic v3
     assert isinstance(vt1.prototype.construct(), pydantic.BaseModel)
-    assert list(vt1.prototype.__fields__.values())[0].type_ == int
+    assert vt1.prototype.construct().__dict__ == {"0": 96, "1": 11, "2": 33}
 
 
 def test_vetiver_model_df_prototype():
@@ -48,8 +52,9 @@ def test_vetiver_model_df_prototype():
     )
 
     assert vt2.model == model
+    # change to model_construct for pydantic v3
     assert isinstance(vt2.prototype.construct(), pydantic.BaseModel)
-    assert list(vt2.prototype.__fields__.values())[0].type_ == int
+    assert vt2.prototype.construct().B == 96
 
 
 def test_vetiver_model_dict_prototype():
@@ -64,8 +69,9 @@ def test_vetiver_model_dict_prototype():
     )
 
     assert vt3.model == model
+    # change to model_construct for pydantic v3
     assert isinstance(vt3.prototype.construct(), pydantic.BaseModel)
-    assert list(vt3.prototype.__fields__.values())[0].type_ == int
+    assert vt3.prototype.construct().B == 0
 
 
 def test_vetiver_model_basemodel_prototype():
@@ -135,6 +141,7 @@ def test_vetiver_model_from_pin():
 
     assert isinstance(v2, vt.VetiverModel)
     assert isinstance(v2.model, sklearn.base.BaseEstimator)
+    # change to model_construct for pydantic v3
     assert isinstance(v2.prototype.construct(), pydantic.BaseModel)
     assert v2.metadata.user == {"test": 123}
     assert v2.metadata.version is not None
@@ -170,6 +177,7 @@ def test_vetiver_model_from_pin_user_metadata():
 
     assert isinstance(v2, vt.VetiverModel)
     assert isinstance(v2.model, sklearn.base.BaseEstimator)
+    # change to model_construct for pydantic v3
     assert isinstance(v2.prototype.construct(), pydantic.BaseModel)
     assert v2.metadata.user == custom_meta
     assert v2.metadata.version is not None

@@ -73,12 +73,10 @@ def test_predict_sklearn_no_ptype(data, length, vetiver_client_check_ptype_false
 
 @pytest.mark.parametrize("data", [(0), 0, 0.0, "0"])
 def test_predict_sklearn_type_error(data, vetiver_client):
-    import re
 
-    msg = re.sub(
-        r"\n",
-        ": ",
-        "1 validation error for Request\nbody\n  value is not a valid list \(type=type_error.list\)",  # noqa
+    msg = str(
+        "[{'type': 'list_type', 'loc': ('body',), 'msg': 'Input should be a valid list', \
+        'input': '0', 'url': 'https://errors.pydantic.dev/2.0.3/v/list_type'}]"
     )
 
     with pytest.raises(TypeError, match=msg):

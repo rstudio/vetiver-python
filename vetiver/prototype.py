@@ -156,8 +156,10 @@ def _(data: np.ndarray):
 
     dict_data = dict(enumerate(data[0], 0))
     # pydantic requires strings as indicies
+    # if its a numpy type, we have to take the Python type due to Pydantic
+
     dict_data = {
-        f"{key}": (type(value), _item(value)) for key, value in dict_data.items()
+        f"{key}": (type(value.item()), _item(value)) for key, value in dict_data.items()
     }
     prototype = create_prototype(**dict_data)
     return prototype
