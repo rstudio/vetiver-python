@@ -129,9 +129,11 @@ class VetiverAPI:
                     "model_json_schema",
                     self.model.prototype.schema_json,
                 )()
-                # pydantic<2 returns a string, need to handle that
+                # pydantic<2 returns a string, need to handle to json format
                 if isinstance(prototype_schema, str):
                     prototype_schema = json.loads(prototype_schema)
+                for key, value in prototype_schema["properties"].items():
+                    value.pop("title", None)
                 return prototype_schema
 
         self.vetiver_post(
