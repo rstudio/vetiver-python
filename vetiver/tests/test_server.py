@@ -1,4 +1,10 @@
-from vetiver import mock, VetiverModel, VetiverAPI
+from vetiver import (
+    mock,
+    VetiverModel,
+    VetiverAPI,
+    vetiver_create_prototype,
+    InvalidPTypeError,
+)
 from pydantic import BaseModel, conint
 from fastapi.testclient import TestClient
 import numpy as np
@@ -76,7 +82,7 @@ def test_get_metadata(client):
     }
 
 
-def test_get_prototype(client):
+def test_get_prototype(client, vetiver_model):
     response = client.get("/prototype")
     assert response.status_code == 200, response.text
     assert response.json() == {
@@ -88,6 +94,11 @@ def test_get_prototype(client):
         "title": "prototype",
         "type": "object",
     }
+
+    assert (
+        vetiver_model.prototype.construct()
+        == vetiver_create_prototype(response.json()).construct()
+    )
 
 
 def test_complex_prototype(complex_prototype_model):
@@ -103,3 +114,6 @@ def test_complex_prototype(complex_prototype_model):
         "title": "CustomPrototype",
         "type": "object",
     }
+
+    with pytest.raises(InvalidPTypeError):
+        vetiver_create_prototype(response.json())

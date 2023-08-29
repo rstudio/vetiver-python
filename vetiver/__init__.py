@@ -2,7 +2,11 @@
 # Change to import.metadata when minimum python>=3.8
 from importlib_metadata import version as _version
 
-from .prototype import vetiver_create_prototype, vetiver_create_ptype  # noqa
+from .prototype import (  # noqa
+    vetiver_create_prototype,  # noqa
+    vetiver_create_ptype,  # noqa
+    InvalidPTypeError,  # noqa
+)  # noqa
 from .vetiver_model import VetiverModel  # noqa
 from .server import VetiverAPI, vetiver_endpoint, predict  # noqa
 from .mock import get_mock_data, get_mock_model  # noqa

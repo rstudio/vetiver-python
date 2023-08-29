@@ -175,6 +175,22 @@ def _(data: dict):
     data : dict
         Dictionary
     """
+
+    # if it comes from vetiver's /prototype endpoint
+    dict_data = {}
+    if data.keys() >= {"properties", "title", "type"}:
+        # automatically create for simple prototypes
+        try:
+            for key, value in data["properties"].items():
+                dict_data.update({key: (value["type"], value["default"])})
+        # error for complex objects
+        except KeyError:
+            raise InvalidPTypeError(
+                "Failed to create dict prototype for this data. "
+                "Please use pandas DataFrame or pydantic BaseModel."
+            )
+        return create_prototype(**dict_data)
+
     return create_prototype(**_to_field(data))
 
 
