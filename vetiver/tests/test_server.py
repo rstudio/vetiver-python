@@ -96,8 +96,8 @@ def test_get_prototype(client, vetiver_model):
     }
 
     assert (
-        vetiver_model.prototype.construct()
-        == vetiver_create_prototype(response.json()).construct()
+        vetiver_model.prototype.construct().dict()
+        == vetiver_create_prototype(response.json()).construct().dict()
     )
 
 
