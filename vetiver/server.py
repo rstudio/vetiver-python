@@ -3,6 +3,7 @@ from urllib.parse import urljoin
 
 import re
 import httpx
+import json
 import pandas as pd
 import requests
 import uvicorn
@@ -27,6 +28,8 @@ class VetiverAPI:
     ----------
     model :  VetiverModel
         Model to be deployed in API
+    show_prototype: bool = True
+
     check_prototype : bool
         Determine if data prototype should be enforced
     app_factory :
@@ -60,6 +63,7 @@ class VetiverAPI:
     def __init__(
         self,
         model: VetiverModel,
+        show_prototype: bool = True,
         check_prototype: bool = True,
         app_factory=FastAPI,
         **kwargs,
@@ -80,6 +84,7 @@ class VetiverAPI:
             self.model.prototype = self.model.ptype
             delattr(self.model, "ptype")
 
+        self.show_prototype = show_prototype
         self.check_prototype = check_prototype
 
         self._init_app()
@@ -113,6 +118,23 @@ class VetiverAPI:
         async def get_metadata():
             """Get metadata from model"""
             return self.model.metadata.to_dict()
+
+        if self.show_prototype is True:
+
+            @app.get("/prototype")
+            async def get_prototype():
+                # to handle pydantic<2 and >=2
+                prototype_schema = getattr(
+                    self.model.prototype,
+                    "model_json_schema",
+                    self.model.prototype.schema_json,
+                )()
+                # pydantic<2 returns a string, need to handle to json format
+                if isinstance(prototype_schema, str):
+                    prototype_schema = json.loads(prototype_schema)
+                for key, value in prototype_schema["properties"].items():
+                    value.pop("title", None)
+                return prototype_schema
 
         self.vetiver_post(
             self.model.handler_predict, "predict", check_prototype=self.check_prototype
