@@ -3,6 +3,39 @@
 
 For full details, view the [commit logs](https://github.com/rstudio/vetiver-python/commits/).
 
+## v0.2.2
+### What's Changed
+
+**Full Changelog**: https://github.com/rstudio/vetiver-python/compare/v0.2.1...v0.2.2
+* DOCS: add square logo in [GH173](https://github.com/rstudio/vetiver-python/pull/173)
+* DOCS: add API structure documentation in [GH176](https://github.com/rstudio/vetiver-python/pull/176)
+* DOCS: update docs to look less like vetiver.rstudio.com in [GH178](https://github.com/rstudio/vetiver-python/pull/178)
+* BUG: remove __all__ in init in [GH182](https://github.com/rstudio/vetiver-python/pull/182)
+* MAINT: require no less than pins 0.7.1 in [GH183](https://github.com/rstudio/vetiver-python/pull/183)
+* ENH: endpoint_fx docstring as FastAPI description in [GH179](https://github.com/rstudio/vetiver-python/pull/179)
+* MAINT: Update Pydantic usage for v2 compatibility in [GH185](https://github.com/rstudio/vetiver-python/pull/185)
+* MAINT: Update model_card.qmd by in [GH186](https://github.com/rstudio/vetiver-python/pull/186)
+* ENH: add `/GET` prototype endpoint in [GH174](https://github.com/rstudio/vetiver-python/pull/174)
+* BUG: use max instead of first in [GH189](https://github.com/rstudio/vetiver-python/pull/189)
+
+## v0.2.1
+### What's Changed
+
+**Full Changelog**: https://github.com/rstudio/vetiver-python/compare/v0.2.0...v0.2.1
+
+* DOC: add changelog in [GH151](https://github.com/rstudio/vetiver-python/pull/151)
+* FIX: None type handling for `python_version` in metadata [GH149](https://github.com/rstudio/)vetiver-python/pull/149
+* Match GHA Python versions to Connect [GH157](https://github.com/rstudio/vetiver-python/pull/157)
+* DOCS: move from sphinx to quartodoc [GH153](https://github.com/rstudio/vetiver-python/pull/153)
+* BUG,CI: /latest not rendering correctly [GH158](https://github.com/rstudio/vetiver-python/pull/158)
+* MAINT: spring cleaning [GH160](https://github.com/rstudio/vetiver-python/pull/160)
+* DOCS: Add netlify docs preview [GH163](https://github.com/rstudio/vetiver-python/pull/163)
+* MAINT: spring cleaning [GH164](https://github.com/rstudio/vetiver-python/pull/164)
+* ENH: Refactor server handling [GH155](https://github.com/rstudio/vetiver-python/pull/155)
+* FEAT: add required packages to authorize pins boards [GH166](https://github.com/rstudio/vetiver-python/)pull/166
+* MAINT: start typing vetiver [GH168](https://github.com/rstudio/vetiver-python/pull/168)
+* FEAT: add new `/metadata` GET endpoint [GH170](https://github.com/rstudio/vetiver-python/pull/170)
+* FEAT: implement spacy models [GH143](https://github.com/rstudio/vetiver-python/pull/143)
 
 ## v0.2.0
 ### What's Changed
