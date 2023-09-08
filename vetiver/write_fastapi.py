@@ -17,7 +17,7 @@ def _choose_version(df: pd.DataFrame):
         version_desc = df.sort_values(by="created", ascending=False)
         version = version_desc.version[0]
     else:
-        version = df.version[0]
+        version = df.version.max()
         warnings.warn(
             f"""Pinned vetiver model has no active version and no datetime on versions,
               Do you need to check your pinned model?
