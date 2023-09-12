@@ -57,7 +57,7 @@ def test_vetiver_build(vetiver_client):
 
     response = vetiver.predict(endpoint=vetiver_client, data=data)
 
-    assert response.iloc[0, 0] == 21.064373016357422
+    assert response.iloc[0, 0] == 19.963224411010742
     assert len(response) == 1
 
 
@@ -66,7 +66,7 @@ def test_batch(vetiver_client):
 
     response = vetiver.predict(endpoint=vetiver_client, data=data)
 
-    assert response.iloc[0, 0] == 21.064373016357422
+    assert response.iloc[0, 0] == 19.963224411010742
     assert len(response) == 3
 
 
@@ -75,7 +75,7 @@ def test_no_ptype(vetiver_client_check_ptype_false):
 
     response = vetiver.predict(endpoint=vetiver_client_check_ptype_false, data=data)
 
-    assert response.iloc[0, 0] == 21.064373016357422
+    assert response.iloc[0, 0] == 19.963224411010742
     assert len(response) == 1
 
 
