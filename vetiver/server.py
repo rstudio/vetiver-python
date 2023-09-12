@@ -265,6 +265,7 @@ class VetiverAPI:
         _jupyter_nb()
         # check to see if in Posit Workbench, pulled from FastAPI section of user guide
         # https://docs.posit.co/ide/server-pro/user/vs-code/guide/proxying-web-servers.html#running-fastapi-with-uvicorn # noqa
+        path = ""
         if "RS_SERVER_URL" in os.environ and os.environ["RS_SERVER_URL"]:
             path = (
                 subprocess.run(
@@ -275,6 +276,9 @@ class VetiverAPI:
                 .stdout.decode()
                 .strip()
             )
+        # subprocess is run, new URL given
+        if len(path) > 0:
+            print(f"INFO:    vetiver running at: {path}")
             uvicorn.run(self.app, port=port, host=host, root_path=path, **kw)
         else:
             uvicorn.run(self.app, port=port, host=host, **kw)
