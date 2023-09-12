@@ -7,6 +7,8 @@ import json
 import pandas as pd
 import requests
 import uvicorn
+import os
+import subprocess
 from fastapi import FastAPI, Request, testclient
 from fastapi.exceptions import RequestValidationError
 from fastapi.openapi.utils import get_openapi
@@ -261,7 +263,21 @@ class VetiverAPI:
         >>> v_api.run()     # doctest: +SKIP
         """
         _jupyter_nb()
-        uvicorn.run(self.app, port=port, host=host, **kw)
+        # check to see if in Posit Workbench, pulled from FastAPI section of user guide
+        # https://docs.posit.co/ide/server-pro/user/vs-code/guide/proxying-web-servers.html#running-fastapi-with-uvicorn # noqa
+        if "RS_SERVER_URL" in os.environ and os.environ["RS_SERVER_URL"]:
+            path = (
+                subprocess.run(
+                    f"echo $(/usr/lib/rstudio-server/bin/rserver-url -l {port})",
+                    stdout=subprocess.PIPE,
+                    shell=True,
+                )
+                .stdout.decode()
+                .strip()
+            )
+            uvicorn.run(self.app, port=port, host=host, root_path=path, **kw)
+        else:
+            uvicorn.run(self.app, port=port, host=host, **kw)
 
     def _custom_openapi(self):
         import vetiver
