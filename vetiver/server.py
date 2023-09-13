@@ -1,26 +1,27 @@
-from typing import Callable, List, Union
-from urllib.parse import urljoin
-
 import re
 import httpx
 import json
-import pandas as pd
 import requests
 import uvicorn
 import os
 import subprocess
+import logging
+import pandas as pd
 from fastapi import FastAPI, Request, testclient
 from fastapi.exceptions import RequestValidationError
 from fastapi.openapi.utils import get_openapi
-from fastapi.responses import HTMLResponse, RedirectResponse
-from fastapi.responses import PlainTextResponse
+from fastapi.responses import HTMLResponse, RedirectResponse, PlainTextResponse
 from textwrap import dedent
 from warnings import warn
+from urllib.parse import urljoin
+from typing import Callable, List, Union
 
-from .utils import _jupyter_nb
+from .utils import _jupyter_nb, inform
 from .vetiver_model import VetiverModel
 from .meta import VetiverMeta
 from .helpers import api_data_to_frame, response_to_frame
+
+_log = logging.getLogger(__name__)
 
 
 class VetiverAPI:
@@ -278,9 +279,10 @@ class VetiverAPI:
             )
         # subprocess is run, new URL given
         if len(path) > 0:
-            print(f"INFO:    vetiver running at: {path}")
+            inform(_log, f"INFO:     vetiver running at: {path}")
             uvicorn.run(self.app, port=port, host=host, root_path=path, **kw)
         else:
+            inform(_log, f"INFO:     vetiver running at: {host+':'+port}")
             uvicorn.run(self.app, port=port, host=host, **kw)
 
     def _custom_openapi(self):
