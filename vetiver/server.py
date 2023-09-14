@@ -3,8 +3,6 @@ import httpx
 import json
 import requests
 import uvicorn
-import os
-import subprocess
 import logging
 import pandas as pd
 from fastapi import FastAPI, Request, testclient
@@ -16,12 +14,10 @@ from warnings import warn
 from urllib.parse import urljoin
 from typing import Callable, List, Union
 
-from .utils import _jupyter_nb, inform
+from .utils import _jupyter_nb, get_workbench_path
 from .vetiver_model import VetiverModel
 from .meta import VetiverMeta
 from .helpers import api_data_to_frame, response_to_frame
-
-_log = logging.getLogger(__name__)
 
 
 class VetiverAPI:
@@ -74,6 +70,7 @@ class VetiverAPI:
         self.model = model
         self.app_factory = app_factory
         self.app = app_factory()
+        self.workbench_path = None
 
         if "check_ptype" in kwargs:
             check_prototype = kwargs.pop("check_ptype")
@@ -95,6 +92,14 @@ class VetiverAPI:
     def _init_app(self):
         app = self.app
         app.openapi = self._custom_openapi
+
+        @app.on_event("startup")
+        async def startup_event():
+            logger = logging.getLogger("uvicorn.error")
+            if self.workbench_path:
+                logger.info(f"VetiverAPI starting at {self.workbench_path}")
+            else:
+                logger.info("VetiverAPI starting...")
 
         @app.get("/", include_in_schema=False)
         def docs_redirect():
@@ -264,25 +269,13 @@ class VetiverAPI:
         >>> v_api.run()     # doctest: +SKIP
         """
         _jupyter_nb()
-        # check to see if in Posit Workbench, pulled from FastAPI section of user guide
-        # https://docs.posit.co/ide/server-pro/user/vs-code/guide/proxying-web-servers.html#running-fastapi-with-uvicorn # noqa
-        path = ""
-        if "RS_SERVER_URL" in os.environ and os.environ["RS_SERVER_URL"]:
-            path = (
-                subprocess.run(
-                    f"echo $(/usr/lib/rstudio-server/bin/rserver-url -l {port})",
-                    stdout=subprocess.PIPE,
-                    shell=True,
-                )
-                .stdout.decode()
-                .strip()
+        self.workbench_path = get_workbench_path(port)
+
+        if self.workbench_path:
+            uvicorn.run(
+                self.app, port=port, host=host, root_path=self.workbench_path, **kw
             )
-        # subprocess is run, new URL given
-        if len(path) > 0:
-            inform(_log, f"INFO:     vetiver running at: {path}")
-            uvicorn.run(self.app, port=port, host=host, root_path=path, **kw)
         else:
-            inform(_log, f"INFO:     vetiver running at: {host+':'+port}")
             uvicorn.run(self.app, port=port, host=host, **kw)
 
     def _custom_openapi(self):
