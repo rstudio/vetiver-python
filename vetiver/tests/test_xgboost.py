@@ -5,9 +5,16 @@ xgb = pytest.importorskip("xgboost", reason="xgboost library not installed")
 from vetiver.data import mtcars  # noqa
 from vetiver.handlers.xgboost import XGBoostHandler  # noqa
 import numpy as np  # noqa
+import sys  # noqa
 from fastapi.testclient import TestClient  # noqa
 
 import vetiver  # noqa
+
+# hack since xgboost 2.0 dropped 3.7 support
+if sys.version_info[0] == 3 and sys.version_info[1] < 8:
+    PREDICT_VALUE = 21.064373016357422
+else:
+    PREDICT_VALUE = 19.963224411010742
 
 
 @pytest.fixture
@@ -57,7 +64,7 @@ def test_vetiver_build(vetiver_client):
 
     response = vetiver.predict(endpoint=vetiver_client, data=data)
 
-    assert response.iloc[0, 0] == 21.064373016357422
+    assert response.iloc[0, 0] == PREDICT_VALUE
     assert len(response) == 1
 
 
@@ -66,7 +73,7 @@ def test_batch(vetiver_client):
 
     response = vetiver.predict(endpoint=vetiver_client, data=data)
 
-    assert response.iloc[0, 0] == 21.064373016357422
+    assert response.iloc[0, 0] == PREDICT_VALUE
     assert len(response) == 3
 
 
@@ -75,7 +82,7 @@ def test_no_ptype(vetiver_client_check_ptype_false):
 
     response = vetiver.predict(endpoint=vetiver_client_check_ptype_false, data=data)
 
-    assert response.iloc[0, 0] == 21.064373016357422
+    assert response.iloc[0, 0] == PREDICT_VALUE
     assert len(response) == 1
 
 

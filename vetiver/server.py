@@ -1,21 +1,20 @@
-from typing import Callable, List, Union
-from urllib.parse import urljoin
-
 import re
 import httpx
 import json
-import pandas as pd
 import requests
 import uvicorn
+import logging
+import pandas as pd
 from fastapi import FastAPI, Request, testclient
 from fastapi.exceptions import RequestValidationError
 from fastapi.openapi.utils import get_openapi
-from fastapi.responses import HTMLResponse, RedirectResponse
-from fastapi.responses import PlainTextResponse
+from fastapi.responses import HTMLResponse, RedirectResponse, PlainTextResponse
 from textwrap import dedent
 from warnings import warn
+from urllib.parse import urljoin
+from typing import Callable, List, Union
 
-from .utils import _jupyter_nb
+from .utils import _jupyter_nb, get_workbench_path
 from .vetiver_model import VetiverModel
 from .meta import VetiverMeta
 from .helpers import api_data_to_frame, response_to_frame
@@ -71,6 +70,7 @@ class VetiverAPI:
         self.model = model
         self.app_factory = app_factory
         self.app = app_factory()
+        self.workbench_path = None
 
         if "check_ptype" in kwargs:
             check_prototype = kwargs.pop("check_ptype")
@@ -92,6 +92,14 @@ class VetiverAPI:
     def _init_app(self):
         app = self.app
         app.openapi = self._custom_openapi
+
+        @app.on_event("startup")
+        async def startup_event():
+            logger = logging.getLogger("uvicorn.error")
+            if self.workbench_path:
+                logger.info(f"VetiverAPI starting at {self.workbench_path}")
+            else:
+                logger.info("VetiverAPI starting...")
 
         @app.get("/", include_in_schema=False)
         def docs_redirect():
@@ -261,7 +269,14 @@ class VetiverAPI:
         >>> v_api.run()     # doctest: +SKIP
         """
         _jupyter_nb()
-        uvicorn.run(self.app, port=port, host=host, **kw)
+        self.workbench_path = get_workbench_path(port)
+
+        if self.workbench_path:
+            uvicorn.run(
+                self.app, port=port, host=host, root_path=self.workbench_path, **kw
+            )
+        else:
+            uvicorn.run(self.app, port=port, host=host, **kw)
 
     def _custom_openapi(self):
         import vetiver
