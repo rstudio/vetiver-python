@@ -4,9 +4,9 @@ In some cases, you may need to create and deploy custom elements as part of your
 
 In these cases, extra steps will be required to successfully create and deploy a `VetiverModel` object.
 
-# Making a custom model 
+# Making a custom model
 
-Vetiver supports basic [scikit-learn](https://scikit-learn.org/), [torch](https://pytorch.org/), [statsmodels](https://www.statsmodels.org/stable/index.html), [xgboost](https://xgboost.readthedocs.io/en/stable/), and [spacy](https://spacy.io/) models. If you need to alter the usage of these models, or deploy a different type of model, you will likely need to create a custom model handler. 
+Vetiver supports basic [scikit-learn](https://scikit-learn.org/), [torch](https://pytorch.org/), [statsmodels](https://www.statsmodels.org/stable/index.html), [xgboost](https://xgboost.readthedocs.io/en/stable/), and [spacy](https://spacy.io/) models. If you need to alter the usage of these models, or deploy a different type of model, you will likely need to create a custom model handler.
 
 To create a custom model handler, you should create a subclass of Vetiver's BaseHandler class. This custom handler should include the following:
 
@@ -53,7 +53,7 @@ To deploy custom elements, you need to include the necessary source code in your
 
 # Deploying custom elements
 
-If your `VetiverModel` includes custom source code, you need to include that code in your deployment files to build an API in another location. To do so, 
+If your `VetiverModel` includes custom source code, you need to include that code in your deployment files to build an API in another location. To do so,
 
 ```{.python filename="model.py"}
 from sklearn.base import BaseEstimator, TransformerMixin
@@ -64,10 +64,10 @@ from sklearn.pipeline import Pipeline
 class FeatureSelector(BaseEstimator, TransformerMixin):
     def __init__(self, columns):
         self.columns = columns
-        
+
     def fit(self, X, y=None):
         return self
-    
+
     def transform(self, X, y=None):
         return X[self.columns]
 
@@ -151,7 +151,7 @@ To deploy custom elements to Posit Connect, you'll first start with the command 
 vetiver.write_app(board, 'selected_decision_tree')
 ```
 
-This will generate an `app.py` file, where you'll need to add an import statement that is formatted `from {name of file, excluding .py, that has custom element} import {name of custom element}`. 
+This will generate an `app.py` file, where you'll need to add an import statement that is formatted `from {name of file, excluding .py, that has custom element} import {name of custom element}`.
 
 ```{.python filename=="app.py"}
 from vetiver import VetiverModel
@@ -177,8 +177,8 @@ url = "example.connect.com" # your Posit Connect server url
 api_key = os.environ(CONNECT_API_KEY) # your Posit Connect API key
 
 connect_server = rsconnect.api.RSConnectServer(
-    url = url
-    api_key = api_key 
+    url = url,
+    api_key = api_key
 )
 
 rsconnect.actions.deploy_python_fastapi(
@@ -191,4 +191,4 @@ rsconnect.actions.deploy_python_fastapi(
 
 :::
 
-Please note that the above steps are a general guide, and you may need to adapt them to your specific use case and deployment environment. If you have any questions, please consider [opening an issue](https://github.com/rstudio/vetiver-python/issues/new). 
+Please note that the above steps are a general guide, and you may need to adapt them to your specific use case and deployment environment. If you have any questions, please consider [opening an issue](https://github.com/rstudio/vetiver-python/issues/new).
