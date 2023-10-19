@@ -100,7 +100,7 @@ vetiver.prepare_docker(board, "selected_decision_tree")
 
 When you run this line, 3 files are generated: a Dockerfile, an `app.py` file, and a `vetiver_requirements.txt`. In the `app.py` file, you'll need to add an import statement that is formatted `from {name of file, excluding .py, that has custom element} import {name of custom element}`.
 
-```{.python filename=="app.py"}
+```{.python filename="app.py"}
 from vetiver import VetiverModel
 import vetiver
 import pins
