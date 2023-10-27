@@ -15,14 +15,14 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: 'ubuntu-latest'
-            python-version: '3.7'
           - os: 'macos-latest'
             python-version: '3.8'
           - os: 'windows-latest'
             python-version: '3.9'
           - os: 'ubuntu-latest'
             python-version: '3.10'
+          - os: 'ubuntu-latest'
+            python-version: '3.11'
 
     steps:
       - uses: actions/checkout@v3
@@ -37,7 +37,6 @@ jobs:
           python -m pip install spacy
           python -m pip install torch
           python -m pip install statsmodels
-          python -m pip install typing_extensions==4.7.1
       - name: Run Tests
         run: |
           pytest -m 'not rsc_test and not docker' --cov --cov-report xml
