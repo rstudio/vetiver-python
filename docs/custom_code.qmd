@@ -1,19 +1,26 @@
-# Creating and deploying custom elements
+# Creating and deploying custom code
 
-In some cases, you may need to create and deploy custom elements as part of your MLOps workflow using Vetiver. This could be necessary when there is no existing implementation for the type of model you want to deploy, or when you want to implement a current handler in a different way. You may also have a custom element in a known framework, such as a custom column transformer for a scikit-learn model.
+In some cases, you may need to create and deploy custom code as part of your MLOps workflow using vetiver. This could be necessary when you need to: 
+
+- deploy custom models in vetiver
+- deploy unsupported models in vetiver
+- include custom code in vetiver
+- deploy a vetiver model with a custom pipeline
+
+ You may also have custom code in a known framework, such as a column transformer for a scikit-learn model.
 
 In these cases, extra steps will be required to successfully create and deploy a `VetiverModel` object.
 
 # Making a custom model
 
-Vetiver supports basic [scikit-learn](https://scikit-learn.org/), [torch](https://pytorch.org/), [statsmodels](https://www.statsmodels.org/stable/index.html), [xgboost](https://xgboost.readthedocs.io/en/stable/), and [spacy](https://spacy.io/) models. If you need to alter the usage of these models, or deploy a different type of model, you will likely need to create a custom model handler.
+Vetiver supports basic [scikit-learn](https://scikit-learn.org/), [torch](https://pytorch.org/), [statsmodels](https://www.statsmodels.org/stable/index.html), [xgboost](https://xgboost.readthedocs.io/en/stable/), and [spacy](https://spacy.io/) models. If you need to alter the usage of these models, or deploy a different type of model, you will likely need to create a new model handler.
 
-To create a custom model handler, you should create a subclass of Vetiver's BaseHandler class. This custom handler should include the following:
+To create a model handler, you should create a subclass of vetiver's `BaseHandler` class. This handler should include the following:
 
 - `model_type`:  A static method that declares the type of your model.
 - `handler_predict()`: A method that defines how predictions should be made for your model. This method is used at the /predict endpoint in the VetiverAPI.
 
-Here's an example of a custom handler for a model of `newmodeltype` type.
+Here's an example of a handler for a model of `newmodeltype` type. Once you have defined your handler, you can initialize it with your model and pass it to the `VetiverModel` class.
 
 ```python
 from vetiver.handlers.base import BaseHandler
@@ -45,15 +52,13 @@ new_model = CustomHandler(model, ptype_data)
 VetiverModel(new_model, "custom_model")
 ```
 
-Once you have defined your custom handler, you can initialize it with your model and pass it to the VetiverModel class.
-
 If your model is a common type, please consider [submitting a pull request](https://github.com/rstudio/vetiver-python/pulls).
 
-To deploy custom elements, you need to include the necessary source code in your deployment files. If your model or other elements can be imported from a Python package, you can include the relevant packages in a `requirements.txt` file for deployment. However, if you have custom source code in local files, you will need to include those files in the deployment process.
+To deploy custom code, you need to include the necessary source code in your deployment files. If your model or other elements can be imported from a Python package, you can include the relevant packages in a `requirements.txt` file for deployment. However, if you have custom source code in local files, you will need to include those files in the deployment process.
 
 # Deploying custom elements
 
-If your `VetiverModel` includes custom source code, you need to include that code in your deployment files to build an API in another location. To do so,
+If your `VetiverModel` includes custom source code, you need to include that code in your deployment files to build an API in another location. The example below shows a user-created `FeatureSelector`, which is part of a scikit-learn pipeline.
 
 ```{.python filename="model.py"}
 from sklearn.base import BaseEstimator, TransformerMixin
@@ -145,7 +150,7 @@ CMD ["uvicorn", "app.app:api", "--host", "0.0.0.0", "--port", "8080"]
 
 ## Posit Connect
 
-To deploy custom elements to Posit Connect, you'll first start with the command `vetiver.write_app`.
+To deploy custom code to Posit Connect, you'll first start with the command `vetiver.write_app`.
 
 ```{.python}
 vetiver.write_app(board, 'selected_decision_tree')
@@ -167,7 +172,7 @@ vetiver_api = vetiver.VetiverAPI(v)
 api = vetiver_api.app
 ```
 
-After editing the app.py file, you can deploy it to Posit Connect using the `rsconnect` package. Use the `rsconnect.api.actions.deploy_python_fastapi()` function to deploy the API, specifying the Connect server URL, API key, directory containing the `app.py` and `model.py` files, and the entry point of the API.
+After editing the `app.py` file, you can deploy it to Posit Connect using the `rsconnect` package. Use the `rsconnect.api.actions.deploy_python_fastapi()` function to deploy the API, specifying the Connect server URL, API key, directory containing the `app.py` and `model.py` files, and the entry point of the API.
 
 ```{.python}
 from rsconnect.api.actions import deploy_python_fastapi
