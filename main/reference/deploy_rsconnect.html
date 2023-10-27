@@ -186,7 +186,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../reference/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Vetiver:v0.2.3.post4+g273c507</span></a>
+ <span class="menu-text">Vetiver:v0.2.3.post7+g4008274</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -378,7 +378,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="vetiver.deploy_rsconnect" class="level1">
 <h1>deploy_rsconnect</h1>
-<p><code>deploy_rsconnect(connect_server, board, pin_name, version=None, extra_files=None, new=False, app_id=None, title=None, python=None, conda_mode=False, force_generate=False, log_callback=None, image=None)</code></p>
+<p><code>deploy_rsconnect(connect_server, board, pin_name, version=None, extra_files=None, new=False, app_id=None, title=None, python=None, force_generate=False, log_callback=None, image=None)</code></p>
 <p>Deploy to Posit Connect</p>
 <section id="parameters" class="level2">
 <h2 class="anchored" data-anchor-id="parameters">Parameters</h2>
@@ -453,24 +453,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td><code>None</code></td>
 </tr>
 <tr class="even">
-<td><code>conda_mode</code></td>
-<td>bool</td>
-<td>Use conda to build an environment.yml</td>
-<td><code>False</code></td>
-</tr>
-<tr class="odd">
 <td><code>force_generate</code></td>
 <td>bool</td>
 <td>Force generating requirements.txt or environment.yml</td>
 <td><code>False</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>log_callback</code></td>
 <td>typing.Callable</td>
 <td>Callback to use to write the log to</td>
 <td><code>None</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>image</code></td>
 <td>str</td>
 <td>Docker image to be specified for off-host execution</td>
