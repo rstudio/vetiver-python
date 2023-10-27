@@ -24,7 +24,7 @@ website:
         file: reference/index.qmd
       - text: "Advanced Usage"
         menu:
-          - custom_handler.md
+          - custom_elements.qmd
       - text: "Changelog"
         file: changelog.md
       - text: "Learn more"
