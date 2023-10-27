@@ -108,6 +108,7 @@ def deploy_rsconnect(
             app_id=app_id,
             title=title,
             python=python,
+            conda_mode=False,
             force_generate=force_generate,
             log_callback=log_callback,
             image=image,
