@@ -128,10 +128,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Advanced Usage</span>
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-advanced-usage">    
-        <li>
-    <a class="dropdown-item" href="../custom_handler.html" rel="" target="">
- <span class="dropdown-text">Custom Handlers</span></a>
-  </li>  
+        <li class="dropdown-header">custom_elements.qmd</li>
     </ul>
   </li>
   <li class="nav-item">
@@ -186,7 +183,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../reference/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Vetiver:v0.2.3.post14+gb9248cf</span></a>
+ <span class="menu-text">Vetiver:v0.2.3.post28+ge7cb91d</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -441,8 +438,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="notes" class="level2">
 <h2 class="anchored" data-anchor-id="notes">Notes</h2>
-<p>This generates an API with either 2 or 3 GET endpoints and 1 POST endpoint.</p>
-<p>├──/ping (GET) ├──/metadata (GET) ├──/pin-url (GET, if VetiverModel metadata <code>url</code> field is not None) └──/predict (POST)</p>
+<p>This generates an API with either 3 or 4 GET endpoints and 1 POST endpoint.</p>
+<pre><code>├──/ping (GET)
+├──/metadata (GET)
+├──/prototype (GET)
+├──/pin-url (GET, if VetiverModel metadata `url` field is not None)
+└──/predict (POST)</code></pre>
 <p>Parameter <code>check_ptype</code> was changed to <code>check_prototype</code>. Handling of <code>check_ptype</code> will be removed in a future version.</p>
 </section>
 <section id="methods" class="level2">
