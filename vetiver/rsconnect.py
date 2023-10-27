@@ -19,7 +19,6 @@ def deploy_rsconnect(
     app_id: int = None,
     title: str = None,
     python: str = None,
-    conda_mode: bool = False,
     force_generate: bool = False,
     log_callback: typing.Callable = None,
     image: str = None,
@@ -46,8 +45,6 @@ def deploy_rsconnect(
         Optional title for the deploy.
     python : str
         Optional name of a Python executable
-    conda_mode : bool
-        Use conda to build an environment.yml
     force_generate : bool
         Force generating requirements.txt or environment.yml
     log_callback : typing.Callable
@@ -111,7 +108,6 @@ def deploy_rsconnect(
             app_id=app_id,
             title=title,
             python=python,
-            conda_mode=conda_mode,
             force_generate=force_generate,
             log_callback=log_callback,
             image=image,
