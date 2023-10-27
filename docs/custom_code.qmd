@@ -1,6 +1,6 @@
 # Creating and deploying custom code
 
-In some cases, you may need to create and deploy custom code as part of your MLOps workflow using vetiver. This could be necessary when you need to: 
+In some cases, you may need to create and deploy custom code as part of your MLOps workflow using vetiver. This could be necessary when you need to:
 
 - deploy custom models in vetiver
 - deploy unsupported models in vetiver
@@ -26,8 +26,8 @@ Here's an example of a handler for a model of `newmodeltype` type. Once you have
 from vetiver.handlers.base import BaseHandler
 
 class CustomHandler(BaseHandler):
-    def __init__(self, model, ptype_data):
-        super().__init__(model, ptype_data)
+    def __init__(self, model, prototype_data):
+        super().__init__(model, prototype_data)
 
     model_type = staticmethod(lambda: newmodeltype)
     pip_name = "scikit-learn" # package's installation name on pip
@@ -47,7 +47,7 @@ class CustomHandler(BaseHandler):
 
         return prediction
 
-new_model = CustomHandler(model, ptype_data)
+new_model = CustomHandler(model, prototype_data)
 
 VetiverModel(new_model, "custom_model")
 ```
