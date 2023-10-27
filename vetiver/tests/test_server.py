@@ -4,6 +4,7 @@ from vetiver import (
     VetiverAPI,
     vetiver_create_prototype,
     InvalidPTypeError,
+    vetiver_endpoint,
 )
 from pydantic import BaseModel, conint
 from fastapi.testclient import TestClient
@@ -117,3 +118,10 @@ def test_complex_prototype(complex_prototype_model):
 
     with pytest.raises(InvalidPTypeError):
         vetiver_create_prototype(response.json())
+
+
+def test_vetiver_endpoint():
+    url_raw = "http://127.0.0.1:8000/predict/"
+    url = vetiver_endpoint(url_raw)
+
+    assert url == "http://127.0.0.1:8000/predict"
