@@ -370,4 +370,8 @@ def vetiver_endpoint(url: str = "http://127.0.0.1:8000/predict") -> str:
     >>> import vetiver
     >>> endpoint = vetiver.vetiver_endpoint(url='http://127.0.0.1:8000/predict')
     """
+    # remove trailing backslash, if it exists
+    if url[-1] == "/":
+        url = url[:-1]
+
     return url
