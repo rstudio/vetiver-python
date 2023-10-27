@@ -10,11 +10,7 @@ from fastapi.testclient import TestClient  # noqa
 
 import vetiver  # noqa
 
-# hack since xgboost 2.0 dropped 3.7 support
-if sys.version_info[0] == 3 and sys.version_info[1] < 8:
-    PREDICT_VALUE = 21.064373016357422
-else:
-    PREDICT_VALUE = 19.963224411010742
+PREDICT_VALUE = 19.963224411010742
 
 
 @pytest.fixture
