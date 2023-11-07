@@ -3,10 +3,19 @@
 
 For full details, view the [commit logs](https://github.com/rstudio/vetiver-python/commits/).
 
+## v0.2.3
+## What's Changed
+
+[**Full Changelog**](https://github.com/rstudio/vetiver-python/compare/v0.2.2...v0.2.3)
+
+* ENH: add `root_path` if user in Posit Workbench in [GH191](https://github.com/rstudio/vetiver-python/pull/191)
+
+
 ## v0.2.2
 ### What's Changed
 
-**Full Changelog**: https://github.com/rstudio/vetiver-python/compare/v0.2.1...v0.2.2
+[**Full Changelog**](https://github.com/rstudio/vetiver-python/compare/v0.2.1...v0.2.2)
+
 * DOCS: add square logo in [GH173](https://github.com/rstudio/vetiver-python/pull/173)
 * DOCS: add API structure documentation in [GH176](https://github.com/rstudio/vetiver-python/pull/176)
 * DOCS: update docs to look less like vetiver.rstudio.com in [GH178](https://github.com/rstudio/vetiver-python/pull/178)
@@ -21,7 +30,7 @@ For full details, view the [commit logs](https://github.com/rstudio/vetiver-pyth
 ## v0.2.1
 ### What's Changed
 
-**Full Changelog**: https://github.com/rstudio/vetiver-python/compare/v0.2.0...v0.2.1
+[**Full Changelog**](https://github.com/rstudio/vetiver-python/compare/v0.2.0...v0.2.1)
 
 * DOC: add changelog in [GH151](https://github.com/rstudio/vetiver-python/pull/151)
 * FIX: None type handling for `python_version` in metadata [GH149](https://github.com/rstudio/)vetiver-python/pull/149
