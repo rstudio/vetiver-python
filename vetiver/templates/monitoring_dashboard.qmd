@@ -31,16 +31,21 @@ days_old = datetime.today() - datetime.strptime(v_meta.created, "%Y%m%dT%H%M%SZ"
 ```
 
 ```{python}
+## the next few lines are an example model, here is a place to
+## add any code you need to import new data and make predictions
+
 # import new data to track performance over time
 raw = "https://colorado.rstudio.com/rsc"
 paths = {"new-data": "inspections-new-data/"}
 board = pins.board_url(raw, paths, allow_pickle_read=True)
 inspections_new = board.pin_read("new-data")
 
+# make predictions
 inspections_new["preds"] = v.model.predict(
     inspections_new.drop(columns=["results", "aka_name", "inspection_date"])
 )
 
+# map results
 inspections_new["preds"] = inspections_new["preds"].map({"PASS": 0, "FAIL": 1})
 inspections_new["results"] = inspections_new["results"].map({"PASS": 0, "FAIL": 1})
 ```
@@ -113,9 +118,9 @@ plot_metrics(metrics_df).show()
 
 ## Column {.sidebar}
 
-This tab is used to see model performance over time. In this context, _performance_ is the statistical properties of the model, specifically, accuracy and recall.
+This tab is used to see model performance over time. In this context, _performance_ is the statistical properties of the model, eg, accuracy and recall.
 
-You can add custom information and metrics here
+You can add custom information and metrics here.
 
 # API visual documentation
 
@@ -129,4 +134,5 @@ IFrame('https://colorado.posit.co/rsc/chicago-inspections-python', width=750, he
 
 
 ## Column {.sidebar}
-This table shows the new inspections that our model misclassified, in either direction.
+
+Interact directly with your model via its visual documentation, and get `curl` examples.
