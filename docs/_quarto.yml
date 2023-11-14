@@ -59,7 +59,7 @@ quartodoc:
         - VetiverModel
         - vetiver_pin_write
         - vetiver_create_prototype
-        - model_card.model_card
+        - templates.model_card
 
     - title: Deploy
       desc: ""
@@ -72,7 +72,7 @@ quartodoc:
         - predict
         - write_app
         - prepare_docker
-        - write_docker.write_docker
+        - write_docker
         - deploy_rsconnect
 
     - title: Monitor
@@ -81,6 +81,7 @@ quartodoc:
         - compute_metrics
         - pin_metrics
         - plot_metrics
+        - templates.monitoring_dashboard
 
     - title: Model Handlers
       desc: ""
