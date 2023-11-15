@@ -166,7 +166,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
-      - uses: actions/
         with:
           python-version: 3.10
       - name: Set up Quarto
@@ -180,4 +179,4 @@ jobs:
       - name: Render files
         run: |
           quarto render vetiver/templates/model_card.qmd
-          quarto render monitoring_dashboard.qmd
+          quarto render vetiver/templates/monitoring_dashboard.qmd
