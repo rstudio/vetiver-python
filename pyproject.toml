@@ -49,6 +49,7 @@ ignore = [
     "vetiver/prototype.py",
     "vetiver/rsconnect.py",
     "vetiver/server.py",
+    "vetiver/templates.py",
     "vetiver/types.py",
     "vetiver/utils.py",
     "vetiver/vetiver_model.py",
