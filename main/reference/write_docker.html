@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>vetiver for Python – write_docker.write_docker</title>
+<title>vetiver for Python – write_docker</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -128,7 +128,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Advanced Usage</span>
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-advanced-usage">    
-        <li class="dropdown-header">custom_elements.qmd</li>
+        <li>
+    <a class="dropdown-item" href="../custom_code.html" rel="" target="">
+ <span class="dropdown-text">Creating and deploying custom code</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
@@ -168,7 +171,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference/VetiverAPI.html">Deploy</a></li><li class="breadcrumb-item"><a href="../reference/write_docker.write_docker.html">write_docker.write_docker</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference/VetiverAPI.html">Deploy</a></li><li class="breadcrumb-item"><a href="../reference/write_docker.html">write_docker</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
     </div>
@@ -183,7 +186,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../reference/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Vetiver:v0.2.3.post30+g3608744</span></a>
+ <span class="menu-text">Vetiver:v0.2.3.post40+g30d73f0</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -215,8 +218,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../reference/model_card.model_card.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">model_card.model_card</span></a>
+  <a href="../reference/templates.model_card.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">templates.model_card</span></a>
   </div>
 </li>
       </ul>
@@ -274,8 +277,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../reference/write_docker.write_docker.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">write_docker.write_docker</span></a>
+  <a href="../reference/write_docker.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">write_docker</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -311,6 +314,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <div class="sidebar-item-container"> 
   <a href="../reference/plot_metrics.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">plot_metrics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../reference/templates.monitoring_dashboard.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">templates.monitoring_dashboard</span></a>
   </div>
 </li>
       </ul>
@@ -373,12 +382,120 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="vetiver.write_docker.write_docker" class="level1">
-<h1>write_docker.write_docker</h1>
+<section id="vetiver.write_docker" class="level1">
+<h1>write_docker</h1>
+<p><code>write_docker</code></p>
+<section id="functions" class="level2">
+<h2 class="anchored" data-anchor-id="functions">Functions</h2>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="#vetiver.write_docker.prepare_docker">prepare_docker</a></td>
+<td>Create all files needed for Docker</td>
+</tr>
+<tr class="even">
+<td><a href="#vetiver.write_docker.write_docker">write_docker</a></td>
+<td>Writes a Dockerfile to run VetiverAPI in a container</td>
+</tr>
+</tbody>
+</table>
+<section id="vetiver.write_docker.prepare_docker" class="level3">
+<h3 class="anchored" data-anchor-id="vetiver.write_docker.prepare_docker">prepare_docker</h3>
+<p><code>write_docker.prepare_docker(board, pin_name, path='./', version=None, rspm_env=False, host='0.0.0.0', port='8080')</code></p>
+<p>Create all files needed for Docker</p>
+<section id="parameters" class="level4">
+<h4 class="anchored" data-anchor-id="parameters">Parameters</h4>
+<table class="table">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 9%">
+<col style="width: 61%">
+<col style="width: 15%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>board</code></td>
+<td></td>
+<td>Pin board for model</td>
+<td><em>required</em></td>
+</tr>
+<tr class="even">
+<td><code>pin_name</code></td>
+<td>str</td>
+<td>Name of pin</td>
+<td><em>required</em></td>
+</tr>
+<tr class="odd">
+<td><code>path</code></td>
+<td>str</td>
+<td>Path to output</td>
+<td><code>'./'</code></td>
+</tr>
+<tr class="even">
+<td><code>version</code></td>
+<td></td>
+<td>Pin version to be used</td>
+<td><code>None</code></td>
+</tr>
+<tr class="odd">
+<td><code>rspm_env</code></td>
+<td>bool</td>
+<td>Whether or not Posit Package Manager should be used</td>
+<td><code>False</code></td>
+</tr>
+<tr class="even">
+<td><code>host</code></td>
+<td>str</td>
+<td>Host address to run VetiverAPI from Dockerfile</td>
+<td><code>'0.0.0.0'</code></td>
+</tr>
+<tr class="odd">
+<td><code>port</code></td>
+<td>str</td>
+<td>Port to run VetiverAPI from Dockerfile</td>
+<td><code>'8080'</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="examples" class="level4">
+<h4 class="anchored" data-anchor-id="examples">Examples</h4>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> vetiver</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> tempfile</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> pins</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> tmp <span class="op">=</span> tempfile.TemporaryDirectory()</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> board <span class="op">=</span> pins.board_temp(allow_pickle_read<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> X, y <span class="op">=</span> vetiver.get_mock_data()</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> model <span class="op">=</span> vetiver.get_mock_model().fit(X, y)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> v <span class="op">=</span> vetiver.VetiverModel(model, <span class="st">"my_model"</span>, prototype_data <span class="op">=</span> X)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> vetiver.vetiver_pin_write(board, v)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> vetiver.prepare_docker(board <span class="op">=</span> board, pin_name <span class="op">=</span> <span class="st">"my_model"</span>, path <span class="op">=</span> tmp.name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="notes" class="level4">
+<h4 class="anchored" data-anchor-id="notes">Notes</h4>
+<p>This function uses <code>vetiver.get_board_pkgs(board)</code> for generating requirements. For more complex use cases, call <code>write_docker()</code>, <code>load_pkgs()</code>, and <code>write_app()</code> individually.</p>
+</section>
+</section>
+<section id="vetiver.write_docker.write_docker" class="level3">
+<h3 class="anchored" data-anchor-id="vetiver.write_docker.write_docker">write_docker</h3>
 <p><code>write_docker.write_docker(app_file='app.py', path='./', rspm_env=False, host='0.0.0.0', port='8080')</code></p>
 <p>Writes a Dockerfile to run VetiverAPI in a container</p>
-<section id="parameters" class="level2">
-<h2 class="anchored" data-anchor-id="parameters">Parameters</h2>
+<section id="parameters-1" class="level4">
+<h4 class="anchored" data-anchor-id="parameters-1">Parameters</h4>
 <table class="table">
 <colgroup>
 <col style="width: 13%">
@@ -428,23 +545,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 </section>
-<section id="examples" class="level2">
-<h2 class="anchored" data-anchor-id="examples">Examples</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> vetiver</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> tempfile</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> pins</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> tmp <span class="op">=</span> tempfile.TemporaryDirectory()</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> board <span class="op">=</span> pins.board_temp(allow_pickle_read<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> X, y <span class="op">=</span> vetiver.get_mock_data()</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> model <span class="op">=</span> vetiver.get_mock_model().fit(X, y)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> v <span class="op">=</span> vetiver.VetiverModel(model, <span class="st">"my_model"</span>, prototype_data <span class="op">=</span> X)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> vetiver.vetiver_pin_write(board, v)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> vetiver.write_app(board,</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>...     <span class="st">"my_model"</span>,</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>...     <span class="bu">file</span> <span class="op">=</span> tmp.name <span class="op">+</span> <span class="st">"/app.py"</span>) <span class="co"># need file for model</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> vetiver.write_docker(app_file <span class="op">=</span> <span class="st">"app.py"</span>, path <span class="op">=</span> tmp.name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="examples-1" class="level4">
+<h4 class="anchored" data-anchor-id="examples-1">Examples</h4>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> vetiver</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> tempfile</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> pins</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> tmp <span class="op">=</span> tempfile.TemporaryDirectory()</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> board <span class="op">=</span> pins.board_temp(allow_pickle_read<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> X, y <span class="op">=</span> vetiver.get_mock_data()</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> model <span class="op">=</span> vetiver.get_mock_model().fit(X, y)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> v <span class="op">=</span> vetiver.VetiverModel(model, <span class="st">"my_model"</span>, prototype_data <span class="op">=</span> X)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> vetiver.vetiver_pin_write(board, v)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> vetiver.write_app(board,</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>...     <span class="st">"my_model"</span>,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>...     <span class="bu">file</span> <span class="op">=</span> tmp.name <span class="op">+</span> <span class="st">"/app.py"</span>) <span class="co"># need file for model</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> vetiver.write_docker(app_file <span class="op">=</span> <span class="st">"app.py"</span>, path <span class="op">=</span> tmp.name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
+</section>
+</section>
 </section>
 </section>
 

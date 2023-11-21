@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>vetiver for Python – statsmodelshandler</title>
+<title>vetiver for Python – templates.monitoring_dashboard</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -29,8 +29,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../reference/XGBoostHandler.html" rel="next">
-<link href="../reference/TorchHandler.html" rel="prev">
+<link href="../reference/BaseHandler.html" rel="next">
+<link href="../reference/plot_metrics.html" rel="prev">
 <link href="../figures/logo.svg" rel="icon" type="image/svg+xml">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -137,7 +137,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference/BaseHandler.html">Model Handlers</a></li><li class="breadcrumb-item"><a href="../reference/StatsmodelsHandler.html">StatsmodelsHandler</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference/compute_metrics.html">Monitor</a></li><li class="breadcrumb-item"><a href="../reference/templates.monitoring_dashboard.html">templates.monitoring_dashboard</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
     </div>
@@ -284,7 +284,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../reference/templates.monitoring_dashboard.html" class="sidebar-item-text sidebar-link">
+  <a href="../reference/templates.monitoring_dashboard.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">templates.monitoring_dashboard</span></a>
   </div>
 </li>
@@ -319,7 +319,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../reference/StatsmodelsHandler.html" class="sidebar-item-text sidebar-link active">
+  <a href="../reference/StatsmodelsHandler.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">StatsmodelsHandler</span></a>
   </div>
 </li>
@@ -348,19 +348,13 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="vetiver.StatsmodelsHandler" class="level1">
-<h1>StatsmodelsHandler</h1>
-<p><code>StatsmodelsHandler()</code></p>
-<p>Handler class for creating VetiverModels with statsmodels.</p>
+<section id="vetiver.templates.monitoring_dashboard" class="level1">
+<h1>templates.monitoring_dashboard</h1>
+<p><code>templates.monitoring_dashboard(path='.')</code></p>
+<p>Generate a monitoring dashboard template</p>
 <section id="parameters" class="level2">
 <h2 class="anchored" data-anchor-id="parameters">Parameters</h2>
 <table class="table">
-<colgroup>
-<col style="width: 12%">
-<col style="width: 18%">
-<col style="width: 52%">
-<col style="width: 16%">
-</colgroup>
 <thead>
 <tr class="header">
 <th>Name</th>
@@ -371,76 +365,19 @@ ul.task-list li input[type="checkbox"] {
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>model</code></td>
-<td>statsmodels</td>
-<td>a trained and fit statsmodels model</td>
-<td><em>required</em></td>
+<td><code>path</code></td>
+<td>str</td>
+<td>Path to save monitoring dashboard</td>
+<td><code>'.'</code></td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="methods" class="level2">
-<h2 class="anchored" data-anchor-id="methods">Methods</h2>
-<table class="table">
-<thead>
-<tr class="header">
-<th>Name</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><a href="#vetiver.StatsmodelsHandler.handler_predict">handler_predict</a></td>
-<td>Generates method for /predict endpoint in VetiverAPI</td>
-</tr>
-</tbody>
-</table>
-<section id="vetiver.StatsmodelsHandler.handler_predict" class="level3">
-<h3 class="anchored" data-anchor-id="vetiver.StatsmodelsHandler.handler_predict">handler_predict</h3>
-<p><code>StatsmodelsHandler.handler_predict(input_data, check_prototype)</code></p>
-<p>Generates method for /predict endpoint in VetiverAPI</p>
-<p>The <code>handler_predict</code> function executes at each API call. Use this function for calling <code>predict()</code> and any other tasks that must be executed at each API call.</p>
-<section id="parameters-1" class="level4">
-<h4 class="anchored" data-anchor-id="parameters-1">Parameters</h4>
-<table class="table">
-<thead>
-<tr class="header">
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>input_data</code></td>
-<td></td>
-<td>Test data</td>
-<td><em>required</em></td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="returns" class="level4">
-<h4 class="anchored" data-anchor-id="returns">Returns</h4>
-<table class="table">
-<thead>
-<tr class="header">
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>prediction</td>
-<td>Prediction from model</td>
-</tr>
-</tbody>
-</table>
+<section id="notes" class="level2">
+<h2 class="anchored" data-anchor-id="notes">Notes</h2>
+<p>This model card is generated as a Quarto document. For more info on Quarto, visit https://quarto.org/</p>
 
 
-</section>
-</section>
 </section>
 </section>
 
@@ -680,13 +617,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../reference/TorchHandler.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">TorchHandler</span>
+      <a href="../reference/plot_metrics.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">plot_metrics</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../reference/XGBoostHandler.html" class="pagination-link">
-        <span class="nav-page-text">XGBoostHandler</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../reference/BaseHandler.html" class="pagination-link">
+        <span class="nav-page-text">BaseHandler</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
