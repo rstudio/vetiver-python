@@ -24,7 +24,7 @@ from .handlers.spacy import SpacyHandler  # noqa
 from .helpers import api_data_to_frame  # noqa
 from .rsconnect import deploy_rsconnect  # noqa
 from .monitor import compute_metrics, pin_metrics, plot_metrics, _rolling_df  # noqa
-from .model_card import model_card  # noqa
+from .templates import model_card, monitoring_dashboard  # noqa
 from .types import create_prototype, Prototype  # noqa
 
 __author__ = "Isabel Zimmerman <isabel.zimmerman@posit.co>"

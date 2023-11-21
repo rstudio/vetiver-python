@@ -1,0 +1,136 @@
+---
+title: "Monitoring dashboard"
+format:
+  dashboard:
+    orientation: columns
+logo: https://github.com/rstudio/vetiver-python/blob/main/docs/figures/logo.png?raw=true
+output: asis
+jupyter: python3
+---
+
+```{python}
+#| include: false
+#| tags: [parameters]
+
+# import model and metadata
+import pins
+from IPython.display import display, Markdown, IFrame
+from datetime import datetime, timedelta
+import pandas as pd
+import plotly.express as px
+from sklearn import metrics
+from vetiver import VetiverModel, compute_metrics, plot_metrics
+from sklearn.metrics import recall_score, accuracy_score
+
+raw = "https://colorado.rstudio.com/rsc"
+paths = {"chicago-model-python": "chicago-model-python/"}
+board = pins.board_url(raw, paths, allow_pickle_read=True)
+v = VetiverModel.from_pin(board, "chicago-model-python")
+v_meta = board.pin_meta("chicago-model-python")
+days_old = datetime.today() - datetime.strptime(v_meta.created, "%Y%m%dT%H%M%SZ")
+```
+
+```{python}
+## the next few lines are an example model, here is a place to
+## add any code you need to import new data and make predictions
+
+# import new data to track performance over time
+raw = "https://colorado.rstudio.com/rsc"
+paths = {"new-data": "inspections-new-data/"}
+board = pins.board_url(raw, paths, allow_pickle_read=True)
+inspections_new = board.pin_read("new-data")
+
+# make predictions
+inspections_new["preds"] = v.model.predict(
+    inspections_new.drop(columns=["results", "aka_name", "inspection_date"])
+)
+
+# map results
+inspections_new["preds"] = inspections_new["preds"].map({"PASS": 0, "FAIL": 1})
+inspections_new["results"] = inspections_new["results"].map({"PASS": 0, "FAIL": 1})
+```
+
+# Model info
+
+## Column
+### Row {height="33%"}
+::: {.valuebox}
+`{python} v.description`
+
+`{python} v.model_name`
+:::
+
+::: {.valuebox}
+Model age
+
+`{python} days_old.days` days old
+:::
+
+### Row
+
+Model details
+
+- This model has the prototype:
+
+```
+`{python} v.prototype.construct().schema().get("properties")`
+```
+
+- The model was created by ...
+
+# Model metrics
+
+## Column
+```{python}
+import itables
+
+td = timedelta(weeks = 4)
+metric_set = [accuracy_score, recall_score]
+
+metrics_df = compute_metrics(
+    data = inspections_new,
+    date_var = "inspection_date",
+    period = td,
+    metric_set = metric_set,
+    truth = "results",
+    estimate = "preds"
+  )
+itables.show(metrics_df)
+```
+
+```{python}
+plot_metrics(metrics_df).show()
+```
+
+## Column {.sidebar}
+
+This tab is used to see model performance over time. In this context, _performance_ is the statistical properties of the model, eg, accuracy and recall.
+
+You can add custom information and metrics here.
+
+# Explore validation data
+
+```{python}
+fig = px.histogram(inspections_new, x = "facility_type")
+fig.show()
+```
+
+## Column {.sidebar}
+
+Write your own code to make visualizations or tables with the new validation data, and/or the new predictions.
+
+
+# API visual documentation
+
+## Column
+
+```{python}
+from IPython.display import IFrame
+IFrame('https://colorado.posit.co/rsc/chicago-inspections-python', width=750, height=350)
+```
+---
+
+
+## Column {.sidebar}
+
+Interact directly with your model via its visual documentation, and get `curl` examples.
