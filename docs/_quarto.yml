@@ -109,3 +109,11 @@ format:
   html:
     theme:
       - flatly
+
+issuey:
+   issue-url: "https://github.com/rstudio/vetiver-python/issues/%id"
+   issue-text: "GH%id"
+   issue-title: "Issue: #%id"
+   pull-request-url: "https://github.com/rstudio/vetiver-python/pulls/%id"
+   pull-request-text: "PR%id"
+   pull-request-title: "Pull Request: #%id"
