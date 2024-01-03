@@ -26,9 +26,11 @@ def test_write_app(vetiver_model_creation):
         assert (
             contents
             == f"""from vetiver import VetiverModel
+from dotenv import load_dotenv, find_dotenv
 import vetiver
 import pins
 
+load_dotenv(find_dotenv())
 
 b = pins.board_folder({repr(tempdir)}, allow_pickle_read=True)
 v = VetiverModel.from_pin(b, 'model', version = {repr(version)})
