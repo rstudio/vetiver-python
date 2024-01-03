@@ -104,7 +104,9 @@ def write_app(
         f = open(file, "x")
 
     app = f"""from vetiver import VetiverModel
+from dotenv import load_dotenv, find_dotenv
 {_glue_required_pkgs(infra_pkgs)}
+load_dotenv(find_dotenv())
 
 b = pins.{load_board}
 {pin_read}
