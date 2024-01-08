@@ -3,6 +3,22 @@
 
 For full details, view the [commit logs](https://github.com/rstudio/vetiver-python/commits/).
 
+
+## v0.2.4
+## What's Changed
+
+[**Full Changelog**](https://github.com/rstudio/vetiver-python/compare/v0.2.3...v0.2.4)
+
+* MAINT: drop Python 3.7 support in [GH199](https://github.com/rstudio/vetiver-python/pull/199)
+* MAINT: Conda mode deprecated from rsconnect-python pkg in [GH197](https://github.com/rstudio/vetiver-python/pull/197)
+* MAINT: bump minimum rsconnect to 1.11.0 in [GH200](https://github.com/rstudio/vetiver-python/pull/200)
+* BUG: remove trailing backslash in [GH201](https://github.com/rstudio/vetiver-python/pull/201)
+* DOCS: deploying custom elements in [GH195](https://github.com/rstudio/vetiver-python/pull/195)
+* FEAT: quarto monitoring dashboard template in [GH203](https://github.com/rstudio/vetiver-python/pull/203)
+* BUG: ignore more in pyright in [GH204](https://github.com/rstudio/vetiver-python/pull/204)
+* ENH: load dotenv file into generated app.py file in [GH205](https://github.com/rstudio/vetiver-python/pull/205)
+
+
 ## v0.2.3
 ## What's Changed
 
