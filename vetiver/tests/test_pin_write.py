@@ -1,14 +1,12 @@
 import pytest
 
-from vetiver.mock import get_mock_data, get_mock_model
-from vetiver.pin_read_write import vetiver_pin_write
-from vetiver.vetiver_model import VetiverModel
+from vetiver import mock, vetiver_pin_write, VetiverModel
 import sklearn
 import pins
 
 # Load data, model
-X_df, y = get_mock_data()
-model = get_mock_model().fit(X_df, y)
+X_df, y = mock.get_mock_data()
+model = mock.get_mock_model().fit(X_df, y)
 
 
 def test_board_pin_write_error():

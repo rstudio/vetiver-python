@@ -1,9 +1,17 @@
 import sklearn
 import sys
+import pytest
 
-import vetiver as vt
-from vetiver.meta import VetiverMeta
-from vetiver.mock import get_mock_data, get_mock_model
+import vetiver
+from vetiver import (
+    VetiverModel,
+    mock,
+    InvalidModelError,
+    VetiverMeta,
+    get_mock_data,
+    get_mock_model,
+    vetiver_pin_write,
+)
 
 import pandas as pd
 import pydantic
@@ -25,7 +33,7 @@ class MockPrototype(pydantic.BaseModel):
 
 
 def test_vetiver_model_array_prototype():
-    vt1 = vt.VetiverModel(
+    v = VetiverModel(
         model=model,
         prototype_data=X_array,
         model_name="model",
@@ -34,15 +42,15 @@ def test_vetiver_model_array_prototype():
         metadata=None,
     )
 
-    assert vt1.model == model
-    assert issubclass(vt1.prototype, vt.Prototype)
+    assert v.model == model
+    assert issubclass(v.prototype, vetiver.Prototype)
     # change to model_construct for pydantic v3
-    assert isinstance(vt1.prototype.construct(), pydantic.BaseModel)
-    assert vt1.prototype.construct().__dict__ == {"0": 96, "1": 11, "2": 33}
+    assert isinstance(v.prototype.construct(), pydantic.BaseModel)
+    assert v.prototype.construct().__dict__ == {"0": 96, "1": 11, "2": 33}
 
 
 def test_vetiver_model_df_prototype():
-    vt2 = vt.VetiverModel(
+    v = VetiverModel(
         model=model,
         prototype_data=X_df,
         model_name="model",
@@ -51,15 +59,15 @@ def test_vetiver_model_df_prototype():
         metadata=None,
     )
 
-    assert vt2.model == model
+    assert v.model == model
     # change to model_construct for pydantic v3
-    assert isinstance(vt2.prototype.construct(), pydantic.BaseModel)
-    assert vt2.prototype.construct().B == 96
+    assert isinstance(v.prototype.construct(), pydantic.BaseModel)
+    assert v.prototype.construct().B == 96
 
 
 def test_vetiver_model_dict_prototype():
     dict_data = {"B": 0, "C": 0, "D": 0}
-    vt3 = vt.VetiverModel(
+    v = VetiverModel(
         model=model,
         prototype_data=dict_data,
         model_name="model",
@@ -68,16 +76,16 @@ def test_vetiver_model_dict_prototype():
         metadata=None,
     )
 
-    assert vt3.model == model
+    assert v.model == model
     # change to model_construct for pydantic v3
-    assert isinstance(vt3.prototype.construct(), pydantic.BaseModel)
-    assert vt3.prototype.construct().B == 0
+    assert isinstance(v.prototype.construct(), pydantic.BaseModel)
+    assert v.prototype.construct().B == 0
 
 
 def test_vetiver_model_basemodel_prototype():
 
     m = MockPrototype(B=4, C=0, D=0)
-    vt4 = vt.VetiverModel(
+    v = VetiverModel(
         model=model,
         prototype_data=m,
         model_name="model",
@@ -85,12 +93,12 @@ def test_vetiver_model_basemodel_prototype():
         description=None,
     )
 
-    assert vt4.model == model
-    assert vt4.prototype is m
+    assert v.model == model
+    assert v.prototype is m
 
 
 def test_vetiver_model_no_prototype():
-    vt4 = vt.VetiverModel(
+    v = VetiverModel(
         model=model,
         prototype_data=None,
         model_name="model",
@@ -99,12 +107,12 @@ def test_vetiver_model_no_prototype():
         metadata=None,
     )
 
-    assert vt4.model == model
-    assert vt4.prototype is None
+    assert v.model == model
+    assert v.prototype is None
 
 
 def test_vetiver_model_use_ptype():
-    vt5 = vt.VetiverModel(
+    v = VetiverModel(
         model=model,
         prototype_data=None,
         model_name="model",
@@ -113,9 +121,9 @@ def test_vetiver_model_use_ptype():
         metadata={"test": 123},
     )
 
-    assert vt5.model == model
-    assert vt5.prototype is None
-    assert vt5.metadata == VetiverMeta(
+    assert v.model == model
+    assert v.prototype is None
+    assert v.metadata == VetiverMeta(
         user={"test": 123},
         version=None,
         url=None,
@@ -126,7 +134,7 @@ def test_vetiver_model_use_ptype():
 
 def test_vetiver_model_from_pin():
 
-    v = vt.VetiverModel(
+    v = VetiverModel(
         model=model,
         prototype_data=X_df,
         model_name="model",
@@ -136,10 +144,10 @@ def test_vetiver_model_from_pin():
     )
 
     board = pins.board_temp(allow_pickle_read=True)
-    vt.vetiver_pin_write(board=board, model=v)
-    v2 = vt.VetiverModel.from_pin(board, "model")
+    vetiver_pin_write(board=board, model=v)
+    v2 = VetiverModel.from_pin(board, "model")
 
-    assert isinstance(v2, vt.VetiverModel)
+    assert isinstance(v2, VetiverModel)
     assert isinstance(v2.model, sklearn.base.BaseEstimator)
     # change to model_construct for pydantic v3
     assert isinstance(v2.prototype.construct(), pydantic.BaseModel)
@@ -162,7 +170,7 @@ def test_vetiver_model_from_pin_user_metadata():
     }
     loaded_pkgs = custom_meta["required_pkgs"] + ["scikit-learn"]
 
-    v = vt.VetiverModel(
+    v = VetiverModel(
         model=model,
         prototype_data=X_df,
         model_name="model",
@@ -172,10 +180,10 @@ def test_vetiver_model_from_pin_user_metadata():
     )
 
     board = pins.board_temp(allow_pickle_read=True)
-    vt.vetiver_pin_write(board=board, model=v)
-    v2 = vt.VetiverModel.from_pin(board, "model")
+    vetiver_pin_write(board=board, model=v)
+    v2 = VetiverModel.from_pin(board, "model")
 
-    assert isinstance(v2, vt.VetiverModel)
+    assert isinstance(v2, VetiverModel)
     assert isinstance(v2.model, sklearn.base.BaseEstimator)
     # change to model_construct for pydantic v3
     assert isinstance(v2.prototype.construct(), pydantic.BaseModel)
@@ -196,7 +204,7 @@ def test_vetiver_model_from_pin_no_version():
         "python_version": None,
     }
 
-    v = vt.VetiverModel(
+    v = VetiverModel(
         model=model,
         prototype_data=X_df,
         model_name="model",
@@ -204,10 +212,23 @@ def test_vetiver_model_from_pin_no_version():
     )
 
     board = pins.board_temp(allow_pickle_read=True)
-    vt.vetiver_pin_write(board=board, model=v)
-    v2 = vt.VetiverModel.from_pin(board, "model")
+    vetiver_pin_write(board=board, model=v)
+    v2 = VetiverModel.from_pin(board, "model")
 
     assert v2.metadata.required_pkgs == ["scikit-learn"]
     assert v2.metadata.python_version is None
 
     board.pin_delete("model")
+
+
+def test_no_model_handler_found():
+    X, y = mock.get_mock_data()
+
+    with pytest.raises(InvalidModelError):
+        VetiverModel(
+            model=y,
+            prototype_data=X,
+            model_name="my_model",
+            versioned=None,
+            description="A regression model for testing purposes",
+        )

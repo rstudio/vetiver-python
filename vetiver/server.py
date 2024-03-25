@@ -5,7 +5,7 @@ import requests
 import uvicorn
 import logging
 import pandas as pd
-from fastapi import FastAPI, Request, testclient
+from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.openapi.utils import get_openapi
 from fastapi.responses import HTMLResponse, RedirectResponse, PlainTextResponse
@@ -321,9 +321,8 @@ def predict(endpoint, data: Union[dict, pd.DataFrame, pd.Series], **kw) -> pd.Da
     >>> endpoint = vetiver.vetiver_endpoint(url='http://127.0.0.1:8000/predict')
     >>> vetiver.predict(endpoint, X)     # doctest: +SKIP
     """
-    if isinstance(endpoint, testclient.TestClient):
-        requester = endpoint
-        endpoint = requester.app.root_path
+    if "test_client" in kw:
+        requester = kw.pop("test_client")
     else:
         requester = requests
 

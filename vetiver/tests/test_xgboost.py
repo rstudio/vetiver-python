@@ -14,7 +14,7 @@ PREDICT_VALUE = 19.963224411010742
 
 
 @pytest.fixture
-def xgb_model():
+def model():
     # read in data
     dtrain = xgb.DMatrix(mtcars.drop(columns="mpg"), label=mtcars["mpg"])
     # specify parameters via map
@@ -30,63 +30,44 @@ def xgb_model():
     return vetiver.VetiverModel(fit, "xgb", mtcars.drop(columns="mpg"))
 
 
-@pytest.fixture
-def vetiver_client(xgb_model):  # With check_prototype=True
-    app = vetiver.VetiverAPI(xgb_model, check_prototype=True)
-    app.app.root_path = "/predict"
-    client = TestClient(app.app)
-
-    return client
+def test_required_pkgs(model):
+    assert model.metadata.required_pkgs == ["xgboost"]
+    assert not model.metadata.user
 
 
-@pytest.fixture
-def vetiver_client_check_ptype_false(xgb_model):  # With check_prototype=True
-    app = vetiver.VetiverAPI(xgb_model, check_prototype=False)
-    app.app.root_path = "/predict"
-    client = TestClient(app.app)
-
-    return client
-
-
-def test_model(xgb_model):
-    v = xgb_model
-
-    assert v.metadata.required_pkgs == ["xgboost"]
-    assert not v.metadata.user
-
-
-def test_vetiver_build(vetiver_client):
+def test_vetiver_build(client):
     data = mtcars.head(1).drop(columns="mpg")
 
-    response = vetiver.predict(endpoint=vetiver_client, data=data)
+    response = vetiver.predict(endpoint="/predict/", data=data, test_client=client)
 
     assert response.iloc[0, 0] == PREDICT_VALUE
     assert len(response) == 1
 
 
-def test_batch(vetiver_client):
+def test_batch(client):
     data = mtcars.head(3).drop(columns="mpg")
 
-    response = vetiver.predict(endpoint=vetiver_client, data=data)
+    response = vetiver.predict(endpoint="/predict/", data=data, test_client=client)
 
     assert response.iloc[0, 0] == PREDICT_VALUE
     assert len(response) == 3
 
 
-def test_no_ptype(vetiver_client_check_ptype_false):
+def test_no_ptype(client_no_prototype):
     data = mtcars.head(1).drop(columns="mpg")
 
-    response = vetiver.predict(endpoint=vetiver_client_check_ptype_false, data=data)
-
+    response = vetiver.predict(
+        endpoint="/predict/", data=data, test_client=client_no_prototype
+    )
     assert response.iloc[0, 0] == PREDICT_VALUE
     assert len(response) == 1
 
 
-def test_serialize(xgb_model):
+def test_serialize(model):
     import pins
 
     board = pins.board_temp(allow_pickle_read=True)
-    vetiver.vetiver_pin_write(board=board, model=xgb_model)
+    vetiver.vetiver_pin_write(board=board, model=model)
     assert isinstance(
         board.pin_read("xgb"),
         xgb.Booster,
