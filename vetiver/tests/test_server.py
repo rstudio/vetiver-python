@@ -114,16 +114,9 @@ def test_complex_prototype(complex_prototype_model):
         vetiver_create_prototype(response.json())
 
 
-@pytest.mark.parametrize(
-    "data",
-    [
-        [{"B": 43, "C": 43}],
-        # [{"B": 43, "C": 43, "D": 43, "E": 43}],  # should this error?
-    ],
-)
-def test_predict_wrong_input(data, client):
+def test_predict_wrong_input(client):
     with pytest.raises(TypeError):
-        predict(endpoint="/predict/", data=data, test_client=client)
+        predict(endpoint="/predict/", data=[{"B": 43, "C": 43}], test_client=client)
 
 
 def test_vetiver_endpoint():
