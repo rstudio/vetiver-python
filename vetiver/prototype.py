@@ -9,6 +9,7 @@ except ImportError:
 import pandas as pd
 import numpy as np
 import pydantic
+from pydantic import Field
 from warnings import warn
 from .types import create_prototype
 
@@ -159,7 +160,8 @@ def _(data: np.ndarray):
     # if its a numpy type, we have to take the Python type due to Pydantic
 
     dict_data = {
-        f"{key}": (type(value.item()), _item(value)) for key, value in dict_data.items()
+        f"{key}": (type(value.item()), Field(..., example=_item(value)))
+        for key, value in dict_data.items()
     }
     prototype = create_prototype(**dict_data)
     return prototype
@@ -223,5 +225,5 @@ def _(data: NoneType):
 def _to_field(data):
     basemodel_input = dict()
     for key, value in data.items():
-        basemodel_input[key] = (type(value), value)
+        basemodel_input[key] = (type(value), Field(..., example=value))
     return basemodel_input
