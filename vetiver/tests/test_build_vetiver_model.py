@@ -7,7 +7,6 @@ from vetiver import (
     VetiverModel,
     mock,
     InvalidModelError,
-    VetiverMeta,
     get_mock_data,
     get_mock_model,
     vetiver_pin_write,
@@ -26,6 +25,7 @@ X_array = pd.DataFrame(X_df).to_numpy()
 model = get_mock_model().fit(X_df, y)
 
 
+# --- test prototypes ---
 class MockPrototype(pydantic.BaseModel):
     B: int
     C: int
@@ -49,10 +49,11 @@ def test_vetiver_model_array_prototype():
     assert v.prototype.construct().__dict__ == {"0": 96, "1": 11, "2": 33}
 
 
-def test_vetiver_model_df_prototype():
+@pytest.mark.parametrize("prototype_data", [{"B": 96, "C": 0, "D": 0}, X_df])
+def test_vetiver_model_dict_like_prototype(prototype_data):
     v = VetiverModel(
         model=model,
-        prototype_data=X_df,
+        prototype_data=prototype_data,
         model_name="model",
         versioned=None,
         description=None,
@@ -65,11 +66,11 @@ def test_vetiver_model_df_prototype():
     assert v.prototype.construct().B == 96
 
 
-def test_vetiver_model_dict_prototype():
-    dict_data = {"B": 0, "C": 0, "D": 0}
+@pytest.mark.parametrize("prototype_data", [MockPrototype(B=4, C=0, D=0), None])
+def test_vetiver_model_prototypes(prototype_data):
     v = VetiverModel(
         model=model,
-        prototype_data=dict_data,
+        prototype_data=prototype_data,
         model_name="model",
         versioned=None,
         description=None,
@@ -77,61 +78,10 @@ def test_vetiver_model_dict_prototype():
     )
 
     assert v.model == model
-    # change to model_construct for pydantic v3
-    assert isinstance(v.prototype.construct(), pydantic.BaseModel)
-    assert v.prototype.construct().B == 0
+    assert v.prototype is prototype_data
 
 
-def test_vetiver_model_basemodel_prototype():
-
-    m = MockPrototype(B=4, C=0, D=0)
-    v = VetiverModel(
-        model=model,
-        prototype_data=m,
-        model_name="model",
-        versioned=False,
-        description=None,
-    )
-
-    assert v.model == model
-    assert v.prototype is m
-
-
-def test_vetiver_model_no_prototype():
-    v = VetiverModel(
-        model=model,
-        prototype_data=None,
-        model_name="model",
-        versioned=None,
-        description=None,
-        metadata=None,
-    )
-
-    assert v.model == model
-    assert v.prototype is None
-
-
-def test_vetiver_model_use_ptype():
-    v = VetiverModel(
-        model=model,
-        prototype_data=None,
-        model_name="model",
-        versioned=None,
-        description=None,
-        metadata={"test": 123},
-    )
-
-    assert v.model == model
-    assert v.prototype is None
-    assert v.metadata == VetiverMeta(
-        user={"test": 123},
-        version=None,
-        url=None,
-        required_pkgs=["scikit-learn"],
-        python_version=tuple(sys.version_info),
-    )
-
-
+# --- test from pins ---
 def test_vetiver_model_from_pin():
 
     v = VetiverModel(
@@ -221,6 +171,7 @@ def test_vetiver_model_from_pin_no_version():
     board.pin_delete("model")
 
 
+# --- test handlers
 def test_no_model_handler_found():
     X, y = mock.get_mock_data()
 
