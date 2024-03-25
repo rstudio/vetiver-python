@@ -5,6 +5,7 @@ from vetiver import (
     vetiver_create_prototype,
     InvalidPTypeError,
     vetiver_endpoint,
+    predict,
 )
 from pydantic import BaseModel, conint
 from fastapi.testclient import TestClient
@@ -14,7 +15,7 @@ import sys
 
 
 @pytest.fixture
-def vetiver_model():
+def model():
     np.random.seed(500)
     X, y = mock.get_mock_data()
     model = mock.get_mock_model().fit(X, y)
@@ -29,14 +30,7 @@ def vetiver_model():
 
 
 @pytest.fixture
-def client(vetiver_model):
-    app = VetiverAPI(vetiver_model)
-
-    return TestClient(app.app)
-
-
-@pytest.fixture
-def complex_prototype_model():
+def complex_prototype_client():
     np.random.seed(500)
 
     class CustomPrototype(BaseModel):
@@ -118,6 +112,18 @@ def test_complex_prototype(complex_prototype_model):
 
     with pytest.raises(InvalidPTypeError):
         vetiver_create_prototype(response.json())
+
+
+@pytest.mark.parametrize(
+    "data",
+    [
+        [{"B": 43, "C": 43}],
+        # [{"B": 43, "C": 43, "D": 43, "E": 43}],  # should this error?
+    ],
+)
+def test_predict_wrong_input(data, client):
+    with pytest.raises(TypeError):
+        predict(endpoint="/predict/", data=data, test_client=client)
 
 
 def test_vetiver_endpoint():
