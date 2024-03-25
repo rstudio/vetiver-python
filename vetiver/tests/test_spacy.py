@@ -32,35 +32,10 @@ def spacy_model():
     return nlp
 
 
-@pytest.fixture()
-def vetiver_client_with_prototype(spacy_model):  # With check_prototype=True
-    df = pd.DataFrame({"new_column": ["one", "two", "three"]})
-    v = vetiver.VetiverModel(spacy_model, "animals", prototype_data=df)
-    app = vetiver.VetiverAPI(v, check_prototype=True)
-    app.app.root_path = "/predict"
-    client = TestClient(app.app)
-
-    return client
-
-
-@pytest.fixture(scope="function")
-def vetiver_client_with_prototype_series(spacy_model):  # With check_prototype=True
-    df = pd.Series({"new_column": ["one", "two", "three"]})
-    v = vetiver.VetiverModel(spacy_model, "animals", prototype_data=df)
-    app = vetiver.VetiverAPI(v, check_prototype=True)
-    app.app.root_path = "/predict"
-    client = TestClient(app.app)
-    return client
-
-
 @pytest.fixture
-def vetiver_client_no_prototype(spacy_model):  # With check_prototype=False
-    v = vetiver.VetiverModel(spacy_model, "animals")
-    app = vetiver.VetiverAPI(v, check_prototype=False)
-    app.app.root_path = "/predict"
-    client = TestClient(app.app)
-
-    return client
+def model(spacy_model) -> TestClient:
+    df = pd.DataFrame({"new_column": ["one", "two", "three"]})
+    return vetiver.VetiverModel(spacy_model, "animals", prototype_data=df)
 
 
 @pytest.mark.parametrize("data", ["a", 1, [1, 2, 3]])
@@ -88,10 +63,10 @@ def test_good_prototype_shape(data, spacy_model):
     assert v.prototype.construct().dict() == {"col": "1"}
 
 
-def test_vetiver_predict_with_prototype(vetiver_client_with_prototype):
+def test_vetiver_predict_with_prototype(client: TestClient):
     df = pd.DataFrame({"new_column": ["turtles", "i have a dog"]})
 
-    response = vetiver.predict(endpoint=vetiver_client_with_prototype, data=df)
+    response = vetiver.predict(endpoint="/predict/", data=df, test_client=client)
 
     assert isinstance(response, pd.DataFrame), response
     assert response.to_dict() == {
@@ -115,10 +90,12 @@ def test_vetiver_predict_with_prototype(vetiver_client_with_prototype):
     }
 
 
-def test_vetiver_predict_no_prototype(vetiver_client_no_prototype):
+def test_vetiver_predict_no_prototype(client_no_prototype: TestClient):
     df = pd.DataFrame({"uhhh": ["turtles", "i have a dog"]})
 
-    response = vetiver.predict(endpoint=vetiver_client_no_prototype, data=df)
+    response = vetiver.predict(
+        endpoint="/predict/", data=df, test_client=client_no_prototype
+    )
 
     assert isinstance(response, pd.DataFrame), response
     assert response.to_dict() == {

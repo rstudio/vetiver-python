@@ -1,22 +1,24 @@
-from importlib_resources import files as _files
-
-sources = {
-    "mtcars": _files("vetiver") / "data/mtcars.csv",
-    "chicago": _files("vetiver") / "data/chicago.csv",
-    "sacramento": _files("vetiver") / "data/sacramento.csv",
-}
+__all__ = [
+    "mtcars",
+    "chicago",
+    "sacramento",
+]
 
 
 def __dir__():
-    return list(sources)
+    return __all__
 
 
-def __getattr__(k):
+def _load_data_csv(name):
     import pandas as pd
+    import pkg_resources
 
-    f_path = sources.get("mtcars")
-    if k == "chicago":
-        f_path = sources.get("chicago")
-    elif k == "sacramento":
-        f_path = sources.get("sacramento")
-    return pd.read_csv(f_path)
+    fname = pkg_resources.resource_filename("vetiver.data", f"{name}.csv")
+    return pd.read_csv(fname)
+
+
+def __getattr__(name):
+    if name not in __all__:
+        raise AttributeError(f"No dataset named: {name}")
+
+    return _load_data_csv(name)
