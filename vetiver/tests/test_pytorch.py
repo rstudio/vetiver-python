@@ -44,11 +44,10 @@ def build_torch():
 
 
 @pytest.fixture
-def torch_vetiver(build_torch):
+def model(build_torch):
 
     x_train, torch_model = build_torch
-
-    vt2 = VetiverModel(
+    return VetiverModel(
         model=torch_model,
         prototype_data=x_train,
         model_name="torch",
@@ -57,75 +56,57 @@ def torch_vetiver(build_torch):
         metadata=None,
     )
 
-    assert vt2.model == torch_model
-    assert vt2.metadata.required_pkgs == ["torch"]
 
-    return vt2
-
-
-@pytest.fixture
-def vetiver_client_prototype(torch_vetiver):
-    app = vetiver.VetiverAPI(torch_vetiver, check_prototype=True)
-    app.app.root_path = "/predict"
-    client = TestClient(app.app)
-
-    return client
+def test_required_pkgs(model):
+    assert isinstance(model.model, torch.nn.Linear)
+    assert model.metadata.required_pkgs == ["torch"]
 
 
-@pytest.fixture
-def vetiver_client_no_prototype(torch_vetiver):
-    app = vetiver.VetiverAPI(torch_vetiver, check_prototype=False)
-    app.app.root_path = "/predict"
-    client = TestClient(app.app)
-
-    return client
-
-
-def test_torch_predict_ptype(vetiver_client_prototype):
+def test_torch_predict_ptype(client: TestClient):
     torch.manual_seed(3)
 
     data = [{"0": 3.3}]
-    response = predict(endpoint=vetiver_client_prototype, data=data)
+    response = predict(endpoint="/predict/", data=data, test_client=client)
 
     assert len(response) == 1, len(response)
     assert isinstance(response, pd.DataFrame)
     assert response.iloc[0, 0] == [-4.060722351074219], response.iloc[0, 0]
 
 
-def test_torch_predict_ptype_batch(vetiver_client_prototype):
+def test_torch_predict_ptype_batch(client: TestClient):
 
     data = [{"0": 3.3}, {"0": 3.3}]
-    response = predict(endpoint=vetiver_client_prototype, data=data)
+    response = predict(endpoint="/predict/", data=data, test_client=client)
 
     assert len(response) == 2, len(response)
     assert isinstance(response, pd.DataFrame)
     assert response.iloc[0, 0] == [-4.060722351074219], response.iloc[0, 0]
 
 
-def test_torch_predict_ptype_error(vetiver_client_prototype):
+def test_torch_predict_ptype_error(client: TestClient):
 
     data = {"0": "bad"}
 
     with pytest.raises(TypeError):
-        predict(endpoint=vetiver_client_prototype, data=data)
+        predict(endpoint="/predict/", data=data, test_client=client)
 
 
-def test_torch_predict_no_ptype_batch(vetiver_client_no_prototype):
+def test_torch_predict_no_ptype_batch(client_no_prototype: TestClient):
     torch.manual_seed(3)
 
     data = [[3.3], [3.3]]
-    response = predict(endpoint=vetiver_client_no_prototype, data=data)
+    response = predict(endpoint="/predict/", data=data, test_client=client_no_prototype)
 
     assert len(response) == 2, len(response)
     assert isinstance(response, pd.DataFrame)
     assert response.iloc[0, 0] == [-4.060722351074219], response.iloc[0, 0]
 
 
-def test_torch_predict_no_ptype(vetiver_client_no_prototype):
+def test_torch_predict_no_ptype(client_no_prototype: TestClient):
     torch.manual_seed(3)
 
     data = [[3.3]]
-    response = predict(endpoint=vetiver_client_no_prototype, data=data)
+    response = predict(endpoint="/predict/", data=data, test_client=client_no_prototype)
 
     assert len(response) == 1, len(response)
     assert isinstance(response, pd.DataFrame)
