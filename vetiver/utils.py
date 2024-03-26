@@ -57,7 +57,10 @@ def get_workbench_path(port):
 
 
 def serialize_prototype(prototype):
-    schema = prototype.model_json_schema().get("properties")
+    try:
+        schema = prototype.model_json_schema().get("properties")
+    except AttributeError:  # pydantic v1
+        schema = prototype.schema_json().get("properties")
     serialized_schema = dict()
     for key, value in schema.items():
         serialized_schema[key] = value.get("example") or value.get("default")
