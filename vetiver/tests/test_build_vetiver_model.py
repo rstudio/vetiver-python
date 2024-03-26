@@ -41,21 +41,33 @@ def test_vetiver_model_array_prototype():
         description=None,
         metadata=None,
     )
+    try:
+        json_schema = v.prototype.model_json_schema()
+        expected = {
+            "properties": {
+                "0": {"example": 96, "title": "0", "type": "integer"},
+                "1": {"example": 11, "title": "1", "type": "integer"},
+                "2": {"example": 33, "title": "2", "type": "integer"},
+            },
+            "required": ["0", "1", "2"],
+            "title": "prototype",
+            "type": "object",
+        }
+    except AttributeError:  # pydantic v1
+        json_schema = v.prototype.schema_json()
+        expected = '{\
+"title": "prototype", \
+"type": "object", \
+"properties": {"0": {"title": "0", "example": 96, "type": "integer"}, \
+"1": {"title": "1", "example": 11, "type": "integer"}, \
+"2": {"title": "2", "example": 33, "type": "integer"}}, \
+"required": ["0", "1", "2"]}'
 
     assert v.model == model
     assert issubclass(v.prototype, vetiver.Prototype)
     # change to model_construct for pydantic v3
     assert isinstance(v.prototype.construct(), pydantic.BaseModel)
-    assert v.prototype.model_json_schema() == {
-        "properties": {
-            "0": {"example": 96, "title": "0", "type": "integer"},
-            "1": {"example": 11, "title": "1", "type": "integer"},
-            "2": {"example": 33, "title": "2", "type": "integer"},
-        },
-        "required": ["0", "1", "2"],
-        "title": "prototype",
-        "type": "object",
-    }
+    assert json_schema == expected
 
 
 @pytest.mark.parametrize("prototype_data", [{"B": 96, "C": 11, "D": 33}, X_df])
@@ -72,16 +84,30 @@ def test_vetiver_model_dict_like_prototype(prototype_data):
     assert v.model == model
     # change to model_construct for pydantic v3
     assert isinstance(v.prototype.construct(), pydantic.BaseModel)
-    assert v.prototype.model_json_schema() == {
-        "properties": {
-            "B": {"example": 96, "title": "B", "type": "integer"},
-            "C": {"example": 11, "title": "C", "type": "integer"},
-            "D": {"example": 33, "title": "D", "type": "integer"},
-        },
-        "required": ["B", "C", "D"],
-        "title": "prototype",
-        "type": "object",
-    }
+
+    try:
+        json_schema = v.prototype.model_json_schema()
+        expected = {
+            "properties": {
+                "B": {"example": 96, "title": "B", "type": "integer"},
+                "C": {"example": 11, "title": "C", "type": "integer"},
+                "D": {"example": 33, "title": "D", "type": "integer"},
+            },
+            "required": ["B", "C", "D"],
+            "title": "prototype",
+            "type": "object",
+        }
+    except AttributeError:  # pydantic v1
+        json_schema = v.prototype.schema_json()
+        expected = '{\
+"title": "prototype", \
+"type": "object", \
+"properties": {"B": {"title": "B", "example": 96, "type": "integer"}, \
+"C": {"title": "C", "example": 11, "type": "integer"}, \
+"D": {"title": "D", "example": 33, "type": "integer"}}, \
+"required": ["B", "C", "D"]}'
+
+    assert json_schema == expected
 
 
 @pytest.mark.parametrize("prototype_data", [MockPrototype(B=4, C=0, D=0), None])
