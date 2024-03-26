@@ -60,7 +60,14 @@ def test_bad_prototype_shape(data, spacy_model):
 def test_good_prototype_shape(data, spacy_model):
     v = vetiver.VetiverModel(spacy_model, "animals", prototype_data=data)
 
-    assert v.prototype.construct().dict() == {"col": "1"}
+    assert v.prototype.model_json_schema() == {
+        "properties": {
+            "col": {"example": "1", "title": "Col", "type": "string"},
+        },
+        "required": ["col"],
+        "title": "prototype",
+        "type": "object",
+    }
 
 
 def test_vetiver_predict_with_prototype(client: TestClient):

@@ -77,27 +77,28 @@ def test_get_metadata(client):
     }
 
 
-def test_get_prototype(client, vetiver_model):
+def test_get_prototype(client, model):
     response = client.get("/prototype")
     assert response.status_code == 200, response.text
     assert response.json() == {
         "properties": {
-            "B": {"default": 55, "type": "integer"},
-            "C": {"default": 65, "type": "integer"},
-            "D": {"default": 17, "type": "integer"},
+            "B": {"example": 55, "type": "integer"},
+            "C": {"example": 65, "type": "integer"},
+            "D": {"example": 17, "type": "integer"},
         },
+        "required": ["B", "C", "D"],
         "title": "prototype",
         "type": "object",
     }
 
     assert (
-        vetiver_model.prototype.construct().dict()
+        model.prototype.construct().dict()
         == vetiver_create_prototype(response.json()).construct().dict()
     )
 
 
-def test_complex_prototype(complex_prototype_model):
-    response = complex_prototype_model.get("/prototype")
+def test_complex_prototype(complex_prototype_client):
+    response = complex_prototype_client.get("/prototype")
     assert response.status_code == 200, response.text
     assert response.json() == {
         "properties": {

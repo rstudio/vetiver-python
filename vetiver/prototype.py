@@ -184,7 +184,14 @@ def _(data: dict):
         # automatically create for simple prototypes
         try:
             for key, value in data["properties"].items():
-                dict_data.update({key: (type(value["default"]), value["default"])})
+                dict_data.update(
+                    {
+                        key: (
+                            type(value["example"]),
+                            Field(..., example=value["example"]),
+                        )
+                    }
+                )
         # error for complex objects
         except KeyError:
             raise InvalidPTypeError(

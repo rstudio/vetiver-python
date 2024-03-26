@@ -46,10 +46,19 @@ def test_vetiver_model_array_prototype():
     assert issubclass(v.prototype, vetiver.Prototype)
     # change to model_construct for pydantic v3
     assert isinstance(v.prototype.construct(), pydantic.BaseModel)
-    assert v.prototype.construct().__dict__ == {"0": 96, "1": 11, "2": 33}
+    assert v.prototype.model_json_schema() == {
+        "properties": {
+            "0": {"example": 96, "title": "0", "type": "integer"},
+            "1": {"example": 11, "title": "1", "type": "integer"},
+            "2": {"example": 33, "title": "2", "type": "integer"},
+        },
+        "required": ["0", "1", "2"],
+        "title": "prototype",
+        "type": "object",
+    }
 
 
-@pytest.mark.parametrize("prototype_data", [{"B": 96, "C": 0, "D": 0}, X_df])
+@pytest.mark.parametrize("prototype_data", [{"B": 96, "C": 11, "D": 33}, X_df])
 def test_vetiver_model_dict_like_prototype(prototype_data):
     v = VetiverModel(
         model=model,
@@ -63,7 +72,16 @@ def test_vetiver_model_dict_like_prototype(prototype_data):
     assert v.model == model
     # change to model_construct for pydantic v3
     assert isinstance(v.prototype.construct(), pydantic.BaseModel)
-    assert v.prototype.construct().B == 96
+    assert v.prototype.model_json_schema() == {
+        "properties": {
+            "B": {"example": 96, "title": "B", "type": "integer"},
+            "C": {"example": 11, "title": "C", "type": "integer"},
+            "D": {"example": 33, "title": "D", "type": "integer"},
+        },
+        "required": ["B", "C", "D"],
+        "title": "prototype",
+        "type": "object",
+    }
 
 
 @pytest.mark.parametrize("prototype_data", [MockPrototype(B=4, C=0, D=0), None])

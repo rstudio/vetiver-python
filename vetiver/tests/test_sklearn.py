@@ -26,7 +26,11 @@ def model() -> VetiverModel:
 
 @pytest.mark.parametrize(
     "data,expected_length",
-    [([{"B": 0, "C": 0, "D": 0}], 1), (pd.Series(data=[0, 0, 0]), 1), (X, 100)],
+    [
+        ([{"B": 0, "C": 0, "D": 0}], 1),
+        (pd.Series(data=[0, 0, 0], index=["B", "C", "D"]), 1),
+        (X, 100),
+    ],
 )
 def test_predict_sklearn_ptype(data, expected_length, client):
     response = predict(endpoint="/predict/", data=data, test_client=client)
