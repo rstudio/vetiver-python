@@ -3,6 +3,7 @@ import warnings
 import sys
 import os
 import subprocess
+import json
 from types import SimpleNamespace
 
 no_notebook = False
@@ -53,3 +54,16 @@ def get_workbench_path(port):
         return path
     else:
         return None
+
+
+def serialize_prototype(prototype):
+    try:
+        schema = prototype.model_json_schema().get("properties")
+    except AttributeError:  # pydantic v1
+        schema = json.loads(prototype.schema_json()).get("properties")
+
+    serialized_schema = dict()
+    for key, value in schema.items():
+        serialized_schema[key] = value.get("example") or value.get("default")
+
+    return json.dumps(serialized_schema)

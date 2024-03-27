@@ -1,6 +1,6 @@
 from .vetiver_model import VetiverModel
 from .meta import VetiverMeta
-from .utils import inform
+from .utils import inform, serialize_prototype
 import warnings
 import logging
 
@@ -72,10 +72,16 @@ def vetiver_pin_write(board, model: VetiverModel, versioned: bool = True):
             "user": model.metadata.user,
             "vetiver_meta": {
                 "required_pkgs": model.metadata.required_pkgs,
-                "prototype": None if not model.prototype else model.prototype().json(),
-                "python_version": None
-                if not model.metadata.python_version
-                else list(model.metadata.python_version),
+                "prototype": (
+                    None
+                    if not model.prototype
+                    else serialize_prototype(model.prototype)
+                ),
+                "python_version": (
+                    None
+                    if not model.metadata.python_version
+                    else list(model.metadata.python_version)
+                ),
             },
         },
         versioned=versioned,

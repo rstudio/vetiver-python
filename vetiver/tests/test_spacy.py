@@ -60,7 +60,22 @@ def test_bad_prototype_shape(data, spacy_model):
 def test_good_prototype_shape(data, spacy_model):
     v = vetiver.VetiverModel(spacy_model, "animals", prototype_data=data)
 
-    assert v.prototype.construct().dict() == {"col": "1"}
+    try:
+        model_schema = v.prototype.model_json_schema()
+        expected = {
+            "properties": {
+                "col": {"example": "1", "title": "Col", "type": "string"},
+            },
+            "required": ["col"],
+            "title": "prototype",
+            "type": "object",
+        }
+    except AttributeError:  # pydantic v1
+        model_schema = v.prototype.schema_json()
+        expected = '{"title": "prototype", "type": "object", "properties": \
+{"col": {"title": "Col", "example": "1", "type": "string"}}, "required": ["col"]}'
+
+    assert model_schema == expected
 
 
 def test_vetiver_predict_with_prototype(client: TestClient):

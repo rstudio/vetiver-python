@@ -5,6 +5,7 @@ from vetiver import (
     vetiver_create_prototype,
     InvalidPTypeError,
     vetiver_endpoint,
+    predict,
 )
 from pydantic import BaseModel, conint
 from fastapi.testclient import TestClient
@@ -14,7 +15,7 @@ import sys
 
 
 @pytest.fixture
-def vetiver_model():
+def model():
     np.random.seed(500)
     X, y = mock.get_mock_data()
     model = mock.get_mock_model().fit(X, y)
@@ -29,14 +30,7 @@ def vetiver_model():
 
 
 @pytest.fixture
-def client(vetiver_model):
-    app = VetiverAPI(vetiver_model)
-
-    return TestClient(app.app)
-
-
-@pytest.fixture
-def complex_prototype_model():
+def complex_prototype_client():
     np.random.seed(500)
 
     class CustomPrototype(BaseModel):
@@ -83,27 +77,28 @@ def test_get_metadata(client):
     }
 
 
-def test_get_prototype(client, vetiver_model):
+def test_get_prototype(client, model):
     response = client.get("/prototype")
     assert response.status_code == 200, response.text
     assert response.json() == {
         "properties": {
-            "B": {"default": 55, "type": "integer"},
-            "C": {"default": 65, "type": "integer"},
-            "D": {"default": 17, "type": "integer"},
+            "B": {"example": 55, "type": "integer"},
+            "C": {"example": 65, "type": "integer"},
+            "D": {"example": 17, "type": "integer"},
         },
+        "required": ["B", "C", "D"],
         "title": "prototype",
         "type": "object",
     }
 
     assert (
-        vetiver_model.prototype.construct().dict()
+        model.prototype.construct().dict()
         == vetiver_create_prototype(response.json()).construct().dict()
     )
 
 
-def test_complex_prototype(complex_prototype_model):
-    response = complex_prototype_model.get("/prototype")
+def test_complex_prototype(complex_prototype_client):
+    response = complex_prototype_client.get("/prototype")
     assert response.status_code == 200, response.text
     assert response.json() == {
         "properties": {
@@ -118,6 +113,11 @@ def test_complex_prototype(complex_prototype_model):
 
     with pytest.raises(InvalidPTypeError):
         vetiver_create_prototype(response.json())
+
+
+def test_predict_wrong_input(client):
+    with pytest.raises(TypeError):
+        predict(endpoint="/predict/", data=[{"B": 43, "C": 43}], test_client=client)
 
 
 def test_vetiver_endpoint():
