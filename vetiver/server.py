@@ -263,6 +263,8 @@ class VetiverAPI:
             An integer that indicates the server port that should be listened on.
         host : str
             A valid IPv4 or IPv6 address, which the application will listen on.
+        quiet_open : bool
+            If host is a localhost address, try to automatically open API in browser
 
         Examples
         -------

@@ -3,6 +3,15 @@
 
 For full details, view the [commit logs](https://github.com/rstudio/vetiver-python/commits/).
 
+## v0.2.5
+## What's Changed
+
+[**Full Changelog**](https://github.com/rstudio/vetiver-python/compare/v0.2.4...v0.2.5)
+
+* MAINT: refactor tests in [GH209](https://github.com/rstudio/vetiver-python/pull/209)
+* DOCS: Update link to custom handlers documentation in [GH208](https://github.com/rstudio/vetiver-python/pull/208)
+* ENH: add `Field` examples to model prototypes in [GH210](https://github.com/rstudio/vetiver-python/pull/210)
+
 
 ## v0.2.4
 ## What's Changed
