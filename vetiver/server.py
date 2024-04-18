@@ -1,23 +1,25 @@
-import re
-import httpx
 import json
+import logging
+import re
+import webbrowser
+from textwrap import dedent
+from typing import Callable, List, Union
+from urllib.parse import urljoin
+from warnings import warn
+
+import httpx
+import pandas as pd
 import requests
 import uvicorn
-import logging
-import pandas as pd
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.openapi.utils import get_openapi
-from fastapi.responses import HTMLResponse, RedirectResponse, PlainTextResponse
-from textwrap import dedent
-from warnings import warn
-from urllib.parse import urljoin
-from typing import Callable, List, Union
+from fastapi.responses import HTMLResponse, PlainTextResponse, RedirectResponse
 
+from .helpers import api_data_to_frame, response_to_frame
+from .meta import VetiverMeta
 from .utils import _jupyter_nb, get_workbench_path
 from .vetiver_model import VetiverModel
-from .meta import VetiverMeta
-from .helpers import api_data_to_frame, response_to_frame
 
 
 class VetiverAPI:
@@ -273,7 +275,13 @@ class VetiverAPI:
         """
         _jupyter_nb()
         self.workbench_path = get_workbench_path(port)
-
+        if port and host:
+            try:
+                if host == "127.0.0.1":
+                    # quality of life for developing APIs locally
+                    webbrowser.open(f"http://{host}:{port}")
+            except Exception:
+                pass
         if self.workbench_path:
             uvicorn.run(
                 self.app, port=port, host=host, root_path=self.workbench_path, **kw
