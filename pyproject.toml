@@ -39,7 +39,7 @@ include = [
 # single character).
 ignore = [
     #"vetiver/__init__.py",
-    #"vetiver/attach_pkgs.py",
+    "vetiver/attach_pkgs.py",
     "vetiver/helpers.py",
     "vetiver/meta.py",
     "vetiver/mock.py",
