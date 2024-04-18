@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.552">
+<meta name="generator" content="quarto-1.4.553">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -193,7 +193,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../reference/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Vetiver:v0.2.4.post3+g3f13ed5</span></a>
+ <span class="menu-text">Vetiver:v0.2.4.post4+g0ba1703</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -392,16 +392,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="vetiver.VetiverAPI.run" class="level1">
 <h1>VetiverAPI.run</h1>
-<p><code>VetiverAPI.run(port=8000, host='127.0.0.1', **kw)</code></p>
+<p><code>VetiverAPI.run(port=8000, host='127.0.0.1', quiet_open=False, **kw)</code></p>
 <p>Start API</p>
 <section id="parameters" class="level2">
 <h2 class="anchored" data-anchor-id="parameters">Parameters</h2>
 <table class="table">
 <colgroup>
+<col style="width: 12%">
 <col style="width: 7%">
-<col style="width: 7%">
-<col style="width: 69%">
-<col style="width: 14%">
+<col style="width: 66%">
+<col style="width: 13%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -423,6 +423,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>str</td>
 <td>A valid IPv4 or IPv6 address, which the application will listen on.</td>
 <td><code>'127.0.0.1'</code></td>
+</tr>
+<tr class="odd">
+<td><code>quiet_open</code></td>
+<td>bool</td>
+<td>If host is a localhost address, try to automatically open API in browser</td>
+<td><code>False</code></td>
 </tr>
 </tbody>
 </table>
