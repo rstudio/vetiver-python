@@ -253,7 +253,7 @@ class VetiverAPI:
                 else:
                     return predictions
 
-    def run(self, port: int = 8000, host: str = "127.0.0.1", **kw):
+    def run(self, port: int = 8000, host: str = "127.0.0.1", quiet_open=False, **kw):
         """
         Start API
 
@@ -277,7 +277,7 @@ class VetiverAPI:
         self.workbench_path = get_workbench_path(port)
         if port and host:
             try:
-                if host == "127.0.0.1":
+                if host == "127.0.0.1" and not quiet_open:
                     # quality of life for developing APIs locally
                     webbrowser.open(f"http://{host}:{port}")
             except Exception:
