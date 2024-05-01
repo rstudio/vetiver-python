@@ -73,6 +73,6 @@ To start a server using this object, use `app.run(port = 8080)` or your port of 
 
 This project is released with a [Contributor Code of Conduct](https://www.contributor-covenant.org/version/2/1/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
 
-- For questions and discussions about deploying models, statistical modeling, and machine learning, please [post on Posit Community](https://community.rstudio.com/new-topic?category_id=15&tags=vetiver,question).
+- For questions and discussions about deploying models, statistical modeling, and machine learning, please [post on Posit Community](https://forum.posit.co/new-topic?category_id=15&tags=vetiver,question).
 
 - If you think you have encountered a bug, please [submit an issue](https://github.com/rstudio/vetiver-python/issues).
