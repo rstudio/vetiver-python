@@ -8,6 +8,7 @@ except ImportError:
 
 import pandas as pd
 import numpy as np
+import polars as pl
 import pydantic
 from pydantic import Field
 from warnings import warn
@@ -119,6 +120,52 @@ def _(data: pd.DataFrame):
     True
     """
     dict_data = _to_field(data.iloc[0, :].to_dict())
+    prototype = create_prototype(**dict_data)
+    return prototype
+
+
+@vetiver_create_prototype.register
+def _(data: pl.DataFrame):
+    """
+    Create input data prototype for a polars dataframe
+
+    Parameters
+    ----------
+    data : pl.DataFrame
+        Polars dataframe
+
+    Examples
+    --------
+    >>> from pydantic import BaseModel
+    >>> df = pd.DataFrame({'x': [1, 2, 3], 'y': [4, 5, 6]})
+    >>> prototype = vetiver_create_prototype(df)
+    >>> issubclass(prototype, BaseModel)
+    True
+    >>> prototype()
+    prototype(x=1, y=4)
+
+    The data prototype created for the dataframe is equivalent to:
+
+    >>> class another_prototype(BaseModel):
+    ...     class Config:
+    ...         title = 'prototype'
+    ...     x: int = 1
+    ...     y: int = 4
+
+    >>> another_prototype()
+    another_prototype(x=1, y=4)
+    >>> another_prototype() == prototype()
+    True
+
+    Changing the title using `class Config` ensures that the
+    also json/schemas match.
+
+    >>> another_prototype.schema() == prototype.schema()
+    True
+    """
+    dict_data = dict()
+    for col in data[0]:
+        dict_data[col.name] = (col.dtype, Field(..., example=col[0]))
     prototype = create_prototype(**dict_data)
     return prototype
 
