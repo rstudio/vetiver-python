@@ -8,11 +8,17 @@ except ImportError:
 
 import pandas as pd
 import numpy as np
-import polars as pl
 import pydantic
+import typing
 from pydantic import Field
 from warnings import warn
 from .types import create_prototype
+
+if typing.TYPE_CHECKING:
+    try:
+        import polars as pl
+    except ImportError:
+        pl = None
 
 
 class InvalidPTypeError(Exception):
