@@ -9,16 +9,14 @@ except ImportError:
 import pandas as pd
 import numpy as np
 import pydantic
-import typing
 from pydantic import Field
 from warnings import warn
 from .types import create_prototype
 
-if typing.TYPE_CHECKING:
-    try:
-        import polars as pl
-    except ImportError:
-        pl = None
+try:
+    from polars import DataFrame as polars_frame
+except ImportError:
+    polars_frame = None
 
 
 class InvalidPTypeError(Exception):
@@ -131,7 +129,7 @@ def _(data: pd.DataFrame):
 
 
 @vetiver_create_prototype.register
-def _(data: pl.DataFrame):
+def _(data: polars_frame):
     """
     Create input data prototype for a polars dataframe
 
