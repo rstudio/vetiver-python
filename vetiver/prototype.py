@@ -15,10 +15,11 @@ from pydantic import Field
 
 from .types import create_prototype
 
+polars_exists = True
 try:
-    from polars import DataFrame as polars_frame
+    import polars as pl
 except ImportError:
-    polars_frame = None
+    polars_exists = None
 
 
 class InvalidPTypeError(Exception):
@@ -130,60 +131,62 @@ def _(data: pd.DataFrame):
     return prototype
 
 
-@vetiver_create_prototype.register
-def _(data: polars_frame):
-    """
-    Create input data prototype for a polars dataframe
+if polars_exists:
 
-    Parameters
-    ----------
-    data : pl.DataFrame
-        Polars dataframe
+    @vetiver_create_prototype.register
+    def _(data: pl.DataFrame):
+        """
+        Create input data prototype for a polars dataframe
 
-    Examples
-    --------
-    >>> from vetiver import vetiver_create_prototype
-    >>> import polars as pl
-    >>> df = pl.DataFrame({'x': [1, 2, 3], 'y': [4, 5, 6]})
-    >>> prototype = vetiver_create_prototype(df)
-    >>> from pydantic import BaseModel
-    >>> issubclass(prototype, BaseModel)
-    True
+        Parameters
+        ----------
+        data : pl.DataFrame
+            Polars dataframe
 
-    The data prototype created for the dataframe is equivalent to:
+        Examples
+        --------
+        >>> from vetiver import vetiver_create_prototype
+        >>> import polars as pl
+        >>> df = pl.DataFrame({'x': [1, 2, 3], 'y': [4, 5, 6]})
+        >>> prototype = vetiver_create_prototype(df)
+        >>> from pydantic import BaseModel
+        >>> issubclass(prototype, BaseModel)
+        True
 
-    >>> from pydantic import Field
-    >>> class another_prototype(BaseModel):
-    ...     x: int = Field(example=1)
-    ...     y: int = Field(example=4)
-    ...     class Config:
-    ...         title = 'prototype'
+        The data prototype created for the dataframe is equivalent to:
 
-    >>> another_prototype.schema() == prototype.schema()
-    True
+        >>> from pydantic import Field
+        >>> class another_prototype(BaseModel):
+        ...     x: int = Field(example=1)
+        ...     y: int = Field(example=4)
+        ...     class Config:
+        ...         title = 'prototype'
 
-    Changing the title using `class Config` ensures that the
-    also json/schemas match.
+        >>> another_prototype.schema() == prototype.schema()
+        True
 
-    >>> another_prototype.schema() == prototype.schema()
-    True
-    """
-    dict_data = dict()
-    for col in data[0]:
-        # pydantic only accepts python types. for now, we can approximate
-        # polars types to their python equivalents
-        # TODO: more robust support of polars types
-        if col.dtype.is_integer():
-            col_dtype = int
-        elif col.dtype.is_float():
-            col_dtype = float
-        elif col.dtype.is_nested():
-            raise TypeError
-        else:
-            col_dtype = str
-        dict_data[col.name] = (col_dtype, Field(..., example=col[0]))
-    prototype = create_prototype(**dict_data)
-    return prototype
+        Changing the title using `class Config` ensures that the
+        also json/schemas match.
+
+        >>> another_prototype.schema() == prototype.schema()
+        True
+        """
+        dict_data = dict()
+        for col in data[0]:
+            # pydantic only accepts python types. for now, we can approximate
+            # polars types to their python equivalents
+            # TODO: more robust support of polars types
+            if col.dtype.is_integer():
+                col_dtype = int
+            elif col.dtype.is_float():
+                col_dtype = float
+            elif col.dtype.is_nested():
+                raise TypeError
+            else:
+                col_dtype = str
+            dict_data[col.name] = (col_dtype, Field(..., example=col[0]))
+        prototype = create_prototype(**dict_data)
+        return prototype
 
 
 @vetiver_create_prototype.register
