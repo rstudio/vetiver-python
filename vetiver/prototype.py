@@ -6,11 +6,13 @@ except ImportError:
     # python < 3.10
     NoneType = type(None)
 
-import pandas as pd
+from warnings import warn
+
 import numpy as np
+import pandas as pd
 import pydantic
 from pydantic import Field
-from warnings import warn
+
 from .types import create_prototype
 
 try:
@@ -140,25 +142,24 @@ def _(data: polars_frame):
 
     Examples
     --------
-    >>> from pydantic import BaseModel
-    >>> df = pd.DataFrame({'x': [1, 2, 3], 'y': [4, 5, 6]})
+    >>> from vetiver import vetiver_create_prototype
+    >>> import polars as pl
+    >>> df = pl.DataFrame({'x': [1, 2, 3], 'y': [4, 5, 6]})
     >>> prototype = vetiver_create_prototype(df)
+    >>> from pydantic import BaseModel
     >>> issubclass(prototype, BaseModel)
     True
-    >>> prototype()
-    prototype(x=1, y=4)
 
     The data prototype created for the dataframe is equivalent to:
 
+    >>> from pydantic import Field
     >>> class another_prototype(BaseModel):
+    ...     x: int = Field(example=1)
+    ...     y: int = Field(example=4)
     ...     class Config:
     ...         title = 'prototype'
-    ...     x: int = 1
-    ...     y: int = 4
 
-    >>> another_prototype()
-    another_prototype(x=1, y=4)
-    >>> another_prototype() == prototype()
+    >>> another_prototype.schema() == prototype.schema()
     True
 
     Changing the title using `class Config` ensures that the
@@ -169,7 +170,18 @@ def _(data: polars_frame):
     """
     dict_data = dict()
     for col in data[0]:
-        dict_data[col.name] = (col.dtype, Field(..., example=col[0]))
+        # pydantic only accepts python types. for now, we can approximate
+        # polars types to their python equivalents
+        # TODO: more robust support of polars types
+        if col.dtype.is_integer():
+            col_dtype = int
+        elif col.dtype.is_float():
+            col_dtype = float
+        elif col.dtype.is_nested():
+            raise TypeError
+        else:
+            col_dtype = str
+        dict_data[col.name] = (col_dtype, Field(..., example=col[0]))
     prototype = create_prototype(**dict_data)
     return prototype
 
