@@ -60,7 +60,7 @@ jobs:
           echo {{ github.sha }}
       - name: run Connect
         run: |
-          docker-compose up --build -d
+          docker compose up --build -d
           pip freeze > requirements.txt
           make dev
           cat requirements.txt
