@@ -1,6 +1,10 @@
 import pytest
+import sys
 
 spacy = pytest.importorskip("spacy", reason="spacy library not installed")
+pytestmark = pytest.mark.skipif(
+    sys.version_info > (3, 12), reason="requires python 3.9"
+)
 
 import numpy as np  # noqa
 import pandas as pd  # noqa
