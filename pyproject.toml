@@ -6,10 +6,83 @@ requires = [
 ]
 build-backend = "setuptools.build_meta"
 
+[tool.setuptools.packages.find]
+include = ["vetiver"]
+
+[project]
+name = "vetiver"
+description = "Version, share, deploy, and monitor models."
+readme = { file = "README.md", content-type = "text/markdown" }
+authors = [
+    { name = "Isabel Zimmerman", email = "isabel.zimmerman@posit.co" }
+]
+license = { text = "MIT" }
+keywords = ["data", "mlops"]
+dynamic = ["version"]
+classifiers = [
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13"
+]
+requires-python = ">=3.9"
+
+dependencies  =[
+    "numpy",
+    "pandas",
+    "fastapi",
+    "pydantic",
+    "joblib",
+    "uvicorn",
+    "scikit-learn",
+    "nest-asyncio",
+    "requests",
+    "pins>=0.7.1",
+    "rsconnect-python>=1.11.0",
+    "python-dotenv",
+    "plotly",
+    "pip-tools",
+    "httpx"
+]
+
+[project.optional-dependencies]
+all = [
+    "vetiver[dev]",
+    "vetiver[all_models]",
+    "vetiver[docs]"
+]
+all_models = [
+    "vetiver[torch]",
+    "vetiver[statsmodels]",
+    "vetiver[xgboost]",
+    "vetiver[spacy]"
+]
+dev = [
+    "pytest",
+    "pytest-cov",
+    "pytest-snapshot",
+    "vetiver[typecheck]",
+    "vetiver[docs]"
+]
+docs = [
+    "quartodoc"
+]
+statsmodels = ["statsmodels"]
+torch = ["torch"]
+xgboost = ["xgboost"]
+spacy = ["spacy"]
+typecheck = [
+    "pyright",
+    "pandas-stubs"
+]
+
+[project.urls]
+homepage = "https://github.com/rstudio/vetiver-python"
+documentation = "https://rstudio.github.io/vetiver-python/stable/"
+
 [tool.pytest.ini_options]
 testpaths = ["vetiver"]
-addopts = "--doctest-modules"
-doctest_optionflags = "NORMALIZE_WHITESPACE"
 markers = [
     "rsc_test: tests for connect",
     "docker: tests for docker deployments"
