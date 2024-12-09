@@ -39,7 +39,7 @@ jobs:
 
       - name: run Connect
         run: |
-          docker-compose up --build -d
+          docker compose up --build -d
           make dev
         env:
           RSC_LICENSE: ${{ secrets.RSC_LICENSE }}
@@ -86,7 +86,7 @@ jobs:
 
       - name: run Connect
         run: |
-          docker-compose up --build -d
+          docker compose up --build -d
           make dev
         env:
           RSC_LICENSE: ${{ secrets.RSC_LICENSE }}
@@ -133,7 +133,7 @@ jobs:
 
       - name: run Connect
         run: |
-          docker-compose up --build -d
+          docker compose up --build -d
           make dev
         env:
           RSC_LICENSE: ${{ secrets.RSC_LICENSE }}
@@ -168,7 +168,7 @@ jobs:
 
       - name: run Connect
         run: |
-          docker-compose up --build -d
+          docker compose up --build -d
           make dev
         env:
           RSC_LICENSE: ${{ secrets.RSC_LICENSE }}
