@@ -14,7 +14,6 @@ DefaultUserRole = publisher
 [Python]
 Enabled = true
 Executable = /opt/python/3.9.5/bin/python
-Executable = /opt/python/3.10.5/bin/python
 
 [RPackageRepository "CRAN"]
 URL = https://packagemanager.rstudio.com/cran/__linux__/bionic/latest
