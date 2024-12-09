@@ -54,23 +54,26 @@ def deploy_rsconnect(
 
     Examples
     -------
-    >>> import vetiver
-    >>> import pins
-    >>> import rsconnect
-    >>> board = pins.board_temp(allow_pickle_read=True)
-    >>> connect_server = rsconnect.api.RSConnectServer(
-    ...    url = url,
-    ...    api_key = api_key)      # doctest: +SKIP
-    >>> X, y = vetiver.get_mock_data()
-    >>> model = vetiver.get_mock_model().fit(X, y)
-    >>> v = vetiver.VetiverModel(model = model,
-    ...    model_name = "my_model",
-    ...    prototype_data = X)
-    >>> vetiver.deploy_rsconnect(
-    ...    connect_server = connect_server,
-    ...    board = board,
-    ...    pin_name = "my_model"
-    ... )      # doctest: +SKIP
+
+    ```python
+    import vetiver
+    import pins
+    import rsconnect
+
+    # Set up Connect Server and board
+    board = pins.board_connect(allow_pickle_read=True)
+    connect_server = rsconnect.api.RSConnectServer(
+       url = url,
+       api_key = api_key
+    )
+
+    # Deploy model, which should already be pinned on Posit Connect
+    vetiver.deploy_rsconnect(
+        connect_server = connect_server,
+        board = board,
+       pin_name = "my_model"
+    )
+    ```
     """
 
     if not title:

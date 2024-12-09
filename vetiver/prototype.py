@@ -91,32 +91,42 @@ def _(data: pd.DataFrame):
 
     Examples
     --------
-    >>> from pydantic import BaseModel
-    >>> df = pd.DataFrame({'x': [1, 2, 3], 'y': [4, 5, 6]})
-    >>> prototype = vetiver_create_prototype(df)
-    >>> issubclass(prototype, BaseModel)
-    True
-    >>> prototype()
+    ```{python}
+    from pydantic import BaseModel
+    df = pd.DataFrame({'x': [1, 2, 3], 'y': [4, 5, 6]})
+    prototype = vetiver_create_prototype(df)
+    issubclass(prototype, BaseModel)
+    ```
+
+    ```{python}
+    prototype()
     prototype(x=1, y=4)
+    ```
 
     The data prototype created for the dataframe is equivalent to:
 
-    >>> class another_prototype(BaseModel):
-    ...     class Config:
-    ...         title = 'prototype'
-    ...     x: int = 1
-    ...     y: int = 4
+    ```{python}
+    class another_prototype(BaseModel):
+        class Config:
+            title = 'prototype'
+            x: int = 1
+            y: int = 4
+    ```
 
-    >>> another_prototype()
-    another_prototype(x=1, y=4)
-    >>> another_prototype() == prototype()
-    True
+    ```{python}
+    another_prototype()
+    ```
+
+    ```{python}
+    another_prototype() == prototype()
+    ```
 
     Changing the title using `class Config` ensures that the
     also json/schemas match.
 
-    >>> another_prototype.schema() == prototype.schema()
-    True
+    ```{python}
+    another_prototype.schema() == prototype.schema()
+    ```
     """
     dict_data = _to_field(data.iloc[0, :].to_dict())
     prototype = create_prototype(**dict_data)
@@ -133,17 +143,17 @@ def _(data: np.ndarray):
     data : ndarray
         2-Dimensional numpy array
 
-    Examples
-    --------
-    >>> arr = np.array([[1, 4], [2, 5], [3, 6]])
-    >>> prototype = vetiver_create_prototype(arr)
-    >>> prototype()
-    prototype(0=1, 1=4)
+    ```{python}
+    arr = np.array([[1, 4], [2, 5], [3, 6]])
+    prototype = vetiver_create_prototype(arr)
+    prototype()
+    ```
 
-    >>> arr2 = np.array([[1, 'a'], [2, 'b'], [3, 'c']], dtype=object)
-    >>> prototype2 = vetiver_create_prototype(arr2)
-    >>> prototype2()
-    prototype(0=1, 1='a')
+    ```{python}
+    arr2 = np.array([[1, 'a'], [2, 'b'], [3, 'c']], dtype=object)
+    prototype2 = vetiver_create_prototype(arr2)
+    prototype2()
+    ```
     """
 
     def _item(value):

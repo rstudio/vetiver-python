@@ -50,8 +50,11 @@ quartodoc:
   package: vetiver
   renderer:
     style: markdown
+    table_style: description-list
+    show_signature_annotations: true
     display_name: relative
   sidebar: "_sidebar.yml"
+  # css: _styles-quartodoc.css
   sections:
     - title: Version
       desc: ""
@@ -72,7 +75,7 @@ quartodoc:
         - predict
         - write_app
         - prepare_docker
-        - write_docker
+        - write_docker.write_docker
         - deploy_rsconnect
 
     - title: Monitor
@@ -109,3 +112,5 @@ format:
   html:
     theme:
       - flatly
+    css:
+      - _styles-quartodoc.css

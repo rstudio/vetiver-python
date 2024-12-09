@@ -30,7 +30,7 @@ class VetiverAPI:
     model :  VetiverModel
         Model to be deployed in API
     show_prototype: bool = True
-
+        Whether or not to show the data prototype in the API
     check_prototype : bool
         Determine if data prototype should be enforced
     app_factory :
@@ -40,20 +40,23 @@ class VetiverAPI:
 
     Examples
     -------
-    >>> import vetiver as vt
-    >>> X, y = vt.get_mock_data()
-    >>> model = vt.get_mock_model().fit(X, y)
-    >>> v = vt.VetiverModel(model = model, model_name = "my_model", prototype_data = X)
-    >>> v_api = vt.VetiverAPI(model = v, check_prototype = True)
+    ```{python}
+    from vetiver import mock, VetiverModel, VetiverAPI
+    X, y = mock.get_mock_data()
+    model = mock.get_mock_model().fit(X, y)
+
+    v = VetiverModel(model = model, model_name = "my_model", prototype_data = X)
+    api = VetiverAPI(model = v, check_prototype = True)
+    ```
 
     Notes
     -----
-    This generates an API with either 3 or 4 GET endpoints and 1 POST endpoint.
+    This generates an API with 2-4 GET endpoints and 1 POST endpoint.
 
     ```
     ├──/ping (GET)
     ├──/metadata (GET)
-    ├──/prototype (GET)
+    ├──/prototype (GET, if `show_prototype` is True)
     ├──/pin-url (GET, if VetiverModel metadata `url` field is not None)
     └──/predict (POST)
     ```
@@ -209,14 +212,18 @@ class VetiverAPI:
 
         Examples
         -------
-        >>> import vetiver as vt
-        >>> X, y = vt.get_mock_data()
-        >>> model = vt.get_mock_model().fit(X, y)
-        >>> v = vt.VetiverModel(model = model, model_name = "model", prototype_data = X)
-        >>> v_api = vt.VetiverAPI(model = v, check_prototype = True)
-        >>> def sum_values(x):
-        ...     return x.sum()
-        >>> v_api.vetiver_post(sum_values, "sums")
+        ```{python}
+        from vetiver import mock, VetiverModel, VetiverAPI
+        X, y = mock.get_mock_data()
+        model = mock.get_mock_model().fit(X, y)
+
+        v = VetiverModel(model = model, model_name = "model", prototype_data = X)
+        v_api = VetiverAPI(model = v, check_prototype = True)
+
+        def sum_values(x):
+            return x.sum()
+        v_api.vetiver_post(sum_values, "sums")
+        ```
         """
         if not endpoint_name:
             endpoint_name = endpoint_fx.__name__
@@ -268,12 +275,17 @@ class VetiverAPI:
 
         Examples
         -------
-        >>> import vetiver as vt
-        >>> X, y = vt.get_mock_data()
-        >>> model = vt.get_mock_model().fit(X, y)
-        >>> v = vt.VetiverModel(model = model, model_name = "model", prototype_data = X)
-        >>> v_api = vt.VetiverAPI(model = v, check_prototype = True)
-        >>> v_api.run()     # doctest: +SKIP
+
+        ```python
+        from vetiver import mock, VetiverModel, VetiverAPI
+        X, y = mock.get_mock_data()
+        model = mock.get_mock_model().fit(X, y)
+
+        v = VetiverModel(model = model, model_name = "my_model", prototype_data = X)
+        v_api = VetiverAPI(model = v, check_prototype = True)
+        v_api.run()
+        ```
+
         """
         _jupyter_nb()
         self.workbench_path = get_workbench_path(port)
@@ -317,7 +329,7 @@ def predict(endpoint, data: Union[dict, pd.DataFrame, pd.Series], **kw) -> pd.Da
     endpoint :
         URI path to endpoint
     data : Union[dict, pd.DataFrame, pd.Series]
-        Name of endpoint
+        New data for making predictions, such as a data frame.
 
     Returns
     -------
@@ -326,10 +338,23 @@ def predict(endpoint, data: Union[dict, pd.DataFrame, pd.Series], **kw) -> pd.Da
 
     Examples
     -------
-    >>> import vetiver
-    >>> X, y = vetiver.get_mock_data()
-    >>> endpoint = vetiver.vetiver_endpoint(url='http://127.0.0.1:8000/predict')
-    >>> vetiver.predict(endpoint, X)     # doctest: +SKIP
+    ```python
+    from vetiver import vetiver_endpoint, mock, predict
+    X, y = mock.get_mock_data()
+    endpoint = vetiver_endpoint(url='http://127.0.0.1:8000/predict')
+    predict(endpoint, X)
+    ```
+
+    Notes
+    -----
+    To authorize a request to Posit Connect, pass in a
+    dictionary of headers that includes your API key. For example:
+
+    ```python
+    h = { 'Authorization': f'Key {api_key}' }
+    response = predict(data = data, endpoint = endpoint, headers=h)
+    ```
+
     """
     if "test_client" in kw:
         requester = kw.pop("test_client")
@@ -379,8 +404,10 @@ def vetiver_endpoint(url: str = "http://127.0.0.1:8000/predict") -> str:
 
     Examples
     -------
-    >>> import vetiver
-    >>> endpoint = vetiver.vetiver_endpoint(url='http://127.0.0.1:8000/predict')
+    ```{python}
+    from vetiver import vetiver_endpoint
+    endpoint = vetiver_endpoint(url='http://127.0.0.1:8000/predict')
+    ```
     """
     # remove trailing backslash, if it exists
     if url[-1] == "/":
