@@ -1,3 +1,70 @@
+[project]
+name = "vetiver"
+description = "Version, share, deploy, and monitor models."
+readme = { file = "README.md", content-type = "text/markdown" }
+homepage = "https://github.com/rstudio/vetiver-python"
+authors = [
+    { name = "Isabel Zimmerman", email = "isabel.zimmerman@posit.co" }
+]
+license = { text = "MIT" }
+keywords = ["data", "mlops"]
+classifiers = [
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13"
+]
+requires-python = ">=3.9"
+
+[project.dependencies]
+numpy
+pandas
+fastapi
+pydantic
+joblib
+uvicorn
+scikit-learn
+nest-asyncio
+requests
+pins
+rsconnect-python
+python-dotenv
+plotly
+pip-tools
+httpx
+
+[project.optional-dependencies]
+all = [
+    "vetiver[dev]",
+    "vetiver[all_models]",
+    "vetiver[docs]"
+]
+all_models = [
+    "vetiver[torch]",
+    "vetiver[statsmodels]",
+    "vetiver[xgboost]",
+    "vetiver[spacy]"
+]
+dev = [
+    "pytest",
+    "pytest-cov",
+    "pytest-snapshot",
+    "vetiver[typecheck]",
+    "vetiver[docs]"
+]
+docs = [
+    "quartodoc"
+]
+statsmodels = ["statsmodels"]
+torch = ["torch"]
+xgboost = ["xgboost"]
+spacy = ["spacy"]
+typecheck = [
+    "pyright",
+    "pandas-stubs"
+]
+
 [build-system]
 requires = [
     "setuptools>=59",
@@ -8,8 +75,6 @@ build-backend = "setuptools.build_meta"
 
 [tool.pytest.ini_options]
 testpaths = ["vetiver"]
-addopts = "--doctest-modules"
-doctest_optionflags = "NORMALIZE_WHITESPACE"
 markers = [
     "rsc_test: tests for connect",
     "docker: tests for docker deployments"
