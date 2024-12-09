@@ -159,7 +159,7 @@ jobs:
     name: "Release to pypi"
     runs-on: ubuntu-latest
     if: github.event_name == 'release'
-    needs: [test-no-extras, tests, test-rsconnect]
+    needs: [test-no-extras, tests, test-connect]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v4
