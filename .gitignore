@@ -1,6 +1,9 @@
 /docs/site/*
 docs/source/reference
 vetiver/templates/*.html
+.vscode/
+license.lic
+
 # Mac specific
 .DS_Store
 
