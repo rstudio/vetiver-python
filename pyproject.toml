@@ -1,13 +1,24 @@
+[build-system]
+requires = [
+    "setuptools>=59",
+    "setuptools_scm[toml]>=6.4",
+    "wheel"
+]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["vetiver"]
+
 [project]
 name = "vetiver"
 description = "Version, share, deploy, and monitor models."
 readme = { file = "README.md", content-type = "text/markdown" }
-homepage = "https://github.com/rstudio/vetiver-python"
 authors = [
     { name = "Isabel Zimmerman", email = "isabel.zimmerman@posit.co" }
 ]
 license = { text = "MIT" }
 keywords = ["data", "mlops"]
+dynamic = ["version"]
 classifiers = [
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
@@ -17,22 +28,23 @@ classifiers = [
 ]
 requires-python = ">=3.9"
 
-[project.dependencies]
-numpy
-pandas
-fastapi
-pydantic
-joblib
-uvicorn
-scikit-learn
-nest-asyncio
-requests
-pins
-rsconnect-python
-python-dotenv
-plotly
-pip-tools
-httpx
+dependencies  =[
+    "numpy",
+    "pandas",
+    "fastapi",
+    "pydantic",
+    "joblib",
+    "uvicorn",
+    "scikit-learn",
+    "nest-asyncio",
+    "requests",
+    "pins>=0.7.1",
+    "rsconnect-python>=1.11.0",
+    "python-dotenv",
+    "plotly",
+    "pip-tools",
+    "httpx"
+]
 
 [project.optional-dependencies]
 all = [
@@ -65,13 +77,9 @@ typecheck = [
     "pandas-stubs"
 ]
 
-[build-system]
-requires = [
-    "setuptools>=59",
-    "setuptools_scm[toml]>=6.4",
-    "wheel"
-]
-build-backend = "setuptools.build_meta"
+[project.urls]
+homepage = "https://github.com/rstudio/vetiver-python"
+documentation = "https://rstudio.github.io/vetiver-python/stable/"
 
 [tool.pytest.ini_options]
 testpaths = ["vetiver"]
