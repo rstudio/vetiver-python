@@ -4,31 +4,7 @@
     "href": "reference/deploy_rsconnect.html",
     "title": "deploy_rsconnect",
     "section": "",
-    "text": "deploy_rsconnect(\n    connect_server: ConnectServer,\n    board,\n    pin_name: str,\n    version: str = None,\n    extra_files: typing.List[str] = None,\n    new: bool = False,\n    app_id: int = None,\n    title: str = None,\n    python: str = None,\n    force_generate: bool = False,\n    log_callback: typing.Callable = None,\n    image: str = None,\n)\nDeploy to Posit Connect\n\n\n\nconnect_server : rsconnect.api.RSConnectServer\n\nPosit Connect Server\n\nboard : \n\nPins board\n\npin_name : str\n\nName of pin\n\nversion : str = None\n\nVersion of pin\n\nextra_files : typing.List[str] = None\n\nAny extra files to include\n\nnew : bool = False\n\nForce as a new deploy\n\napp_id : int = None\n\nID of an existing application to deploy new files for.\n\ntitle : str = None\n\nOptional title for the deploy.\n\npython : str = None\n\nOptional name of a Python executable\n\nforce_generate : bool = False\n\nForce generating requirements.txt or environment.yml\n\nlog_callback : typing.Callable = None\n\nCallback to use to write the log to\n\nimage : str = None\n\nDocker image to be specified for off-host execution\n\n\n\n\n\nimport vetiver\nimport pins\nimport rsconnect\n\n# Set up Connect Server and board\nboard = pins.board_connect(allow_pickle_read=True)\nconnect_server = rsconnect.api.RSConnectServer(\n   url = url,\n   api_key = api_key\n)\n\n# Deploy model, which should already be pinned on Posit Connect\nvetiver.deploy_rsconnect(\n    connect_server = connect_server,\n    board = board,\n   pin_name = \"my_model\"\n)",
-    "crumbs": [
-      "Reference",
-      "Deploy",
-      "deploy_rsconnect"
-    ]
-  },
-  {
-    "objectID": "reference/deploy_rsconnect.html#parameters",
-    "href": "reference/deploy_rsconnect.html#parameters",
-    "title": "deploy_rsconnect",
-    "section": "",
-    "text": "connect_server : rsconnect.api.RSConnectServer\n\nPosit Connect Server\n\nboard : \n\nPins board\n\npin_name : str\n\nName of pin\n\nversion : str = None\n\nVersion of pin\n\nextra_files : typing.List[str] = None\n\nAny extra files to include\n\nnew : bool = False\n\nForce as a new deploy\n\napp_id : int = None\n\nID of an existing application to deploy new files for.\n\ntitle : str = None\n\nOptional title for the deploy.\n\npython : str = None\n\nOptional name of a Python executable\n\nforce_generate : bool = False\n\nForce generating requirements.txt or environment.yml\n\nlog_callback : typing.Callable = None\n\nCallback to use to write the log to\n\nimage : str = None\n\nDocker image to be specified for off-host execution",
-    "crumbs": [
-      "Reference",
-      "Deploy",
-      "deploy_rsconnect"
-    ]
-  },
-  {
-    "objectID": "reference/deploy_rsconnect.html#examples",
-    "href": "reference/deploy_rsconnect.html#examples",
-    "title": "deploy_rsconnect",
-    "section": "",
-    "text": "import vetiver\nimport pins\nimport rsconnect\n\n# Set up Connect Server and board\nboard = pins.board_connect(allow_pickle_read=True)\nconnect_server = rsconnect.api.RSConnectServer(\n   url = url,\n   api_key = api_key\n)\n\n# Deploy model, which should already be pinned on Posit Connect\nvetiver.deploy_rsconnect(\n    connect_server = connect_server,\n    board = board,\n   pin_name = \"my_model\"\n)",
+    "text": "deploy_rsconnect\ndeploy_rsconnect(\n    connect_server: ConnectServer,\n    board,\n    pin_name: str,\n    version: str = None,\n    extra_files: typing.List[str] = None,\n    new: bool = False,\n    app_id: int = None,\n    title: str = None,\n    python: str = None,\n    force_generate: bool = False,\n    log_callback: typing.Callable = None,\n    image: str = None,\n)\nDeprecated. Use deploy_connect instead.",
     "crumbs": [
       "Reference",
       "Deploy",
@@ -64,7 +40,7 @@
     "href": "reference/vetiver_pin_write.html#examples",
     "title": "vetiver_pin_write",
     "section": "Examples",
-    "text": "Examples\n\nimport vetiver\nfrom pins import board_temp\nmodel_board = board_temp(versioned = True, allow_pickle_read = True)\nX, y = vetiver.get_mock_data()\nmodel = vetiver.get_mock_model().fit(X, y)\nv = vetiver.VetiverModel(model, \"my_model\", prototype_data = X)\nvetiver.vetiver_pin_write(model_board, v)\n\nModel Cards provide a framework for transparent, responsible reporting. \n Use the vetiver `.qmd` Quarto template as a place to start, \n with vetiver.model_card()\nWriting pin:\nName: 'my_model'\nVersion: 20241210T193601Z-eaec0",
+    "text": "Examples\n\nimport vetiver\nfrom pins import board_temp\nmodel_board = board_temp(versioned = True, allow_pickle_read = True)\nX, y = vetiver.get_mock_data()\nmodel = vetiver.get_mock_model().fit(X, y)\nv = vetiver.VetiverModel(model, \"my_model\", prototype_data = X)\nvetiver.vetiver_pin_write(model_board, v)\n\nModel Cards provide a framework for transparent, responsible reporting. \n Use the vetiver `.qmd` Quarto template as a place to start, \n with vetiver.model_card()\nWriting pin:\nName: 'my_model'\nVersion: 20241210T220757Z-0bdcc",
     "crumbs": [
       "Reference",
       "Version",
@@ -316,7 +292,7 @@
     "href": "reference/write_docker.write_docker.html#examples",
     "title": "write_docker.write_docker",
     "section": "Examples",
-    "text": "Examples\n\nimport vetiver\nimport tempfile\nimport pins\ntmp = tempfile.TemporaryDirectory()\nboard = pins.board_temp(allow_pickle_read=True)\n\nX, y = vetiver.get_mock_data()\nmodel = vetiver.get_mock_model().fit(X, y)\nv = vetiver.VetiverModel(model, \"my_model\", prototype_data = X)\n\nvetiver.vetiver_pin_write(board, v)\nvetiver.write_app(board,\n    \"my_model\",\n    file = tmp.name + \"/app.py\")\nvetiver.write_docker(app_file = \"app.py\", path = tmp.name)\n\nModel Cards provide a framework for transparent, responsible reporting. \n Use the vetiver `.qmd` Quarto template as a place to start, \n with vetiver.model_card()\nWriting pin:\nName: 'my_model'\nVersion: 20241210T193542Z-d1862",
+    "text": "Examples\n\nimport vetiver\nimport tempfile\nimport pins\ntmp = tempfile.TemporaryDirectory()\nboard = pins.board_temp(allow_pickle_read=True)\n\nX, y = vetiver.get_mock_data()\nmodel = vetiver.get_mock_model().fit(X, y)\nv = vetiver.VetiverModel(model, \"my_model\", prototype_data = X)\n\nvetiver.vetiver_pin_write(board, v)\nvetiver.write_app(board,\n    \"my_model\",\n    file = tmp.name + \"/app.py\")\nvetiver.write_docker(app_file = \"app.py\", path = tmp.name)\n\nModel Cards provide a framework for transparent, responsible reporting. \n Use the vetiver `.qmd` Quarto template as a place to start, \n with vetiver.model_card()\nWriting pin:\nName: 'my_model'\nVersion: 20241210T220737Z-14093",
     "crumbs": [
       "Reference",
       "Deploy",
@@ -637,7 +613,7 @@
     "href": "reference/write_app.html#examples",
     "title": "write_app",
     "section": "Examples",
-    "text": "Examples\n\nimport vetiver\nimport tempfile\nimport pins\n\ntmp = tempfile.TemporaryDirectory()\nboard = pins.board_temp(allow_pickle_read=True)\n\nX, y = vetiver.get_mock_data()\nmodel = vetiver.get_mock_model().fit(X, y)\nv = vetiver.VetiverModel(model, \"my_model\", prototype_data = X)\n\nvetiver.vetiver_pin_write(board, v)\nvetiver.write_app(board,\n    \"my_model\",\n    file = tmp.name + \"/app.py\")\n\nModel Cards provide a framework for transparent, responsible reporting. \n Use the vetiver `.qmd` Quarto template as a place to start, \n with vetiver.model_card()\nWriting pin:\nName: 'my_model'\nVersion: 20241210T193530Z-78391",
+    "text": "Examples\n\nimport vetiver\nimport tempfile\nimport pins\n\ntmp = tempfile.TemporaryDirectory()\nboard = pins.board_temp(allow_pickle_read=True)\n\nX, y = vetiver.get_mock_data()\nmodel = vetiver.get_mock_model().fit(X, y)\nv = vetiver.VetiverModel(model, \"my_model\", prototype_data = X)\n\nvetiver.vetiver_pin_write(board, v)\nvetiver.write_app(board,\n    \"my_model\",\n    file = tmp.name + \"/app.py\")\n\nModel Cards provide a framework for transparent, responsible reporting. \n Use the vetiver `.qmd` Quarto template as a place to start, \n with vetiver.model_card()\nWriting pin:\nName: 'my_model'\nVersion: 20241210T220725Z-13113",
     "crumbs": [
       "Reference",
       "Deploy",
@@ -935,9 +911,9 @@
   {
     "objectID": "reference/index.html",
     "href": "reference/index.html",
-    "title": "Vetiver:v0.2.5.post5+ga466e36",
+    "title": "Vetiver:v0.2.5.post6+gfed271a",
     "section": "",
-    "text": "VetiverModel\nCreate VetiverModel class for serving.\n\n\nvetiver_pin_write\nPin a trained VetiverModel along with other model metadata.\n\n\nvetiver_create_prototype\nCreate zero row structure to save data types\n\n\ntemplates.model_card\nCreate a model card for documentation\n\n\n\n\n\n\n\n\n\nVetiverAPI\nCreate model aware API\n\n\nVetiverAPI.run\nStart API\n\n\nVetiverAPI.vetiver_post\nCreate new POST endpoint that is aware of model input data\n\n\nvetiver_endpoint\nWrap url where VetiverModel will be deployed\n\n\npredict\nMake a prediction from model endpoint\n\n\nwrite_app\nWrite VetiverAPI app to a file\n\n\nprepare_docker\nGenerate files needed for Docker\n\n\nwrite_docker.write_docker\nWrites a Dockerfile to run VetiverAPI in a container\n\n\ndeploy_rsconnect\nDeploy to Posit Connect\n\n\n\n\n\n\n\n\n\ncompute_metrics\nCompute metrics for given time period\n\n\npin_metrics\nUpdate an existing pin storing model metrics over time\n\n\nplot_metrics\nPlot metrics over a given time period\n\n\ntemplates.monitoring_dashboard\nGenerate a monitoring dashboard template\n\n\n\n\n\n\n\n\n\nBaseHandler\nBase handler class for creating VetiverModel of different types of model.\n\n\nSKLearnHandler\nHandler class for creating VetiverModels with sklearn.\n\n\nTorchHandler\nHandler class for creating VetiverModels with torch.\n\n\nStatsmodelsHandler\nHandler class for creating VetiverModels with statsmodels.\n\n\nXGBoostHandler\nHandler class for creating VetiverModels with xgboost.\n\n\nSpacyHandler\nHandler class for creating VetiverModels with spacy.",
+    "text": "VetiverModel\nCreate VetiverModel class for serving.\n\n\nvetiver_pin_write\nPin a trained VetiverModel along with other model metadata.\n\n\nvetiver_create_prototype\nCreate zero row structure to save data types\n\n\ntemplates.model_card\nCreate a model card for documentation\n\n\n\n\n\n\n\n\n\nVetiverAPI\nCreate model aware API\n\n\nVetiverAPI.run\nStart API\n\n\nVetiverAPI.vetiver_post\nCreate new POST endpoint that is aware of model input data\n\n\nvetiver_endpoint\nWrap url where VetiverModel will be deployed\n\n\npredict\nMake a prediction from model endpoint\n\n\nwrite_app\nWrite VetiverAPI app to a file\n\n\nprepare_docker\nGenerate files needed for Docker\n\n\nwrite_docker.write_docker\nWrites a Dockerfile to run VetiverAPI in a container\n\n\ndeploy_rsconnect\nDeprecated. Use deploy_connect instead.\n\n\n\n\n\n\n\n\n\ncompute_metrics\nCompute metrics for given time period\n\n\npin_metrics\nUpdate an existing pin storing model metrics over time\n\n\nplot_metrics\nPlot metrics over a given time period\n\n\ntemplates.monitoring_dashboard\nGenerate a monitoring dashboard template\n\n\n\n\n\n\n\n\n\nBaseHandler\nBase handler class for creating VetiverModel of different types of model.\n\n\nSKLearnHandler\nHandler class for creating VetiverModels with sklearn.\n\n\nTorchHandler\nHandler class for creating VetiverModels with torch.\n\n\nStatsmodelsHandler\nHandler class for creating VetiverModels with statsmodels.\n\n\nXGBoostHandler\nHandler class for creating VetiverModels with xgboost.\n\n\nSpacyHandler\nHandler class for creating VetiverModels with spacy.",
     "crumbs": [
       "Reference",
       "Vetiver:v{{< env VERSION >}}"
@@ -946,7 +922,7 @@
   {
     "objectID": "reference/index.html#version",
     "href": "reference/index.html#version",
-    "title": "Vetiver:v0.2.5.post5+ga466e36",
+    "title": "Vetiver:v0.2.5.post6+gfed271a",
     "section": "",
     "text": "VetiverModel\nCreate VetiverModel class for serving.\n\n\nvetiver_pin_write\nPin a trained VetiverModel along with other model metadata.\n\n\nvetiver_create_prototype\nCreate zero row structure to save data types\n\n\ntemplates.model_card\nCreate a model card for documentation",
     "crumbs": [
@@ -957,9 +933,9 @@
   {
     "objectID": "reference/index.html#deploy",
     "href": "reference/index.html#deploy",
-    "title": "Vetiver:v0.2.5.post5+ga466e36",
+    "title": "Vetiver:v0.2.5.post6+gfed271a",
     "section": "",
-    "text": "VetiverAPI\nCreate model aware API\n\n\nVetiverAPI.run\nStart API\n\n\nVetiverAPI.vetiver_post\nCreate new POST endpoint that is aware of model input data\n\n\nvetiver_endpoint\nWrap url where VetiverModel will be deployed\n\n\npredict\nMake a prediction from model endpoint\n\n\nwrite_app\nWrite VetiverAPI app to a file\n\n\nprepare_docker\nGenerate files needed for Docker\n\n\nwrite_docker.write_docker\nWrites a Dockerfile to run VetiverAPI in a container\n\n\ndeploy_rsconnect\nDeploy to Posit Connect",
+    "text": "VetiverAPI\nCreate model aware API\n\n\nVetiverAPI.run\nStart API\n\n\nVetiverAPI.vetiver_post\nCreate new POST endpoint that is aware of model input data\n\n\nvetiver_endpoint\nWrap url where VetiverModel will be deployed\n\n\npredict\nMake a prediction from model endpoint\n\n\nwrite_app\nWrite VetiverAPI app to a file\n\n\nprepare_docker\nGenerate files needed for Docker\n\n\nwrite_docker.write_docker\nWrites a Dockerfile to run VetiverAPI in a container\n\n\ndeploy_rsconnect\nDeprecated. Use deploy_connect instead.",
     "crumbs": [
       "Reference",
       "Vetiver:v{{< env VERSION >}}"
@@ -968,7 +944,7 @@
   {
     "objectID": "reference/index.html#monitor",
     "href": "reference/index.html#monitor",
-    "title": "Vetiver:v0.2.5.post5+ga466e36",
+    "title": "Vetiver:v0.2.5.post6+gfed271a",
     "section": "",
     "text": "compute_metrics\nCompute metrics for given time period\n\n\npin_metrics\nUpdate an existing pin storing model metrics over time\n\n\nplot_metrics\nPlot metrics over a given time period\n\n\ntemplates.monitoring_dashboard\nGenerate a monitoring dashboard template",
     "crumbs": [
@@ -979,7 +955,7 @@
   {
     "objectID": "reference/index.html#model-handlers",
     "href": "reference/index.html#model-handlers",
-    "title": "Vetiver:v0.2.5.post5+ga466e36",
+    "title": "Vetiver:v0.2.5.post6+gfed271a",
     "section": "",
     "text": "BaseHandler\nBase handler class for creating VetiverModel of different types of model.\n\n\nSKLearnHandler\nHandler class for creating VetiverModels with sklearn.\n\n\nTorchHandler\nHandler class for creating VetiverModels with torch.\n\n\nStatsmodelsHandler\nHandler class for creating VetiverModels with statsmodels.\n\n\nXGBoostHandler\nHandler class for creating VetiverModels with xgboost.\n\n\nSpacyHandler\nHandler class for creating VetiverModels with spacy.",
     "crumbs": [
