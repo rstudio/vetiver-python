@@ -104,6 +104,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
+<link rel="stylesheet" href="../_styles-quartodoc.css">
 </head>
 
 <body class="nav-sidebar floating nav-fixed fullcontent">
@@ -193,7 +194,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../reference/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Vetiver:v0.2.5.post3+g4749b64</span></a>
+ <span class="menu-text">Vetiver:v0.2.5.post4+gf3e53e6</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -284,8 +285,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../reference/write_docker.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">write_docker</span></a>
+  <a href="../reference/write_docker.write_docker.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">write_docker.write_docker</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -385,66 +386,67 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference/VetiverModel.html">Version</a></li><li class="breadcrumb-item"><a href="../reference/vetiver_pin_write.html">vetiver_pin_write</a></li></ol></nav></header>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference/VetiverModel.html">Version</a></li><li class="breadcrumb-item"><a href="../reference/vetiver_pin_write.html">vetiver_pin_write</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">vetiver_pin_write</h1>
+</div>
 
 
 
+<div class="quarto-title-meta">
 
-<section id="vetiver.vetiver_pin_write" class="level1">
-<h1>vetiver_pin_write</h1>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>vetiver_pin_write(board, model, versioned<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>vetiver_pin_write(board, model: VetiverModel, versioned: <span class="bu">bool</span> <span class="op">=</span> <span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Pin a trained VetiverModel along with other model metadata.</p>
 <section id="parameters" class="level2 doc-section doc-section-parameters">
 <h2 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters">Parameters</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 9%">
-<col style="width: 12%">
-<col style="width: 67%">
-<col style="width: 10%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>board</td>
-<td></td>
-<td>A pin board, created by <code>pins.board_folder()</code> or another <code>board_</code> function.</td>
-<td><em>required</em></td>
-</tr>
-<tr class="even">
-<td>model</td>
-<td>VetiverModel</td>
-<td>VetiverModel to be written to board</td>
-<td><em>required</em></td>
-</tr>
-<tr class="odd">
-<td>versioned</td>
-<td>bool</td>
-<td>Whether or not the pin should be versioned</td>
-<td><code>True</code></td>
-</tr>
-</tbody>
-</table>
+<dl>
+<dt><code><span class="parameter-name"><strong>board</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"></span></code></dt>
+<dd>
+<p>A pin board, created by <code>pins.board_folder()</code> or another <code>board_</code> function.</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>model</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">VetiverModel</span></code></dt>
+<dd>
+<p>VetiverModel to be written to board</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>versioned</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">bool</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">True</span></code></dt>
+<dd>
+<p>Whether or not the pin should be versioned</p>
+</dd>
+</dl>
 </section>
 <section id="examples" class="level2 doc-section doc-section-examples">
 <h2 class="doc-section doc-section-examples anchored" data-anchor-id="examples">Examples</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> vetiver</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">from</span> pins <span class="im">import</span> board_temp</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> model_board <span class="op">=</span> board_temp(versioned <span class="op">=</span> <span class="va">True</span>, allow_pickle_read <span class="op">=</span> <span class="va">True</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> X, y <span class="op">=</span> vetiver.get_mock_data()</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> model <span class="op">=</span> vetiver.get_mock_model().fit(X, y)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> v <span class="op">=</span> vetiver.VetiverModel(model, <span class="st">"my_model"</span>, prototype_data <span class="op">=</span> X)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> vetiver.vetiver_pin_write(model_board, v)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="4f17a073" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> vetiver</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pins <span class="im">import</span> board_temp</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>model_board <span class="op">=</span> board_temp(versioned <span class="op">=</span> <span class="va">True</span>, allow_pickle_read <span class="op">=</span> <span class="va">True</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>X, y <span class="op">=</span> vetiver.get_mock_data()</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> vetiver.get_mock_model().fit(X, y)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>v <span class="op">=</span> vetiver.VetiverModel(model, <span class="st">"my_model"</span>, prototype_data <span class="op">=</span> X)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>vetiver.vetiver_pin_write(model_board, v)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Model Cards provide a framework for transparent, responsible reporting. 
+ Use the vetiver `.qmd` Quarto template as a place to start, 
+ with vetiver.model_card()
+Writing pin:
+Name: 'my_model'
+Version: 20241210T170047Z-207c2</code></pre>
+</div>
+</div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

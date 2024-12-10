@@ -57,7 +57,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
@@ -102,8 +102,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
+<link rel="stylesheet" href="../_styles-quartodoc.css">
 </head>
 
 <body class="nav-sidebar floating nav-fixed fullcontent">
@@ -193,7 +197,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../reference/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Vetiver:v0.2.5.post3+g4749b64</span></a>
+ <span class="menu-text">Vetiver:v0.2.5.post4+gf3e53e6</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -284,8 +288,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../reference/write_docker.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">write_docker</span></a>
+  <a href="../reference/write_docker.write_docker.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">write_docker.write_docker</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -385,90 +389,136 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference/compute_metrics.html">Monitor</a></li><li class="breadcrumb-item"><a href="../reference/compute_metrics.html">compute_metrics</a></li></ol></nav></header>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference/compute_metrics.html">Monitor</a></li><li class="breadcrumb-item"><a href="../reference/compute_metrics.html">compute_metrics</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">compute_metrics</h1>
+</div>
 
 
 
+<div class="quarto-title-meta">
 
-<section id="vetiver.compute_metrics" class="level1">
-<h1>compute_metrics</h1>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>compute_metrics(data, date_var, period, metric_set, truth, estimate, <span class="op">**</span>kw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>compute_metrics(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    data: pd.DataFrame,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    date_var: <span class="bu">str</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    period: timedelta,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    metric_set: <span class="bu">list</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    truth: <span class="bu">str</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    estimate: <span class="bu">str</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">**</span>kw,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Compute metrics for given time period</p>
 <section id="parameters" class="level2 doc-section doc-section-parameters">
 <h2 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters">Parameters</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 10%">
-<col style="width: 9%">
-<col style="width: 68%">
-<col style="width: 10%">
-</colgroup>
+<dl>
+<dt><code><span class="parameter-name"><strong>data</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">DataFrame</span></code></dt>
+<dd>
+<p>Pandas dataframe</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>date_var</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">str</span></code></dt>
+<dd>
+<p>Column in <code>data</code> containing dates</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>period</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">timedelta</span></code></dt>
+<dd>
+<p>Defining period to group by</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>metric_set</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">list</span></code></dt>
+<dd>
+<p>List of metrics to compute, that have the parameters <code>y_true</code> and <code>y_pred</code></p>
+</dd>
+<dt><code><span class="parameter-name"><strong>truth</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">str</span></code></dt>
+<dd>
+<p>Column name for true results</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>estimate</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">str</span></code></dt>
+<dd>
+<p>Column name for predicted results</p>
+</dd>
+</dl>
+</section>
+<section id="examples" class="level2 doc-section doc-section-examples">
+<h2 class="doc-section doc-section-examples anchored" data-anchor-id="examples">Examples</h2>
+<div id="ed4b98c4" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> vetiver <span class="im">import</span> compute_metrics</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datetime <span class="im">import</span> timedelta</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> mean_squared_error, mean_absolute_error</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>       <span class="st">"index"</span>: [<span class="st">"2021-01-01"</span>, <span class="st">"2021-01-02"</span>, <span class="st">"2021-01-03"</span>],</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>       <span class="st">"truth"</span>: [<span class="dv">200</span>, <span class="dv">201</span>, <span class="dv">199</span>],</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>       <span class="st">"pred"</span>: [<span class="dv">198</span>, <span class="dv">200</span>, <span class="dv">199</span>],</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>td <span class="op">=</span> timedelta(days <span class="op">=</span> <span class="dv">1</span>)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>metric_set <span class="op">=</span> [mean_squared_error, mean_absolute_error]</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>metrics <span class="op">=</span> compute_metrics(df, <span class="st">"index"</span>, td, metric_set, <span class="st">"truth"</span>, <span class="st">"pred"</span>)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>metrics</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
 <thead>
 <tr class="header">
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">index</th>
+<th data-quarto-table-cell-role="th">n</th>
+<th data-quarto-table-cell-role="th">metric</th>
+<th data-quarto-table-cell-role="th">estimate</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>data</td>
-<td>DataFrame</td>
-<td>Pandas dataframe</td>
-<td><em>required</em></td>
+<td data-quarto-table-cell-role="th">0</td>
+<td>2021-01-01</td>
+<td>1</td>
+<td>mean_squared_error</td>
+<td>4.0</td>
 </tr>
 <tr class="even">
-<td>date_var</td>
-<td>str</td>
-<td>Column in <code>data</code> containing dates</td>
-<td><em>required</em></td>
+<td data-quarto-table-cell-role="th">1</td>
+<td>2021-01-01</td>
+<td>1</td>
+<td>mean_absolute_error</td>
+<td>2.0</td>
 </tr>
 <tr class="odd">
-<td>period</td>
-<td>timedelta</td>
-<td>Defining period to group by</td>
-<td><em>required</em></td>
+<td data-quarto-table-cell-role="th">2</td>
+<td>2021-01-02</td>
+<td>1</td>
+<td>mean_squared_error</td>
+<td>1.0</td>
 </tr>
 <tr class="even">
-<td>metric_set</td>
-<td>list</td>
-<td>List of metrics to compute, that have the parameters <code>y_true</code> and <code>y_pred</code></td>
-<td><em>required</em></td>
-</tr>
-<tr class="odd">
-<td>truth</td>
-<td>str</td>
-<td>Column name for true results</td>
-<td><em>required</em></td>
-</tr>
-<tr class="even">
-<td>estimate</td>
-<td>str</td>
-<td>Column name for predicted results</td>
-<td><em>required</em></td>
+<td data-quarto-table-cell-role="th">3</td>
+<td>2021-01-02</td>
+<td>1</td>
+<td>mean_absolute_error</td>
+<td>1.0</td>
 </tr>
 </tbody>
 </table>
-</section>
-<section id="examples" class="level2 doc-section doc-section-examples">
-<h2 class="doc-section doc-section-examples anchored" data-anchor-id="examples">Examples</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">from</span> datetime <span class="im">import</span> timedelta</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">from</span> sklearn.metrics <span class="im">import</span> mean_squared_error, mean_absolute_error</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> df <span class="op">=</span> pd.DataFrame(</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>...   {</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>...        <span class="st">"index"</span>: [<span class="st">"2021-01-01"</span>, <span class="st">"2021-01-02"</span>, <span class="st">"2021-01-03"</span>],</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>...        <span class="st">"truth"</span>: [<span class="dv">200</span>, <span class="dv">201</span>, <span class="dv">199</span>],</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>...        <span class="st">"pred"</span>: [<span class="dv">198</span>, <span class="dv">200</span>, <span class="dv">199</span>],</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>...   }</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>... )</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> td <span class="op">=</span> timedelta(days <span class="op">=</span> <span class="dv">1</span>)</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> metric_set <span class="op">=</span> [mean_squared_error, mean_absolute_error]</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> metrics <span class="op">=</span> compute_metrics(df, <span class="st">"index"</span>, td, metric_set, <span class="st">"truth"</span>, <span class="st">"pred"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+</div>
+</div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

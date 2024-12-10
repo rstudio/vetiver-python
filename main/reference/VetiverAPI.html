@@ -104,6 +104,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
+<link rel="stylesheet" href="../_styles-quartodoc.css">
 </head>
 
 <body class="nav-sidebar floating nav-fixed fullcontent">
@@ -193,7 +194,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../reference/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Vetiver:v0.2.5.post3+g4749b64</span></a>
+ <span class="menu-text">Vetiver:v0.2.5.post4+gf3e53e6</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -284,8 +285,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../reference/write_docker.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">write_docker</span></a>
+  <a href="../reference/write_docker.write_docker.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">write_docker.write_docker</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -385,87 +386,78 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference/VetiverAPI.html">Deploy</a></li><li class="breadcrumb-item"><a href="../reference/VetiverAPI.html">VetiverAPI</a></li></ol></nav></header>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference/VetiverAPI.html">Deploy</a></li><li class="breadcrumb-item"><a href="../reference/VetiverAPI.html">VetiverAPI</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">VetiverAPI</h1>
+</div>
 
 
 
+<div class="quarto-title-meta">
 
-<section id="vetiver.VetiverAPI" class="level1">
-<h1>VetiverAPI</h1>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
 <div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>VetiverAPI(</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>,</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    model,</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    show_prototype<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    check_prototype<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    app_factory<span class="op">=</span>FastAPI,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    model: VetiverModel,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    show_prototype: <span class="bu">bool</span> <span class="op">=</span> <span class="va">True</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    check_prototype: <span class="bu">bool</span> <span class="op">=</span> <span class="va">True</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    app_factory,</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">**</span>kwargs,</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Create model aware API</p>
 <section id="parameters" class="level2 doc-section doc-section-parameters">
 <h2 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters">Parameters</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 18%">
-<col style="width: 15%">
-<col style="width: 52%">
-<col style="width: 13%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>model</td>
-<td>VetiverModel</td>
-<td>Model to be deployed in API</td>
-<td><em>required</em></td>
-</tr>
-<tr class="even">
-<td>show_prototype</td>
-<td>bool</td>
-<td></td>
-<td><code>True</code></td>
-</tr>
-<tr class="odd">
-<td>check_prototype</td>
-<td>bool</td>
-<td>Determine if data prototype should be enforced</td>
-<td><code>True</code></td>
-</tr>
-<tr class="even">
-<td>app_factory</td>
-<td></td>
-<td>Type of API to be deployed</td>
-<td><code>FastAPI</code></td>
-</tr>
-<tr class="odd">
-<td>**kwargs</td>
-<td></td>
-<td>Deprecated parameters.</td>
-<td><code>{}</code></td>
-</tr>
-</tbody>
-</table>
+<dl>
+<dt><code><span class="parameter-name"><strong>model</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">VetiverModel</span></code></dt>
+<dd>
+<p>Model to be deployed in API</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>show_prototype</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">bool</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">True</span></code></dt>
+<dd>
+<p>Whether or not to show the data prototype in the API</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>check_prototype</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">bool</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">True</span></code></dt>
+<dd>
+<p>Determine if data prototype should be enforced</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>app_factory</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"></span> <span class="parameter-default-sep">=</span> <span class="parameter-default">FastAPI</span></code></dt>
+<dd>
+<p>Type of API to be deployed</p>
+</dd>
+<dt><code><span class="parameter-name">****kwargs**</span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"></span> <span class="parameter-default-sep">=</span> <span class="parameter-default">{}</span></code></dt>
+<dd>
+<p>Deprecated parameters.</p>
+</dd>
+</dl>
 </section>
 <section id="examples" class="level2 doc-section doc-section-examples">
 <h2 class="doc-section doc-section-examples anchored" data-anchor-id="examples">Examples</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> vetiver <span class="im">as</span> vt</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> X, y <span class="op">=</span> vt.get_mock_data()</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> model <span class="op">=</span> vt.get_mock_model().fit(X, y)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> v <span class="op">=</span> vt.VetiverModel(model <span class="op">=</span> model, model_name <span class="op">=</span> <span class="st">"my_model"</span>, prototype_data <span class="op">=</span> X)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> v_api <span class="op">=</span> vt.VetiverAPI(model <span class="op">=</span> v, check_prototype <span class="op">=</span> <span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="e81e8ede" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> vetiver <span class="im">import</span> mock, VetiverModel, VetiverAPI</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>X, y <span class="op">=</span> mock.get_mock_data()</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> mock.get_mock_model().fit(X, y)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>v <span class="op">=</span> VetiverModel(model <span class="op">=</span> model, model_name <span class="op">=</span> <span class="st">"my_model"</span>, prototype_data <span class="op">=</span> X)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>api <span class="op">=</span> VetiverAPI(model <span class="op">=</span> v, check_prototype <span class="op">=</span> <span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 <section id="notes" class="level2 doc-section doc-section-notes">
 <h2 class="doc-section doc-section-notes anchored" data-anchor-id="notes">Notes</h2>
-<p>This generates an API with either 3 or 4 GET endpoints and 1 POST endpoint.</p>
+<p>This generates an API with 2-4 GET endpoints and 1 POST endpoint.</p>
 <pre><code>├──/ping (GET)
 ├──/metadata (GET)
-├──/prototype (GET)
+├──/prototype (GET, if `show_prototype` is True)
 ├──/pin-url (GET, if VetiverModel metadata `url` field is not None)
 └──/predict (POST)</code></pre>
 <p>Parameter <code>check_ptype</code> was changed to <code>check_prototype</code>. Handling of <code>check_ptype</code> will be removed in a future version.</p>
@@ -492,7 +484,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </table>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

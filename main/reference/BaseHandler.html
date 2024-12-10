@@ -104,6 +104,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
+<link rel="stylesheet" href="../_styles-quartodoc.css">
 </head>
 
 <body class="nav-sidebar floating nav-fixed fullcontent">
@@ -193,7 +194,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../reference/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Vetiver:v0.2.5.post3+g4749b64</span></a>
+ <span class="menu-text">Vetiver:v0.2.5.post4+gf3e53e6</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -284,8 +285,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../reference/write_docker.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">write_docker</span></a>
+  <a href="../reference/write_docker.write_docker.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">write_docker.write_docker</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -393,39 +394,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="vetiver.BaseHandler" class="level1">
 <h1>BaseHandler</h1>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>BaseHandler(<span class="va">self</span>, model, prototype_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Base handler class for creating VetiverModel of different type.</p>
+<p>Base handler class for creating VetiverModel of different types of model.</p>
+<p>Handlers are used in Vetiver to as a unified interface for different types of models. They are used to generate predictions and create metadata about a trained model.</p>
 <section id="parameters" class="level2 doc-section doc-section-parameters">
 <h2 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters">Parameters</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 15%">
-<col style="width: 7%">
-<col style="width: 65%">
-<col style="width: 11%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>model</td>
-<td></td>
-<td>a trained model</td>
-<td><em>required</em></td>
-</tr>
-<tr class="even">
-<td>prototype_data</td>
-<td></td>
-<td>An object with information (data) whose layout is to be determined.</td>
-<td><em>required</em></td>
-</tr>
-</tbody>
-</table>
+<dl>
+<dt><code><span class="parameter-name"><strong>model</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"></span></code></dt>
+<dd>
+<p>a trained model</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>prototype_data</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"></span></code></dt>
+<dd>
+<p>An object with information (data) whose layout is to be determined.</p>
+</dd>
+</dl>
 </section>
 <section id="methods" class="level2">
 <h2 class="anchored" data-anchor-id="methods">Methods</h2>
@@ -465,54 +447,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Create data prototype for a model</p>
 <section id="parameters-1" class="level4 doc-section doc-section-parameters">
 <h4 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters-1">Parameters</h4>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 16%">
-<col style="width: 35%">
-<col style="width: 35%">
-<col style="width: 12%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>prototype_data</td>
-<td>pd.DataFrame, np.ndarray, or None</td>
-<td>Training data to create prototype</td>
-<td><em>required</em></td>
-</tr>
-</tbody>
-</table>
+<dl>
+<dt><code><span class="parameter-name"><strong>prototype_data</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">pd.DataFrame, np.ndarray, or None</span></code></dt>
+<dd>
+<p>Training data to create prototype</p>
+</dd>
+</dl>
 </section>
 <section id="returns" class="level4 doc-section doc-section-returns">
 <h4 class="doc-section doc-section-returns anchored" data-anchor-id="returns">Returns</h4>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 14%">
-<col style="width: 28%">
-<col style="width: 56%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>prototype</td>
-<td>pd.DataFrame or None</td>
-<td>Zero-row DataFrame for storing data types</td>
-</tr>
-</tbody>
-</table>
+<dl>
+<dt><code><span class="parameter-name"><strong>prototype</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">pd.DataFrame or None</span></code></dt>
+<dd>
+<p>Zero-row DataFrame for storing data types</p>
+</dd>
+</dl>
 </section>
 </section>
 <section id="vetiver.BaseHandler.create_meta" class="level3">
@@ -532,55 +481,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The <code>handler_predict</code> function executes at each API call. Use this function for calling <code>predict()</code> and any other tasks that must be executed at each API call.</p>
 <section id="parameters-2" class="level4 doc-section doc-section-parameters">
 <h4 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters-2">Parameters</h4>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 18%">
-<col style="width: 8%">
-<col style="width: 59%">
-<col style="width: 13%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>input_data</td>
-<td></td>
-<td>Data used to generate prediction</td>
-<td><em>required</em></td>
-</tr>
-<tr class="even">
-<td>check_prototype</td>
-<td></td>
-<td>If type should be checked against <code>prototype</code> or not</td>
-<td><em>required</em></td>
-</tr>
-</tbody>
-</table>
+<dl>
+<dt><code><span class="parameter-name"><strong>input_data</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"></span></code></dt>
+<dd>
+<p>Data used to generate prediction</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>check_prototype</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"></span></code></dt>
+<dd>
+<p>If type should be checked against <code>prototype</code> or not</p>
+</dd>
+</dl>
 </section>
 <section id="returns-1" class="level4 doc-section doc-section-returns">
 <h4 class="doc-section doc-section-returns anchored" data-anchor-id="returns-1">Returns</h4>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td></td>
-<td>prediction</td>
-<td>Prediction from model</td>
-</tr>
-</tbody>
-</table>
+<dl>
+<dt><code><span class="parameter-name"></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">prediction</span></code></dt>
+<dd>
+<p>Prediction from model</p>
+</dd>
+</dl>
 </section>
 </section>
 <section id="vetiver.BaseHandler.handler_startup" class="level3">
