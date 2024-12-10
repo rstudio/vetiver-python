@@ -49,19 +49,25 @@ def write_docker(
 
     Examples
     -------
-    >>> import vetiver
-    >>> import tempfile
-    >>> import pins
-    >>> tmp = tempfile.TemporaryDirectory()
-    >>> board = pins.board_temp(allow_pickle_read=True)
-    >>> X, y = vetiver.get_mock_data()
-    >>> model = vetiver.get_mock_model().fit(X, y)
-    >>> v = vetiver.VetiverModel(model, "my_model", prototype_data = X)
-    >>> vetiver.vetiver_pin_write(board, v)
-    >>> vetiver.write_app(board,
-    ...     "my_model",
-    ...     file = tmp.name + "/app.py") # need file for model
-    >>> vetiver.write_docker(app_file = "app.py", path = tmp.name)
+
+    ```{python}
+    import vetiver
+    import tempfile
+    import pins
+    tmp = tempfile.TemporaryDirectory()
+    board = pins.board_temp(allow_pickle_read=True)
+
+    X, y = vetiver.get_mock_data()
+    model = vetiver.get_mock_model().fit(X, y)
+    v = vetiver.VetiverModel(model, "my_model", prototype_data = X)
+
+    vetiver.vetiver_pin_write(board, v)
+    vetiver.write_app(board,
+        "my_model",
+        file = tmp.name + "/app.py")
+    vetiver.write_docker(app_file = "app.py", path = tmp.name)
+    ```
+
     """
     py_version = str(sys.version_info.major) + "." + str(sys.version_info.minor)
 
@@ -106,7 +112,11 @@ def prepare_docker(
     host: str = "0.0.0.0",
     port: str = "8080",
 ):
-    """Create all files needed for Docker
+    """Generate files needed for Docker
+
+    Deploying a vetiver model via Docker requires several files.
+    This function will generate a Dockerfile, `app.py` file, and
+    a `requirements.txt` to be usedto build and run a Docker container.
 
     Parameters
     ----------
@@ -114,10 +124,10 @@ def prepare_docker(
         Pin board for model
     pin_name : str
         Name of pin
-    path :
+    path : Path | str
         Path to output
-    version :
-        Pin version to be used
+    version : str
+        Pin version to be used. If none is supplied, the most recent pin will be selected.
     rspm_env: bool
         Whether or not Posit Package Manager should be used
     host: str
@@ -127,16 +137,21 @@ def prepare_docker(
 
     Examples
     -------
-    >>> import vetiver
-    >>> import tempfile
-    >>> import pins
-    >>> tmp = tempfile.TemporaryDirectory()
-    >>> board = pins.board_temp(allow_pickle_read=True)
-    >>> X, y = vetiver.get_mock_data()
-    >>> model = vetiver.get_mock_model().fit(X, y)
-    >>> v = vetiver.VetiverModel(model, "my_model", prototype_data = X)
-    >>> vetiver.vetiver_pin_write(board, v)
-    >>> vetiver.prepare_docker(board = board, pin_name = "my_model", path = tmp.name)
+    ```python
+    import vetiver
+    import tempfile
+    import pins
+
+    tmp = tempfile.TemporaryDirectory()
+    board = pins.board_temp(allow_pickle_read=True)
+
+    X, y = vetiver.get_mock_data()
+    model = vetiver.get_mock_model().fit(X, y)
+    v = vetiver.VetiverModel(model, "my_model", prototype_data = X)
+
+    vetiver.vetiver_pin_write(board, v)
+    vetiver.prepare_docker(board = board, pin_name = "my_model", path = tmp.name)
+    ```
 
     Notes
     ------

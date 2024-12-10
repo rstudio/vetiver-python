@@ -33,20 +33,24 @@ def compute_metrics(
 
     Examples
     -------
-    >>> from datetime import timedelta
-    >>> import pandas as pd
-    >>> from sklearn.metrics import mean_squared_error, mean_absolute_error
-    >>> df = pd.DataFrame(
-    ...   {
-    ...        "index": ["2021-01-01", "2021-01-02", "2021-01-03"],
-    ...        "truth": [200, 201, 199],
-    ...        "pred": [198, 200, 199],
-    ...   }
-    ... )
-    >>> td = timedelta(days = 1)
-    >>> metric_set = [mean_squared_error, mean_absolute_error]
-    >>> metrics = compute_metrics(df, "index", td, metric_set, "truth", "pred")
+    ```{python}
+    import pandas as pd
+    from vetiver import compute_metrics
+    from datetime import timedelta
+    from sklearn.metrics import mean_squared_error, mean_absolute_error
 
+    df = pd.DataFrame(
+      {
+           "index": ["2021-01-01", "2021-01-02", "2021-01-03"],
+           "truth": [200, 201, 199],
+           "pred": [198, 200, 199],
+      }
+    )
+    td = timedelta(days = 1)
+    metric_set = [mean_squared_error, mean_absolute_error]
+    metrics = compute_metrics(df, "index", td, metric_set, "truth", "pred")
+    metrics
+    ```
     """
 
     df = data[[truth, estimate, date_var]].copy()
@@ -117,41 +121,43 @@ def pin_metrics(
 
     Examples
     -------
-    >>> import pins
-    >>> import vetiver
-    >>> df = pd.DataFrame(
-    ... {'index': {0: pd.Timestamp('2021-01-01 00:00:00'),
-    ...            1: pd.Timestamp('2021-01-01 00:00:00'),
-    ...            2: pd.Timestamp('2021-01-02 00:00:00'),
-    ...            3: pd.Timestamp('2021-01-02 00:00:00')},
-    ...  'n': {0: 1, 1: 1, 2: 1, 3: 1},
-    ...  'metric': {0: 'mean_squared_error',
-    ...             1: 'mean_absolute_error',
-    ...             2: 'mean_squared_error',
-    ...             3: 'mean_absolute_error'},
-    ...  'estimate': {0: 4.0, 1: 2.0, 2: 1.0, 3: 1.0}}
-    ... )
-    >>> board = pins.board_temp()
+    ```python
+    import pins
+    import vetiver
+    df = pd.DataFrame(
+    {'index': {0: pd.Timestamp('2021-01-01 00:00:00'),
+               1: pd.Timestamp('2021-01-01 00:00:00'),
+               2: pd.Timestamp('2021-01-02 00:00:00'),
+               3: pd.Timestamp('2021-01-02 00:00:00')},
+     'n': {0: 1, 1: 1, 2: 1, 3: 1},
+     'metric': {0: 'mean_squared_error',
+                1: 'mean_absolute_error',
+                2: 'mean_squared_error',
+                3: 'mean_absolute_error'},
+     'estimate': {0: 4.0, 1: 2.0, 2: 1.0, 3: 1.0}}
+    )
+    board = pins.board_temp()
+    board.pin_write(df, "metrics", type = "csv")
 
-    >>> board.pin_write(df, "metrics", type = "csv") # doctest: +SKIP
-    >>> df = pd.DataFrame(
-    ... {'index': {0: pd.Timestamp('2021-01-02 00:00:00'),
-    ...            1: pd.Timestamp('2021-01-02 00:00:00'),
-    ...            2: pd.Timestamp('2021-01-03 00:00:00'),
-    ...            3: pd.Timestamp('2021-01-03 00:00:00')},
-    ...  'n': {0: 1, 1: 1, 2: 1, 3: 1},
-    ...  'metric': {0: 'mean_squared_error',
-    ...             1: 'mean_absolute_error',
-    ...             2: 'mean_squared_error',
-    ...             3: 'mean_absolute_error'},
-    ...  'estimate': {0: 4.0, 1: 6.0, 2: 2.0, 3: 1.0}}
-    ... )
-    >>> vetiver.pin_metrics(     # doctest: +SKIP
-    ...    board=board,
-    ...    df_metrics=df2,
-    ...    metrics_pin_name="metrics",
-    ...    index_name="index",
-    ...    overwrite=True)
+    df = pd.DataFrame(
+    {'index': {0: pd.Timestamp('2021-01-02 00:00:00'),
+               1: pd.Timestamp('2021-01-02 00:00:00'),
+               2: pd.Timestamp('2021-01-03 00:00:00'),
+               3: pd.Timestamp('2021-01-03 00:00:00')},
+     'n': {0: 1, 1: 1, 2: 1, 3: 1},
+     'metric': {0: 'mean_squared_error',
+                1: 'mean_absolute_error',
+                2: 'mean_squared_error',
+                3: 'mean_absolute_error'},
+     'estimate': {0: 4.0, 1: 6.0, 2: 2.0, 3: 1.0}}
+    )
+    vetiver.pin_metrics(
+       board=board,
+       df_metrics=df2,
+       metrics_pin_name="metrics",
+       index_name="index",
+       overwrite=True)
+    ```
 
 
     """
@@ -207,37 +213,51 @@ def plot_metrics(
     df_metrics : DataFrame
          Pandas dataframe of metrics over time, such as created by `compute_metrics()`
     date: str
-         Column in `df_metrics` containing dates
+         Name of column in `df_metrics` containing dates
     estimate: str
-         Column in `df_metrics` containing metric output
+          Name of column in `df_metrics` containing metric output
     metric: str
-         Column in `df_metrics` containing metric name
+          Name of column in `df_metrics` containing metric name
     n: str
-         Column in `df_metrics` containing number of observations
+          Name of column in `df_metrics` containing number of observations
+
+    Returns
+    -------
+    plotly.express.line
+        A plotly line plot is returned with metrics over time
 
     Examples
     -------
-    >>> import vetiver
-    >>> import pandas as pd
-    >>> df = pd.DataFrame(
-    ... {'index': {0: pd.Timestamp('2021-01-01 00:00:00'),
-    ...            1: pd.Timestamp('2021-01-01 00:00:00'),
-    ...            2: pd.Timestamp('2021-01-02 00:00:00'),
-    ...            3: pd.Timestamp('2021-01-02 00:00:00')},
-    ...  'n': {0: 1, 1: 1, 2: 1, 3: 1},
-    ...  'metric': {0: 'mean_squared_error',
-    ...             1: 'mean_absolute_error',
-    ...             2: 'mean_squared_error',
-    ...             3: 'mean_absolute_error'},
-    ...  'estimate': {0: 4.0, 1: 2.0, 2: 1.0, 3: 1.0}}
-    ... )
-    >>> plot = vetiver.plot_metrics(
-    ...     df_metrics = df,
-    ...     date = "index",
-    ...     estimate = "estimate",
-    ...     metric = "metric",
-    ...     n = "n")
-    >>> plot.show()    # doctest: +SKIP
+
+    First, we will set up some example data.
+
+    ```{python}
+    import vetiver
+    import pandas as pd
+
+    # Example data
+    df = pd.DataFrame(
+    {'index': {0: pd.Timestamp('2021-01-01 00:00:00'),
+               1: pd.Timestamp('2021-01-01 00:00:00'),
+               2: pd.Timestamp('2021-01-02 00:00:00'),
+               3: pd.Timestamp('2021-01-02 00:00:00')},
+     'n': {0: 1, 1: 1, 2: 1, 3: 1},
+     'metric': {0: 'mean_squared_error',
+                1: 'mean_absolute_error',
+                2: 'mean_squared_error',
+                3: 'mean_absolute_error'},
+     'estimate': {0: 4.0, 1: 2.0, 2: 1.0, 3: 1.0}}
+    )
+
+    plot = vetiver.plot_metrics(
+        df_metrics = df,
+        date = "index",
+        estimate = "estimate",
+        metric = "metric",
+        n = "n")
+
+    plot.show()
+    ```
     """
 
     fig = px.line(

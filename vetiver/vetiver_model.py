@@ -35,7 +35,7 @@ class VetiverModel:
         If omitted, a brief description will be generated.
     metadata : dict
         Other details to be saved and accessed for serving
-    **kwargs: dict
+    kwargs: dict
         Deprecated parameters.
 
     Attributes
@@ -54,12 +54,14 @@ class VetiverModel:
 
     Examples
     -------
-    >>> from vetiver import mock, VetiverModel
-    >>> X, y = mock.get_mock_data()
-    >>> model = mock.get_mock_model().fit(X, y)
-    >>> v = VetiverModel(model = model, model_name = "my_model", prototype_data = X)
-    >>> v.description
-    'A scikit-learn DummyRegressor model'
+
+    ```{python}
+    from vetiver import mock, VetiverModel
+    X, y = mock.get_mock_data()
+    model = mock.get_mock_model().fit(X, y)
+    v = VetiverModel(model = model, model_name = "my_model", prototype_data = X)
+    v.description
+    ```
     """
 
     def __init__(

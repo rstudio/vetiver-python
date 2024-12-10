@@ -37,12 +37,13 @@ def create_handler(model, prototype_data):
 
     Examples
     --------
-    >>> import vetiver
-    >>> X, y = vetiver.mock.get_mock_data()
-    >>> model = vetiver.mock.get_mock_model()
-    >>> handler = vetiver.create_handler(model, X)
-    >>> handler.describe()
-    'A scikit-learn DummyRegressor model'
+    ```{python}
+    import vetiver
+    X, y = vetiver.mock.get_mock_data()
+    model = vetiver.mock.get_mock_model()
+    handler = vetiver.create_handler(model, X)
+    handler.describe()
+    ```
     """
 
     raise InvalidModelError(
@@ -56,7 +57,10 @@ def create_handler(model, prototype_data):
 
 
 class BaseHandler:
-    """Base handler class for creating VetiverModel of different type.
+    """Base handler class for creating VetiverModel of different types of model.
+
+    Handlers are used in Vetiver to as a unified interface for different types of models.
+    They are used to generate predictions and create metadata about a trained model.
 
     Parameters
     ----------
