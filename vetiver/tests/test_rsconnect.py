@@ -68,7 +68,7 @@ def test_deploy(rsc_short):
 
     v = vetiver.VetiverModel(model=model, prototype_data=X_df, model_name="susan/model")
 
-    board = pins.board_rsconnect(
+    board = pins.board_connect(
         server_url=RSC_SERVER_URL, api_key=get_key("susan"), allow_pickle_read=True
     )
 
@@ -76,7 +76,7 @@ def test_deploy(rsc_short):
     connect_server = RSConnectServer(url=RSC_SERVER_URL, api_key=get_key("susan"))
     assert isinstance(board.pin_read("susan/model"), sklearn.dummy.DummyRegressor)
 
-    vetiver.deploy_rsconnect(
+    vetiver.deploy_connect(
         connect_server=connect_server,
         board=board,
         pin_name="susan/model",

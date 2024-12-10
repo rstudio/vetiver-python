@@ -69,7 +69,7 @@ def deploy_connect(
     )
 
     # Deploy model, which should already be pinned on Posit Connect
-    vetiver.deploy_rsconnect(
+    vetiver.deploy_connect(
         connect_server = connect_server,
         board = board,
        pin_name = "my_model"
@@ -134,7 +134,12 @@ def deploy_rsconnect(
     image: str = None,
 ):
     """Deprecated. Use `deploy_connect` instead."""
-    warnings.warn("deploy_rsconnect is deprecated. Use deploy_connect instead.")
+
+    warnings.warn(
+        "deploy_rsconnect is deprecated and will be removed in a future version. "
+        "Use deploy_connect instead."
+    )
+
     deploy_connect(
         connect_server=connect_server,
         board=board,
