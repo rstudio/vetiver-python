@@ -64,6 +64,8 @@ def serialize_prototype(prototype):
 
     serialized_schema = dict()
     for key, value in schema.items():
-        serialized_schema[key] = value.get("example") or value.get("default")
+        example = value.get("example", None)
+        default = value.get("default", None)
+        serialized_schema[key] = example if example is not None else default
 
     return json.dumps(serialized_schema)
