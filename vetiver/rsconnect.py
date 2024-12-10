@@ -2,6 +2,7 @@ import os
 import shutil
 import tempfile
 import typing
+import warnings
 
 from rsconnect.actions import deploy_python_fastapi
 from rsconnect.api import RSConnectServer as ConnectServer
@@ -9,7 +10,7 @@ from rsconnect.api import RSConnectServer as ConnectServer
 from .write_fastapi import write_app
 
 
-def deploy_rsconnect(
+def deploy_connect(
     connect_server: ConnectServer,
     board,
     pin_name: str,
@@ -116,3 +117,35 @@ def deploy_rsconnect(
             log_callback=log_callback,
             image=image,
         )
+
+
+def deploy_rsconnect(
+    connect_server: ConnectServer,
+    board,
+    pin_name: str,
+    version: str = None,
+    extra_files: typing.List[str] = None,
+    new: bool = False,
+    app_id: int = None,
+    title: str = None,
+    python: str = None,
+    force_generate: bool = False,
+    log_callback: typing.Callable = None,
+    image: str = None,
+):
+    """Deprecated. Use `deploy_connect` instead."""
+    warnings.warn("deploy_rsconnect is deprecated. Use deploy_connect instead.")
+    deploy_connect(
+        connect_server=connect_server,
+        board=board,
+        pin_name=pin_name,
+        version=version,
+        extra_files=extra_files,
+        new=new,
+        app_id=app_id,
+        title=title,
+        python=python,
+        force_generate=force_generate,
+        log_callback=log_callback,
+        image=image,
+    )
