@@ -73,7 +73,7 @@ docs = [
 statsmodels = ["statsmodels"]
 torch = ["torch"]
 xgboost = ["xgboost"]
-spacy = ["spacy; python_version >= '3.13'"]
+spacy = ["spacy; python_version < '3.13'"]
 typecheck = [
     "pyright",
     "pandas-stubs"
