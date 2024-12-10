@@ -68,8 +68,7 @@ dev = [
 docs = [
     "quartodoc",
     # quarto render dependencies
-    "nbformat",
-    "nbclient"
+    "jupyter"
 ]
 statsmodels = ["statsmodels"]
 torch = ["torch"]
