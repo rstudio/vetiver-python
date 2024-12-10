@@ -110,6 +110,41 @@ def test_vetiver_model_dict_like_prototype(prototype_data):
     assert json_schema == expected
 
 
+@pytest.mark.skipif(
+    pydantic.__version__.startswith("1"), reason="only run for pydantic v2"
+)
+@pytest.mark.parametrize(
+    "prototype_data,expected",
+    [
+        (
+            {"B": 0, "C": False, "D": None},
+            {
+                "properties": {
+                    "B": {"example": 0, "title": "B", "type": "integer"},
+                    "C": {"example": False, "title": "C", "type": "boolean"},
+                    "D": {"example": None, "title": "D", "type": "null"},
+                },
+                "required": ["B", "C", "D"],
+                "title": "prototype",
+                "type": "object",
+            },
+        )
+    ],
+)
+def test_falsy_prototypes(prototype_data, expected):
+    v = VetiverModel(
+        model=model,
+        prototype_data=prototype_data,
+        model_name="model",
+        versioned=None,
+        description=None,
+        metadata=None,
+    )
+
+    assert isinstance(v.prototype.construct(), pydantic.BaseModel)
+    assert v.prototype.model_json_schema() == expected
+
+
 @pytest.mark.parametrize("prototype_data", [MockPrototype(B=4, C=0, D=0), None])
 def test_vetiver_model_prototypes(prototype_data):
     v = VetiverModel(
