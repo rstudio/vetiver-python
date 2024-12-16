@@ -368,9 +368,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
+<section id="common-pitfalls" class="level2">
+<h2 class="anchored" data-anchor-id="common-pitfalls">Common Pitfalls</h2>
+<p>When deploying custom code, the most common error is something similar to <code>AttributeError: Can't get attribute 'ExampleModel' on &lt;module '__main__' (built-in)&gt;</code>. There are a few possible causes for this error:</p>
+<ol type="1">
+<li><p>The original <code>ExampleModel</code> may have been pinned from inside a Jupyter Notebook. Because pickling only saves a reference for how to read a class, not the source code, a custom model transformer pinned from a Jupyter Notebook cannot be imported and resolved later. To fix this, repin your model/transformer from inside a Python script.</p></li>
+<li><p>You may not be uploading the custom code to be used later. When deploying, you’ll want to add the files containing your custom code to the <code>extra_files</code> argument so that it can be imported, eg, <code>vetiver.deploy_rsconnect(connect_server, board, model_name, extra_files=['custom_model.py', 'requirements.txt'])</code> .</p></li>
+</ol>
 <p>Please note that the above steps are a general guide, and you may need to adapt them to your specific use case and deployment environment. If you have any questions, please consider <a href="https://github.com/rstudio/vetiver-python/issues/new">opening an issue</a>.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
