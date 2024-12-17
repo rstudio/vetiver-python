@@ -22,7 +22,7 @@ from sklearn import metrics
 from vetiver import VetiverModel, compute_metrics, plot_metrics
 from sklearn.metrics import recall_score, accuracy_score
 
-raw = "https://colorado.rstudio.com/rsc"
+raw = "https://pub.palm.ptd.posit.it/public"
 paths = {"chicago-model-python": "chicago-model-python/"}
 board = pins.board_url(raw, paths, allow_pickle_read=True)
 v = VetiverModel.from_pin(board, "chicago-model-python")
@@ -35,8 +35,8 @@ days_old = datetime.today() - datetime.strptime(v_meta.created, "%Y%m%dT%H%M%SZ"
 ## add any code you need to import new data and make predictions
 
 # import new data to track performance over time
-raw = "https://colorado.rstudio.com/rsc"
-paths = {"new-data": "inspections-new-data/"}
+raw = "https://pub.palm.ptd.posit.it/public"
+paths = {"new-data": "inspections-monitor/"}
 board = pins.board_url(raw, paths, allow_pickle_read=True)
 inspections_new = board.pin_read("new-data")
 
@@ -73,7 +73,7 @@ Model details
 - This model has the prototype:
 
 ```
-`{python} v.prototype.construct().schema().get("properties")`
+`{python} v.prototype.model_json_schema()`
 ```
 
 - The model was created by ...
@@ -125,8 +125,13 @@ Write your own code to make visualizations or tables with the new validation dat
 ## Column
 
 ```{python}
+# For your own model, you can use
+# the following code with your URL
+# to display your model API's visual documentation
+
 from IPython.display import IFrame
-IFrame('https://colorado.posit.co/rsc/chicago-inspections-python', width=750, height=350)
+url = "your-model-api-url"
+IFrame(url, width=750, height=350)
 ```
 ---
 
