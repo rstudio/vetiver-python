@@ -40,7 +40,7 @@
     "href": "reference/vetiver_pin_write.html#examples",
     "title": "vetiver_pin_write",
     "section": "Examples",
-    "text": "Examples\n\nimport vetiver\nfrom pins import board_temp\nmodel_board = board_temp(versioned = True, allow_pickle_read = True)\nX, y = vetiver.get_mock_data()\nmodel = vetiver.get_mock_model().fit(X, y)\nv = vetiver.VetiverModel(model, \"my_model\", prototype_data = X)\nvetiver.vetiver_pin_write(model_board, v)\n\nModel Cards provide a framework for transparent, responsible reporting. \n Use the vetiver `.qmd` Quarto template as a place to start, \n with vetiver.model_card()\nWriting pin:\nName: 'my_model'\nVersion: 20241217T022807Z-376eb",
+    "text": "Examples\n\nimport vetiver\nfrom pins import board_temp\nmodel_board = board_temp(versioned = True, allow_pickle_read = True)\nX, y = vetiver.get_mock_data()\nmodel = vetiver.get_mock_model().fit(X, y)\nv = vetiver.VetiverModel(model, \"my_model\", prototype_data = X)\nvetiver.vetiver_pin_write(model_board, v)\n\nModel Cards provide a framework for transparent, responsible reporting. \n Use the vetiver `.qmd` Quarto template as a place to start, \n with vetiver.model_card()\nWriting pin:\nName: 'my_model'\nVersion: 20241217T024539Z-b7a42",
     "crumbs": [
       "Reference",
       "Version",
@@ -292,7 +292,7 @@
     "href": "reference/write_docker.write_docker.html#examples",
     "title": "write_docker.write_docker",
     "section": "Examples",
-    "text": "Examples\n\nimport vetiver\nimport tempfile\nimport pins\ntmp = tempfile.TemporaryDirectory()\nboard = pins.board_temp(allow_pickle_read=True)\n\nX, y = vetiver.get_mock_data()\nmodel = vetiver.get_mock_model().fit(X, y)\nv = vetiver.VetiverModel(model, \"my_model\", prototype_data = X)\n\nvetiver.vetiver_pin_write(board, v)\nvetiver.write_app(board,\n    \"my_model\",\n    file = tmp.name + \"/app.py\")\nvetiver.write_docker(app_file = \"app.py\", path = tmp.name)\n\nModel Cards provide a framework for transparent, responsible reporting. \n Use the vetiver `.qmd` Quarto template as a place to start, \n with vetiver.model_card()\nWriting pin:\nName: 'my_model'\nVersion: 20241217T022747Z-07e54",
+    "text": "Examples\n\nimport vetiver\nimport tempfile\nimport pins\ntmp = tempfile.TemporaryDirectory()\nboard = pins.board_temp(allow_pickle_read=True)\n\nX, y = vetiver.get_mock_data()\nmodel = vetiver.get_mock_model().fit(X, y)\nv = vetiver.VetiverModel(model, \"my_model\", prototype_data = X)\n\nvetiver.vetiver_pin_write(board, v)\nvetiver.write_app(board,\n    \"my_model\",\n    file = tmp.name + \"/app.py\")\nvetiver.write_docker(app_file = \"app.py\", path = tmp.name)\n\nModel Cards provide a framework for transparent, responsible reporting. \n Use the vetiver `.qmd` Quarto template as a place to start, \n with vetiver.model_card()\nWriting pin:\nName: 'my_model'\nVersion: 20241217T024520Z-18e54",
     "crumbs": [
       "Reference",
       "Deploy",
@@ -464,25 +464,39 @@
     "href": "changelog.html",
     "title": "Release notes",
     "section": "",
-    "text": "For full details, view the commit logs.\n\n\n\n\n\nFull Changelog\n\nMAINT: refactor tests in GH209\nDOCS: Update link to custom handlers documentation in GH208\nENH: add Field examples to model prototypes in GH210\n\n\n\n\n\n\n\nFull Changelog\n\nMAINT: drop Python 3.7 support in GH199\nMAINT: Conda mode deprecated from rsconnect-python pkg in GH197\nMAINT: bump minimum rsconnect to 1.11.0 in GH200\nBUG: remove trailing backslash in GH201\nDOCS: deploying custom elements in GH195\nFEAT: quarto monitoring dashboard template in GH203\nBUG: ignore more in pyright in GH204\nENH: load dotenv file into generated app.py file in GH205\n\n\n\n\n\n\n\nFull Changelog\n\nENH: add root_path if user in Posit Workbench in GH191\n\n\n\n\n\n\nFull Changelog\n\nDOCS: add square logo in GH173\nDOCS: add API structure documentation in GH176\nDOCS: update docs to look less like vetiver.rstudio.com in GH178\nBUG: remove all in init in GH182\nMAINT: require no less than pins 0.7.1 in GH183\nENH: endpoint_fx docstring as FastAPI description in GH179\nMAINT: Update Pydantic usage for v2 compatibility in GH185\nMAINT: Update model_card.qmd by in GH186\nENH: add /GET prototype endpoint in GH174\nBUG: use max instead of first in GH189\n\n\n\n\n\n\n\nFull Changelog\n\nDOC: add changelog in GH151\nFIX: None type handling for python_version in metadata GH149vetiver-python/pull/149\nMatch GHA Python versions to Connect GH157\nDOCS: move from sphinx to quartodoc GH153\nBUG,CI: /latest not rendering correctly GH158\nMAINT: spring cleaning GH160\nDOCS: Add netlify docs preview GH163\nMAINT: spring cleaning GH164\nENH: Refactor server handling GH155\nFEAT: add required packages to authorize pins boards GH166pull/166\nMAINT: start typing vetiver GH168\nFEAT: add new /metadata GET endpoint GH170\nFEAT: implement spacy models GH143\n\n\n\n\n\n\n\nFull Changelog\n\nDOC: Added missing model_name to VetiverModel in GH128\nBUG, MAINT: Catch non 200 codes in GH129\nDOC: fix deploy_rsconnect example in GH1234\nENH: Make vetiver_post extensible for all endpoints in GH130\nTEST: ci testing to run generated dockerfile in GH136\nMAINT: rsconnect-python&gt;=1.8.0 in GH132\nENH: New prepare_docker function in GH137\nDOC: refresh README and add to docs in GH141\nTEST: Update weekly tests: only run necessary tests in GH142\nMAINT: update ptype_data to prototype_data in GH138\nENH: Refactor metadata in GH126\nMAINT: remove stars for explicit imports in GH145\nDOC: Changing language from “Example” to “Examples” for docstrings in GH146\nENH: Added Python version to vetiver_pin_write in GH127\n\n\n\n\n\n\n\nFull Changelog\n\nTEST: pins&lt;&gt;vetiver compatibility test in GH113\nTEST: Update weekly tests to include rsconnect-python in GH117\nDOC: Missing whitespace in InvalidModelError in GH120\nMAINT: Remove xfail from test_rsconnect in GH119\nMAINT: Add httpx in GH125\nENH: Add pin URL to REST API and metadata in GH123\n\n\n\n\n\n\n\nFull Changelog\n\nENH, DOC: have stable and latest docs in GH93\nBUG: bug fix for load_pkgs function on Windows OS in GH98\nMAINT: Update attach_pkgs.py in GH99\nENH: implement statsmodels handler in GH100\nFEAT: xgboost handler in GH101\nENH: adding model card template in GH106\nBUG: refactor pseudo version to pin_url in model card in GH107\nDOC: adding docs, small refactoring in GH108\nENH, DOC: add examples to docstrings in GH109\n\n\n\n\n\n\n\nFull Changelog\n\nENH: add rsconnect_deploy support for board_folder in GH77\nENH: model monitoring in GH76\nDOC: add mini chicago dataset in GH81\nMAINT: remove trailing slashes in API paths GH\nENH: explicitly add n to hover data in plot_metrics in GH84\nENH: initial vetiver_pin_metrics implementation in GH82\nMAINT, ENH: Use setuptools_scm for tagged versioning in GH86\nENH: handlers to register themselves in GH87\nBUG: coerce date var to datetime in GH89"
+    "text": "For full details, view the commit logs.\n\n\n\n\n\nFull Changelog\n\n\n\n\nDOCS: Update forum URL in GH212\nMAINT: call docker compose for containers in GH216\nMAINT: drop Python 3.8 in GH224\nDOCS: refresh and build examples in CI in 222\nBUGFIX: pinned bool columns show up as None in GH225\nMAINT: move from deploy_rsconnect to deploy_connect by in GH226\nMAINT: update actions/upload-artifact action to latest version in GH227\ndocs: add common pitfalls section to deploying custom code in GH228\nMAINT: update templates to render out of the box in GH229\n\n\n\n\n\n\n\nFull Changelog\n\nMAINT: refactor tests in GH209\nDOCS: Update link to custom handlers documentation in GH208\nENH: add Field examples to model prototypes in GH210\n\n\n\n\n\n\n\nFull Changelog\n\nMAINT: drop Python 3.7 support in GH199\nMAINT: Conda mode deprecated from rsconnect-python pkg in GH197\nMAINT: bump minimum rsconnect to 1.11.0 in GH200\nBUG: remove trailing backslash in GH201\nDOCS: deploying custom elements in GH195\nFEAT: quarto monitoring dashboard template in GH203\nBUG: ignore more in pyright in GH204\nENH: load dotenv file into generated app.py file in GH205\n\n\n\n\n\n\n\nFull Changelog\n\nENH: add root_path if user in Posit Workbench in GH191\n\n\n\n\n\n\nFull Changelog\n\nDOCS: add square logo in GH173\nDOCS: add API structure documentation in GH176\nDOCS: update docs to look less like vetiver.rstudio.com in GH178\nBUG: remove all in init in GH182\nMAINT: require no less than pins 0.7.1 in GH183\nENH: endpoint_fx docstring as FastAPI description in GH179\nMAINT: Update Pydantic usage for v2 compatibility in GH185\nMAINT: Update model_card.qmd by in GH186\nENH: add /GET prototype endpoint in GH174\nBUG: use max instead of first in GH189\n\n\n\n\n\n\n\nFull Changelog\n\nDOC: add changelog in GH151\nFIX: None type handling for python_version in metadata GH149vetiver-python/pull/149\nMatch GHA Python versions to Connect GH157\nDOCS: move from sphinx to quartodoc GH153\nBUG,CI: /latest not rendering correctly GH158\nMAINT: spring cleaning GH160\nDOCS: Add netlify docs preview GH163\nMAINT: spring cleaning GH164\nENH: Refactor server handling GH155\nFEAT: add required packages to authorize pins boards GH166pull/166\nMAINT: start typing vetiver GH168\nFEAT: add new /metadata GET endpoint GH170\nFEAT: implement spacy models GH143\n\n\n\n\n\n\n\nFull Changelog\n\nDOC: Added missing model_name to VetiverModel in GH128\nBUG, MAINT: Catch non 200 codes in GH129\nDOC: fix deploy_rsconnect example in GH1234\nENH: Make vetiver_post extensible for all endpoints in GH130\nTEST: ci testing to run generated dockerfile in GH136\nMAINT: rsconnect-python&gt;=1.8.0 in GH132\nENH: New prepare_docker function in GH137\nDOC: refresh README and add to docs in GH141\nTEST: Update weekly tests: only run necessary tests in GH142\nMAINT: update ptype_data to prototype_data in GH138\nENH: Refactor metadata in GH126\nMAINT: remove stars for explicit imports in GH145\nDOC: Changing language from “Example” to “Examples” for docstrings in GH146\nENH: Added Python version to vetiver_pin_write in GH127\n\n\n\n\n\n\n\nFull Changelog\n\nTEST: pins&lt;&gt;vetiver compatibility test in GH113\nTEST: Update weekly tests to include rsconnect-python in GH117\nDOC: Missing whitespace in InvalidModelError in GH120\nMAINT: Remove xfail from test_rsconnect in GH119\nMAINT: Add httpx in GH125\nENH: Add pin URL to REST API and metadata in GH123\n\n\n\n\n\n\n\nFull Changelog\n\nENH, DOC: have stable and latest docs in GH93\nBUG: bug fix for load_pkgs function on Windows OS in GH98\nMAINT: Update attach_pkgs.py in GH99\nENH: implement statsmodels handler in GH100\nFEAT: xgboost handler in GH101\nENH: adding model card template in GH106\nBUG: refactor pseudo version to pin_url in model card in GH107\nDOC: adding docs, small refactoring in GH108\nENH, DOC: add examples to docstrings in GH109\n\n\n\n\n\n\n\nFull Changelog\n\nENH: add rsconnect_deploy support for board_folder in GH77\nENH: model monitoring in GH76\nDOC: add mini chicago dataset in GH81\nMAINT: remove trailing slashes in API paths GH\nENH: explicitly add n to hover data in plot_metrics in GH84\nENH: initial vetiver_pin_metrics implementation in GH82\nMAINT, ENH: Use setuptools_scm for tagged versioning in GH86\nENH: handlers to register themselves in GH87\nBUG: coerce date var to datetime in GH89"
   },
   {
     "objectID": "changelog.html#whats-changed",
     "href": "changelog.html#whats-changed",
     "title": "Release notes",
     "section": "",
-    "text": "Full Changelog\n\nMAINT: refactor tests in GH209\nDOCS: Update link to custom handlers documentation in GH208\nENH: add Field examples to model prototypes in GH210"
+    "text": "Full Changelog"
   },
   {
     "objectID": "changelog.html#whats-changed-1",
     "href": "changelog.html#whats-changed-1",
     "title": "Release notes",
     "section": "",
-    "text": "Full Changelog\n\nMAINT: drop Python 3.7 support in GH199\nMAINT: Conda mode deprecated from rsconnect-python pkg in GH197\nMAINT: bump minimum rsconnect to 1.11.0 in GH200\nBUG: remove trailing backslash in GH201\nDOCS: deploying custom elements in GH195\nFEAT: quarto monitoring dashboard template in GH203\nBUG: ignore more in pyright in GH204\nENH: load dotenv file into generated app.py file in GH205"
+    "text": "DOCS: Update forum URL in GH212\nMAINT: call docker compose for containers in GH216\nMAINT: drop Python 3.8 in GH224\nDOCS: refresh and build examples in CI in 222\nBUGFIX: pinned bool columns show up as None in GH225\nMAINT: move from deploy_rsconnect to deploy_connect by in GH226\nMAINT: update actions/upload-artifact action to latest version in GH227\ndocs: add common pitfalls section to deploying custom code in GH228\nMAINT: update templates to render out of the box in GH229"
   },
   {
     "objectID": "changelog.html#whats-changed-2",
     "href": "changelog.html#whats-changed-2",
+    "title": "Release notes",
+    "section": "",
+    "text": "Full Changelog\n\nMAINT: refactor tests in GH209\nDOCS: Update link to custom handlers documentation in GH208\nENH: add Field examples to model prototypes in GH210"
+  },
+  {
+    "objectID": "changelog.html#whats-changed-3",
+    "href": "changelog.html#whats-changed-3",
+    "title": "Release notes",
+    "section": "",
+    "text": "Full Changelog\n\nMAINT: drop Python 3.7 support in GH199\nMAINT: Conda mode deprecated from rsconnect-python pkg in GH197\nMAINT: bump minimum rsconnect to 1.11.0 in GH200\nBUG: remove trailing backslash in GH201\nDOCS: deploying custom elements in GH195\nFEAT: quarto monitoring dashboard template in GH203\nBUG: ignore more in pyright in GH204\nENH: load dotenv file into generated app.py file in GH205"
+  },
+  {
+    "objectID": "changelog.html#whats-changed-4",
+    "href": "changelog.html#whats-changed-4",
     "title": "Release notes",
     "section": "",
     "text": "Full Changelog\n\nENH: add root_path if user in Posit Workbench in GH191"
@@ -620,7 +634,7 @@
     "href": "reference/write_app.html#examples",
     "title": "write_app",
     "section": "Examples",
-    "text": "Examples\n\nimport vetiver\nimport tempfile\nimport pins\n\ntmp = tempfile.TemporaryDirectory()\nboard = pins.board_temp(allow_pickle_read=True)\n\nX, y = vetiver.get_mock_data()\nmodel = vetiver.get_mock_model().fit(X, y)\nv = vetiver.VetiverModel(model, \"my_model\", prototype_data = X)\n\nvetiver.vetiver_pin_write(board, v)\nvetiver.write_app(board,\n    \"my_model\",\n    file = tmp.name + \"/app.py\")\n\nModel Cards provide a framework for transparent, responsible reporting. \n Use the vetiver `.qmd` Quarto template as a place to start, \n with vetiver.model_card()\nWriting pin:\nName: 'my_model'\nVersion: 20241217T022735Z-d719a",
+    "text": "Examples\n\nimport vetiver\nimport tempfile\nimport pins\n\ntmp = tempfile.TemporaryDirectory()\nboard = pins.board_temp(allow_pickle_read=True)\n\nX, y = vetiver.get_mock_data()\nmodel = vetiver.get_mock_model().fit(X, y)\nv = vetiver.VetiverModel(model, \"my_model\", prototype_data = X)\n\nvetiver.vetiver_pin_write(board, v)\nvetiver.write_app(board,\n    \"my_model\",\n    file = tmp.name + \"/app.py\")\n\nModel Cards provide a framework for transparent, responsible reporting. \n Use the vetiver `.qmd` Quarto template as a place to start, \n with vetiver.model_card()\nWriting pin:\nName: 'my_model'\nVersion: 20241217T024508Z-97a24",
     "crumbs": [
       "Reference",
       "Deploy",
@@ -918,7 +932,7 @@
   {
     "objectID": "reference/index.html",
     "href": "reference/index.html",
-    "title": "Vetiver:v0.2.5.post9+gc6b33de",
+    "title": "Vetiver:v0.2.5.post10+g6a74b2f",
     "section": "",
     "text": "VetiverModel\nCreate VetiverModel class for serving.\n\n\nvetiver_pin_write\nPin a trained VetiverModel along with other model metadata.\n\n\nvetiver_create_prototype\nCreate zero row structure to save data types\n\n\ntemplates.model_card\nCreate a model card for documentation\n\n\n\n\n\n\n\n\n\nVetiverAPI\nCreate model aware API\n\n\nVetiverAPI.run\nStart API\n\n\nVetiverAPI.vetiver_post\nCreate new POST endpoint that is aware of model input data\n\n\nvetiver_endpoint\nWrap url where VetiverModel will be deployed\n\n\npredict\nMake a prediction from model endpoint\n\n\nwrite_app\nWrite VetiverAPI app to a file\n\n\nprepare_docker\nGenerate files needed for Docker\n\n\nwrite_docker.write_docker\nWrites a Dockerfile to run VetiverAPI in a container\n\n\ndeploy_rsconnect\nDeprecated. Use deploy_connect instead.\n\n\n\n\n\n\n\n\n\ncompute_metrics\nCompute metrics for given time period\n\n\npin_metrics\nUpdate an existing pin storing model metrics over time\n\n\nplot_metrics\nPlot metrics over a given time period\n\n\ntemplates.monitoring_dashboard\nGenerate a monitoring dashboard template\n\n\n\n\n\n\n\n\n\nBaseHandler\nBase handler class for creating VetiverModel of different types of model.\n\n\nSKLearnHandler\nHandler class for creating VetiverModels with sklearn.\n\n\nTorchHandler\nHandler class for creating VetiverModels with torch.\n\n\nStatsmodelsHandler\nHandler class for creating VetiverModels with statsmodels.\n\n\nXGBoostHandler\nHandler class for creating VetiverModels with xgboost.\n\n\nSpacyHandler\nHandler class for creating VetiverModels with spacy.",
     "crumbs": [
@@ -929,7 +943,7 @@
   {
     "objectID": "reference/index.html#version",
     "href": "reference/index.html#version",
-    "title": "Vetiver:v0.2.5.post9+gc6b33de",
+    "title": "Vetiver:v0.2.5.post10+g6a74b2f",
     "section": "",
     "text": "VetiverModel\nCreate VetiverModel class for serving.\n\n\nvetiver_pin_write\nPin a trained VetiverModel along with other model metadata.\n\n\nvetiver_create_prototype\nCreate zero row structure to save data types\n\n\ntemplates.model_card\nCreate a model card for documentation",
     "crumbs": [
@@ -940,7 +954,7 @@
   {
     "objectID": "reference/index.html#deploy",
     "href": "reference/index.html#deploy",
-    "title": "Vetiver:v0.2.5.post9+gc6b33de",
+    "title": "Vetiver:v0.2.5.post10+g6a74b2f",
     "section": "",
     "text": "VetiverAPI\nCreate model aware API\n\n\nVetiverAPI.run\nStart API\n\n\nVetiverAPI.vetiver_post\nCreate new POST endpoint that is aware of model input data\n\n\nvetiver_endpoint\nWrap url where VetiverModel will be deployed\n\n\npredict\nMake a prediction from model endpoint\n\n\nwrite_app\nWrite VetiverAPI app to a file\n\n\nprepare_docker\nGenerate files needed for Docker\n\n\nwrite_docker.write_docker\nWrites a Dockerfile to run VetiverAPI in a container\n\n\ndeploy_rsconnect\nDeprecated. Use deploy_connect instead.",
     "crumbs": [
@@ -951,7 +965,7 @@
   {
     "objectID": "reference/index.html#monitor",
     "href": "reference/index.html#monitor",
-    "title": "Vetiver:v0.2.5.post9+gc6b33de",
+    "title": "Vetiver:v0.2.5.post10+g6a74b2f",
     "section": "",
     "text": "compute_metrics\nCompute metrics for given time period\n\n\npin_metrics\nUpdate an existing pin storing model metrics over time\n\n\nplot_metrics\nPlot metrics over a given time period\n\n\ntemplates.monitoring_dashboard\nGenerate a monitoring dashboard template",
     "crumbs": [
@@ -962,7 +976,7 @@
   {
     "objectID": "reference/index.html#model-handlers",
     "href": "reference/index.html#model-handlers",
-    "title": "Vetiver:v0.2.5.post9+gc6b33de",
+    "title": "Vetiver:v0.2.5.post10+g6a74b2f",
     "section": "",
     "text": "BaseHandler\nBase handler class for creating VetiverModel of different types of model.\n\n\nSKLearnHandler\nHandler class for creating VetiverModels with sklearn.\n\n\nTorchHandler\nHandler class for creating VetiverModels with torch.\n\n\nStatsmodelsHandler\nHandler class for creating VetiverModels with statsmodels.\n\n\nXGBoostHandler\nHandler class for creating VetiverModels with xgboost.\n\n\nSpacyHandler\nHandler class for creating VetiverModels with spacy.",
     "crumbs": [
