@@ -3,6 +3,23 @@
 
 For full details, view the [commit logs](https://github.com/rstudio/vetiver-python/commits/).
 
+## v0.2.6
+## What's Changed
+
+[**Full Changelog**](https://github.com/rstudio/vetiver-python/compare/v0.2.5...v0.2.6)
+
+## What's Changed
+* DOCS: Update forum URL [in GH212](https://github.com/rstudio/vetiver-python/pull/212)
+* MAINT: call docker compose for containers [in GH216](https://github.com/rstudio/vetiver-python/pull/216)
+* MAINT: drop Python 3.8 [in GH224](https://github.com/rstudio/vetiver-python/pull/224)
+* DOCS: refresh and build examples in CI [in 222](https://github.com/rstudio/vetiver-python/pull/222)
+* BUGFIX: pinned `bool` columns show up as `None` [in GH225](https://github.com/rstudio/vetiver-python/pull/225)
+* MAINT: move from `deploy_rsconnect` to `deploy_connect` by [in GH226](https://github.com/rstudio/vetiver-python/pull/226)
+* MAINT: update `actions/upload-artifact` action to latest version [in GH227](https://github.com/rstudio/vetiver-python/pull/227)
+* docs: add common pitfalls section to deploying custom code [in GH228](https://github.com/rstudio/vetiver-python/pull/228)
+* MAINT: update templates to render out of the box [in GH229](https://github.com/rstudio/vetiver-python/pull/229)
+
+
 ## v0.2.5
 ## What's Changed
 
