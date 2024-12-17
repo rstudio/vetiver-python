@@ -17,8 +17,8 @@ display(Markdown(f"""
 #| include: false
 import pins
 
-raw = "https://colorado.rstudio.com/rsc/"
-paths = {"v": "sacramento/"}
+raw = "https://pub.palm.ptd.posit.it/public"
+paths = {"v": "vetiver-model-card/"}
 board = pins.board_urls(raw, paths, allow_pickle_read=True)
 ```
 
@@ -51,13 +51,15 @@ display(Markdown(f"""
 - A {model_desc} using {num_features} feature{'s'[:num_features^1]}.
 """))
 ```
+
 - More details about how model was developed and what it is predicting
 - More details on feature engineering and/or data preprocessing for model
+
 ```{python}
 #| echo: false
 version = v_meta.version
-time_created =  datetime.datetime
-    .strptime(v_meta.created, '%Y%m%dT%H%M%SZ')
+time_created =  datetime.datetime\
+    .strptime(v_meta.created, '%Y%m%dT%H%M%SZ')\
     .strftime('%Y-%m-%d %H:%M:%S')
 
 display(Markdown(f"""
@@ -91,7 +93,7 @@ display(Markdown(f"""
 - The training dataset for this model has the "prototype" or signature:
 ```{python}
 #| echo: false
-v.prototype.construct().schema().get("properties")
+v.prototype.model_json_schema()
 ```
 
 - The evaluation dataset used in this model card is ...
@@ -105,6 +107,7 @@ v.prototype.construct().schema().get("properties")
 ## consider using a package like Pandas Profiling for automated EDA
 
 ```
+
 ## Overall model performance
 
 ```{python}
@@ -134,7 +137,7 @@ dmp
 ## Visualize model performance
 
 ```{python}
-performance = px.scatter(sacramento, x="price", y = "preds", facet_row="type", trendline="ols")
+performance = px.scatter(sacramento, x="price", y = "preds", facet_row="type")
 performance.update_yaxes(matches=None)
 performance.show()
 ```
