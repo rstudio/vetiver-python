@@ -125,8 +125,13 @@ Write your own code to make visualizations or tables with the new validation dat
 ## Column
 
 ```{python}
+# For your own model, you can use
+# the following code with your URL
+# to display your model API's visual documentation
+
 from IPython.display import IFrame
-IFrame('https://pub.palm.ptd.posit.it/public/inspections-python/', width=750, height=350)
+url = "your-model-api-url"
+IFrame(url, width=750, height=350)
 ```
 ---
 
