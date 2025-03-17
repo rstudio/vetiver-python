@@ -43,7 +43,7 @@ def complex_prototype_client():
     v = VetiverModel(
         model=model,
         # move to model_construct for pydantic 3
-        prototype_data=CustomPrototype.construct(),
+        prototype_data=CustomPrototype.model_construct(),
         model_name="my_model",
         versioned=None,
         description="A regression model for testing purposes",
@@ -82,9 +82,9 @@ def test_get_prototype(client, model):
     assert response.status_code == 200, response.text
     assert response.json() == {
         "properties": {
-            "B": {"example": 55, "type": "integer"},
-            "C": {"example": 65, "type": "integer"},
-            "D": {"example": 17, "type": "integer"},
+            "B": {"examples": [55], "type": "integer"},
+            "C": {"examples": [65], "type": "integer"},
+            "D": {"examples": [17], "type": "integer"},
         },
         "required": ["B", "C", "D"],
         "title": "prototype",
@@ -92,8 +92,8 @@ def test_get_prototype(client, model):
     }
 
     assert (
-        model.prototype.construct().dict()
-        == vetiver_create_prototype(response.json()).construct().dict()
+        model.prototype.model_construct().model_dump()
+        == vetiver_create_prototype(response.json()).model_construct().model_dump()
     )
 
 

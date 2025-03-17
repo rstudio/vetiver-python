@@ -170,7 +170,7 @@ def _(data: np.ndarray):
     # if its a numpy type, we have to take the Python type due to Pydantic
 
     dict_data = {
-        f"{key}": (type(value.item()), Field(..., example=_item(value)))
+        f"{key}": (type(value.item()), Field(..., examples=[_item(value)]))
         for key, value in dict_data.items()
     }
     prototype = create_prototype(**dict_data)
@@ -197,8 +197,8 @@ def _(data: dict):
                 dict_data.update(
                     {
                         key: (
-                            type(value["example"]),
-                            Field(..., example=value["example"]),
+                            type(value["examples"]),
+                            Field(..., examples=[value["examples"]]),
                         )
                     }
                 )
@@ -242,5 +242,5 @@ def _(data: NoneType):
 def _to_field(data):
     basemodel_input = dict()
     for key, value in data.items():
-        basemodel_input[key] = (type(value), Field(..., example=value))
+        basemodel_input[key] = (type(value), Field(..., examples=[value]))
     return basemodel_input

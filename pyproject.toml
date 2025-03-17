@@ -32,7 +32,7 @@ dependencies  =[
     "numpy",
     "pandas",
     "fastapi",
-    "pydantic",
+    "pydantic>2",
     "joblib",
     "uvicorn",
     "scikit-learn",
