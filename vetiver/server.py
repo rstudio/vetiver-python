@@ -22,6 +22,7 @@ from .meta import VetiverMeta
 from .utils import _jupyter_nb, get_workbench_path
 from .vetiver_model import VetiverModel
 
+
 class VetiverAPI:
     """Create model aware API
 
