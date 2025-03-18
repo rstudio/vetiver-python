@@ -12,6 +12,8 @@ from fastapi.testclient import TestClient
 import numpy as np
 import pytest
 import sys
+import pandas as pd
+from vetiver.handlers.sklearn import SKLearnHandler
 
 
 @pytest.fixture
@@ -125,3 +127,51 @@ def test_vetiver_endpoint():
     url = vetiver_endpoint(url_raw)
 
     assert url == "http://127.0.0.1:8000/predict"
+
+
+@pytest.fixture
+def data() -> pd.DataFrame:
+    return pd.DataFrame({"B": [1, 1, 1], "C": [2, 2, 2], "D": [3, 3, 3]})
+
+
+def test_endpoint_adds(client, data):
+    response = client.post("/sum/", data=data.to_json(orient="records"))
+
+    assert response.status_code == 200
+    assert response.json() == {"sum": [3, 6, 9]}
+
+
+def test_endpoint_adds_no_prototype(client_no_prototype, data):
+
+    data = pd.DataFrame({"B": [1, 1, 1], "C": [2, 2, 2], "D": [3, 3, 3]})
+    response = client_no_prototype.post("/sum/", data=data.to_json(orient="records"))
+
+    assert response.status_code == 200
+    assert response.json() == {"sum": [3, 6, 9]}
+
+
+def test_vetiver_post_sklearn_predict(model):
+    vetiver_api = VetiverAPI(model=model)
+    if not isinstance(vetiver_api.model, SKLearnHandler):
+        pytest.skip("Test only applicable for SKLearnHandler models")
+
+    vetiver_api.vetiver_post("predict_proba")
+
+    client = TestClient(vetiver_api.app)
+    response = client.post(
+        "/predict_proba", json=vetiver_api.model.prototype.construct().dict()
+    )
+    assert response.status_code == 200
+
+
+def test_vetiver_post_invalid_sklearn_type(model):
+    vetiver_api = VetiverAPI(model=model)
+    if not isinstance(vetiver_api.model, SKLearnHandler):
+        pytest.skip("Test only applicable for SKLearnHandler models")
+
+    with pytest.raises(
+        ValueError,
+        match="The 'endpoint_fx' parameter can only be a string \
+            when using scikit-learn models.",
+    ):
+        vetiver_api.vetiver_post("invalid_type")

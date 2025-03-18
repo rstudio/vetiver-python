@@ -11,7 +11,7 @@ import httpx
 import pandas as pd
 import requests
 import uvicorn
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.openapi.utils import get_openapi
 from fastapi.responses import HTMLResponse, PlainTextResponse, RedirectResponse
@@ -210,11 +210,13 @@ class VetiverAPI:
 
         Parameters
         ----------
-        endpoint_fx : Union[typing.Callable, Literal["predict", "predict_proba", "predict_log_proba"]]
-            A callable function that specifies the custom logic to execute when the endpoint is called.
-            This function should take input data (e.g., a DataFrame or dictionary) and return the desired output
-            (e.g., predictions or transformed data). For scikit-learn models, endpoint_fx can also be one of
-            "predict", "predict_proba", or "predict_log_proba" if the model supports these methods.
+        endpoint_fx
+        : Union[typing.Callable, Literal["predict", "predict_proba", "predict_log_proba"]]
+            A callable function that specifies the custom logic to execute when the
+            endpoint is called. This function should take input data (e.g., a DataFrame
+            or dictionary) and return the desired output(e.g., predictions or transformed
+            data). For scikit-learn models, endpoint_fx can also be one of "predict",
+            "predict_proba", or "predict_log_proba" if the model supports these methods.
 
         endpoint_name : str
             The name of the endpoint to be created.
@@ -236,10 +238,20 @@ class VetiverAPI:
         ```
         """
 
-        if isinstance(endpoint_fx, SklearnPredictionTypes):
+        if not isinstance(endpoint_fx, Callable):
+            if endpoint_fx not in SklearnPredictionTypes:
+                raise ValueError(
+                    f"""
+                    Prediction type {endpoint_fx} not available.
+                    Available prediction types: {SklearnPredictionTypes}
+                    """
+                )
             if not isinstance(self.model, SKLearnHandler):
                 raise ValueError(
-                    "The 'endpoint_fx' parameter can only be a string when using scikit-learn models."
+                    """
+                    The 'endpoint_fx' parameter can only be a
+                    string when using scikit-learn models.
+                    """
                 )
             self.vetiver_post(
                 self.model.handler_predict,
@@ -252,17 +264,24 @@ class VetiverAPI:
         endpoint_name = endpoint_name or endpoint_fx.__name__
         endpoint_doc = dedent(endpoint_fx.__doc__) if endpoint_fx.__doc__ else None
 
+        # this must be split up this way to preserve the correct type hints for
+        # the input_data schema validation via Pydantic + FastAPI
+        input_data_type = (
+            List[self.model.prototype] if self.check_prototype else Request
+        )
+
         @self.app.post(
             urljoin("/", endpoint_name),
             name=endpoint_name,
             description=endpoint_doc,
         )
-        async def custom_endpoint(input_data: List[self.model.prototype]):
-            if self.check_prototype:
-                served_data = api_data_to_frame(input_data)
-            else:
-                served_data = await input_data.json()
+        async def custom_endpoint(input_data: input_data_type):
 
+            served_data = (
+                api_data_to_frame(input_data)
+                if self.check_prototype
+                else await input_data.json()
+            )
             predictions = endpoint_fx(served_data, **kw)
 
             if isinstance(predictions, List):
