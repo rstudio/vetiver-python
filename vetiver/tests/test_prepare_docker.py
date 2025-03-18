@@ -1,27 +1,16 @@
 import pytest
 import vetiver
 import pins
+import requests
 from pathlib import Path
 from tempfile import TemporaryDirectory
 import pandas as pd
 import numpy as np
 
-DOCKER_URL = "http://0.0.0.0:8080/predict"
+DOCKER_URL = "http://0.0.0.0:8080"
 
 # uses GitHub Actions to deploy model into Docker
 # see vetiver-python/script/setup-docker for files
-
-
-@pytest.mark.docker
-def test_deployed_dockerfile():
-    np.random.seed(500)
-
-    X, y = vetiver.mock.get_mock_data()
-    response = vetiver.predict(endpoint=DOCKER_URL, data=X)
-
-    assert isinstance(response, pd.DataFrame), response
-    assert response.iloc[0, 0] == 44.47
-    assert len(response) == 100
 
 
 @pytest.fixture()
@@ -39,6 +28,38 @@ def test_warning_if_no_protocol(create_vetiver_model):
         board.fs.protocol = "abc"
 
         vetiver.get_board_pkgs(board)
+
+
+@pytest.mark.docker
+def test_prototype():
+    np.random.seed(500)
+
+    X, y = vetiver.mock.get_mock_data()
+    response = requests.get(endpoint=DOCKER_URL + "/prototype")
+    response = requests.get("/prototype")
+    assert response.status_code == 200, response.text
+    assert response.json() == {
+        "properties": {
+            "B": {"examples": [55], "type": "integer"},
+            "C": {"examples": [65], "type": "integer"},
+            "D": {"examples": [17], "type": "integer"},
+        },
+        "required": ["B", "C", "D"],
+        "title": "prototype",
+        "type": "object",
+    }
+
+
+@pytest.mark.docker
+def test_deployed_dockerfile():
+    np.random.seed(500)
+
+    X, y = vetiver.mock.get_mock_data()
+    response = vetiver.predict(endpoint=DOCKER_URL + "/predict", data=X)
+
+    assert isinstance(response, pd.DataFrame), response
+    assert response.iloc[0, 0] == 44.47
+    assert len(response) == 100
 
 
 @pytest.mark.parametrize(
