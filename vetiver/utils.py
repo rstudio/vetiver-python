@@ -64,7 +64,10 @@ def serialize_prototype(prototype):
 
     serialized_schema = dict()
     for key, value in schema.items():
-        example = value.get("example", None)
+        example = value.get("example", None) or value.get("examples", None)
+        # with pydantic's move from example to [examples], now we have to
+        # make sure we're extracting the right value
+        example = example[0] if isinstance(value, list) else example
         default = value.get("default", None)
         serialized_schema[key] = example if example is not None else default
 
