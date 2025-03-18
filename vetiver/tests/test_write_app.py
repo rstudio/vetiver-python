@@ -11,7 +11,7 @@ def vetiver_model_creation():
     model = vetiver.get_mock_model().fit(X_df, y)
     return vetiver.VetiverModel(model, "model")
 
-
+@pytest.fixture(scope="function")
 def test_write_app(vetiver_model_creation):
     with TemporaryDirectory() as tempdir:
         file = Path(tempdir, "app.py")
