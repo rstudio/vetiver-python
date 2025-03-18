@@ -31,7 +31,7 @@ requires-python = ">=3.9"
 dependencies  =[
     "numpy",
     "pandas",
-    "fastapi",
+    "fastapi>0.93",
     "pydantic>2",
     "joblib",
     "uvicorn",
