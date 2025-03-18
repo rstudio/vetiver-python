@@ -2,6 +2,7 @@ import pytest
 import json
 import sklearn
 import pins
+import requests
 import pandas as pd
 import numpy as np
 
@@ -84,13 +85,36 @@ def test_deploy(rsc_short):
         extra_files=["requirements.txt"],
     )
 
+    h = {"Authorization": f'Key {get_key("susan")}'}
     # get url of where content lives
     client = RSConnectClient(connect_server)
     dicts = client.content_search()
     rsc_api = list(filter(lambda x: x["title"] == "testapi", dicts))
     content_url = rsc_api[0].get("content_url")
 
-    h = {"Authorization": f'Key {get_key("susan")}'}
+    # check that endpoint is alive
+    ping_response = requests.get(content_url + "/ping", headers=h)
+    assert ping_response.status_code == 200, ping_response.text
+
+    prototype_response = requests.get(content_url + "/prototype", headers=h)
+    assert prototype_response.status_code == 200, prototype_response.text
+    assert prototype_response.json() == {
+        "properties": {
+            "B": {"examples": [55], "type": "integer"},
+            "C": {"examples": [65], "type": "integer"},
+            "D": {"examples": [17], "type": "integer"},
+        },
+        "required": ["B", "C", "D"],
+        "title": "prototype",
+        "type": "object",
+    }
+
+    assert (
+        model.prototype.model_construct().model_dump()
+        == vetiver.vetiver_create_prototype(prototype_response.json())
+        .model_construct()
+        .model_dump()
+    )
 
     endpoint = vetiver.vetiver_endpoint(content_url + "/predict")
     response = vetiver.predict(endpoint, X_df, headers=h)
