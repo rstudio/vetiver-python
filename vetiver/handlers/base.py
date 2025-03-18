@@ -121,7 +121,7 @@ class BaseHandler:
         """
         ...
 
-    def handler_predict(self, input_data, check_prototype):
+    def handler_predict(self, input_data, check_prototype, **kw):
         """Generates method for /predict endpoint in VetiverAPI
 
         The `handler_predict` function executes at each API call. Use this

@@ -53,7 +53,7 @@ class SpacyHandler(BaseHandler):
 
         return prototype
 
-    def handler_predict(self, input_data, check_prototype):
+    def handler_predict(self, input_data, check_prototype, **kw):
         """
         Generates method for /predict endpoint in VetiverAPI
 

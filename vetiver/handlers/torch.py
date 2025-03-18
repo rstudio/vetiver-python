@@ -22,7 +22,7 @@ class TorchHandler(BaseHandler):
     if torch_exists:
         pip_name = "torch"
 
-    def handler_predict(self, input_data, check_prototype):
+    def handler_predict(self, input_data, check_prototype, **kw):
         """
         Generates method for /predict endpoint in VetiverAPI
 
