@@ -3,7 +3,7 @@ name: tests
 on:
   workflow_dispatch:
   push:
-    branches: ['main', 'dev-*', 'dev']
+    branches: ["main", "dev-*", "dev"]
   pull_request:
   release:
     types: [published]
@@ -15,16 +15,16 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: 'macos-latest'
-            python-version: '3.9'
-          - os: 'windows-latest'
-            python-version: '3.10'
-          - os: 'ubuntu-latest'
-            python-version: '3.11'
-          - os: 'ubuntu-latest'
-            python-version: '3.12'
-          - os: 'ubuntu-latest'
-            python-version: '3.13'
+          - os: "macos-latest"
+            python-version: "3.9"
+          - os: "windows-latest"
+            python-version: "3.10"
+          - os: "ubuntu-latest"
+            python-version: "3.11"
+          - os: "ubuntu-latest"
+            python-version: "3.12"
+          - os: "ubuntu-latest"
+            python-version: "3.13"
 
     steps:
       - uses: actions/checkout@v3
@@ -74,30 +74,30 @@ jobs:
           pytest vetiver -m 'rsc_test'
 
   test-docker:
-      name: "Test Docker"
-      runs-on: ubuntu-latest
-      steps:
-        - uses: actions/checkout@v3
-        - name: Install uv and Python
-          uses: astral-sh/setup-uv@v5
-          with:
-            python-version: "3.10"
-        - name: Install dependencies
-          run: |
-            uv pip install --upgrade pip
-            uv pip install ".[dev]"
-            uv pip install --upgrade git+https://github.com/rstudio/vetiver-python@${{ github.sha }}
-        - name: run Docker
-          run: |
-            python script/setup-docker/docker.py
-            pip freeze > vetiver_requirements.txt
-            docker build -t mock .
-            docker run -d -v $PWD/pinsboard:/vetiver/pinsboard -p 8080:8080 mock
-            sleep 5
-            curl -s --retry 10 --retry-connrefused http://0.0.0.0:8080
-        - name: Run tests
-          run: |
-            pytest vetiver -m 'docker'
+    name: "Test Docker"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install uv and Python
+        uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.10"
+      - name: Install dependencies
+        run: |
+          uv pip install --upgrade pip
+          uv pip install ".[dev]"
+          uv pip install --upgrade git+https://github.com/rstudio/vetiver-python@${{ github.sha }}
+      - name: run Docker
+        run: |
+          python script/setup-docker/docker.py
+          pip freeze > vetiver_requirements.txt
+          docker build -t mock .
+          docker run -d -v $PWD/pinsboard:/vetiver/pinsboard -p 8080:8080 mock
+          sleep 5
+          curl -s --retry 10 --retry-connrefused http://0.0.0.0:8080
+      - name: Run tests
+        run: |
+          pytest vetiver -m 'docker'
 
   test-no-extras:
     name: "Test no exra ml frameworks"
@@ -141,7 +141,6 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Setup Python
       - name: Install uv and Python
         uses: astral-sh/setup-uv@v5
         with:
