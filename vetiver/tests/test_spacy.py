@@ -68,7 +68,7 @@ def test_good_prototype_shape(data, spacy_model):
         model_schema = v.prototype.model_json_schema()
         expected = {
             "properties": {
-                "col": {"example": "1", "title": "Col", "type": "string"},
+                "col": {"examples": ["1"], "title": "Col", "type": "string"},
             },
             "required": ["col"],
             "title": "prototype",
@@ -77,7 +77,7 @@ def test_good_prototype_shape(data, spacy_model):
     except AttributeError:  # pydantic v1
         model_schema = v.prototype.schema_json()
         expected = '{"title": "prototype", "type": "object", "properties": \
-{"col": {"title": "Col", "example": "1", "type": "string"}}, "required": ["col"]}'
+{"col": {"title": "Col", "examples": ["1"], "type": "string"}}, "required": ["col"]}'
 
     assert model_schema == expected
 

@@ -6,6 +6,7 @@ from textwrap import dedent
 from typing import Callable, List, Union
 from urllib.parse import urljoin
 from warnings import warn
+from contextlib import asynccontextmanager
 
 import httpx
 import pandas as pd
@@ -77,7 +78,7 @@ class VetiverAPI:
     ) -> None:
         self.model = model
         self.app_factory = app_factory
-        self.app = app_factory()
+        self.app = app_factory(lifespan=self._lifespan)
         self.workbench_path = None
 
         if "check_ptype" in kwargs:
@@ -97,17 +98,18 @@ class VetiverAPI:
 
         self._init_app()
 
+    @asynccontextmanager
+    async def _lifespan(self, app: FastAPI):
+        logger = logging.getLogger("uvicorn.error")
+        if self.workbench_path:
+            logger.info(f"VetiverAPI starting at {self.workbench_path}")
+        else:
+            logger.info("VetiverAPI starting...")
+        yield
+
     def _init_app(self):
         app = self.app
         app.openapi = self._custom_openapi
-
-        @app.on_event("startup")
-        async def startup_event():
-            logger = logging.getLogger("uvicorn.error")
-            if self.workbench_path:
-                logger.info(f"VetiverAPI starting at {self.workbench_path}")
-            else:
-                logger.info("VetiverAPI starting...")
 
         @app.get("/", include_in_schema=False)
         def docs_redirect():

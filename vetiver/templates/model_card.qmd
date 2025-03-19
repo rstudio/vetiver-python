@@ -45,7 +45,7 @@ A [model card](https://doi.org/10.1145/3287560.3287596) provides brief, transpar
 ```{python}
 #| echo: false
 model_desc = v.description
-num_features = len(v.prototype.construct().dict())
+num_features = len(v.prototype.model_construct().model_dump())
 
 display(Markdown(f"""
 - A {model_desc} using {num_features} feature{'s'[:num_features^1]}.

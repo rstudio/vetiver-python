@@ -45,9 +45,9 @@ def test_vetiver_model_array_prototype():
         json_schema = v.prototype.model_json_schema()
         expected = {
             "properties": {
-                "0": {"example": 96, "title": "0", "type": "integer"},
-                "1": {"example": 11, "title": "1", "type": "integer"},
-                "2": {"example": 33, "title": "2", "type": "integer"},
+                "0": {"examples": [96], "title": "0", "type": "integer"},
+                "1": {"examples": [11], "title": "1", "type": "integer"},
+                "2": {"examples": [33], "title": "2", "type": "integer"},
             },
             "required": ["0", "1", "2"],
             "title": "prototype",
@@ -58,15 +58,15 @@ def test_vetiver_model_array_prototype():
         expected = '{\
 "title": "prototype", \
 "type": "object", \
-"properties": {"0": {"title": "0", "example": 96, "type": "integer"}, \
-"1": {"title": "1", "example": 11, "type": "integer"}, \
-"2": {"title": "2", "example": 33, "type": "integer"}}, \
+"properties": {"0": {"title": "0", "examples": [96], "type": "integer"}, \
+"1": {"title": "1", "examples": [11], "type": "integer"}, \
+"2": {"title": "2", "examples": [33], "type": "integer"}}, \
 "required": ["0", "1", "2"]}'
 
     assert v.model == model
     assert issubclass(v.prototype, vetiver.Prototype)
     # change to model_construct for pydantic v3
-    assert isinstance(v.prototype.construct(), pydantic.BaseModel)
+    assert isinstance(v.prototype.model_construct(), pydantic.BaseModel)
     assert json_schema == expected
 
 
@@ -83,15 +83,15 @@ def test_vetiver_model_dict_like_prototype(prototype_data):
 
     assert v.model == model
     # change to model_construct for pydantic v3
-    assert isinstance(v.prototype.construct(), pydantic.BaseModel)
+    assert isinstance(v.prototype.model_construct(), pydantic.BaseModel)
 
     try:
         json_schema = v.prototype.model_json_schema()
         expected = {
             "properties": {
-                "B": {"example": 96, "title": "B", "type": "integer"},
-                "C": {"example": 11, "title": "C", "type": "integer"},
-                "D": {"example": 33, "title": "D", "type": "integer"},
+                "B": {"examples": [96], "title": "B", "type": "integer"},
+                "C": {"examples": [11], "title": "C", "type": "integer"},
+                "D": {"examples": [33], "title": "D", "type": "integer"},
             },
             "required": ["B", "C", "D"],
             "title": "prototype",
@@ -102,9 +102,9 @@ def test_vetiver_model_dict_like_prototype(prototype_data):
         expected = '{\
 "title": "prototype", \
 "type": "object", \
-"properties": {"B": {"title": "B", "example": 96, "type": "integer"}, \
-"C": {"title": "C", "example": 11, "type": "integer"}, \
-"D": {"title": "D", "example": 33, "type": "integer"}}, \
+"properties": {"B": {"title": "B", "examples": [96], "type": "integer"}, \
+"C": {"title": "C", "examples": [11], "type": "integer"}, \
+"D": {"title": "D", "examples": [33], "type": "integer"}}, \
 "required": ["B", "C", "D"]}'
 
     assert json_schema == expected
@@ -120,9 +120,9 @@ def test_vetiver_model_dict_like_prototype(prototype_data):
             {"B": 0, "C": False, "D": None},
             {
                 "properties": {
-                    "B": {"example": 0, "title": "B", "type": "integer"},
-                    "C": {"example": False, "title": "C", "type": "boolean"},
-                    "D": {"example": None, "title": "D", "type": "null"},
+                    "B": {"examples": [0], "title": "B", "type": "integer"},
+                    "C": {"examples": [False], "title": "C", "type": "boolean"},
+                    "D": {"examples": [None], "title": "D", "type": "null"},
                 },
                 "required": ["B", "C", "D"],
                 "title": "prototype",
@@ -141,7 +141,7 @@ def test_falsy_prototypes(prototype_data, expected):
         metadata=None,
     )
 
-    assert isinstance(v.prototype.construct(), pydantic.BaseModel)
+    assert isinstance(v.prototype.model_construct(), pydantic.BaseModel)
     assert v.prototype.model_json_schema() == expected
 
 
@@ -179,7 +179,7 @@ def test_vetiver_model_from_pin():
     assert isinstance(v2, VetiverModel)
     assert isinstance(v2.model, sklearn.base.BaseEstimator)
     # change to model_construct for pydantic v3
-    assert isinstance(v2.prototype.construct(), pydantic.BaseModel)
+    assert isinstance(v2.prototype.model_construct(), pydantic.BaseModel)
     assert v2.metadata.user == {"test": 123}
     assert v2.metadata.version is not None
     assert v2.metadata.required_pkgs == ["scikit-learn"]
@@ -215,7 +215,7 @@ def test_vetiver_model_from_pin_user_metadata():
     assert isinstance(v2, VetiverModel)
     assert isinstance(v2.model, sklearn.base.BaseEstimator)
     # change to model_construct for pydantic v3
-    assert isinstance(v2.prototype.construct(), pydantic.BaseModel)
+    assert isinstance(v2.prototype.model_construct(), pydantic.BaseModel)
     assert v2.metadata.user == custom_meta
     assert v2.metadata.version is not None
     assert v2.metadata.required_pkgs == loaded_pkgs

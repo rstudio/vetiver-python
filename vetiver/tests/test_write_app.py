@@ -12,6 +12,7 @@ def vetiver_model_creation():
     return vetiver.VetiverModel(model, "model")
 
 
+@pytest.fixture(scope="function")
 def test_write_app(vetiver_model_creation):
     with TemporaryDirectory() as tempdir:
         file = Path(tempdir, "app.py")
