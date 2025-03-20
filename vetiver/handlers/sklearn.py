@@ -46,7 +46,4 @@ class SKLearnHandler(BaseHandler):
             else input_data
         )
 
-        if prediction_type in ["predict_proba", "predict_log_proba"]:
-            return getattr(self.model, prediction_type)(input_data).tolist()
-
-        return self.model.predict(input_data).to_list()
+        return getattr(self.model, prediction_type)(input_data).tolist()
