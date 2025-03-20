@@ -1,3 +1,11 @@
+import pytest
+import sys
+import pandas as pd
+import numpy as np
+from fastapi.testclient import TestClient
+from pydantic import BaseModel, conint
+
+from vetiver.data import mtcars
 from vetiver import (
     mock,
     VetiverModel,
@@ -7,26 +15,18 @@ from vetiver import (
     vetiver_endpoint,
     predict,
 )
-from pydantic import BaseModel, conint
-from fastapi.testclient import TestClient
-import numpy as np
-import pytest
-import sys
-import pandas as pd
-from vetiver.handlers.sklearn import SKLearnHandler
 
 
 @pytest.fixture
 def model():
     np.random.seed(500)
-    X, y = mock.get_mock_data()
-    model = mock.get_mock_model().fit(X, y)
+    model = mock.get_mtcars_model()
     v = VetiverModel(
         model=model,
-        prototype_data=X,
+        prototype_data=mtcars.drop(columns="cyl"),
         model_name="my_model",
         versioned=None,
-        description="A regression model for testing purposes",
+        description="A logistic regression model for testing purposes",
     )
     return v
 
@@ -84,11 +84,29 @@ def test_get_prototype(client, model):
     assert response.status_code == 200, response.text
     assert response.json() == {
         "properties": {
-            "B": {"example": 55, "type": "integer"},
-            "C": {"example": 65, "type": "integer"},
-            "D": {"example": 17, "type": "integer"},
+            "mpg": {"example": 21.0, "type": "number"},
+            "disp": {"example": 160.0, "type": "number"},
+            "hp": {"example": 110.0, "type": "number"},
+            "drat": {"example": 3.9, "type": "number"},
+            "wt": {"example": 2.62, "type": "number"},
+            "qsec": {"example": 16.46, "type": "number"},
+            "vs": {"example": 0.0, "type": "number"},
+            "am": {"example": 1.0, "type": "number"},
+            "gear": {"example": 4.0, "type": "number"},
+            "carb": {"example": 4.0, "type": "number"},
         },
-        "required": ["B", "C", "D"],
+        "required": [
+            "mpg",
+            "disp",
+            "hp",
+            "drat",
+            "wt",
+            "qsec",
+            "vs",
+            "am",
+            "gear",
+            "carb",
+        ],
         "title": "prototype",
         "type": "object",
     }
@@ -131,14 +149,28 @@ def test_vetiver_endpoint():
 
 @pytest.fixture
 def data() -> pd.DataFrame:
-    return pd.DataFrame({"B": [1, 1, 1], "C": [2, 2, 2], "D": [3, 3, 3]})
+    return pd.DataFrame(
+        {
+            "mpg": [20, 20],
+            "disp": [160, 160],
+            "hp": [110, 110],
+            "drat": [3.9, 3.9],
+            "wt": [2.62, 2.62],
+            "qsec": [16.00, 16.00],
+            "vs": [0, 0],
+            "am": [1, 1],
+            "gear": [4, 4],
+            "carb": [4, 4],
+        }
+    )
 
 
 def test_endpoint_adds(client, data):
+
     response = client.post("/sum/", data=data.to_json(orient="records"))
 
     assert response.status_code == 200
-    assert response.json() == {"sum": [3, 6, 9]}
+    assert response.json() == {"sum": [40, 320, 220, 7.8, 5.24, 32.00, 0, 2, 8, 8]}
 
 
 def test_endpoint_adds_no_prototype(client_no_prototype, data):
@@ -150,28 +182,36 @@ def test_endpoint_adds_no_prototype(client_no_prototype, data):
     assert response.json() == {"sum": [3, 6, 9]}
 
 
-def test_vetiver_post_sklearn_predict(model):
-    vetiver_api = VetiverAPI(model=model)
-    if not isinstance(vetiver_api.model, SKLearnHandler):
-        pytest.skip("Test only applicable for SKLearnHandler models")
+def test_vetiver_post_sklearn_predict(model, data):
+    api = VetiverAPI(model=model)
+    api.vetiver_post("predict_proba")
 
-    vetiver_api.vetiver_post("predict_proba")
+    client = TestClient(api.app)
+    response = predict(endpoint="/predict_proba/", data=data, test_client=client)
 
-    client = TestClient(vetiver_api.app)
-    response = client.post(
-        "/predict_proba", json=vetiver_api.model.prototype.construct().dict()
-    )
-    assert response.status_code == 200
+    assert isinstance(response, pd.DataFrame)
+    assert len(response) == 2
+    assert response.to_dict() == {
+        "predict_proba": {
+            0: [
+                0.00627480416153554,
+                0.9937251958346092,
+                3.855256735904704e-12,
+            ],
+            1: [
+                0.00627480416153554,
+                0.9937251958346092,
+                3.855256735904704e-12,
+            ],
+        },
+    }
 
 
 def test_vetiver_post_invalid_sklearn_type(model):
     vetiver_api = VetiverAPI(model=model)
-    if not isinstance(vetiver_api.model, SKLearnHandler):
-        pytest.skip("Test only applicable for SKLearnHandler models")
 
     with pytest.raises(
         ValueError,
-        match="The 'endpoint_fx' parameter can only be a string \
-            when using scikit-learn models.",
+        match="Prediction type invalid_type not available",
     ):
         vetiver_api.vetiver_post("invalid_type")

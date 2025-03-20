@@ -239,14 +239,14 @@ class VetiverAPI:
         """
 
         if not isinstance(endpoint_fx, Callable):
-            if endpoint_fx not in SklearnPredictionTypes:
+            if endpoint_fx not in ["predict", "predict_proba", "predict_log_proba"]:
                 raise ValueError(
                     f"""
                     Prediction type {endpoint_fx} not available.
                     Available prediction types: {SklearnPredictionTypes}
                     """
                 )
-            if not isinstance(self.model, SKLearnHandler):
+            if not isinstance(self.model.handler_predict.__self__, SKLearnHandler):
                 raise ValueError(
                     """
                     The 'endpoint_fx' parameter can only be a
@@ -255,7 +255,7 @@ class VetiverAPI:
                 )
             self.vetiver_post(
                 self.model.handler_predict,
-                SklearnPredictionTypes,
+                endpoint_fx,
                 check_prototype=self.check_prototype,
                 prediction_type=endpoint_fx,
             )

@@ -39,15 +39,14 @@ class SKLearnHandler(BaseHandler):
             Prediction from model
         """
         prediction_type = kw.get("prediction_type", "predict")
-        if prediction_type not in ["predict", "predict_proba", "predict_log_proba"]:
-            raise ValueError(
-                'prediction_type must be "predict", "predict_proba", \
-                    or "predict_log_proba"'
-            )
 
         input_data = (
             [input_data]
             if check_prototype and not isinstance(input_data, pd.DataFrame)
             else input_data
         )
-        return getattr(self.model, prediction_type)(input_data).tolist()
+
+        if prediction_type in ["predict_proba", "predict_log_proba"]:
+            return getattr(self.model, prediction_type)(input_data).tolist()
+
+        return self.model.predict(input_data).to_list()
