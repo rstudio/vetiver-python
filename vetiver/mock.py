@@ -41,7 +41,6 @@ def get_mtcars_model():
     model : sklearn.dummy.DummyRegressor
         Arbitrary model for testing purposes
     """
-    np.random.seed(500)
-    return LogisticRegression(max_iter=1000).fit(
+    return LogisticRegression(max_iter=1000, random_state=500).fit(
         mtcars.drop(columns="cyl"), mtcars["cyl"]
     )
