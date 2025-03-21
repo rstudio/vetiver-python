@@ -10,7 +10,7 @@ from .prototype import (  # noqa
 )  # noqa
 from .vetiver_model import VetiverModel  # noqa
 from .server import VetiverAPI, vetiver_endpoint, predict  # noqa
-from .mock import get_mock_data, get_mock_model  # noqa
+from .mock import get_mock_data, get_mock_model, get_mtcars_model  # noqa
 from .pin_read_write import vetiver_pin_write  # noqa
 from .attach_pkgs import load_pkgs, get_board_pkgs  # noqa
 from .meta import VetiverMeta  # noqa

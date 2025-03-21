@@ -15,11 +15,12 @@ from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.openapi.utils import get_openapi
 from fastapi.responses import HTMLResponse, PlainTextResponse, RedirectResponse
-
 from .helpers import api_data_to_frame, response_to_frame
+from .handlers.sklearn import SKLearnHandler
 from .meta import VetiverMeta
 from .utils import _jupyter_nb, get_workbench_path
 from .vetiver_model import VetiverModel
+from .types import SklearnPredictionTypes
 
 
 class VetiverAPI:
@@ -111,7 +112,6 @@ class VetiverAPI:
 
         @app.get("/", include_in_schema=False)
         def docs_redirect():
-
             redirect = "__docs__"
 
             return RedirectResponse(redirect)
@@ -200,65 +200,94 @@ class VetiverAPI:
 
         return app
 
-    def vetiver_post(self, endpoint_fx: Callable, endpoint_name: str = None, **kw):
-        """Create new POST endpoint that is aware of model input data
+    def vetiver_post(
+        self,
+        endpoint_fx: Union[Callable, SklearnPredictionTypes],
+        endpoint_name: str = None,
+        **kw,
+    ):
+        """Define a new POST endpoint that utilizes the model's input data.
 
         Parameters
         ----------
-        endpoint_fx : typing.Callable
-            Custom function to be run at endpoint
+        endpoint_fx
+        : Union[typing.Callable, Literal["predict", "predict_proba", "predict_log_proba"]]
+            A callable function that specifies the custom logic to execute when the
+            endpoint is called. This function should take input data (e.g., a DataFrame
+            or dictionary) and return the desired output(e.g., predictions or transformed
+            data). For scikit-learn models, endpoint_fx can also be one of "predict",
+            "predict_proba", or "predict_log_proba" if the model supports these methods.
+
         endpoint_name : str
-            Name of endpoint
+            The name of the endpoint to be created.
 
         Examples
         -------
-        ```{python}
+        ```python
         from vetiver import mock, VetiverModel, VetiverAPI
         X, y = mock.get_mock_data()
         model = mock.get_mock_model().fit(X, y)
 
-        v = VetiverModel(model = model, model_name = "model", prototype_data = X)
-        v_api = VetiverAPI(model = v, check_prototype = True)
+        v = VetiverModel(model=model, model_name="model", prototype_data=X)
+        v_api = VetiverAPI(model=v, check_prototype=True)
 
         def sum_values(x):
             return x.sum()
+
         v_api.vetiver_post(sum_values, "sums")
         ```
         """
-        if not endpoint_name:
-            endpoint_name = endpoint_fx.__name__
 
-        if endpoint_fx.__doc__ is not None:
-            api_desc = dedent(endpoint_fx.__doc__)
-        else:
-            api_desc = None
-
-        if self.check_prototype is True:
-
-            @self.app.post(
-                urljoin("/", endpoint_name),
-                name=endpoint_name,
-                description=api_desc,
+        if not isinstance(endpoint_fx, Callable):
+            if endpoint_fx not in ["predict", "predict_proba", "predict_log_proba"]:
+                raise ValueError(
+                    f"""
+                    Prediction type {endpoint_fx} not available.
+                    Available prediction types: {SklearnPredictionTypes}
+                    """
+                )
+            if not isinstance(self.model.handler_predict.__self__, SKLearnHandler):
+                raise ValueError(
+                    """
+                    The 'endpoint_fx' parameter can only be a
+                    string when using scikit-learn models.
+                    """
+                )
+            self.vetiver_post(
+                self.model.handler_predict,
+                endpoint_fx,
+                check_prototype=self.check_prototype,
+                prediction_type=endpoint_fx,
             )
-            async def custom_endpoint(input_data: List[self.model.prototype]):
-                _to_frame = api_data_to_frame(input_data)
-                predictions = endpoint_fx(_to_frame, **kw)
-                if isinstance(predictions, List):
-                    return {endpoint_name: predictions}
-                else:
-                    return predictions
+            return
 
-        else:
+        endpoint_name = endpoint_name or endpoint_fx.__name__
+        endpoint_doc = dedent(endpoint_fx.__doc__) if endpoint_fx.__doc__ else None
 
-            @self.app.post(urljoin("/", endpoint_name))
-            async def custom_endpoint(input_data: Request):
-                served_data = await input_data.json()
-                predictions = endpoint_fx(served_data, **kw)
+        # this must be split up this way to preserve the correct type hints for
+        # the input_data schema validation via Pydantic + FastAPI
+        input_data_type = (
+            List[self.model.prototype] if self.check_prototype else Request
+        )
 
-                if isinstance(predictions, List):
-                    return {endpoint_name: predictions}
-                else:
-                    return predictions
+        @self.app.post(
+            urljoin("/", endpoint_name),
+            name=endpoint_name,
+            description=endpoint_doc,
+        )
+        async def custom_endpoint(input_data: input_data_type):
+
+            served_data = (
+                api_data_to_frame(input_data)
+                if self.check_prototype
+                else await input_data.json()
+            )
+            predictions = endpoint_fx(served_data, **kw)
+
+            if isinstance(predictions, List):
+                return {endpoint_name: predictions}
+            else:
+                return predictions
 
     def run(self, port: int = 8000, host: str = "127.0.0.1", quiet_open=False, **kw):
         """

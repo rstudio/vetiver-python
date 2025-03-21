@@ -22,7 +22,7 @@ class StatsmodelsHandler(BaseHandler):
     if sm_exists:
         pip_name = "statsmodels"
 
-    def handler_predict(self, input_data, check_prototype):
+    def handler_predict(self, input_data, check_prototype, **kw):
         """
         Generates method for /predict endpoint in VetiverAPI
 
@@ -43,9 +43,7 @@ class StatsmodelsHandler(BaseHandler):
         if not sm_exists:
             raise ImportError("Cannot import `statsmodels`")
 
-        if isinstance(input_data, (list, pd.DataFrame)):
-            prediction = self.model.predict(input_data)
-        else:
-            prediction = self.model.predict([input_data])
-
-        return prediction.tolist()
+        input_data = (
+            input_data if isinstance(input_data, (list, pd.DataFrame)) else [input_data]
+        )
+        return self.model.predict(input_data).tolist()

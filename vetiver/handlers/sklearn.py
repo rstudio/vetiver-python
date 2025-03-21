@@ -16,7 +16,7 @@ class SKLearnHandler(BaseHandler):
     model_class = staticmethod(lambda: sklearn.base.BaseEstimator)
     pip_name = "scikit-learn"
 
-    def handler_predict(self, input_data, check_prototype):
+    def handler_predict(self, input_data, check_prototype: bool, **kw):
         """
         Generates method for /predict endpoint in VetiverAPI
 
@@ -28,16 +28,22 @@ class SKLearnHandler(BaseHandler):
         ----------
         input_data:
             Test data
+        check_prototype: bool
+        prediction_type: str
+            Type of prediction to make. One of "predict", "predict_proba",
+            or "predict_log_proba". Default is "predict".
 
         Returns
         -------
         prediction:
             Prediction from model
         """
+        prediction_type = kw.get("prediction_type", "predict")
 
-        if not check_prototype or isinstance(input_data, pd.DataFrame):
-            prediction = self.model.predict(input_data)
-        else:
-            prediction = self.model.predict([input_data])
+        input_data = (
+            [input_data]
+            if check_prototype and not isinstance(input_data, pd.DataFrame)
+            else input_data
+        )
 
-        return prediction.tolist()
+        return getattr(self.model, prediction_type)(input_data).tolist()

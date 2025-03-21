@@ -22,7 +22,7 @@ class XGBoostHandler(BaseHandler):
     if xgb_exists:
         pip_name = "xgboost"
 
-    def handler_predict(self, input_data, check_prototype):
+    def handler_predict(self, input_data, check_prototype, **kw):
         """
         Generates method for /predict endpoint in VetiverAPI
 

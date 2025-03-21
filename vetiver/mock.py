@@ -1,6 +1,10 @@
-from sklearn.dummy import DummyRegressor
 import pandas as pd
 import numpy as np
+
+from sklearn.dummy import DummyRegressor
+from sklearn.linear_model import LogisticRegression
+
+from .data import mtcars
 
 
 def get_mock_data():
@@ -26,5 +30,17 @@ def get_mock_model():
     model : sklearn.dummy.DummyRegressor
         Arbitrary model for testing purposes
     """
-    model = DummyRegressor()
-    return model
+    return DummyRegressor()
+
+
+def get_mtcars_model():
+    """Create mock model for testing
+
+    Returns
+    -------
+    model : sklearn.dummy.DummyRegressor
+        Arbitrary model for testing purposes
+    """
+    return LogisticRegression(max_iter=1000, random_state=500).fit(
+        mtcars.drop(columns="cyl"), mtcars["cyl"]
+    )
