@@ -149,3 +149,6 @@ NOTES.md
 /.quarto/
 
 /.luarc.json
+
+# Local Connect license for with-connect integration tests
+rstudio-connect.lic
