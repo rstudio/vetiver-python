@@ -62,6 +62,10 @@ jobs:
         uses: posit-dev/with-connect@0783dabdd24e360e985a4588ce1239c3dc31c542
         with:
           license: ${{ secrets.RSC_LICENSE }}
+          # Plain freeze (unlike the Makefile/weekly jobs, which filter): here
+          # vetiver is installed from git+...@<sha>, so the freeze yields an
+          # installable git URL and Connect deploys THIS PR's vetiver. Filtering
+          # would deploy released vetiver and miss PR-level serving regressions.
           command: |
             pip freeze > requirements.txt
             pytest vetiver/tests/test_rsconnect.py -m 'rsc_test'

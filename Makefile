@@ -1,7 +1,6 @@
 .PHONY: clean-pyc clean-build clean docs
 UNAME := $(shell uname)
 
-
 ifeq ($(UNAME), Darwin)
     BROWSER := open
 else
@@ -43,7 +42,8 @@ test-pdb: clean-test
 	pytest -m 'not rsc_test and not docker' --pdb
 
 test-rsc: clean-test
-	uv run pip freeze | grep -v '^vetiver' | grep -v '^-e ' > requirements.txt && echo 'vetiver' >> requirements.txt
+	uv run pip freeze | grep -v '^vetiver' | grep -v '^-e ' > requirements.txt
+	echo 'vetiver' >> requirements.txt
 	uvx --from git+https://github.com/posit-dev/with-connect@0783dabdd24e360e985a4588ce1239c3dc31c542 \
 		with-connect -- uv run --with pytest pytest vetiver/tests/test_rsconnect.py -m 'rsc_test'
 
