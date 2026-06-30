@@ -84,7 +84,7 @@ def test_deploy(rsc_admin, username):
     rsc_api = list(filter(lambda x: x["title"] == "testapi", dicts))
     content_url = rsc_api[0].get("content_url").rstrip("/")
 
-    h = {"Authorization": f"Key {RSC_API_KEY}", "Content-Type": "application/json"}
+    h = {"Authorization": f"Key {RSC_API_KEY}"}
 
     endpoint = vetiver.vetiver_endpoint(content_url + "/predict")
     response = vetiver.predict(endpoint, X_df, headers=h)
