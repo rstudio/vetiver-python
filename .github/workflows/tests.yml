@@ -58,6 +58,12 @@ jobs:
           uv pip install ".[dev]"
           uv pip install --upgrade git+https://github.com/rstudio/vetiver-python@${{ github.sha }}
           echo {{ github.sha }}
+      - name: Let with-connect use its own interpreter
+        # setup-uv pinned UV_PYTHON=3.9 for the vetiver env above, but the
+        # with-connect tool requires Python >=3.13 to install. Repoint UV_PYTHON
+        # so `uv tool install with-connect` resolves; the freeze/pytest command
+        # still runs in the 3.9 VIRTUAL_ENV created above.
+        run: echo "UV_PYTHON=3.13" >> "$GITHUB_ENV"
       - name: Run Connect integration tests
         uses: posit-dev/with-connect@0783dabdd24e360e985a4588ce1239c3dc31c542
         with:

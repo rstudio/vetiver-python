@@ -67,6 +67,9 @@ dev = [
 ]
 docs = [
     "quartodoc",
+    # quartodoc 0.11.x is incompatible with the griffe 2.x rewrite
+    # (it imports griffe.loader / passes removed parse_numpy kwargs).
+    "griffe<2",
     # quarto render dependencies
     "jupyter"
 ]
