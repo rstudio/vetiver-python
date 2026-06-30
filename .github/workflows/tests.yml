@@ -58,20 +58,13 @@ jobs:
           uv pip install ".[dev]"
           uv pip install --upgrade git+https://github.com/rstudio/vetiver-python@${{ github.sha }}
           echo {{ github.sha }}
-      - name: run Connect
-        run: |
-          docker compose up --build -d
-          pip freeze > requirements.txt
-          make dev
-          cat requirements.txt
-        env:
-          RSC_LICENSE: ${{ secrets.RSC_LICENSE }}
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-
-      # NOTE: edited to run checks for python package
-      - name: Run tests
-        run: |
-          pytest vetiver -m 'rsc_test'
+      - name: Run Connect integration tests
+        uses: posit-dev/with-connect@0783dabdd24e360e985a4588ce1239c3dc31c542
+        with:
+          license: ${{ secrets.RSC_LICENSE }}
+          command: |
+            pip freeze > requirements.txt
+            pytest vetiver/tests/test_rsconnect.py -m 'rsc_test'
 
   test-docker:
     name: "Test Docker"
