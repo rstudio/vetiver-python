@@ -9,7 +9,7 @@ import vetiver
 
 import pytest
 
-rng = pd.date_range("1/1/2012", periods=10, freq="S")
+rng = pd.date_range("1/1/2012", periods=10, freq="s")
 new = dict(x=range(len(rng)), y=range(len(rng)))
 df = pd.DataFrame(new, index=rng)
 td = timedelta(seconds=2)

@@ -167,7 +167,11 @@ def data() -> pd.DataFrame:
 
 def test_endpoint_adds(client, data):
 
-    response = client.post("/sum/", data=data.to_json(orient="records"))
+    response = client.post(
+        "/sum/",
+        data=data.to_json(orient="records"),
+        headers={"Content-Type": "application/json"},
+    )
 
     assert response.status_code == 200
     assert response.json() == {"sum": [40, 320, 220, 7.8, 5.24, 32.00, 0, 2, 8, 8]}
