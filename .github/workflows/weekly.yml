@@ -87,7 +87,7 @@ jobs:
     strategy:
       matrix:
         # Minimum and Maximum supported versions
-        python-version: ['3.9']
+        python-version: ['3.14']
 
     steps:
       - name: Get latest release with tag from GitHub API
