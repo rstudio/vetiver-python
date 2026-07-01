@@ -37,14 +37,6 @@ jobs:
           python -m pip install '.[all]'
           python -m pip install --upgrade git+https://github.com/rstudio/pins-python
 
-      - name: run Connect
-        run: |
-          docker compose up --build -d
-          make dev
-        env:
-          RSC_LICENSE: ${{ secrets.RSC_LICENSE }}
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-
       - name: Run tests
         run: |
           make test
@@ -84,14 +76,6 @@ jobs:
           python -m pip install .[dev]
           python -m pip install --upgrade git+https://github.com/rstudio/pins-python
 
-      - name: run Connect
-        run: |
-          docker compose up --build -d
-          make dev
-        env:
-          RSC_LICENSE: ${{ secrets.RSC_LICENSE }}
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-
       - name: Run Tests
         run: |
           make test
@@ -103,7 +87,7 @@ jobs:
     strategy:
       matrix:
         # Minimum and Maximum supported versions
-        python-version: ['3.9']
+        python-version: ['3.14']
 
     steps:
       - name: Get latest release with tag from GitHub API
@@ -129,19 +113,28 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install .[dev]
           python -m pip install --upgrade git+https://github.com/rstudio/rsconnect-python
-          pip freeze > requirements.txt
 
-      - name: run Connect
-        run: |
-          docker compose up --build -d
-          make dev
-        env:
-          RSC_LICENSE: ${{ secrets.RSC_LICENSE }}
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      - name: Run Connect integration tests
+        uses: posit-dev/with-connect@0783dabdd24e360e985a4588ce1239c3dc31c542
+        with:
+          license: ${{ secrets.RSC_LICENSE }}
+          command: |
+            pip freeze | grep -v '^vetiver' | grep -v '^-e ' > requirements.txt
+            echo 'vetiver' >> requirements.txt
+            pytest vetiver/tests/test_rsconnect.py -m 'rsc_test'
 
-      - name: Run Tests
-        run: |
-          pytest -m 'rsc_test'
+      - name: Open issue on failure
+        if: failure() && github.event_name == 'schedule'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `Weekly canary failed: ${context.job}`,
+              body: `The weekly Connect canary failed on run ${context.runId}. This often means a change in rsconnect-python \`main\` broke vetiver. See https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+              labels: ["ci-failure"]
+            })
 
   vetiver_latest_rsconnect_latest:
     name: 'vetiver latest, rsconnect latest'
@@ -164,16 +157,25 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install '.[all]'
           python -m pip install --upgrade git+https://github.com/rstudio/rsconnect-python
-          pip freeze > requirements.txt
 
-      - name: run Connect
-        run: |
-          docker compose up --build -d
-          make dev
-        env:
-          RSC_LICENSE: ${{ secrets.RSC_LICENSE }}
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      - name: Run Connect integration tests
+        uses: posit-dev/with-connect@0783dabdd24e360e985a4588ce1239c3dc31c542
+        with:
+          license: ${{ secrets.RSC_LICENSE }}
+          command: |
+            pip freeze | grep -v '^vetiver' | grep -v '^-e ' > requirements.txt
+            echo 'vetiver' >> requirements.txt
+            pytest vetiver/tests/test_rsconnect.py -m 'rsc_test'
 
-      - name: Run Tests
-        run: |
-          pytest -m 'rsc_test'
+      - name: Open issue on failure
+        if: failure() && github.event_name == 'schedule'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `Weekly canary failed: ${context.job}`,
+              body: `The weekly Connect canary failed on run ${context.runId}. This often means a change in rsconnect-python \`main\` broke vetiver. See https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+              labels: ["ci-failure"]
+            })

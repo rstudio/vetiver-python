@@ -11,10 +11,11 @@ def __dir__():
 
 def _load_data_csv(name):
     import pandas as pd
-    import pkg_resources
+    from importlib.resources import files
 
-    fname = pkg_resources.resource_filename("vetiver.data", f"{name}.csv")
-    return pd.read_csv(fname)
+    fname = files("vetiver.data").joinpath(f"{name}.csv")
+    with fname.open("rb") as f:
+        return pd.read_csv(f)
 
 
 def __getattr__(name):

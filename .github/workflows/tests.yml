@@ -51,27 +51,29 @@ jobs:
       - name: Install uv and Python
         uses: astral-sh/setup-uv@v5
         with:
-          python-version: "3.9"
+          # Match the Python the with-connect Connect image provides (3.14):
+          # rsconnect records the client Python in the deploy manifest and
+          # Connect must have a matching Local environment to build the
+          # content. 3.14 also satisfies the with-connect tool's own
+          # requires-python (>=3.13), so no separate UV_PYTHON override.
+          python-version: "3.14"
       - name: Install dependencies
         run: |
           uv pip install --upgrade pip
           uv pip install ".[dev]"
           uv pip install --upgrade git+https://github.com/rstudio/vetiver-python@${{ github.sha }}
           echo {{ github.sha }}
-      - name: run Connect
-        run: |
-          docker compose up --build -d
-          pip freeze > requirements.txt
-          make dev
-          cat requirements.txt
-        env:
-          RSC_LICENSE: ${{ secrets.RSC_LICENSE }}
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-
-      # NOTE: edited to run checks for python package
-      - name: Run tests
-        run: |
-          pytest vetiver -m 'rsc_test'
+      - name: Run Connect integration tests
+        uses: posit-dev/with-connect@0783dabdd24e360e985a4588ce1239c3dc31c542
+        with:
+          license: ${{ secrets.RSC_LICENSE }}
+          # Plain freeze (unlike the Makefile/weekly jobs, which filter): here
+          # vetiver is installed from git+...@<sha>, so the freeze yields an
+          # installable git URL and Connect deploys THIS PR's vetiver. Filtering
+          # would deploy released vetiver and miss PR-level serving regressions.
+          command: |
+            pip freeze > requirements.txt
+            pytest vetiver/tests/test_rsconnect.py -m 'rsc_test'
 
   test-docker:
     name: "Test Docker"
@@ -129,7 +131,9 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           python -m pip install -e .[dev]
-          python -m pip install 'pydantic<2.0.0'
+          # FastAPI >=0.116 unconditionally imports `IncEx` from pydantic v2,
+          # so pin to the last release that still supports pydantic v1.
+          python -m pip install 'pydantic<2.0.0' 'fastapi<0.116'
 
       - name: Run tests
         run: |

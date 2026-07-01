@@ -1,40 +1,31 @@
-import pytest
-import json
-import sklearn
-import pins
-import pandas as pd
-import numpy as np
+import os
 
+import numpy as np
+import pandas as pd
+import pytest
+import sklearn
+
+import pins
 from pins.boards import BoardRsConnect
 from pins.rsconnect.api import RsConnectApi
 from pins.rsconnect.fs import RsConnectFs
-from rsconnect.api import RSConnectServer, RSConnectClient
+from rsconnect.api import RSConnectClient, RSConnectServer
 
 import vetiver
 
-RSC_SERVER_URL = "http://localhost:3939"
-RSC_KEYS_FNAME = "vetiver/tests/rsconnect_api_keys.json"
+RSC_SERVER_URL = os.environ.get("CONNECT_SERVER")
+RSC_API_KEY = os.environ.get("CONNECT_API_KEY")
 
 pytestmark = pytest.mark.rsc_test  # noqa
 
 
-def get_key(name):
-    with open(RSC_KEYS_FNAME) as f:
-        api_key = json.load(f)[name]
-        return api_key
+def _require_connect():
+    if not RSC_SERVER_URL or not RSC_API_KEY:
+        pytest.skip("CONNECT_SERVER and CONNECT_API_KEY must be set (run via with-connect)")
 
 
-def rsc_from_key(name):
-    with open(RSC_KEYS_FNAME) as f:
-        api_key = json.load(f)[name]
-        return RsConnectApi(RSC_SERVER_URL, api_key)
-
-
-def rsc_fs_from_key(name):
-
-    rsc = rsc_from_key(name)
-
-    return RsConnectFs(rsc)
+def _api():
+    return RsConnectApi(RSC_SERVER_URL, RSC_API_KEY)
 
 
 def rsc_delete_user_content(rsc):
@@ -45,52 +36,55 @@ def rsc_delete_user_content(rsc):
 
 
 @pytest.fixture(scope="function")
-def rsc_short():
+def username():
+    _require_connect()
+    return _api().get_user()["username"]
+
+
+@pytest.fixture(scope="function")
+def rsc_admin():
     # tears down content after each test
-    fs_susan = rsc_fs_from_key("susan")
-
-    # delete any content that might already exist
-    rsc_delete_user_content(fs_susan.api)
-
-    yield BoardRsConnect(
-        "", fs_susan, allow_pickle_read=True
-    )  # fs_susan.ls to list content
-
-    rsc_delete_user_content(fs_susan.api)
+    _require_connect()
+    fs = RsConnectFs(_api())
+    rsc_delete_user_content(fs.api)
+    yield BoardRsConnect("", fs, allow_pickle_read=True)
+    rsc_delete_user_content(fs.api)
 
 
-def test_deploy(rsc_short):
+def test_deploy(rsc_admin, username):
     np.random.seed(500)
 
     # Load data, model
     X_df, y = vetiver.mock.get_mock_data()
     model = vetiver.mock.get_mock_model().fit(X_df, y)
 
-    v = vetiver.VetiverModel(model=model, prototype_data=X_df, model_name="susan/model")
+    pin_name = f"{username}/model"
+    v = vetiver.VetiverModel(model=model, prototype_data=X_df, model_name=pin_name)
 
     board = pins.board_connect(
-        server_url=RSC_SERVER_URL, api_key=get_key("susan"), allow_pickle_read=True
+        server_url=RSC_SERVER_URL, api_key=RSC_API_KEY, allow_pickle_read=True
     )
 
     vetiver.vetiver_pin_write(board=board, model=v)
-    connect_server = RSConnectServer(url=RSC_SERVER_URL, api_key=get_key("susan"))
-    assert isinstance(board.pin_read("susan/model"), sklearn.dummy.DummyRegressor)
+    connect_server = RSConnectServer(url=RSC_SERVER_URL, api_key=RSC_API_KEY)
+    assert isinstance(board.pin_read(pin_name), sklearn.dummy.DummyRegressor)
 
     vetiver.deploy_connect(
         connect_server=connect_server,
         board=board,
-        pin_name="susan/model",
+        pin_name=pin_name,
         title="testapi",
         extra_files=["requirements.txt"],
+        new=True,
     )
 
     # get url of where content lives
     client = RSConnectClient(connect_server)
-    dicts = client.content_search()
+    dicts = client.content_list()
     rsc_api = list(filter(lambda x: x["title"] == "testapi", dicts))
-    content_url = rsc_api[0].get("content_url")
+    content_url = rsc_api[0].get("content_url").rstrip("/")
 
-    h = {"Authorization": f'Key {get_key("susan")}'}
+    h = {"Authorization": f"Key {RSC_API_KEY}"}
 
     endpoint = vetiver.vetiver_endpoint(content_url + "/predict")
     response = vetiver.predict(endpoint, X_df, headers=h)

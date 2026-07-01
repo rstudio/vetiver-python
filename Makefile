@@ -1,8 +1,6 @@
 .PHONY: clean-pyc clean-build clean docs
 UNAME := $(shell uname)
 
-RSC_API_KEYS=vetiver/tests/rsconnect_api_keys.json
-
 ifeq ($(UNAME), Darwin)
     BROWSER := open
 else
@@ -19,9 +17,6 @@ help:
 	@echo "coverage - check code coverage quickly with the default Python"
 	@echo "docs - generate HTML documentation, including API docs"
 	@echo "release - package and upload a release"
-	@echo "dev - generate Connect API keys"
-	@echo "dev-start - start up development Connect in Docker"
-	@echo "dev-stop - stop Connect dev container"
 
 clean: clean-build clean-pyc clean-test
 
@@ -47,7 +42,10 @@ test-pdb: clean-test
 	pytest -m 'not rsc_test and not docker' --pdb
 
 test-rsc: clean-test
-	pytest
+	uv run pip freeze | grep -v '^vetiver' | grep -v '^-e ' > requirements.txt
+	echo 'vetiver' >> requirements.txt
+	uvx --from git+https://github.com/posit-dev/with-connect@0783dabdd24e360e985a4588ce1239c3dc31c542 \
+		with-connect -- uv run --with pytest pytest vetiver/tests/test_rsconnect.py -m 'rsc_test'
 
 coverage:
 	coverage report -m
@@ -60,21 +58,6 @@ docs doc documentation:
 release: dist
 	twine upload dist/*
 
-dev: vetiver/tests/rsconnect_api_keys.json
-
-dev-start:
-	docker compose up -d
-	docker compose exec -T rsconnect bash < script/setup-rsconnect/add-users.sh
-	# curl fails with error 52 without a short sleep....
-	sleep 5
-	curl -s --retry 10 --retry-connrefused http://localhost:3939
-
-dev-stop:
-	docker compose down
-	rm -f $(RSC_API_KEYS)
-
 typecheck:
 	pyright
 
-$(RSC_API_KEYS): dev-start
-	python script/setup-rsconnect/dump_api_keys.py $@

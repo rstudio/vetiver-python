@@ -394,8 +394,9 @@ def predict(endpoint, data: Union[dict, pd.DataFrame, pd.Series], **kw) -> pd.Da
     # TO DO: dispatch
 
     if isinstance(data, pd.DataFrame):
+        headers = {"Content-Type": "application/json", **kw.pop("headers", {})}
         response = requester.post(
-            endpoint, data=data.to_json(orient="records"), **kw
+            endpoint, data=data.to_json(orient="records"), headers=headers, **kw
         )  # TO DO: httpx deprecating data in favor of content for TestClient
     elif isinstance(data, pd.Series):
         response = requester.post(endpoint, json=[data.to_dict()], **kw)
